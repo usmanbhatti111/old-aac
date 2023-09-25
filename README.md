@@ -5,6 +5,7 @@ This is an NX powered respository with microservice architecture.
 
 ## Recommendations
 
+- Use [pnpm](https://pnpm.io/installation) as package manager
 - Use "kebab-case" when naming a file e.g user-account
 - Append the file name with valid entity e.g auth.controller.ts, profile.service.ts
 - Use PascalCase while naming class, enum, and dto
