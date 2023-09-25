@@ -11,7 +11,6 @@ This is an NX powered respository with microservice architecture.
 - Use camelCase for functions and variables
 - Use nx console extension to run and build the project
 
-
 ## Guide to running the project
 
 Install [pnpm](https://pnpm.io/installation) and run
@@ -33,8 +32,6 @@ Run docker for rabbitmq and mongodb
 ```
 
 Finally use nx console to run the project
-
-
 
 ## Pre-Commit Hooks
 
