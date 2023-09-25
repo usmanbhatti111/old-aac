@@ -10,6 +10,7 @@ This is an NX powered respository with microservice architecture.
 - Use PascalCase while naming class, enum, and dto
 - Use camelCase for functions and variables
 - Use nx console extension to run and build the project
+- Add success response in swagger API enpoints
 
 ## Guide to running the project
 
