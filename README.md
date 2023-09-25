@@ -23,7 +23,7 @@ Install [pnpm](https://pnpm.io/installation) and run
 Generate prisma client
 
 ```bash
-  npx generate prisma
+  npx prisma generate
 ```
 
 Run docker for rabbitmq and mongodb
