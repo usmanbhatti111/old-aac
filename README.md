@@ -1,4 +1,3 @@
-
 # Air Apple Cart Backend
 
 This is an NX powered respository with microservice architecture.
@@ -12,14 +11,38 @@ This is an NX powered respository with microservice architecture.
 - Use camelCase for functions and variables
 - Use nx console extension to run and build the project
 
+
+## Guide to running the project
+
+Install [pnpm](https://pnpm.io/installation) and run
+
+```bash
+  pnpm install
+```
+
+Generate prisma client
+
+```bash
+  npx generate prisma
+```
+
+Run docker for rabbitmq and mongodb
+
+```bash
+  docker compose up
+```
+
+Finally use nx console to run the project
+
+
+
 ## Pre-Commit Hooks
 
 - Prettier
-- Lint (Unused variables will stop you from commiting)
+- Lint (Unused variables and typescript errors will stop you from commiting)
 
 ## Tech Stack
 
 **Architecture:** Microservice ([nx](https://nx.dev))
 
 **Server:** Nestjs, Mongodb, Prisma, RabbitMQ, Redis
-

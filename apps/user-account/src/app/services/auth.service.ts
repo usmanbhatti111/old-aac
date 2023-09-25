@@ -9,7 +9,7 @@ export class AuthService {
 
   async signup(payload: SignupDto) {
     try {
-      let res = await this.prisma.testStuff.findFirstOrThrow({
+      const res = await this.prisma.testStuff.findFirstOrThrow({
         where: { email: payload.email },
       });
       return successResponse(200, 'Success', res);

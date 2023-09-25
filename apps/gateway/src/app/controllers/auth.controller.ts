@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Inject, Post, Res } from '@nestjs/common';
+import { Body, Controller, Inject, Post, Res } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import {
@@ -21,10 +21,7 @@ export class AuthController {
   ) {}
 
   @Post(API_ENDPOINTS.AUTHENTICATION.SIGNUP)
-  public async createUser(
-    @Body() payload: SignupDto,
-    @Res() res: Response | any
-  ) {
+  public async createUser(@Body() payload: SignupDto, @Res() res: Response) {
     const response = await firstValueFrom(
       this.userServiceClient.send(RMQ_MESSAGES.AUTHENTICATION.SIGNUP, payload)
     );

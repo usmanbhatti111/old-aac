@@ -1,8 +1,5 @@
 import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
-import {
-  ClientProxyFactory,
-  Transport,
-} from '@nestjs/microservices';
+import { ClientProxyFactory, Transport } from '@nestjs/microservices';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 
 import { AppController } from './app.controller';
