@@ -1,0 +1,26 @@
+version: '3.8'
+services:
+  mongo:
+    build: ./local-mongodb
+    container_name: 'mongodb-aap'
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: prisma
+      MONGO_REPLICA_HOST: localhost
+      MONGO_REPLICA_PORT: 27018
+    ports:
+      - '27018:27018'
+  rabbitmq:
+    image: rabbitmq:3.12-management-alpine
+    container_name: 'rabbitmq-aap'
+    ports:
+      - 5673:5672
+      - 15673:15672
+    volumes:
+      - ~/.docker-conf/rabbitmq/data/:/var/lib/rabbitmq
+      - ~/.docker-conf/rabbitmq/log/:/var/log/rabbitmq
+    networks:
+      - backend
+networks:
+  backend:
+    driver: bridge
