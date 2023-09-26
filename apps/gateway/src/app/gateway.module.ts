@@ -44,9 +44,7 @@ import { HealthController } from './controllers/healthcheck.controller';
 export class GatewayModule implements NestModule {
   constructor(private config: ConfigService) {}
   configure(consumer: MiddlewareConsumer) {
-    if (
-      this.config.get('NODE_ENV') != 'production'
-    ) {
+    if (this.config.get('NODE_ENV') != 'production') {
       consumer.apply(LoggerMiddleware).forRoutes('*');
     }
     consumer.apply(LoggerMiddleware).exclude('healthcheck(.*)').forRoutes('*');
