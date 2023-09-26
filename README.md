@@ -38,6 +38,22 @@ Finally use nx console to run the project
 
 - Prettier
 - Lint (Unused variables and typescript errors will stop you from commiting)
+- Following are the valid commit message rules
+
+```bash
+  git commit -m "fix(fix-name): description (#****)"
+```
+- feat(feature-name)
+- fix(fix-name)
+- docs(docs-change)
+- style(style-name)
+- refactor(overview)
+- test(test-name)
+- chore(task-name)
+- breaking(deployment-env)
+ 
+**(#****) is Jira Ticket Number**
+
 
 ## Tech Stack
 
