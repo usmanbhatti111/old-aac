@@ -1,0 +1,15 @@
+#!/usr/bin
+
+gitmessage=$(cat "${1:?Missing commit message file}")
+
+RED="\033[1;31m"
+GREEN="\033[1;32m"
+NC="\033[0m"
+
+./scripts/commit-filter-check.sh "$gitmessage" && rc=$? || rc=$?
+if [ $rc -ne 0 ]; then
+  echo -e "${RED} ❌ Commit message formatting failed${NC}"
+  exit 1
+else
+  echo -e "${GREEN} ✔ Good commit message. Cheers!${NC}"
+fi

@@ -69,13 +69,13 @@ model Job {
 model JobApplicant {
   id           String      @id @default(auto()) @map("_id") @db.ObjectId
   job_id       String?     @db.ObjectId
-  job          Job?        @relation(fields: [job_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  job          Job?        @relation(fields: [job_id], references: [id])
   first_name   String
   last_name    String
   email        String
   phone_number String
   resume_id    String?     @db.ObjectId
-  resume       Attachment? @relation(fields: [resume_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  resume       Attachment? @relation(fields: [resume_id], references: [id])
 }
 
 model Attachment {
