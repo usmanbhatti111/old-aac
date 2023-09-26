@@ -21,7 +21,7 @@ export class AuthController {
   ) {}
 
   @Post(API_ENDPOINTS.AUTHENTICATION.SIGNUP)
-  public async createUser(@Body() payload: SignupDto, @Res() res: Response) {
+  public async createUser(@Body() payload: SignupDto, @Res() res: Response | any) {
     const response = await firstValueFrom(
       this.userServiceClient.send(RMQ_MESSAGES.AUTHENTICATION.SIGNUP, payload)
     );
