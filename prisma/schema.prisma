@@ -12,3 +12,153 @@ model TestStuff {
   email String  @unique
   name  String?
 }
+
+enum ERole {
+  ADMIN
+}
+
+model Admin {
+  id               String   @id @default(auto()) @map("_id") @db.ObjectId
+  role             ERole    @default(ADMIN)
+  is_product_owner Boolean  @default(false)
+  first_name       String
+  middle_name      String?
+  last_name        String
+  email            String   @unique
+  phone_number     String?
+  post_code        String?
+  flat_or_unit     String?
+  building_name    String?
+  building_number  String?
+  street_name      String?
+  town_or_city     String?
+  country          String?
+  job_title        String?
+  facebook_url     String?
+  linked_url       String?
+  status           String   @default("active")
+  created_by_id    String?  @unique @db.ObjectId
+  created_by_user  Admin?   @relation(name: "creator", fields: [created_by_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  created_by       Admin?   @relation("creator")
+  updated_by_id    String?  @unique @db.ObjectId
+  updated_by_user  Admin?   @relation(name: "updater", fields: [updated_by_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  updated_by       Admin?   @relation("updater")
+  deleted_by_id    String?  @unique @db.ObjectId
+  deleted_by_user  Admin?   @relation(name: "deleter", fields: [deleted_by_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  deleted_by       Admin?   @relation("deleter")
+  created_at       DateTime @default(now())
+  updated_at       DateTime @updatedAt
+  deleted_at       DateTime @default(now())
+  jobs             Job[]
+}
+
+model Job {
+  id                String         @id @default(auto()) @map("_id") @db.ObjectId
+  created_by_id     String?        @db.ObjectId
+  created_by        Admin?         @relation(fields: [created_by_id], references: [id])
+  title             String
+  job_type          String
+  job_category      String
+  experience        String
+  number_of_vacancy String
+  deadline          DateTime
+  description       String?
+  applicants        JobApplicant[]
+}
+
+model JobApplicant {
+  id           String      @id @default(auto()) @map("_id") @db.ObjectId
+  job_id       String?     @db.ObjectId
+  job          Job?        @relation(fields: [job_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  first_name   String
+  last_name    String
+  email        String
+  phone_number String
+  resume_id    String?     @db.ObjectId
+  resume       Attachment? @relation(fields: [resume_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model Attachment {
+  id             String         @id @default(auto()) @map("_id") @db.ObjectId
+  job_applicants JobApplicant[]
+}
+
+model Event {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+}
+
+model Plan {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+}
+
+model Role {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+}
+
+model Organization {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+}
+
+model OrganizationSocialMediaIntegration {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+}
+
+model OrganizationUser {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+}
+
+model OrganizationProduct {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+}
+
+model OrganizationCompanyAccount {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+}
+
+model OrganizationCompanyAccountRoleAndPermission {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+}
+
+model OrganizationCompanyAccountTask {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+}
+
+model OrganizationCompanyAccountFormType {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+}
+
+model OrganizationCompanyAccountForm {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+}
+
+model OrganizationCompanyAccountUser {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+}
+
+model OrganizationCompanyAccountDocumentFolder {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+}
+
+model OrganizationCompanyAccountDocumentFolderFile {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+}
+
+model OrganizationCompanyAccountProduct {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+}
+
+model OrganizationCompanyAccountProductChat {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+}
+
+model OrganizationCompanyAccountProductChatUser {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+}
+
+model OrganizationCompanyAccountProductContact {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+}
+
+model OrganizationCompanyAccountProductRoleAndPermission {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+}
