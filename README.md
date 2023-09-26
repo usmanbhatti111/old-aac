@@ -43,6 +43,7 @@ Finally use nx console to run the project
 ```bash
   git commit -m "fix(fix-name): description (#****)"
 ```
+
 - feat(feature-name)
 - fix(fix-name)
 - docs(docs-change)
@@ -51,9 +52,8 @@ Finally use nx console to run the project
 - test(test-name)
 - chore(task-name)
 - breaking(deployment-env)
- 
-**(#****) is Jira Ticket Number**
 
+**(#\*\***) is Jira Ticket Number\*\*
 
 ## Tech Stack
 
