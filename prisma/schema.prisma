@@ -13,13 +13,13 @@ model TestStuff {
   name  String?
 }
 
-enum ERole {
+enum RoleEnum {
   ADMIN
 }
 
 model Admin {
   id               String   @id @default(auto()) @map("_id") @db.ObjectId
-  role             ERole    @default(ADMIN)
+  role             RoleEnum @default(ADMIN)
   is_product_owner Boolean  @default(false)
   first_name       String
   middle_name      String?
