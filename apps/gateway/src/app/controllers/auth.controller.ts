@@ -17,7 +17,7 @@ import { firstValueFrom } from 'rxjs';
 @ApiBearerAuth()
 export class AuthController {
   constructor(
-    @Inject(SERVICES.USER_SERVICE) private userServiceClient: ClientProxy
+    @Inject(SERVICES.USER) private userServiceClient: ClientProxy
   ) {}
 
   @Post(API_ENDPOINTS.AUTHENTICATION.SIGNUP)

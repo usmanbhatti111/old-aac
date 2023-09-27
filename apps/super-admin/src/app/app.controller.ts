@@ -8,6 +8,7 @@ export class AppController {
 
   @MessagePattern('test')
   getData() {
+    return this.prisma.testStuff.findMany()
     return this.prisma.testStuff.createMany({
       data: [
         {

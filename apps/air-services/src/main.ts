@@ -2,16 +2,17 @@ import { NestFactory } from '@nestjs/core';
 import { MicroserviceOptions, Transport } from '@nestjs/microservices';
 import { SERVICES } from '@shared/constants';
 
-import { UserAccountModule } from './app/user-account.module';
+import { AirServicesModule } from './app/air-services.module';
+
 
 async function bootstrap() {
   const app = await NestFactory.createMicroservice<MicroserviceOptions>(
-    UserAccountModule,
+    AirServicesModule,
     {
       transport: Transport.RMQ,
       options: {
         urls: [process.env.RABBITMQ_HOST],
-        queue: `${SERVICES.USER}_QUEUE`,
+        queue: `${SERVICES.AIR_SERVICES}_QUEUE`,
         queueOptions: {
           durable: false,
         },
@@ -20,4 +21,5 @@ async function bootstrap() {
   );
   await app.listen();
 }
+
 bootstrap();

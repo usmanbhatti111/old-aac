@@ -6,7 +6,7 @@ import { firstValueFrom } from 'rxjs';
 @Controller()
 export class AppController {
   constructor(
-    @Inject(SERVICES.SUPER_ADMIN_SERVICE)
+    @Inject(SERVICES.SUPER_ADMIN)
     private readonly serviceClient: ClientProxy
   ) {}
 
