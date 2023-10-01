@@ -2,4 +2,13 @@ export const API_ENDPOINTS = {
   AUTHENTICATION: {
     SIGNUP: 'signup',
   },
+  ORGANIZATION: {
+    CREATE_ORGANIZATION: 'create',
+    UPDATE_ORGANIZATION: 'update',
+    GET_ORGANIZATION: 'get',
+  },
+  ORGANIZATION_COMPANY_ACCOUNT: {
+    CREATE_ORGANIZATION_COMPANY_ACCOUNT: 'create',
+    GET_ORGANIZATION_COMPANY_ACCOUNTS: 'get-accounts',
+  },
 };
