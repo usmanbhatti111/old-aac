@@ -8,25 +8,26 @@ import {
   RMQ_MESSAGES,
   SERVICES,
 } from '@shared/constants';
-import { SignupDto } from '@shared/dto';
+import { AddPlanDto } from '@shared/dto';
 import { Response } from 'express';
 import { firstValueFrom } from 'rxjs';
 
-@ApiTags(API_TAGS.AUTHENTICATION)
-@Controller(CONTROLLERS.AUTHENTICATION)
+@ApiTags(API_TAGS.PLAN)
+@Controller(CONTROLLERS.PLAN)
 @ApiBearerAuth()
-export class AuthController {
-  constructor(@Inject(SERVICES.USER) private userServiceClient: ClientProxy) {}
+export class PlanController {
+  constructor(
+    @Inject(SERVICES.SUPER_ADMIN) private superAdminServiceClient: ClientProxy
+  ) {}
 
-  @Post(API_ENDPOINTS.AUTHENTICATION.SIGNUP)
-  public async createUser(
-    @Body() payload: SignupDto,
+  @Post(API_ENDPOINTS.PLAN.ADDPLAN)
+  public async createPlan(
+    @Body() payload: AddPlanDto,
     @Res() res: Response | any
   ) {
     const response = await firstValueFrom(
-      this.userServiceClient.send(RMQ_MESSAGES.AUTHENTICATION.SIGNUP, payload)
+      this.superAdminServiceClient.send(RMQ_MESSAGES.PLAN.ADDPLAN, payload)
     );
-
     return res.status(response.statusCode).json(response);
   }
 }

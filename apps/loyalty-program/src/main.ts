@@ -4,7 +4,6 @@ import { SERVICES } from '@shared/constants';
 
 import { LoyaltyProgramModule } from './app/loyalty-program.module';
 
-
 async function bootstrap() {
   const app = await NestFactory.createMicroservice<MicroserviceOptions>(
     LoyaltyProgramModule,

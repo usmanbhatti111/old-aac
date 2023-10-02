@@ -134,7 +134,54 @@ model Event {
 }
 
 model Plan {
-  id String @id @default(auto()) @map("_id") @db.ObjectId
+  id                        String        @id @default(auto()) @map("_id") @db.ObjectId
+  // plan_type_id              String        @db.ObjectId
+  // plan_type                 String
+  description               String?
+  default_users             Int
+  default_storage           Int
+  plan_price                Float
+  additional_per_user_price Float?
+  additional_storage_price  Float?
+  plan_product              PlanProduct[]
+  plan_type                 PlanType?     @relation(fields: [plan_type_id], references: [id])
+  //  plan_type                  PlanType?     @relation(fields: [plan_type_id], references: [id])
+  plan_type_id              String?       @db.ObjectId
+}
+
+model PlanType {
+  id   String @id @default(auto()) @map("_id") @db.ObjectId
+  name String
+  plan Plan[]
+}
+
+model PlanProduct {
+  id                    String                @id @default(auto()) @map("_id") @db.ObjectId
+  plan_id               String                @db.ObjectId
+  product_id            String                @db.ObjectId
+  plan                  Plan?                 @relation(fields: [plan_id], references: [id])
+  plan_products_feature PlanProductsFeature[]
+  plan_products_module  PlanProductsModule[]
+}
+
+model PlanProductsFeature {
+  id                        String       @id @default(auto()) @map("_id") @db.ObjectId
+  plan_id                   String       @db.ObjectId
+  product_id                String       @db.ObjectId
+  feature_id                String       @db.ObjectId
+  deals_associations_detail String?
+  plan_product              PlanProduct? @relation(fields: [product_id], references: [id])
+}
+
+model PlanProductsModule {
+  id                       String       @id @default(auto()) @map("_id") @db.ObjectId
+  plan_id                  String       @db.ObjectId
+  product_id               String       @db.ObjectId
+  module_id                String       @db.ObjectId
+  sub_module_id            String?      @db.ObjectId
+  module_permission_id     String[]     @default([])  @db.ObjectId
+  sub_module_permission_id String[]     @default([])  @db.ObjectId
+  plan_product             PlanProduct? @relation(fields: [product_id], references: [id])
 }
 
 model Role {
