@@ -25,7 +25,6 @@ export class OrganizationCompanyAccountService {
       if (existingCompany) {
         return errorResponse(409, 'This company account already exist.');
       }
-      //products check left--> can we create duplicate company when products are different
       const res = await this.prisma.organizationCompanyAccount.create({
         data: accountData,
       });
@@ -46,7 +45,7 @@ export class OrganizationCompanyAccountService {
   async getOrganizationCompanyAccounts(payload: any) {
     try {
       const page = payload.page || 1; // Default to page 1 if not specified
-      const perPage = payload.perPage || 10; // Default to 10 items per page if not specified
+      const perPage = payload.limit || 10; // Default to 10 items per page if not specified
 
       const skip = (page - 1) * perPage;
 

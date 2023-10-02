@@ -36,7 +36,6 @@ export class OrganizationController {
 
         return res.status(response.statusCode).json(response);
     }
-    //651924286c82f1f4e9485e11
     @Get(API_ENDPOINTS.ORGANIZATION.GET_ORGANIZATION + '/:id')
     @ApiParam({ name: 'id', type: String, description: 'Organization ID' })
     @ApiResponse({
