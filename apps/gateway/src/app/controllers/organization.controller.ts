@@ -1,6 +1,6 @@
 import { Body, Controller, Inject, Post, Res, Put, Get, Param } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
-import { ApiBearerAuth, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiOkResponse, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
 import {
     API_ENDPOINTS,
     API_TAGS,
@@ -38,7 +38,7 @@ export class OrganizationController {
     }
     @Get(API_ENDPOINTS.ORGANIZATION.GET_ORGANIZATION + '/:id')
     @ApiParam({ name: 'id', type: String, description: 'Organization ID' })
-    @ApiResponse({
+    @ApiOkResponse({
         description: 'Successfully retrieved the organization',
         type: CreateOrganizationResponseDto,
     })

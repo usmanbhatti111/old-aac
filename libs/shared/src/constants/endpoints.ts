@@ -9,6 +9,6 @@ export const API_ENDPOINTS = {
   },
   ORGANIZATION_COMPANY_ACCOUNT: {
     CREATE_ORGANIZATION_COMPANY_ACCOUNT: 'create',
-    GET_ORGANIZATION_COMPANY_ACCOUNTS: 'get-accounts',
+    GET_ORGANIZATION_COMPANY_ACCOUNTS: 'get-accounts/:organization_id',
   },
 };

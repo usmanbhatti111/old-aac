@@ -9,7 +9,7 @@ import {
   Res,
 } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
-import { ApiBearerAuth, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiOkResponse, ApiParam, ApiQuery, ApiTags } from '@nestjs/swagger';
 import {
   API_ENDPOINTS,
   API_TAGS,
@@ -20,6 +20,7 @@ import {
 import {
   OrganizationCompanyAccountDto,
   OrganizationCompanyAccountResponseDto,
+  GetOrganizationCompanyAccountDto
 } from '@shared/dto';
 import { Response } from 'express';
 import { firstValueFrom } from 'rxjs';
@@ -55,31 +56,43 @@ export class OrganizationCompanyAccountController {
 
   @Get(
     API_ENDPOINTS.ORGANIZATION_COMPANY_ACCOUNT
-      .GET_ORGANIZATION_COMPANY_ACCOUNTS + '/:organization_id'
+      .GET_ORGANIZATION_COMPANY_ACCOUNTS
   )
   @ApiParam({
     name: 'organization_id',
     type: String,
     description: 'Organization ID',
   })
-  @ApiResponse({
+  @ApiQuery({
+    name: 'page',
+    type: Number,
+    description: 'Page number',
+    required: false, 
+  })
+  @ApiQuery({
+    name: 'limit',
+    type: Number,
+    description: 'Number of items per page',
+    required: false, 
+  })
+  @ApiOkResponse({
     description: 'Successfully retrieved the organization company accounts',
     type: OrganizationCompanyAccountResponseDto,
   })
   public async getOrganizationAccount(
     @Param('organization_id') organization_id: string,
-    @Query('page') page: number,
-    @Query('limit') limit: number,
+    @Query() query: GetOrganizationCompanyAccountDto,
     @Res() res: Response | any
   ) {
-    // -----------need to ask whether to take page number+limit and id in body or both in params
+    console.log({ organization_id,...query });
+    
     const response = await firstValueFrom(
       this.organizationServiceClient.send(
         {
           cmd: RMQ_MESSAGES.ORGANIZATION_COMPANY_ACCOUNT
             .GET_ORGANIZATION_COMPANY_ACCOUNTS,
         },
-        { organization_id,page,limit }
+        { organization_id,...query }
       )
     );
 

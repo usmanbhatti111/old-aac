@@ -1,6 +1,7 @@
 
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNotEmpty } from 'class-validator';
+import { IsInt, IsNotEmpty , IsOptional} from 'class-validator';
+import { Type } from 'class-transformer';
 
 export class OrganizationCompanyAccountProductDto {
   @ApiProperty({
@@ -108,5 +109,18 @@ export class OrganizationCompanyAccountResponseDto {
   error: string
 
 
+}
+
+
+export class GetOrganizationCompanyAccountDto {
+  @IsOptional()
+  @IsInt()
+  @Type(() => Number) // Specify the type as a number
+  page?: number;
+
+  @IsOptional()
+  @IsInt()
+  @Type(() => Number) // Specify the type as a number
+  limit?: number;
 }
 
