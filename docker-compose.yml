@@ -10,17 +10,17 @@ services:
       MONGO_REPLICA_PORT: 27018
     ports:
       - '27018:27018'
-  # rabbitmq:
-  #   image: rabbitmq:3.12-management-alpine
-  #   container_name: 'rabbitmq-aap'
-  #   ports:
-  #     - 5673:5672
-  #     - 15673:15672
-  #   volumes:
-  #     - ~/.docker-conf/rabbitmq/data/:/var/lib/rabbitmq
-  #     - ~/.docker-conf/rabbitmq/log/:/var/log/rabbitmq
-  #   networks:
-  #     - backend
+  rabbitmq:
+    image: rabbitmq:3.12-management-alpine
+    container_name: 'rabbitmq-aap'
+    ports:
+      - 5673:5672
+      - 15673:15672
+    volumes:
+      - ~/.docker-conf/rabbitmq/data/:/var/lib/rabbitmq
+      - ~/.docker-conf/rabbitmq/log/:/var/log/rabbitmq
+    networks:
+      - backend
 networks:
   backend:
     driver: bridge

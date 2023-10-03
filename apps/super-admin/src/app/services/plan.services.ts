@@ -1,11 +1,78 @@
 import { Injectable } from '@nestjs/common';
 import { errorResponse, successResponse } from '@shared/constants';
-import { AddPlanDto } from '@shared/dto';
+import {
+  AddPlanDto,
+  PaginationDto,
+  ProductFeatureDto,
+  ProductModuleDto,
+} from '@shared/dto';
 import { PrismaService } from '@shared/services';
 
 @Injectable()
 export class PlanService {
-  constructor(private prisma: PrismaService) {}
+  constructor(private prisma: PrismaService) { }
+
+  async getPlans(payload: PaginationDto) {
+    try {
+      console.log('this is payload', payload)
+      return successResponse(200, 'Success', {});
+    } catch (error) {
+      console.log('error in get plans', error);
+      return errorResponse(400, 'Bad Request', error?.name);
+    }
+  }
+
+  async savePlan(
+    plan_id: string,
+    product_id: string,
+    featureProducts: ProductFeatureDto[],
+    moduleProducts: ProductModuleDto[]
+  ) {
+    const planProdustsRes = await this.prisma.planProduct.create({
+      data: {
+        plan_id,
+        product_id,
+      },
+    });
+
+    const featureProduct = featureProducts.find(
+      (val) => (val.product_id = product_id)
+    );
+    const moduleProduct = moduleProducts.find(
+      (val) => (val.product_id = product_id)
+    );
+
+    // inserting plan product features data
+    await this.prisma.planProductFeature.create({
+      data: {
+        plan_id,
+        product_id,
+        plan_product_id: planProdustsRes.id,
+        feature_id: featureProduct.feature_id,
+        deals_associations_detail: featureProduct?.dealsAssociationsDetail,
+      },
+    });
+    // inserting plan product module data
+    const planProductsModuleRes = await this.prisma.planProductModule.create({
+      data: {
+        plan_id,
+        product_id,
+        module_id: moduleProduct.module_id,
+        plan_product_id: planProdustsRes.id,
+      },
+    });
+    // inserting plan product module permission data
+    await this.prisma.planProductModulePermission.create({
+      data: {
+        plan_id,
+        product_id,
+        module_id: moduleProduct.module_id,
+        plan_product_id: planProdustsRes.id,
+        plan_product_module_id: planProductsModuleRes.id,
+        module_permission_id: moduleProduct.module_permission_id,
+      },
+    });
+  }
 
   async addPlan(payload: AddPlanDto) {
     try {
@@ -21,93 +88,28 @@ export class PlanService {
         data: payloadPlan,
       });
 
-      let planProdustsRes = null;
-      let planProductsFeatureRes = null;
-      let planProductsModuleRes = null;
-
       if (payload.suite) {
+        // if suites then looping through the suits consist of multiple product ids and inserting plan data
         for (const product_id of payload.suite) {
-          // if suites then looping through the suits consist of multiple product ids and insert plan product data
-          planProdustsRes = await this.prisma.planProduct.create({
-            data: {
-              plan_id: planRes.id,
-              product_id,
-            },
-          });
-          // if suites then looping through the suits consist of multiple product ids and inserting plan product features data
-          const featureProduct = payload.plan_feature.find(
-            (val) => (val.product_id = product_id)
+          await this.savePlan(
+            planRes.id,
+            product_id,
+            payload.plan_feature,
+            payload.plan_module
           );
-          planProductsFeatureRes = await this.prisma.planProductsFeature.create(
-            {
-              data: {
-                plan_id: planRes.id,
-                product_id,
-                feature_id: featureProduct.feature_id,
-                deals_associations_detail:
-                  featureProduct?.dealsAssociationsDetail,
-              },
-            }
-          );
-          // if suites then looping through the suits consist of multiple product ids and inserting plan product module data
-          const moduleProduct = payload.plan_module.find(
-            (val) => (val.product_id = product_id)
-          );
-          planProductsModuleRes = await this.prisma.planProductsModule.create({
-            data: {
-              plan_id: planRes.id,
-              product_id,
-              module_id: moduleProduct.module_id,
-              sub_module_id: moduleProduct?.sub_module_id,
-              module_permission_id: moduleProduct?.module_permission_id,
-              sub_module_permission_id: moduleProduct?.sub_module_permission_id,
-            },
-          });
         }
       } else {
-        // if single product then using product id, insert plan product data
-        planProdustsRes = await this.prisma.planProduct.create({
-          data: {
-            plan_id: planRes.id,
-            product_id: payload.product_id,
-          },
-        });
-        // if single product then using product id, insert plan product feature data
-        const featureProduct = payload.plan_feature.find(
-          (val) => (val.product_id = payload.product_id)
+        // if single product then using product id, insert plan data
+        await this.savePlan(
+          planRes.id,
+          payload.product_id,
+          payload.plan_feature,
+          payload.plan_module
         );
-        planProductsFeatureRes = await this.prisma.planProductsFeature.create({
-          data: {
-            plan_id: planRes.id,
-            product_id: payload.product_id,
-            feature_id: featureProduct?.feature_id,
-            deals_associations_detail: featureProduct?.dealsAssociationsDetail,
-          },
-        });
-        // if single product then using product id, insert plan product module data
-        const moduleProduct = payload.plan_module.find(
-          (val) => (val.product_id = payload.product_id)
-        );
-        planProductsModuleRes = await this.prisma.planProductsModule.create({
-          data: {
-            plan_id: planRes.id,
-            product_id: payload.product_id,
-            module_id: moduleProduct.module_id,
-            sub_module_id: moduleProduct?.sub_module_id,
-            module_permission_id: moduleProduct?.module_permission_id,
-            sub_module_permission_id: moduleProduct?.sub_module_permission_id,
-          },
-        });
       }
 
-      return successResponse(200, 'Success', {
-        planRes,
-        planProdustsRes,
-        planProductsFeatureRes,
-        planProductsModuleRes,
-      });
+      return successResponse(200, 'Success', planRes);
     } catch (error) {
-      console.log('eroorooror', error);
       return errorResponse(400, 'Bad Request', error?.name);
     }
   }

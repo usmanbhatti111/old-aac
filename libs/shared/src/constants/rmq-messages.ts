@@ -4,5 +4,6 @@ export const RMQ_MESSAGES = {
   },
   PLAN: {
     ADDPLAN: 'add-plan',
+    PLANLIST: 'plan-list',
   },
 };

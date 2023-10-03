@@ -1,53 +1,13 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
 import { IsNotEmpty, IsNumber, IsOptional, IsString } from 'class-validator';
+import { ProductFeatureDto } from './product-feature.dto';
+import { ProductModuleDto } from './product-module.dto';
 
 export enum PlanTypeEnum {
   GROWTH = 'Growth',
   ENTERPRISE = 'Enterprise',
   PREMIUM = 'Premium',
-}
-
-class ProductFeature {
-  @ApiProperty()
-  @IsString()
-  @IsOptional()
-  dealsAssociationsDetail: string;
-
-  @ApiProperty()
-  @IsNotEmpty()
-  @IsString()
-  feature_id: string;
-
-  @ApiProperty()
-  @IsNotEmpty()
-  @IsString()
-  product_id: string;
-}
-
-class ProductModule {
-  @ApiProperty()
-  @IsNotEmpty()
-  @IsString()
-  module_id: string;
-
-  @ApiProperty()
-  @IsOptional()
-  @IsString()
-  sub_module_id: string;
-
-  @ApiProperty({ type: String, isArray: true })
-  @IsOptional()
-  module_permission_id: string[];
-
-  @ApiProperty({ type: String, isArray: true })
-  @IsOptional()
-  sub_module_permission_id: string[];
-
-  @ApiProperty()
-  @IsNotEmpty()
-  @IsString()
-  product_id: string;
 }
 
 export class AddPlanDto {
@@ -122,16 +82,16 @@ export class AddPlanDto {
   additional_storage_price: number;
 
   @ApiProperty({
-    type: () => ProductFeature,
+    type: () => ProductFeatureDto,
     isArray: true,
   })
-  @Type(() => ProductFeature)
-  plan_feature: ProductFeature[];
+  @Type(() => ProductFeatureDto)
+  plan_feature: ProductFeatureDto[];
 
   @ApiProperty({
-    type: () => ProductModule,
+    type: () => ProductModuleDto,
     isArray: true,
   })
-  @Type(() => ProductModule)
-  plan_module: ProductModule[];
+  @Type(() => ProductModuleDto)
+  plan_module: ProductModuleDto[];
 }

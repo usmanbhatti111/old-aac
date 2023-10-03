@@ -10,30 +10,16 @@
     "importHelpers": true,
     "target": "es2015",
     "module": "esnext",
-    "lib": [
-      "es2020",
-      "dom"
-    ],
+    "lib": ["es2020", "dom"],
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@shared": [
-        "libs/shared/src/index.ts"
-      ],
-      "@shared/constants": [
-        "libs/shared/src/constants/index.ts"
-      ],
-      "@shared/dto": [
-        "libs/shared/src/dto/index.ts"
-      ],
-      "@shared/services": [
-        "libs/shared/src/services/index.ts"
-      ]
+      "@shared": ["libs/shared/src/index.ts"],
+      "@shared/constants": ["libs/shared/src/constants/index.ts"],
+      "@shared/dto": ["libs/shared/src/dto/index.ts"],
+      "@shared/services": ["libs/shared/src/services/index.ts"]
     }
   },
-  "exclude": [
-    "node_modules",
-    "tmp"
-  ]
+  "exclude": ["node_modules", "tmp"]
 }
