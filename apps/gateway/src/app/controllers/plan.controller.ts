@@ -8,7 +8,7 @@ import {
   Res,
 } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
-import { ApiBearerAuth, ApiCreatedResponse, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiCreatedResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import {
   API_ENDPOINTS,
   API_TAGS,
@@ -16,7 +16,12 @@ import {
   RMQ_MESSAGES,
   SERVICES,
 } from '@shared/constants';
-import { AddPlanDto, GetResponseDto, PaginationDto, PostResponseDto } from '@shared/dto';
+import {
+  AddPlanDto,
+  GetResponseDto,
+  PaginationDto,
+  PostResponseDto,
+} from '@shared/dto';
 import { Response } from 'express';
 import { firstValueFrom } from 'rxjs';
 
@@ -26,7 +31,7 @@ import { firstValueFrom } from 'rxjs';
 export class PlanController {
   constructor(
     @Inject(SERVICES.SUPER_ADMIN) private superAdminServiceClient: ClientProxy
-  ) { }
+  ) {}
 
   @Post(API_ENDPOINTS.PLAN.ADDPLAN)
   @ApiCreatedResponse({ type: PostResponseDto })
@@ -41,7 +46,7 @@ export class PlanController {
   }
 
   @Get(API_ENDPOINTS.PLAN.PLANLIST)
-  @ApiCreatedResponse({ type: GetResponseDto })
+  @ApiOkResponse({ type: GetResponseDto })
   public async getPlans(
     @Query() payload: PaginationDto,
     @Res() res: Response | any

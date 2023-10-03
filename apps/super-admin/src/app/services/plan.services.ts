@@ -10,14 +10,18 @@ import { PrismaService } from '@shared/services';
 
 @Injectable()
 export class PlanService {
-  constructor(private prisma: PrismaService) { }
+  constructor(private prisma: PrismaService) {}
 
   async getPlans(payload: PaginationDto) {
     try {
-      const take = payload.limit || 10
+      const take = payload.limit || 10;
       const page = payload.page || 1;
       const skip = (page - 1) * take;
-      const data = await this.prisma.plan.findMany({ skip, take, include: { plan_product:true, plan_type:true } })
+      const data = await this.prisma.plan.findMany({
+        skip,
+        take,
+        include: { plan_product: true, plan_type: true },
+      });
       console.log('this is payload', payload);
       return successResponse(200, 'Success', data);
     } catch (error) {
