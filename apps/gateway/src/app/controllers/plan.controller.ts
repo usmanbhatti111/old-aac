@@ -8,7 +8,12 @@ import {
   Res,
 } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
-import { ApiBearerAuth, ApiCreatedResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiCreatedResponse,
+  ApiOkResponse,
+  ApiTags,
+} from '@nestjs/swagger';
 import {
   API_ENDPOINTS,
   API_TAGS,
