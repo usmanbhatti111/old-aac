@@ -9,6 +9,7 @@ import { WinstonModule } from 'nest-winston';
 import { WinstonConfigService } from './config/winston.config';
 import { AuthController } from './controllers/auth.controller';
 import { HealthController } from './controllers/healthcheck.controller';
+import { InventoryController } from './controllers/inventory.controller';
 
 @Module({
   imports: [
@@ -17,7 +18,12 @@ import { HealthController } from './controllers/healthcheck.controller';
       useClass: WinstonConfigService,
     }),
   ],
-  controllers: [AppController, AuthController, HealthController],
+  controllers: [
+    AppController,
+    AuthController,
+    HealthController,
+    InventoryController,
+  ],
   providers: [
     // Connected to all the rabbitmq queues
     ...Object.values(SERVICES).map((SERVICE_NAME) => {

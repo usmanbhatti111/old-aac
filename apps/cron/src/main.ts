@@ -4,7 +4,6 @@ import { SERVICES } from '@shared/constants';
 
 import { CronModule } from './app/cron.module';
 
-
 async function bootstrap() {
   const app = await NestFactory.createMicroservice<MicroserviceOptions>(
     CronModule,

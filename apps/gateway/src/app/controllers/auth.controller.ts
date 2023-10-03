@@ -16,12 +16,13 @@ import { firstValueFrom } from 'rxjs';
 @Controller(CONTROLLERS.AUTHENTICATION)
 @ApiBearerAuth()
 export class AuthController {
-  constructor(
-    @Inject(SERVICES.USER) private userServiceClient: ClientProxy
-  ) {}
+  constructor(@Inject(SERVICES.USER) private userServiceClient: ClientProxy) {}
 
   @Post(API_ENDPOINTS.AUTHENTICATION.SIGNUP)
-  public async createUser(@Body() payload: SignupDto, @Res() res: Response | any) {
+  public async createUser(
+    @Body() payload: SignupDto,
+    @Res() res: Response | any
+  ) {
     const response = await firstValueFrom(
       this.userServiceClient.send(RMQ_MESSAGES.AUTHENTICATION.SIGNUP, payload)
     );

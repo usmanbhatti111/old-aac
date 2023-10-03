@@ -209,4 +209,20 @@ model OrganizationCompanyAccountProductRoleAndPermission {
   id String @id @default(auto()) @map("_id") @db.ObjectId
 }
 
+
+model Asset {
+    id                      String @id @default(auto()) @map("_id") @db.ObjectId
+    display_name            String?
+    asset_id                String? @unique @db.ObjectId
+    asset_type              String?
+    impact                  String?
+    description             String?
+    asset_life_expiry       DateTime?
+    location_id               String?
+    department_id              String?
+    assigned_on             DateTime?
+    used_by                 String?  
+    attachment_id                    String?
+}
+
 //////----------------Models-End---------------------///////
