@@ -8,7 +8,7 @@ import {
   Res,
 } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
-import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiCreatedResponse, ApiTags } from '@nestjs/swagger';
 import {
   API_ENDPOINTS,
   API_TAGS,
@@ -16,7 +16,7 @@ import {
   RMQ_MESSAGES,
   SERVICES,
 } from '@shared/constants';
-import { AddPlanDto } from '@shared/dto';
+import { AddPlanDto, GetResponseDto, PaginationDto, PostResponseDto } from '@shared/dto';
 import { Response } from 'express';
 import { firstValueFrom } from 'rxjs';
 
@@ -26,9 +26,10 @@ import { firstValueFrom } from 'rxjs';
 export class PlanController {
   constructor(
     @Inject(SERVICES.SUPER_ADMIN) private superAdminServiceClient: ClientProxy
-  ) {}
+  ) { }
 
   @Post(API_ENDPOINTS.PLAN.ADDPLAN)
+  @ApiCreatedResponse({ type: PostResponseDto })
   public async createPlan(
     @Body() payload: AddPlanDto,
     @Res() res: Response | any
@@ -39,13 +40,14 @@ export class PlanController {
     return res.status(response.statusCode).json(response);
   }
 
-  @Get(RMQ_MESSAGES.PLAN.PLANLIST)
+  @Get(API_ENDPOINTS.PLAN.PLANLIST)
+  @ApiCreatedResponse({ type: GetResponseDto })
   public async getPlans(
-    @Query() payload: AddPlanDto,
+    @Query() payload: PaginationDto,
     @Res() res: Response | any
   ) {
     const response = await firstValueFrom(
-      this.superAdminServiceClient.send(RMQ_MESSAGES.PLAN.ADDPLAN, payload)
+      this.superAdminServiceClient.send(RMQ_MESSAGES.PLAN.PLANLIST, payload)
     );
     return res.status(response.statusCode).json(response);
   }

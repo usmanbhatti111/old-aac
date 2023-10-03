@@ -3,6 +3,7 @@ export const API_ENDPOINTS = {
     SIGNUP: 'signup',
   },
   PLAN: {
-    ADDPLAN: 'add-plan',
+    ADDPLAN: '',
+    PLANLIST: '',
   },
 };

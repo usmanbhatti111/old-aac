@@ -14,8 +14,12 @@ export class PlanService {
 
   async getPlans(payload: PaginationDto) {
     try {
-      console.log('this is payload', payload)
-      return successResponse(200, 'Success', {});
+      const take = payload.limit || 10
+      const page = payload.page || 1;
+      const skip = (page - 1) * take;
+      const data = await this.prisma.plan.findMany({ skip, take, include: { plan_product:true, plan_type:true } })
+      console.log('this is payload', payload);
+      return successResponse(200, 'Success', data);
     } catch (error) {
       console.log('error in get plans', error);
       return errorResponse(400, 'Bad Request', error?.name);
@@ -49,7 +53,7 @@ export class PlanService {
         product_id,
         plan_product_id: planProdustsRes.id,
         feature_id: featureProduct.feature_id,
-        deals_associations_detail: featureProduct?.dealsAssociationsDetail,
+        deals_associations_detail: featureProduct?.deals_associations_detail,
       },
     });
     // inserting plan product module data

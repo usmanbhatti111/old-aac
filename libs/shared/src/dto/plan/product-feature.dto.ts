@@ -5,7 +5,7 @@ export class ProductFeatureDto {
   @ApiProperty()
   @IsString()
   @IsOptional()
-  dealsAssociationsDetail: string;
+  deals_associations_detail: string;
 
   @ApiProperty()
   @IsNotEmpty()
