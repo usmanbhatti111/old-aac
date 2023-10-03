@@ -9,7 +9,8 @@ import { WinstonModule } from 'nest-winston';
 import { WinstonConfigService } from './config/winston.config';
 import { AuthController } from './controllers/auth.controller';
 import { HealthController } from './controllers/healthcheck.controller';
-import { InventoryController } from './controllers/inventory.controller';
+import { TicketController } from './controllers/tickets/tickets.controller';
+import { InventoryController } from './controllers/inventory/inventory.controller';
 
 @Module({
   imports: [
@@ -22,6 +23,7 @@ import { InventoryController } from './controllers/inventory.controller';
     AppController,
     AuthController,
     HealthController,
+    TicketController,
     InventoryController,
   ],
   providers: [

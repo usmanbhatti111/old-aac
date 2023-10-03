@@ -20,14 +20,14 @@ export class InventoryController {
     @Inject(SERVICES.AIR_SERVICES) private airServiceClient: ClientProxy
   ) {}
 
-  @Post(API_ENDPOINTS.ASSETS.ADD_ASSETS)
+  @Post(API_ENDPOINTS.AIR_SERVICES.ASSETS.ADD_ASSETS)
   public async addAssets(
     @Body() payload: AddAssetDto,
     @Res() res: Response | any
   ) {
     try {
       const response = await firstValueFrom(
-        this.airServiceClient.send(RMQ_MESSAGES.ASSETS.ADD_ASSETS, payload)
+        this.airServiceClient.send(RMQ_MESSAGES.AIR_SERVICES.ASSETS.ADD_ASSETS, payload)
       );
 
       return res.status(response.statusCode).json(response);
@@ -35,11 +35,11 @@ export class InventoryController {
       return res.status(err.statusCode).json(err);
     }
   }
-  @Get(API_ENDPOINTS.ASSETS.GET_ASSETS)
-  public async getAssets(@Res() res: Response) {
+  @Get(API_ENDPOINTS.AIR_SERVICES.ASSETS.GET_ASSETS)
+  public async getAssets(@Res() res: Response | any) {
     try {
       const response = await firstValueFrom(
-        this.airServiceClient.send(RMQ_MESSAGES.ASSETS.GET_ASSETS, {})
+        this.airServiceClient.send(RMQ_MESSAGES.AIR_SERVICES.ASSETS.GET_ASSETS, {})
       );
 
       return res.status(response.statusCode).json(response);

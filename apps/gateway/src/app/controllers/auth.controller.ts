@@ -23,10 +23,14 @@ export class AuthController {
     @Body() payload: SignupDto,
     @Res() res: Response | any
   ) {
-    const response = await firstValueFrom(
-      this.userServiceClient.send(RMQ_MESSAGES.AUTHENTICATION.SIGNUP, payload)
-    );
+    try {
+      const response = await firstValueFrom(
+        this.userServiceClient.send(RMQ_MESSAGES.AUTHENTICATION.SIGNUP, payload)
+      );
 
-    return res.status(response.statusCode).json(response);
+      return res.status(response.statusCode).json(response);
+    } catch (err) {
+      return res.status(err.statusCode).json(err);
+    }
   }
 }

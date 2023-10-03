@@ -2,8 +2,13 @@ export const API_ENDPOINTS = {
   AUTHENTICATION: {
     SIGNUP: 'signup',
   },
-  ASSETS: {
-    ADD_ASSETS: 'add-assets',
-    GET_ASSETS: 'get-assets',
+  AIR_SERVICES: {
+    TICKETS: {
+      ticket: 'ticket',
+    },
+    ASSETS: {
+      ADD_ASSETS: 'add-assets',
+      GET_ASSETS: 'get-assets',
+    },
   },
 };

@@ -4,3 +4,4 @@ export * from './endpoints';
 export * from './rmq-messages';
 export * from './tags';
 export * from './responses';
+export * from './enums';
