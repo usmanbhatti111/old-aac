@@ -16,20 +16,20 @@ export class AddAssetDto {
     example: 'Name',
     required: true,
   })
-  display_name: string;
+  displayName: string;
   @IsOptional()
   @IsMongoId()
   @ApiProperty({
     example: '651bdf53beeb02bc627d6804',
   })
-  asset_id: string;
+  assetId: string;
 
   @IsNotEmpty()
   @IsString()
   @ApiProperty({
     example: 'services',
   })
-  asset_type: string;
+  assetType: string;
   @IsNotEmpty()
   @IsEnum(['low', 'medium', 'high'])
   @ApiProperty({
@@ -51,39 +51,39 @@ export class AddAssetDto {
   @ApiProperty({
     example: new Date().toISOString(),
   })
-  asset_life_expiry: string;
+  assetLifeExpiry: string;
 
   @IsOptional()
   @IsMongoId()
   @ApiProperty({
     example: '651bdf53beeb02bc627d6804',
   })
-  location_id: string;
+  locationId: string;
   @IsOptional()
   @IsMongoId()
   @ApiProperty({
     example: '651bdf53beeb02bc627d6804',
   })
-  department_id: string;
+  departmentId: string;
 
   @IsOptional()
   @IsISO8601()
   @ApiProperty({
     example: new Date().toISOString(),
   })
-  assigned_on: string;
+  assignedOn: string;
 
   @IsOptional()
   @IsMongoId()
   @ApiProperty({
     example: '651bdf53beeb02bc627d6804',
   })
-  used_by: string;
+  usedBy: string;
 
   @IsOptional()
   @IsMongoId()
   @ApiProperty({
     example: '651bdf53beeb02bc627d6804',
   })
-  attachment_id: string;
+  attachmentId: string;
 }

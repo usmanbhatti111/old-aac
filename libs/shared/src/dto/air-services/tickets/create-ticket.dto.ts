@@ -49,7 +49,7 @@ export class CreateTicketDTO {
   })
   @IsString()
   @IsNotEmpty()
-  internal_type;
+  internalType;
 
   @ApiProperty({
     type: String,

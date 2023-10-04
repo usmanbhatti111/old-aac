@@ -1,17 +1,20 @@
 import { Injectable, HttpStatus } from '@nestjs/common';
-import { PrismaService } from '@shared/services';
-import { errorResponse, successResponse } from '@shared/constants';
+import { MODEL, errorResponse, successResponse } from '@shared/constants';
+import { Model } from 'mongoose';
+import { InjectModel } from '@nestjs/mongoose';
 
 @Injectable()
 export class TicketService {
-  constructor(private prisma: PrismaService) {}
+  constructor(
+    @InjectModel(MODEL.TICKET) private readonly ticketModel: Model<any>
+  ) {}
 
   async createTicket(payload) {
     try {
       //TODO attachment code
-      const res = await this.prisma.tickets.create({
-        data: payload,
-      });
+      const res = await this.ticketModel.create({
+        ...payload,
+      })
 
       const response = successResponse(
         HttpStatus.CREATED,

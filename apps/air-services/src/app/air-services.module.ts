@@ -9,6 +9,5 @@ import { SharedModule } from '@shared';
   imports: [SharedModule],
   controllers: [TicketController, InventoryController],
   providers: [TicketService, InventoryService],
-  exports: [TicketService, InventoryService],
 })
 export class AirServicesModule {}

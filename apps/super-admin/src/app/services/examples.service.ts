@@ -30,11 +30,11 @@ export class ExampleService {
 
   async list(params: any) {
     try {
-      const { page, limit } = params
+      const { page, limit } = params;
       const res = await this.exampleModel
         .find({})
         .limit(limit * 1)
-        .skip((page - 1) * limit)
+        .skip((page - 1) * limit);
       return successResponse(HttpStatus.OK, ResponseMessage.SUCCESS, res);
     } catch (error) {
       return errorResponse(

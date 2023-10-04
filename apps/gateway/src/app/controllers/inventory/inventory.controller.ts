@@ -14,7 +14,6 @@ import { firstValueFrom } from 'rxjs';
 
 @ApiTags(API_TAGS.ASSETS)
 @Controller(CONTROLLERS.ASSETS)
-// @ApiBearerAuth()
 export class InventoryController {
   constructor(
     @Inject(SERVICES.AIR_SERVICES) private airServiceClient: ClientProxy
