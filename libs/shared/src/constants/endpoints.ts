@@ -1,4 +1,9 @@
 export const API_ENDPOINTS = {
+  EXAMPLE: {
+    CREATE_EXAMPLE: '/',
+    GET_EXAMPLES: '/',
+    EDIT_EXAMPLE: '/:id',
+  },
   AUTHENTICATION: {
     SIGNUP: 'signup',
   },

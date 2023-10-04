@@ -1,4 +1,9 @@
 export const RMQ_MESSAGES = {
+  EXAMPLE: {
+    CREATE_EXAMPLE: 'create-example',
+    GET_EXAMPLES: 'get-examples',
+    EDIT_EXAMPLE: 'edit-example',
+  },
   AUTHENTICATION: {
     SIGNUP: 'auth-login',
   },

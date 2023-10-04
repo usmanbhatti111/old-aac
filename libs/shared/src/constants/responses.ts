@@ -1,3 +1,14 @@
+export const ResponseMessage = {
+  SUCCESS: 'Success',
+  BAD_REQUEST: 'Bad Request',
+  CREATED: 'Created',
+};
+
+export const INTERNAL_SERVER_RESPONSE = {
+  statusCode: 500,
+  message: 'Internal server error',
+};
+
 export const errorResponse = (
   statusCode: number = 500,
   message: string = 'Internal Server Error',

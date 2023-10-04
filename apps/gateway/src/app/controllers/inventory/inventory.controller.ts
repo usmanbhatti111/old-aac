@@ -27,7 +27,10 @@ export class InventoryController {
   ) {
     try {
       const response = await firstValueFrom(
-        this.airServiceClient.send(RMQ_MESSAGES.AIR_SERVICES.ASSETS.ADD_ASSETS, payload)
+        this.airServiceClient.send(
+          RMQ_MESSAGES.AIR_SERVICES.ASSETS.ADD_ASSETS,
+          payload
+        )
       );
 
       return res.status(response.statusCode).json(response);
@@ -39,7 +42,10 @@ export class InventoryController {
   public async getAssets(@Res() res: Response | any) {
     try {
       const response = await firstValueFrom(
-        this.airServiceClient.send(RMQ_MESSAGES.AIR_SERVICES.ASSETS.GET_ASSETS, {})
+        this.airServiceClient.send(
+          RMQ_MESSAGES.AIR_SERVICES.ASSETS.GET_ASSETS,
+          {}
+        )
       );
 
       return res.status(response.statusCode).json(response);

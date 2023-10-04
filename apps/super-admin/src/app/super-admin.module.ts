@@ -1,11 +1,12 @@
 import { Module } from '@nestjs/common';
 
-import { AppController } from './app.controller';
 import { SharedModule } from '@shared';
+import { ExampleController } from './controllers/example.controller';
+import { ExampleService } from './services/examples.service';
 
 @Module({
   imports: [SharedModule],
-  controllers: [AppController],
-  providers: [],
+  controllers: [ExampleController],
+  providers: [ExampleService],
 })
 export class SuperAdminModule {}
