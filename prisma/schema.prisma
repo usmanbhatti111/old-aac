@@ -90,17 +90,21 @@ model Admin {
 }
 
 model Job {
-  id                String         @id @default(auto()) @map("_id") @db.ObjectId
-  created_by_id     String?        @db.ObjectId
-  created_by        Admin?         @relation(fields: [created_by_id], references: [id])
+  id                String        @id @default(auto()) @map("_id") @db.ObjectId
+  created_by_id     String        @db.ObjectId
+  created_by        Admin         @relation(fields: [created_by_id], references: [id])
   title             String
   job_type          String
   job_category      String
   experience        String
-  number_of_vacancy String
+  number_of_vacancy Int?
   deadline          DateTime
+  status            String         @default("OPEN")
+  isDeleted         Boolean        @default(false)
   description       String?
   applicants        JobApplicant[]
+  created_at       DateTime        @default(now())
+  updated_at       DateTime        @updatedAt
 }
 
 model JobApplicant {

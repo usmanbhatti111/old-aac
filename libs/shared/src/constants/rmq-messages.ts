@@ -7,6 +7,14 @@ export const RMQ_MESSAGES = {
   AUTHENTICATION: {
     SIGNUP: 'auth-login',
   },
+
+  JOBS: {
+    CREATE_JOB: 'create-job',
+    GET_JOB: 'get-job',
+    GET_JOBS: 'get-jobs',
+    UPDATE_JOB: 'update-job',
+    DELETE_JOB: 'delete-job',
+  },
   PRODUCTS: {
     ADD_PRODUCT: 'add-product',
     GET_PRODUCTS: 'get-products',

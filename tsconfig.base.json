@@ -18,8 +18,8 @@
       "@shared": ["libs/shared/src/index.ts"],
       "@shared/constants": ["libs/shared/src/constants/index.ts"],
       "@shared/dto": ["libs/shared/src/dto/index.ts"],
-      "@shared/services": ["libs/shared/src/services/index.ts"],
-      "@shared/schemas": ["libs/shared/src/schema/index.ts"]
+      "@shared/schemas": ["libs/shared/src/schema/index.ts"],
+      "@shared/services": ["libs/shared/src/services/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

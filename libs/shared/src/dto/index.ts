@@ -1,3 +1,6 @@
+export * from './pagination/pagination.dto';
+export * from './auth/signup.dto';
+export * from './jobs';
 export * from './common';
 export * from './auth';
 export * from './air-services/tickets/index';
