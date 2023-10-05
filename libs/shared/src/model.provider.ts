@@ -1,14 +1,20 @@
 import {
-  Asset,
-  AssetSchema,
+  Inventory,
+  InventorySchema,
   Example,
   ExampleSchema,
   Ticket,
   TicketSchema,
-  Job,
-  JobSchema,
+  Task,
+  TaskSchema,
+  Products,
+  ProductsSchema,
+  SuperAdminSchema,
+  SuperAdmin,
   Faq,
   FaqSchema,
+  Job,
+  JobSchema,
 } from './schema';
 export const DbModels = [
   {
@@ -16,12 +22,17 @@ export const DbModels = [
     schema: ExampleSchema,
   },
   {
-    name: Asset.name,
-    schema: AssetSchema,
+    name: Inventory.name,
+    schema: InventorySchema,
   },
+
   {
     name: Ticket.name,
     schema: TicketSchema,
+  },
+  {
+    name: Task.name,
+    schema: TaskSchema,
   },
   {
     name: Job.name,
@@ -30,5 +41,13 @@ export const DbModels = [
   {
     name: Faq.name,
     schema: FaqSchema,
+  },
+  {
+    name: Products.name,
+    schema: ProductsSchema,
+  },
+  {
+    name: SuperAdmin.name,
+    schema: SuperAdminSchema,
   },
 ];

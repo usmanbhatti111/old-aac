@@ -1,7 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument } from 'mongoose';
 
-export type SupserAdminDocument = HydratedDocument<SuperAdmin>;
+export type SuperAdminDocument = HydratedDocument<SuperAdmin>;
 
 @Schema()
 export class SuperAdmin {

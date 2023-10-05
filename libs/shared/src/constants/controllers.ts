@@ -3,6 +3,7 @@ export const CONTROLLERS = {
   AUTHENTICATION: 'auth',
   ORGANIZATION: 'organization',
   ORGANIZATION_COMPANY_ACCOUNT: 'org-company-account',
+  TASK: 'task',
   SUPER_ADMIN: 'super-admin',
   SETTINGS: {
     JOBS: 'jobs',
@@ -10,4 +11,5 @@ export const CONTROLLERS = {
   PRODUCTS: 'products',
   TICKET: 'ticket',
   ASSETS: 'assets',
+  AIR_SERVICES: 'air-services',
 };

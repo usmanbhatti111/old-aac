@@ -11,10 +11,11 @@ import { AuthController } from './controllers/auth.controller';
 import { HealthController } from './controllers/healthcheck.controller';
 import { OrganizationController } from './controllers/organization.controller';
 import { OrganizationCompanyAccountController } from './controllers/organization-company-account.controller';
+import { TaskController } from './controllers/tasks/task.controller';
 import { SuperAdminController } from './controllers/super-admin.controller';
 import { JobsController } from './controllers/settings/jobs.controller';
 import { TicketController } from './controllers/tickets/tickets.controller';
-import { InventoryController } from './controllers/inventory/inventory.controller';
+import { InventoryController } from './controllers/assets/inventory.controller';
 import { ProductsController } from './controllers/products.controller';
 
 @Module({
@@ -33,7 +34,9 @@ import { ProductsController } from './controllers/products.controller';
     ProductsController,
     TicketController,
     InventoryController,
-    OrganizationController, OrganizationCompanyAccountController
+    OrganizationController, 
+    OrganizationCompanyAccountController,
+    TaskController,
   ],
   providers: [
     // Connected to all the rabbitmq queues

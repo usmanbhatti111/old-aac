@@ -8,7 +8,7 @@ import {
   IsString,
 } from 'class-validator';
 
-export class AddAssetDto {
+export class AddInventoryDto {
   @IsNotEmpty()
   @IsString()
   @ApiProperty({

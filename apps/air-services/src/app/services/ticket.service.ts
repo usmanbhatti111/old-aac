@@ -1,18 +1,15 @@
 import { Injectable, HttpStatus } from '@nestjs/common';
-import { MODEL, errorResponse, successResponse } from '@shared/constants';
-import { Model } from 'mongoose';
-import { InjectModel } from '@nestjs/mongoose';
+import { errorResponse, successResponse } from '@shared/constants';
+import { TicketRepository } from '@shared';
 
 @Injectable()
 export class TicketService {
-  constructor(
-    @InjectModel(MODEL.TICKET) private readonly ticketModel: Model<any>
-  ) {}
+  constructor(private ticketRepository: TicketRepository) {}
 
   async createTicket(payload) {
     try {
       //TODO attachment code
-      const res = await this.ticketModel.create({
+      const res = await this.ticketRepository.create({
         ...payload,
       });
 

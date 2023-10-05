@@ -1,1 +1,1 @@
-// export shared services from here
+export * from './prisma.service';
