@@ -6,5 +6,6 @@ export * from './auth';
 export * from './super-admin';
 export * from './air-services/tickets/index';
 export * from './air-services/asset/index';
+export * from './air-services/task/index';
 export * from './example';
 export * from './products';

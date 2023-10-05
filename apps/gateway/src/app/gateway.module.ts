@@ -9,6 +9,7 @@ import { WinstonModule } from 'nest-winston';
 import { WinstonConfigService } from './config/winston.config';
 import { AuthController } from './controllers/auth.controller';
 import { HealthController } from './controllers/healthcheck.controller';
+import { TaskController } from './controllers/tasks/task.controller';
 import { SuperAdminController } from './controllers/super-admin.controller';
 import { JobsController } from './controllers/settings/jobs.controller';
 import { TicketController } from './controllers/tickets/tickets.controller';
@@ -31,6 +32,7 @@ import { ProductsController } from './controllers/products.controller';
     ProductsController,
     TicketController,
     InventoryController,
+    TaskController,
   ],
   providers: [
     // Connected to all the rabbitmq queues

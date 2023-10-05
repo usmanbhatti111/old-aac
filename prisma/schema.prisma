@@ -249,6 +249,25 @@ model OrganizationCompanyAccountProductRoleAndPermission {
   id String @id @default(auto()) @map("_id") @db.ObjectId
 }
 
+model Task {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  name  String
+  email String  @unique
+}
+model Product {
+  id            String @id @default(auto()) @map("_id") @db.ObjectId
+  name          String @unique
+  description   String?
+  logo_id       String? @db.ObjectId @unique
+  logo          Attachment?   @relation(name: "productLogo", fields: [logo_id], references: [id])
+  status        String @default("inactive")
+  modifier_id    String?  @db.ObjectId
+  modified_by    Admin?   @relation(fields: [modifier_id], references: [id], onDelete: Restrict, onUpdate: Cascade)
+  isDeleted      Boolean @default(false)  // For soft delete
+  modified_at    DateTime @default(now())
+}
+
+
 
 model Asset {
     id                      String @id @default(auto()) @map("_id") @db.ObjectId

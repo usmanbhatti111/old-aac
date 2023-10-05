@@ -38,5 +38,8 @@ export const RMQ_MESSAGES = {
       ADD_Inventory: 'add-inventory',
       GET_Inventory: 'get-inventory',
     },
+    TASK: {
+      ADD_TASK: 'add_task',
+    },
   },
 };

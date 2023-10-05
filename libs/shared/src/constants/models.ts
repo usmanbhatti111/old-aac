@@ -3,6 +3,7 @@ export const MODEL = {
   SUPER_ADMIN: 'SUPER_ADMIN',
   INVENTORY: 'Inventory',
   TICKET: 'Ticket',
+  TASK: 'Task',
   JOBS: 'Jobs',
   FAQS: 'Faqs',
 };

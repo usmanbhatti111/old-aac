@@ -33,7 +33,9 @@ export const API_ENDPOINTS = {
     },
     ASSETS: {
       INVENTORY: 'inventory',
-   
+    },
+    TASK: {
+      ADD_TASK: 'add-task',
     },
   },
 };
