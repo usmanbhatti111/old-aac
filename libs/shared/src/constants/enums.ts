@@ -3,6 +3,16 @@ export enum UserStatus {
   INACTIVE,
 }
 
+export enum UserRole {
+  SUPER_ADMIN = 'SUPER_ADMIN',
+  ORG_ADMIN = 'ORG_ADMIN',
+}
+
+export enum UserAccountStatus {
+  ACTIVE = 'ACTIVE',
+  INACTIVE = 'INACTIVE',
+}
+
 export enum EJobType {
   FULL_TIME = 'FULL_TIME',
   PART_TIME = 'PART_TIME',

@@ -7,6 +7,15 @@ export const RMQ_MESSAGES = {
   AUTHENTICATION: {
     SIGNUP: 'auth-login',
   },
+  SUPER_ADMIN: {
+    ADD_USER: 'add-user',
+    USER_LIST: 'user-list',
+    USER_PROFILE: 'user-profile',
+    UPDATE_PROFILE: 'update-profile',
+    ADD_ACCOUNTS: 'add-accounts',
+    ACCOUNTS_LIST: 'accounts-list',
+    UPDATE_ACCOUNTS: 'update-accounts',
+  },
 
   JOBS: {
     CREATE_JOB: 'create-job',

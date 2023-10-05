@@ -7,6 +7,14 @@ export const API_ENDPOINTS = {
   AUTHENTICATION: {
     SIGNUP: 'signup',
   },
+  SUPER_ADMIN: {
+    ADD_USER: 'add-user',
+    USER_LIST: 'user-list',
+    USER_PROFILE: 'user-profile/:userId',
+    UPDATE_PROFILE: 'update-profile/:userId',
+    ADD_ACCOUNTS: 'add-accounts',
+    ACCOUNTS_LIST: 'accounts-list',
+  },
 
   JOBS: {
     GET_JOB: '/:id',
@@ -18,6 +26,7 @@ export const API_ENDPOINTS = {
     GET_PRODUCTS: '/',
     EDIT_PRODUCT: '/:id',
   },
+
   AIR_SERVICES: {
     TICKETS: {
       ticket: 'ticket',

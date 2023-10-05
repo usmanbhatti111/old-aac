@@ -26,7 +26,7 @@ export const errorResponse = (
 export const successResponse = (
   statusCode: number = 200,
   message: string = 'Success',
-  data: object = {},
+  data: any = {},
   pagination?: {
     count: number;
     page: number;

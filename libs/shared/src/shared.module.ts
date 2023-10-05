@@ -6,12 +6,15 @@ import { ConfigModule } from '@nestjs/config';
 import {
   Example,
   ExampleSchema,
+  Products,
+  ProductsSchema,
+  SupserAdminDocument,
+  SuperAdminSchema,
+  SuperAdmin,
   Faq,
   FaqSchema,
   Job,
   JobSchema,
-  Products,
-  ProductsSchema,
 } from './schema';
 import { DbModels } from '../src/model.provider';
 
@@ -29,6 +32,10 @@ import { DbModels } from '../src/model.provider';
       {
         name: Products.name,
         schema: ProductsSchema,
+      },
+      {
+        name: SuperAdmin.name,
+        schema: SuperAdminSchema,
       },
       {
         name: Job.name,

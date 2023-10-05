@@ -13,6 +13,39 @@ model TestStuff {
   name  String?
 }
 
+
+//////// Test Schemas  Start /////////
+model TestAdmin {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  firstName String?
+  lastName String?
+  email String? @unique
+  rel_id    String?     @db.ObjectId
+  relation  TestRelation?  @relation(name:"test", fields: [rel_id], references: [id])
+}
+
+model TestAccount {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  product String
+  company String
+  manageRole String
+  status String
+}
+
+model TestRelation {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  test  TestAdmin[] @relation("test")
+}
+
+
+model TestCompany {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  name String
+  email String
+}
+
+//////// Test Schemas  Start /////////
+
 //////----------------Enums-Start---------------------///////
 enum RoleEnum {
   ADMIN
