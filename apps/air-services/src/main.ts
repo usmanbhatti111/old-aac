@@ -4,7 +4,6 @@ import { SERVICES } from '@shared/constants';
 
 import { AirServicesModule } from './app/air-services.module';
 
-
 async function bootstrap() {
   const app = await NestFactory.createMicroservice<MicroserviceOptions>(
     AirServicesModule,

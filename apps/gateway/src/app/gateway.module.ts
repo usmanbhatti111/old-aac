@@ -11,6 +11,8 @@ import { AuthController } from './controllers/auth.controller';
 import { HealthController } from './controllers/healthcheck.controller';
 import { OrganizationController } from './controllers/organization.controller';
 import { OrganizationCompanyAccountController } from './controllers/organization-company-account.controller';
+import { TicketController } from './controllers/tickets/tickets.controller';
+import { InventoryController } from './controllers/inventory/inventory.controller';
 
 @Module({
   imports: [
@@ -19,7 +21,14 @@ import { OrganizationCompanyAccountController } from './controllers/organization
       useClass: WinstonConfigService,
     }),
   ],
-  controllers: [AppController, AuthController, HealthController, OrganizationController, OrganizationCompanyAccountController],
+  controllers: [
+    AppController,
+    AuthController,
+    HealthController,
+    TicketController,
+    InventoryController,
+    OrganizationController, OrganizationCompanyAccountController
+  ],
   providers: [
     // Connected to all the rabbitmq queues
     ...Object.values(SERVICES).map((SERVICE_NAME) => {

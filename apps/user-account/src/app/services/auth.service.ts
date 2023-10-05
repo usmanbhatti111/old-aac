@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpStatus, Injectable } from '@nestjs/common';
 import { errorResponse, successResponse } from '@shared/constants';
 import { SignupDto } from '@shared/dto';
 import { PrismaService } from '@shared/services';
@@ -12,9 +12,9 @@ export class AuthService {
       const res = await this.prisma.testStuff.findFirstOrThrow({
         where: { email: payload.email },
       });
-      return successResponse(200, 'Success', res);
+      return successResponse(HttpStatus.CREATED, 'Success', res);
     } catch (error) {
-      return errorResponse(400, 'Bad Request', error?.name);
+      return errorResponse(HttpStatus.BAD_REQUEST, 'Bad Request', error?.name);
     }
   }
 }
