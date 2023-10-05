@@ -9,7 +9,7 @@ import {
   Res,
 } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
-import { ApiBearerAuth, ApiOkResponse, ApiParam, ApiQuery, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiCreatedResponse, ApiOkResponse, ApiParam, ApiTags } from '@nestjs/swagger';
 import {
   API_ENDPOINTS,
   API_TAGS,
@@ -18,8 +18,9 @@ import {
   SERVICES,
 } from '@shared/constants';
 import {
-  OrganizationCompanyAccountDto,
+  CreateOrganizationCompanyAccountDto,
   OrganizationCompanyAccountResponseDto,
+  OrganizationCompanyAccountsResponseDto,
   GetOrganizationCompanyAccountDto
 } from '@shared/dto';
 import { Response } from 'express';
@@ -37,8 +38,12 @@ export class OrganizationCompanyAccountController {
     API_ENDPOINTS.ORGANIZATION_COMPANY_ACCOUNT
       .CREATE_ORGANIZATION_COMPANY_ACCOUNT
   )
+  @ApiCreatedResponse({
+    description: 'Successfully created an organization\'s company accounts',
+    type: OrganizationCompanyAccountResponseDto,
+  })
   public async createOrganizationAccount(
-    @Body() payload: OrganizationCompanyAccountDto,
+    @Body() payload: CreateOrganizationCompanyAccountDto,
     @Res() res: Response | any
   ) {
     const response = await firstValueFrom(
@@ -58,34 +63,15 @@ export class OrganizationCompanyAccountController {
     API_ENDPOINTS.ORGANIZATION_COMPANY_ACCOUNT
       .GET_ORGANIZATION_COMPANY_ACCOUNTS
   )
-  @ApiParam({
-    name: 'organization_id',
-    type: String,
-    description: 'Organization ID',
-  })
-  @ApiQuery({
-    name: 'page',
-    type: Number,
-    description: 'Page number',
-    required: false, 
-  })
-  @ApiQuery({
-    name: 'limit',
-    type: Number,
-    description: 'Number of items per page',
-    required: false, 
-  })
   @ApiOkResponse({
     description: 'Successfully retrieved the organization company accounts',
-    type: OrganizationCompanyAccountResponseDto,
+    type: OrganizationCompanyAccountsResponseDto,
   })
   public async getOrganizationAccount(
     @Param('organization_id') organization_id: string,
     @Query() query: GetOrganizationCompanyAccountDto,
     @Res() res: Response | any
   ) {
-    console.log({ organization_id,...query });
-    
     const response = await firstValueFrom(
       this.organizationServiceClient.send(
         {

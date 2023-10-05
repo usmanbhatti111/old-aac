@@ -8,13 +8,13 @@ export const API_ENDPOINTS = {
     SIGNUP: 'signup',
   },
   ORGANIZATION: {
-    CREATE_ORGANIZATION: 'create',
-    UPDATE_ORGANIZATION: 'update',
-    GET_ORGANIZATION: 'get',
+    CREATE_ORGANIZATION: '/',
+    UPDATE_ORGANIZATION: '/:id',
+    GET_ORGANIZATION: '/:id',
   },
   ORGANIZATION_COMPANY_ACCOUNT: {
-    CREATE_ORGANIZATION_COMPANY_ACCOUNT: 'create',
-    GET_ORGANIZATION_COMPANY_ACCOUNTS: 'get-accounts/:organization_id',
+    CREATE_ORGANIZATION_COMPANY_ACCOUNT: '/',
+    GET_ORGANIZATION_COMPANY_ACCOUNTS: '/:organization_id',
   },
   SUPER_ADMIN: {
     ADD_USER: 'add-user',

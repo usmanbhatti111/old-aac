@@ -15,8 +15,9 @@ export const RMQ_MESSAGES = {
     DELETE_ORGANTIZATION: 'delete-organization',
   },
   ORGANIZATION_COMPANY_ACCOUNT: {
-    CREATE_ORGANIZATION_COMPANY_ACCOUNT: 'create', //can convert this to create instead
-    GET_ORGANIZATION_COMPANY_ACCOUNTS: 'get-accounts',
+    CREATE_ORGANIZATION_COMPANY_ACCOUNT: 'create-company-accounts',
+    GET_ORGANIZATION_COMPANY_ACCOUNTS: 'get-company-accounts',
+  },
   SUPER_ADMIN: {
     ADD_USER: 'add-user',
     USER_LIST: 'user-list',

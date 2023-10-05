@@ -41,12 +41,56 @@ export class CreateOrganizationDto {
   })
   @IsNotEmpty()
   post_code: string;
-
- 
-
 }
 
-export class CreateOrganizationResponseDto {
+export class OrganizationDto {
+
+  @ApiProperty({
+    example: '168927646',
+    description: 'The unique identifier for the organization.',
+  })
+  readonly id: string;
+
+  @ApiProperty({
+    example: '8C68902'
+  })
+  registration_number: string;
+
+  @ApiProperty({
+    example: 'Orcalo Holdings'
+  })
+  name: string;
+
+  @ApiProperty({
+    required: true,
+    example: 'oh@gmail.com'
+  })
+  @IsNotEmpty()
+  email: string;
+
+  @ApiProperty({
+    required: true,
+    example: '++13432121'
+  })
+  @IsNotEmpty()
+  phone_no: string;
+
+  @ApiProperty({
+    required: true,
+    example: 'Street#234 '
+  })
+  @IsNotEmpty()
+  address: string;
+
+  @ApiProperty({
+    required: true,
+    example: 'CN789'
+  })
+  @IsNotEmpty()
+  post_code: string;
+}
+
+export class OrganizationResponseDto {
 
   @ApiProperty({
     example: 200
@@ -59,9 +103,9 @@ export class CreateOrganizationResponseDto {
   message: string
 
   @ApiProperty({
-    type: CreateOrganizationDto,
+    type: OrganizationDto,
   })
-  data: CreateOrganizationDto
+  data: OrganizationDto
 
   @ApiProperty({
     example: ''

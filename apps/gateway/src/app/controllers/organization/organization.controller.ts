@@ -1,6 +1,6 @@
 import { Body, Controller, Inject, Post, Res, Put, Get, Param } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
-import { ApiBearerAuth, ApiOkResponse, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiCreatedResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import {
     API_ENDPOINTS,
     API_TAGS,
@@ -8,7 +8,7 @@ import {
     RMQ_MESSAGES,
     SERVICES,
 } from '@shared/constants';
-import { CreateOrganizationDto, CreateOrganizationResponseDto } from '@shared/dto';
+import { CreateOrganizationDto, OrganizationResponseDto } from '@shared/dto';
 import { Response } from 'express';
 import { firstValueFrom } from 'rxjs';
 
@@ -21,6 +21,10 @@ export class OrganizationController {
     ) { }
 
     @Post(API_ENDPOINTS.ORGANIZATION.CREATE_ORGANIZATION)
+    @ApiCreatedResponse({
+        description: 'Successfully created an organization',
+        type: OrganizationResponseDto,
+    })
     public async createOrganization(@Body() payload: CreateOrganizationDto, @Res() res: Response | any) {
         const response = await firstValueFrom(
             this.organizationServiceClient.send({ cmd: RMQ_MESSAGES.ORGANIZATION.CREATE_ORGANTIZATION }, payload)
@@ -28,19 +32,25 @@ export class OrganizationController {
 
         return res.status(response.statusCode).json(response);
     }
+
+    
     @Put(API_ENDPOINTS.ORGANIZATION.UPDATE_ORGANIZATION)
-    public async updateOrganization(@Body() payload: CreateOrganizationDto, @Res() res: Response | any) {
+    @ApiOkResponse({
+        description: 'Successfully updated the organization.',
+        type: OrganizationResponseDto,
+    })
+    public async updateOrganization(@Param('id') id: string, @Body() payload: CreateOrganizationDto, @Res() res: Response | any) {
         const response = await firstValueFrom(
-            this.organizationServiceClient.send({ cmd: RMQ_MESSAGES.ORGANIZATION.UPDATE_ORGANTIZATION }, payload)
+            this.organizationServiceClient.send({ cmd: RMQ_MESSAGES.ORGANIZATION.UPDATE_ORGANTIZATION }, {id,...payload})
         );
 
         return res.status(response.statusCode).json(response);
     }
-    @Get(API_ENDPOINTS.ORGANIZATION.GET_ORGANIZATION + '/:id')
-    @ApiParam({ name: 'id', type: String, description: 'Organization ID' })
+
+    @Get(API_ENDPOINTS.ORGANIZATION.GET_ORGANIZATION )
     @ApiOkResponse({
-        description: 'Successfully retrieved the organization',
-        type: CreateOrganizationResponseDto,
+        description: 'Successfully retrieved the organization.',
+        type: OrganizationResponseDto,
     })
     public async getOrganization(@Param('id') id: string, @Res() res: Response | any) {
         const response = await firstValueFrom(
