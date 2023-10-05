@@ -19,7 +19,7 @@ export class InventoryService {
   }
   async getAssets() {
     try {
-      const res = await this.assetModel.find()
+      const res = await this.assetModel.find();
       return successResponse(HttpStatus.CREATED, 'Success', res);
     } catch (error) {
       return errorResponse(HttpStatus.BAD_REQUEST, 'Bad Request', error?.name);

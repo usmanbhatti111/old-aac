@@ -14,7 +14,7 @@ export class TicketService {
       //TODO attachment code
       const res = await this.ticketModel.create({
         ...payload,
-      })
+      });
 
       const response = successResponse(
         HttpStatus.CREATED,

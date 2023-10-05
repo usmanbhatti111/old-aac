@@ -3,7 +3,7 @@ import { SharedService } from './shared.service';
 import { MongooseConfig } from './config/mongo.config';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigModule } from '@nestjs/config';
-import {DbModels} from '../src/model.provider'
+import { DbModels } from '../src/model.provider';
 
 @Module({
   imports: [
@@ -14,9 +14,6 @@ import {DbModels} from '../src/model.provider'
     MongooseModule.forFeature(DbModels),
   ],
   providers: [SharedService],
-  exports: [
-    SharedService,
-    MongooseModule.forFeature(DbModels),
-  ],
+  exports: [SharedService, MongooseModule.forFeature(DbModels)],
 })
 export class SharedModule {}

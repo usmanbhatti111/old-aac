@@ -12,7 +12,7 @@ import {
   ApiBearerAuth,
   ApiCreatedResponse,
   ApiOkResponse,
-  ApiTags,  
+  ApiTags,
 } from '@nestjs/swagger';
 import {
   API_ENDPOINTS,
