@@ -2,11 +2,10 @@ import { Injectable } from '@nestjs/common';
 import { errorResponse, successResponse } from '@shared/constants';
 import { PrismaService } from '@shared/services';
 import { OrganizationCompanyAccountProductService } from './organization-company-account-product.service'
+import { OrganizationCompanyAccountRepository } from '@shared';
 @Injectable()
 export class OrganizationCompanyAccountService {
-  constructor(
-    private prisma: PrismaService,
-    private readonly OrganizationCompanyAccountProductService: OrganizationCompanyAccountProductService) { }
+  constructor(private organizationCompanyAccountRepository: OrganizationCompanyAccountRepository) { }
 
   notDeletedFilter = {
     isDeleted: false
@@ -16,7 +15,7 @@ export class OrganizationCompanyAccountService {
     try {
       const { products, ...accountData } = payload; // Extract products from payload
       // Check if a company with the same name already exists
-      const existingCompany = await this.prisma.organizationCompanyAccount.findFirst({
+      const existingCompany = await this.organizationCompanyAccountRepository.findOne({
         where: {
           account_name: accountData.account_name,
         },
@@ -25,8 +24,8 @@ export class OrganizationCompanyAccountService {
       if (existingCompany) {
         return errorResponse(409, 'This company account already exist.');
       }
-      const res = await this.prisma.organizationCompanyAccount.create({
-        data: accountData,
+      const res = await this.organizationCompanyAccountRepository.create({
+        ...accountData
       });
       const productPromises = products.map(async (productPayload) => {
         const product = await this.OrganizationCompanyAccountProductService.createProduct(productPayload, res.id);
@@ -50,21 +49,21 @@ export class OrganizationCompanyAccountService {
       const skip = (page - 1) * perPage;
 
       // Get the total count of records (without pagination)
-      const totalCount = await this.prisma.organizationCompanyAccount.count({
+      const totalCount = await this.organizationCompanyAccountRepository.count({
         where: {
           organization_id: payload.organization_id,
         },
       });
-      const res = await this.prisma.organizationCompanyAccount.findMany({
-        where: {
-          organization_id: payload.organization_id,
-        },
-        include: {
-          products: true,
-        },
-        skip,
-        take: perPage,
-      });
+      const res = await this.organizationCompanyAccountRepository.paginate({
+        // {
+        //   organization_id: payload.organization_id,
+        // },
+        // include: {
+        //   products: true,
+        // },
+        offset:skip,
+        limit:perPage,
+    });
 
       return successResponse(200, 'Success', res, {
         count: totalCount,

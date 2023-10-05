@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { errorResponse, successResponse } from '@shared/constants';
-import { PrismaService } from '@shared/services';
+import { OrganizationRepository } from '@shared';
 
 @Injectable()
 export class OrganizationService {
-  constructor(private prisma: PrismaService) {}
+  constructor(private organizationRepository: OrganizationRepository) {}
 
   notDeletedFilter = {
     isDeleted: false,
@@ -12,8 +12,8 @@ export class OrganizationService {
 
   async createOrganization(payload: any) {
     try {
-      const res = await this.prisma.organization.create({
-        data: payload,
+      const res = await this.organizationRepository.create({
+        ...payload
       });
       return successResponse(200, 'Success', res);
     } catch (error) {
@@ -23,7 +23,7 @@ export class OrganizationService {
 
   async getOrganization(payload: any) {
     try {
-      const res = await this.prisma.organization.findFirst({
+      const res = await this.organizationRepository.findOne({
         where: {
           id: payload.id,
         },
@@ -34,11 +34,9 @@ export class OrganizationService {
     }
   }
 
-  async getOrganizations(payload: any) {
+  async getOrganizations() {
     try {
-      const res = await this.prisma.organization.findMany({
-        where: {},
-      });
+      const res = await this.organizationRepository.find();
       return successResponse(200, 'Success', res);
     } catch (error) {
       return errorResponse(400, error?.meta?.message);
@@ -49,13 +47,11 @@ export class OrganizationService {
     try {
       const { id, registration_number,name, ...updatedFields } = payload;
 
-      const res = await this.prisma.organization.update({
-        where: { id }, 
-        data: updatedFields, 
-      });
+      const res = await this.organizationRepository.findOneAndUpdate({
+        where: { id },},{...updatedFields}
+      );
       return successResponse(200, 'Success', res);
     } catch (error) {
-      console.log('error', error);
       return errorResponse(400, error?.meta?.message || error?.meta?.cause);
     }
   }

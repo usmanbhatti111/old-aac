@@ -1,13 +1,11 @@
 import { Controller } from '@nestjs/common';
 import { MessagePattern, Payload } from '@nestjs/microservices';
 import { RMQ_MESSAGES } from '@shared/constants';
-import { PrismaService } from '@shared/services';
 import { OrganizationService } from '../services/organization.service';
 
 @Controller()
 export class OrganizationController {
   constructor(
-    private prisma: PrismaService,
     private readonly OrganizationService: OrganizationService
   ) {}
 
@@ -23,7 +21,7 @@ export class OrganizationController {
 
   @MessagePattern({ cmd: RMQ_MESSAGES.ORGANIZATION.GET_ORGANTIZATIONS })
   async getOrganization(@Payload() payload: any) {
-    return await this.OrganizationService.getOrganizations(payload);
+    return await this.OrganizationService.getOrganizations();
   }
 
   @MessagePattern({ cmd: RMQ_MESSAGES.ORGANIZATION.UPDATE_ORGANTIZATION })

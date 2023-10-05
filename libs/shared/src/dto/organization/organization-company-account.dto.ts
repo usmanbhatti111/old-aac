@@ -1,8 +1,19 @@
-
 import { ApiProperty } from '@nestjs/swagger';
-import { IsInt, IsNotEmpty , IsOptional} from 'class-validator';
+import { IsInt, IsNotEmpty, IsOptional } from 'class-validator';
 import { Type } from 'class-transformer';
+import { IOrganization } from './organization.dto';
 
+export interface IOrganizationCompanyAccount {
+  organization_id: string;
+  organization: IOrganization;
+  logo_url?: string;
+  account_name: string;
+  phone_no: string;
+  address: string;
+  post_code: string;
+  // products :OrganizationCompanyAccountProduct[].
+  status: string;
+}
 export class OrganizationCompanyAccountProductDto {
   @ApiProperty({
     example: '1',
@@ -12,7 +23,8 @@ export class OrganizationCompanyAccountProductDto {
 
   @ApiProperty({
     example: '279389Afgd',
-    description: 'The unique identifier for the organization company account associated with this product.',
+    description:
+      'The unique identifier for the organization company account associated with this product.',
   })
   organization_company_account_id: string;
 
@@ -25,10 +37,10 @@ export class OrganizationCompanyAccountProductDto {
 }
 
 export class CreateOrganizationCompanyAccountDto {
-
   @ApiProperty({
     example: '93840926A',
-    description: 'The unique identifier for the organization associated with this account.',
+    description:
+      'The unique identifier for the organization associated with this account.',
   })
   @IsNotEmpty()
   organization_id: string;
@@ -63,7 +75,7 @@ export class CreateOrganizationCompanyAccountDto {
 
   @ApiProperty({
     example: 'https://example.com/logo.png',
-    description: 'The URL to the account\'s logo.',
+    description: "The URL to the account's logo.",
   })
   logo_url: string;
 
@@ -88,7 +100,8 @@ export class OrganizationCompanyAccountDto {
 
   @ApiProperty({
     example: '93840926A',
-    description: 'The unique identifier for the organization associated with this account.',
+    description:
+      'The unique identifier for the organization associated with this account.',
   })
   @IsNotEmpty()
   organization_id: string;
@@ -123,7 +136,7 @@ export class OrganizationCompanyAccountDto {
 
   @ApiProperty({
     example: 'https://example.com/logo.png',
-    description: 'The URL to the account\'s logo.',
+    description: "The URL to the account's logo.",
   })
   logo_url: string;
 
@@ -141,59 +154,52 @@ export class OrganizationCompanyAccountDto {
 }
 
 export class OrganizationCompanyAccountResponseDto {
+  @ApiProperty({
+    example: 200,
+  })
+  status: number;
 
   @ApiProperty({
-    example: 200
+    example: 'Success',
   })
-  status: number
-
-  @ApiProperty({
-    example: 'Success'
-  })
-  message: string
+  message: string;
 
   @ApiProperty({
     type: OrganizationCompanyAccountDto,
   })
-  data: OrganizationCompanyAccountDto
+  data: OrganizationCompanyAccountDto;
 
   @ApiProperty({
-    example: ''
+    example: '',
   })
-  error: string
-
-
+  error: string;
 }
 
 export class OrganizationCompanyAccountsResponseDto {
+  @ApiProperty({
+    example: 200,
+  })
+  status: number;
 
   @ApiProperty({
-    example: 200
+    example: 'Success',
   })
-  status: number
-
-  @ApiProperty({
-    example: 'Success'
-  })
-  message: string
+  message: string;
 
   @ApiProperty({
     type: [OrganizationCompanyAccountDto],
   })
-  data: [OrganizationCompanyAccountDto]
+  data: [OrganizationCompanyAccountDto];
 
   @ApiProperty({
-    example: ''
+    example: '',
   })
-  error: string
-
-
+  error: string;
 }
-
 
 export class GetOrganizationCompanyAccountDto {
   @ApiProperty({
-    example: 1
+    example: 1,
   })
   @IsOptional()
   @IsInt()
@@ -201,11 +207,10 @@ export class GetOrganizationCompanyAccountDto {
   page?: number;
 
   @ApiProperty({
-    example: 10
+    example: 10,
   })
   @IsOptional()
   @IsInt()
   @Type(() => Number)
   limit?: number;
 }
-
