@@ -11,6 +11,11 @@ export const API_ENDPOINTS = {
     ADDPLAN: '',
     PLANLIST: '',
   },
+  JOBS: {
+    GET_JOB: '/:id',
+    UPDATE_JOB: '/:id',
+    DELETE_JOB: '/:id',
+  },
   PRODUCTS: {
     ADD_PRODUCT: '/',
     GET_PRODUCTS: '/',

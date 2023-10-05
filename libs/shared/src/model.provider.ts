@@ -17,6 +17,10 @@ import {
   PlanSchema,
   PlanType,
   PlanTypeSchema,
+  Job,
+  JobSchema,
+  Faq,
+  FaqSchema,
 } from './schema';
 
 export const DbModels = [
@@ -55,5 +59,13 @@ export const DbModels = [
   {
     name: PlanType.name,
     schema: PlanTypeSchema,
+  },
+  {
+    name: Job.name,
+    schema: JobSchema,
+  },
+  {
+    name: Faq.name,
+    schema: FaqSchema,
   },
 ];

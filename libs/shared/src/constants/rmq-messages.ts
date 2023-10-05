@@ -11,6 +11,13 @@ export const RMQ_MESSAGES = {
     ADDPLAN: 'add-plan',
     PLANLIST: 'plan-list',
   },
+  JOBS: {
+    CREATE_JOB: 'create-job',
+    GET_JOB: 'get-job',
+    GET_JOBS: 'get-jobs',
+    UPDATE_JOB: 'update-job',
+    DELETE_JOB: 'delete-job',
+  },
   PRODUCTS: {
     ADD_PRODUCT: 'add-product',
     GET_PRODUCTS: 'get-products',
