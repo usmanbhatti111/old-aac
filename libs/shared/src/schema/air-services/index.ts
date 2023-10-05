@@ -1,2 +1,2 @@
-export * from './assets.schema';
+export * from './inventory.schema';
 export * from './ticket.schema';

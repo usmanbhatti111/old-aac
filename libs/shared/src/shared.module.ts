@@ -4,7 +4,7 @@ import { MongooseConfig } from './config/mongo.config';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigModule } from '@nestjs/config';
 import { DbModels } from '../src/model.provider';
-import { TicketRepository, AssetRepository } from '../src/repositories/index';
+import { TicketRepository, InventoryRepository } from '../src/repositories/index';
 
 @Module({
   imports: [
@@ -14,12 +14,12 @@ import { TicketRepository, AssetRepository } from '../src/repositories/index';
     }),
     MongooseModule.forFeature(DbModels),
   ],
-  providers: [SharedService, TicketRepository, AssetRepository],
+  providers: [SharedService, TicketRepository, InventoryRepository],
   exports: [
     SharedService,
     MongooseModule.forFeature(DbModels),
     TicketRepository,
-    AssetRepository,
+    InventoryRepository,
   ],
 })
 export class SharedModule {}

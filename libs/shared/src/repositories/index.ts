@@ -1,2 +1,2 @@
 export * from './airservices/ticket.repository';
-export * from './airservices/asset.repository';
+export * from './airservices/inventory.repository';

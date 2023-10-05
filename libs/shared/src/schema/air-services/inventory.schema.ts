@@ -2,13 +2,13 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { SchemaTypes, HydratedDocument } from 'mongoose';
 import { AbstractSchema } from './../abstract-repo/abstract.schema';
 
-export type AssetDocument = HydratedDocument<Asset>;
+export type InventoryDocument = HydratedDocument<Inventory>;
 
 @Schema({
   versionKey: false,
   timestamps: true,
 })
-export class Asset extends AbstractSchema {
+export class Inventory extends AbstractSchema {
   @Prop({ type: String, required: false })
   displayName: string;
 
@@ -56,4 +56,4 @@ export class Asset extends AbstractSchema {
   attachmentId: string;
 }
 
-export const AssetSchema = SchemaFactory.createForClass(Asset);
+export const InventorySchema = SchemaFactory.createForClass(Inventory);

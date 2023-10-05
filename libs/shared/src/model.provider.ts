@@ -1,7 +1,7 @@
 import { Schema } from '@nestjs/mongoose';
 import {
-  Asset,
-  AssetSchema,
+  Inventory,
+  InventorySchema,
   Example,
   ExampleSchema,
   Ticket,
@@ -21,9 +21,10 @@ export const DbModels = [
     schema: ExampleSchema,
   },
   {
-    name: Asset.name,
-    schema: AssetSchema,
+    name: Inventory.name,
+    schema: InventorySchema,
   },
+
   {
     name: Ticket.name,
     schema: TicketSchema,

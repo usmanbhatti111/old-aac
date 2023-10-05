@@ -12,7 +12,7 @@ import { HealthController } from './controllers/healthcheck.controller';
 import { SuperAdminController } from './controllers/super-admin.controller';
 import { JobsController } from './controllers/settings/jobs.controller';
 import { TicketController } from './controllers/tickets/tickets.controller';
-import { InventoryController } from './controllers/inventory/inventory.controller';
+import { InventoryController } from './controllers/assets/inventory.controller';
 import { ProductsController } from './controllers/products.controller';
 
 @Module({

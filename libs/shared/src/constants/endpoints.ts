@@ -32,8 +32,8 @@ export const API_ENDPOINTS = {
       ticket: 'ticket',
     },
     ASSETS: {
-      ADD_ASSETS: 'add-assets',
-      GET_ASSETS: 'get-assets',
+      INVENTORY: 'inventory',
+   
     },
   },
 };

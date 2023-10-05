@@ -35,8 +35,8 @@ export const RMQ_MESSAGES = {
       GET_TICKET_DETAILS: 'get-ticket-details',
     },
     ASSETS: {
-      ADD_ASSETS: 'add-assets',
-      GET_ASSETS: 'get-assets',
+      ADD_Inventory: 'add-inventory',
+      GET_Inventory: 'get-inventory',
     },
   },
 };
