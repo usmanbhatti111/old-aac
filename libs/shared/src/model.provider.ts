@@ -1,3 +1,4 @@
+import { Schema } from '@nestjs/mongoose';
 import {
   Asset,
   AssetSchema,
@@ -5,10 +6,14 @@ import {
   ExampleSchema,
   Ticket,
   TicketSchema,
-  Job,
-  JobSchema,
+  Products,
+  ProductsSchema,
+  SuperAdminSchema,
+  SuperAdmin,
   Faq,
   FaqSchema,
+  Job,
+  JobSchema,
 } from './schema';
 export const DbModels = [
   {
@@ -30,5 +35,13 @@ export const DbModels = [
   {
     name: Faq.name,
     schema: FaqSchema,
+  },
+  {
+    name: Products.name,
+    schema: ProductsSchema,
+  },
+  {
+    name: SuperAdmin.name,
+    schema: SuperAdminSchema,
   },
 ];

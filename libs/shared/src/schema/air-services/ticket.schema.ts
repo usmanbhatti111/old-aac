@@ -6,11 +6,15 @@ import {
   TicketTypeEnum,
   TicketInternalTypeEnum,
 } from '../../constants/index';
+import { AbstractSchema } from '../abstract-repo/abstract.schema';
 
 export type TicketDocument = HydratedDocument<Ticket>;
 
-@Schema()
-export class Ticket {
+@Schema({
+  versionKey: false,
+  timestamps: true,
+})
+export class Ticket extends AbstractSchema {
   @Prop({ type: Object, required: false, default: {} })
   details: string;
 
@@ -66,12 +70,6 @@ export class Ticket {
     required: false,
   })
   catId: string;
-
-  @Prop()
-  createdAt?: Date;
-
-  @Prop()
-  updatedAt?: Date;
 }
 
 export const TicketSchema = SchemaFactory.createForClass(Ticket);
