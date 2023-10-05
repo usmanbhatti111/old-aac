@@ -2,6 +2,7 @@ export const ResponseMessage = {
   SUCCESS: 'Success',
   BAD_REQUEST: 'Bad Request',
   CREATED: 'Created',
+  NOT_FOUND: 'Record Not Found',
 };
 
 export const INTERNAL_SERVER_RESPONSE = {

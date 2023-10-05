@@ -4,4 +4,5 @@ export const API_TAGS = {
   PLAN: 'Plan',
   TICKETS: 'Tickets',
   ASSETS: 'Assets',
+  PRODUCTS: 'Products',
 };

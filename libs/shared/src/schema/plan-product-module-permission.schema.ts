@@ -9,17 +9,17 @@ export class PlanProductModulePermission extends Document {
   @Prop({
     type: [{ required: true, type: mongoose.Types.ObjectId, ref: 'Plan' }],
   })
-  plan: string; // Reference to Plan _id
+  plan_id: string; // Reference to Plan _id
 
   @Prop({
     type: [{ required: true, type: mongoose.Types.ObjectId, ref: 'Product' }],
   })
-  product: string; // Reference to Product _id
+  product_id: string; // Reference to Product _id
 
   @Prop({
     type: [{ required: true, type: mongoose.Types.ObjectId, ref: 'Module' }],
   })
-  module: string; // Reference to Module _id
+  module_id: string; // Reference to Module _id
 
   @Prop({
     type: [
@@ -30,7 +30,7 @@ export class PlanProductModulePermission extends Document {
       },
     ],
   })
-  plan_product_module: string; // Reference to PlanProductModule _id
+  plan_product_module_id: string; // Reference to PlanProductModule _id
 
   @Prop({
     type: [
@@ -41,7 +41,7 @@ export class PlanProductModulePermission extends Document {
       },
     ],
   })
-  module_permission: string; // Reference to ModulePermission _id
+  module_permission_id: string; // Reference to ModulePermission _id
 
   // Add other fields as needed
 }

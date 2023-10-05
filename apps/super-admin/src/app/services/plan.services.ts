@@ -19,11 +19,11 @@ import {
   PlanProductModuleDocument,
   PlanProductModulePermission,
   PlanProductModulePermissionDocument,
-} from '@shared';
+} from '@shared/schemas';
 
 @Injectable()
 export class PlanService {
-  // constructor(private prisma: PrismaService) {}
+
   constructor(
     @InjectModel(Plan.name) private planModel: Model<PlanDocument>,
     @InjectModel(PlanProduct.name)
@@ -34,17 +34,13 @@ export class PlanService {
     private planProductModuleModel: Model<PlanProductModuleDocument>,
     @InjectModel(PlanProductModulePermission.name)
     private planProductModulePermissionModel: Model<PlanProductModulePermissionDocument>
-  ) {}
+  ) { }
 
   async getPlans(payload: PaginationDto) {
     try {
       const take = payload.limit || 10;
       const page = payload.page || 1;
       const skip = (page - 1) * take;
-      // const data = await this.planModel.find().skip(skip).limit(take)
-      // .populate('plan_type') // Populate plan_type
-      // .populate('plan_product') // Populate plan_product
-      // .exec();
 
       const data = await this.planModel.aggregate([
         { $skip: skip }, // Skip documents
@@ -162,6 +158,7 @@ export class PlanService {
 
       return successResponse(200, 'Success', planRes);
     } catch (error) {
+      console.log('errorrrrr', error)
       return errorResponse(400, 'Bad Request', error?.name);
     }
   }

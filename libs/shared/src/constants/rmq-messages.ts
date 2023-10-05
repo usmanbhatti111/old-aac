@@ -11,6 +11,11 @@ export const RMQ_MESSAGES = {
     ADDPLAN: 'add-plan',
     PLANLIST: 'plan-list',
   },
+  PRODUCTS: {
+    ADD_PRODUCT: 'add-product',
+    GET_PRODUCTS: 'get-products',
+    EDIT_PRODUCT: 'edit-product',
+  },
   AIR_SERVICES: {
     TICKETS: {
       CREATE_TICKET: 'create-ticket',

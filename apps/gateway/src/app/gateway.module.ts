@@ -12,6 +12,7 @@ import { HealthController } from './controllers/healthcheck.controller';
 import { PlanController } from './controllers/plan.controller';
 import { TicketController } from './controllers/tickets/tickets.controller';
 import { InventoryController } from './controllers/inventory/inventory.controller';
+import { ProductsController } from './controllers/products.controller';
 
 @Module({
   imports: [
@@ -25,6 +26,7 @@ import { InventoryController } from './controllers/inventory/inventory.controlle
     AuthController,
     HealthController,
     PlanController,
+    ProductsController,
     TicketController,
     InventoryController,
   ],

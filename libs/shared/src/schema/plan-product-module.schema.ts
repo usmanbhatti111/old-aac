@@ -9,24 +9,24 @@ export class PlanProductModule extends Document {
   @Prop({
     type: [{ required: true, type: mongoose.Types.ObjectId, ref: 'Plan' }],
   })
-  plan: string; // Reference to Plan _id
+  plan_id: string; // Reference to Plan _id
 
   @Prop({
     type: [{ required: true, type: mongoose.Types.ObjectId, ref: 'Product' }],
   })
-  product: string; // Reference to Product _id
+  product_id: string; // Reference to Product _id
 
   @Prop({
     type: [
       { required: true, type: mongoose.Types.ObjectId, ref: 'PlanProduct' },
     ],
   })
-  plan_product: string; // Reference to PlanProduct _id
+  plan_product_id: string; // Reference to PlanProduct _id
 
   @Prop({
     type: [{ required: true, type: mongoose.Types.ObjectId, ref: 'Module' }],
   })
-  module: string; // Reference to Module _id
+  module_id: string; // Reference to Module _id
 
   plan_products_module_permission: PlanProductModulePermission[];
   // Add other fields as needed

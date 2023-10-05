@@ -25,7 +25,7 @@ export class Plan extends Document {
   additional_storage_price?: number;
 
   @Prop({ required: true, type: mongoose.Types.ObjectId, ref: 'PlanType' })
-  plan_type: string;
+  plan_type_id: string;
 
   @Prop()
   plan_product: PlanProduct[];

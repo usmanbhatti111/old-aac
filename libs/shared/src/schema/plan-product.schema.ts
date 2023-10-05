@@ -11,12 +11,12 @@ export class PlanProduct extends Document {
   @Prop({
     type: [{ required: true, type: mongoose.Types.ObjectId, ref: 'Plan' }],
   })
-  plan: string; // Reference to Plan _id
+  plan_id: string; // Reference to Plan _id
 
   @Prop({
     type: [{ required: true, type: mongoose.Types.ObjectId, ref: 'Product' }],
   })
-  product: string; // Reference to Product _id
+  product_id: string; // Reference to Product _id
 
   plan_product_feature: PlanProductFeature[];
   plan_product_module: PlanProductModule[];
