@@ -65,10 +65,8 @@ export class PlanService {
           },
         },
       ]);
-      console.log('this is payload', payload);
       return successResponse(200, 'Success', data);
     } catch (error) {
-      console.log('error in get plans', error);
       return errorResponse(400, 'Bad Request', error?.name);
     }
   }
@@ -157,7 +155,6 @@ export class PlanService {
 
       return successResponse(200, 'Success', planRes);
     } catch (error) {
-      console.log('errorrrrr', error);
       return errorResponse(400, 'Bad Request', error?.name);
     }
   }
