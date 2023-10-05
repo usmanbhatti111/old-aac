@@ -12,7 +12,12 @@ import { PlanService } from './services/plan.services';
 
 @Module({
   imports: [SharedModule],
-  controllers: [ExampleController, ProductsController, JobsController, PlanController],
+  controllers: [
+    ExampleController,
+    ProductsController,
+    JobsController,
+    PlanController,
+  ],
   providers: [ExampleService, ProductsService, JobsService, PlanService],
 })
 export class SuperAdminModule {}
