@@ -6,22 +6,70 @@ import {
   ProductFeatureDto,
   ProductModuleDto,
 } from '@shared/dto';
-import { PrismaService } from '@shared/services';
+import { Model } from 'mongoose';
+import { InjectModel } from '@nestjs/mongoose';
+import {
+  Plan,
+  PlanDocument,
+  PlanProduct,
+  PlanProductDocument,
+  PlanProductFeature,
+  PlanProductFeatureDocument,
+  PlanProductModule,
+  PlanProductModuleDocument,
+  PlanProductModulePermission,
+  PlanProductModulePermissionDocument,
+} from '@shared';
 
 @Injectable()
 export class PlanService {
-  constructor(private prisma: PrismaService) {}
+  // constructor(private prisma: PrismaService) {}
+  constructor(
+    @InjectModel(Plan.name) private planModel: Model<PlanDocument>,
+    @InjectModel(PlanProduct.name)
+    private planProductModel: Model<PlanProductDocument>,
+    @InjectModel(PlanProductFeature.name)
+    private planProductFeatureModel: Model<PlanProductFeatureDocument>,
+    @InjectModel(PlanProductModule.name)
+    private planProductModuleModel: Model<PlanProductModuleDocument>,
+    @InjectModel(PlanProductModulePermission.name)
+    private planProductModulePermissionModel: Model<PlanProductModulePermissionDocument>
+  ) {}
 
   async getPlans(payload: PaginationDto) {
     try {
       const take = payload.limit || 10;
       const page = payload.page || 1;
       const skip = (page - 1) * take;
-      const data = await this.prisma.plan.findMany({
-        skip,
-        take,
-        include: { plan_product: true, plan_type: true },
-      });
+      // const data = await this.planModel.find().skip(skip).limit(take)
+      // .populate('plan_type') // Populate plan_type
+      // .populate('plan_product') // Populate plan_product
+      // .exec();
+
+      const data = await this.planModel.aggregate([
+        { $skip: skip }, // Skip documents
+        { $limit: take }, // Limit the number of documents
+
+        // Populate the 'plan_type' field
+        {
+          $lookup: {
+            from: 'PlanTypes', // The name of the referenced collection
+            localField: 'plan_type', // The field in the current collection
+            foreignField: '_id', // The field in the referenced collection
+            as: 'plan_type', // The alias for the populated field
+          },
+        },
+
+        // Populate the 'plan_product' field
+        {
+          $lookup: {
+            from: 'PlanProduct', // The name of the referenced collection
+            localField: 'plan_product', // The field in the current collection
+            foreignField: '_id', // The field in the referenced collection
+            as: 'plan_product', // The alias for the populated field
+          },
+        },
+      ]);
       console.log('this is payload', payload);
       return successResponse(200, 'Success', data);
     } catch (error) {
@@ -36,12 +84,11 @@ export class PlanService {
     featureProducts: ProductFeatureDto[],
     moduleProducts: ProductModuleDto[]
   ) {
-    const planProdustsRes = await this.prisma.planProduct.create({
-      data: {
-        plan_id,
-        product_id,
-      },
+    const createdplanProduct = new this.planProductModel({
+      plan_id,
+      product_id,
     });
+    const planProdustsRes = await createdplanProduct.save();
 
     const featureProduct = featureProducts.find(
       (val) => (val.product_id = product_id)
@@ -50,36 +97,33 @@ export class PlanService {
       (val) => (val.product_id = product_id)
     );
 
-    // inserting plan product features data
-    await this.prisma.planProductFeature.create({
-      data: {
-        plan_id,
-        product_id,
-        plan_product_id: planProdustsRes.id,
-        feature_id: featureProduct.feature_id,
-        deals_associations_detail: featureProduct?.deals_associations_detail,
-      },
+    const createdPlanProductFeature = new this.planProductFeatureModel({
+      plan_id,
+      product_id,
+      plan_product_id: planProdustsRes.id,
+      feature_id: featureProduct.feature_id,
+      deals_associations_detail: featureProduct?.deals_associations_detail,
     });
-    // inserting plan product module data
-    const planProductsModuleRes = await this.prisma.planProductModule.create({
-      data: {
-        plan_id,
-        product_id,
-        module_id: moduleProduct.module_id,
-        plan_product_id: planProdustsRes.id,
-      },
+    await createdPlanProductFeature.save(); // inserting plan product features data
+
+    const createdPlanProductModule = new this.planProductModuleModel({
+      plan_id,
+      product_id,
+      module_id: moduleProduct.module_id,
+      plan_product_id: planProdustsRes.id,
     });
-    // inserting plan product module permission data
-    await this.prisma.planProductModulePermission.create({
-      data: {
+    const planProductsModuleRes = await createdPlanProductModule.save(); // inserting plan product module data
+
+    const createdPlanProductModulePermission =
+      new this.planProductModulePermissionModel({
         plan_id,
         product_id,
         module_id: moduleProduct.module_id,
         plan_product_id: planProdustsRes.id,
         plan_product_module_id: planProductsModuleRes.id,
         module_permission_id: moduleProduct.module_permission_id,
-      },
-    });
+      });
+    await createdPlanProductModulePermission.save(); // inserting plan product module permission data
   }
 
   async addPlan(payload: AddPlanDto) {
@@ -92,9 +136,9 @@ export class PlanService {
         plan_feature: undefined,
         plan_module: undefined,
       };
-      const planRes = await this.prisma.plan.create({
-        data: payloadPlan,
-      });
+
+      const createdplan = new this.planModel(payloadPlan);
+      const planRes = await createdplan.save();
 
       if (payload.suite) {
         // if suites then looping through the suits consist of multiple product ids and inserting plan data
