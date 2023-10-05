@@ -7,6 +7,11 @@ export const RMQ_MESSAGES = {
   AUTHENTICATION: {
     SIGNUP: 'auth-login',
   },
+  PRODUCTS: {
+    ADD_PRODUCT: 'add-product',
+    GET_PRODUCTS: 'get-products',
+    EDIT_PRODUCT: 'edit-product',
+  },
   AIR_SERVICES: {
     TICKETS: {
       CREATE_TICKET: 'create-ticket',

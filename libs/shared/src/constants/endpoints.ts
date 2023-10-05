@@ -7,6 +7,11 @@ export const API_ENDPOINTS = {
   AUTHENTICATION: {
     SIGNUP: 'signup',
   },
+  PRODUCTS: {
+    ADD_PRODUCT: '/',
+    GET_PRODUCTS: '/',
+    EDIT_PRODUCT: '/:id',
+  },
   AIR_SERVICES: {
     TICKETS: {
       ticket: 'ticket',
