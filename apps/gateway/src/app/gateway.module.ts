@@ -11,8 +11,11 @@ import { AuthController } from './controllers/auth.controller';
 import { HealthController } from './controllers/healthcheck.controller';
 import { OrganizationController } from './controllers/organization.controller';
 import { OrganizationCompanyAccountController } from './controllers/organization-company-account.controller';
+import { SuperAdminController } from './controllers/super-admin.controller';
+import { JobsController } from './controllers/settings/jobs.controller';
 import { TicketController } from './controllers/tickets/tickets.controller';
 import { InventoryController } from './controllers/inventory/inventory.controller';
+import { ProductsController } from './controllers/products.controller';
 
 @Module({
   imports: [
@@ -25,6 +28,9 @@ import { InventoryController } from './controllers/inventory/inventory.controlle
     AppController,
     AuthController,
     HealthController,
+    SuperAdminController,
+    JobsController,
+    ProductsController,
     TicketController,
     InventoryController,
     OrganizationController, OrganizationCompanyAccountController

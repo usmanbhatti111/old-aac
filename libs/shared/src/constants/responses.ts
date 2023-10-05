@@ -2,6 +2,7 @@ export const ResponseMessage = {
   SUCCESS: 'Success',
   BAD_REQUEST: 'Bad Request',
   CREATED: 'Created',
+  NOT_FOUND: 'Record Not Found',
 };
 
 export const INTERNAL_SERVER_RESPONSE = {
@@ -25,7 +26,7 @@ export const errorResponse = (
 export const successResponse = (
   statusCode: number = 200,
   message: string = 'Success',
-  data: object = {},
+  data: any = {},
   pagination?: {
     count: number;
     page: number;

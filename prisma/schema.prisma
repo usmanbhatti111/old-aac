@@ -13,6 +13,39 @@ model TestStuff {
   name  String?
 }
 
+
+//////// Test Schemas  Start /////////
+model TestAdmin {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  firstName String?
+  lastName String?
+  email String? @unique
+  rel_id    String?     @db.ObjectId
+  relation  TestRelation?  @relation(name:"test", fields: [rel_id], references: [id])
+}
+
+model TestAccount {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  product String
+  company String
+  manageRole String
+  status String
+}
+
+model TestRelation {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  test  TestAdmin[] @relation("test")
+}
+
+
+model TestCompany {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  name String
+  email String
+}
+
+//////// Test Schemas  Start /////////
+
 //////----------------Enums-Start---------------------///////
 enum RoleEnum {
   ADMIN
@@ -86,20 +119,25 @@ model Admin {
   updated_at       DateTime @updatedAt
   deleted_at       DateTime @default(now())
   jobs             Job[]
+  products         Product[]
 }
 
 model Job {
-  id                String         @id @default(auto()) @map("_id") @db.ObjectId
-  created_by_id     String?        @db.ObjectId
-  created_by        Admin?         @relation(fields: [created_by_id], references: [id])
+  id                String        @id @default(auto()) @map("_id") @db.ObjectId
+  created_by_id     String        @db.ObjectId
+  created_by        Admin         @relation(fields: [created_by_id], references: [id])
   title             String
   job_type          String
   job_category      String
   experience        String
-  number_of_vacancy String
+  number_of_vacancy Int?
   deadline          DateTime
+  status            String         @default("OPEN")
+  isDeleted         Boolean        @default(false)
   description       String?
   applicants        JobApplicant[]
+  created_at       DateTime        @default(now())
+  updated_at       DateTime        @updatedAt
 }
 
 model JobApplicant {
@@ -128,6 +166,7 @@ model Attachment {
   id                      String         @id @default(auto()) @map("_id") @db.ObjectId
   JobApplicantResume      JobApplicant[] @relation("resume")
   JobApplicantCoverLetter JobApplicant[] @relation("coverLetter")
+  product_logo Product? @relation("productLogo")
 }
 
 model Event {
@@ -233,6 +272,20 @@ model OrganizationCompanyAccountProductContact {
 model OrganizationCompanyAccountProductRoleAndPermission {
   id String @id @default(auto()) @map("_id") @db.ObjectId
 }
+
+model Product {
+  id            String @id @default(auto()) @map("_id") @db.ObjectId
+  name          String @unique
+  description   String?
+  logo_id       String? @db.ObjectId @unique
+  logo          Attachment?   @relation(name: "productLogo", fields: [logo_id], references: [id])
+  status        String @default("inactive")
+  modifier_id    String?  @db.ObjectId
+  modified_by    Admin?   @relation(fields: [modifier_id], references: [id], onDelete: Restrict, onUpdate: Cascade)
+  isDeleted      Boolean @default(false)  // For soft delete
+  modified_at    DateTime @default(now())
+}
+
 
 
 model Asset {

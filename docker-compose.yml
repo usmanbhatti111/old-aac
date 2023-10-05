@@ -16,9 +16,9 @@ services:
     ports:
       - 5673:5672
       - 15673:15672
-    # volumes:
-    #   - ~/.docker-conf/rabbitmq/data/:/var/lib/rabbitmq
-    #   - ~/.docker-conf/rabbitmq/log/:/var/log/rabbitmq
+    volumes:
+      - ~/.docker-conf/rabbitmq/data/:/var/lib/rabbitmq
+      - ~/.docker-conf/rabbitmq/log/:/var/log/rabbitmq
     networks:
       - backend
 networks:

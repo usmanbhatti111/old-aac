@@ -3,6 +3,43 @@ export enum UserStatus {
   INACTIVE,
 }
 
+export enum UserRole {
+  SUPER_ADMIN = 'SUPER_ADMIN',
+  ORG_ADMIN = 'ORG_ADMIN',
+}
+
+export enum UserAccountStatus {
+  ACTIVE = 'ACTIVE',
+  INACTIVE = 'INACTIVE',
+}
+
+export enum EJobType {
+  FULL_TIME = 'FULL_TIME',
+  PART_TIME = 'PART_TIME',
+  PERMANENT = 'PERMANENT',
+  INTERNSHIP = 'INTERNSHIP',
+}
+
+export enum EJobCategories {
+  SALES = 'SALES',
+  MARKETING = 'MARKETING',
+  SERVICES = 'SERVICES',
+  OPERATIONS = 'OPERATIONS',
+  LOYALTY_PROGRAM = 'LOYALTY_PROGRAM',
+}
+
+export enum EExperienceLevel {
+  NO_EXPERIENCE = 'NO_EXPERIENCE',
+  LESS_THAN_YEAR = 'LESS_THAN_YEAR',
+  ONE_TO_TWO_YEARS = 'ONE_TO_TWO_YEARS',
+  THREE_TO_FOUR_YEARS = 'THREE_TO_FOUR_YEARS',
+  MORE_THAN_5_YEARS = 'MORE_THAN_5_YEARS',
+}
+
+export enum EJobStatus {
+  OPEN = 'OPEN',
+  CLOSE = 'CLOSE',
+}
 export enum TicketInternalTypeEnum {
   INTERNAL = 'INTERNAL',
 }
