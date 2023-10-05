@@ -10,6 +10,8 @@ import { WinstonConfigService } from './config/winston.config';
 import { AuthController } from './controllers/auth.controller';
 import { HealthController } from './controllers/healthcheck.controller';
 import { PlanController } from './controllers/plan.controller';
+import { TicketController } from './controllers/tickets/tickets.controller';
+import { InventoryController } from './controllers/inventory/inventory.controller';
 
 @Module({
   imports: [
@@ -23,6 +25,8 @@ import { PlanController } from './controllers/plan.controller';
     AuthController,
     HealthController,
     PlanController,
+    TicketController,
+    InventoryController,
   ],
   providers: [
     // Connected to all the rabbitmq queues

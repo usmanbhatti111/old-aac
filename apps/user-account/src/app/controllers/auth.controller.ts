@@ -10,7 +10,6 @@ export class AuthController {
 
   @MessagePattern(RMQ_MESSAGES.AUTHENTICATION.SIGNUP)
   signup(@Payload() payload: SignupDto) {
-    console.log('START');
     return this.authService.signup(payload);
   }
 }

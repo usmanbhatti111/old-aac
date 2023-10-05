@@ -18,6 +18,7 @@ enum RoleEnum {
   ADMIN
 }
 
+
 //////----------------Enums-End---------------------///////
 
 //////----------------Types-Start---------------------///////
@@ -311,4 +312,58 @@ model OrganizationCompanyAccountProductRoleAndPermission {
   id String @id @default(auto()) @map("_id") @db.ObjectId
 }
 
+
+model Asset {
+    id                      String @id @default(auto()) @map("_id") @db.ObjectId
+    display_name            String?
+    asset_id                String? @unique @db.ObjectId
+    asset_type              String?
+    impact                  String?
+    description             String?
+    asset_life_expiry       DateTime?
+    location_id               String?
+    department_id              String?
+    assigned_on             DateTime?
+    used_by                 String?  
+    attachment_id                    String?
+}
+
 //////----------------Models-End---------------------///////
+
+/////------------- Air Services Schema--------------/////////
+
+enum TicketStatusEnum { 
+  OPEN
+  CLOSED
+  RESOLVED
+}
+enum TicketInternalTypeEnum { 
+  INTERNAL
+}
+
+enum TicketTypeEnum { 
+  INTERNAL
+  EXTERNAL
+}
+
+enum TicketPirorityEnum { 
+  HIGH
+  LOW
+}
+
+model Tickets { 
+    id String @id @default(auto()) @map("_id") @db.ObjectId
+    details Json
+    status TicketStatusEnum
+    subject String
+    pirority TicketPirorityEnum
+    type TicketTypeEnum
+    internal_type TicketInternalTypeEnum
+    ca_id String? @db.ObjectId
+    org_admin_id String? @db.ObjectId
+    cat_id  String? @db.ObjectId
+    created_at    DateTime @default(now())
+}
+
+
+////////------------------ ---------///////
