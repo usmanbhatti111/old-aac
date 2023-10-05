@@ -5,7 +5,18 @@ import {
   ExampleSchema,
   Ticket,
   TicketSchema,
-  Plan, PlanProduct, PlanProductFeature, PlanProductFeatureSchema, PlanProductModule, PlanProductModulePermission, PlanProductModulePermissionSchema, PlanProductModuleSchema, PlanProductSchema, PlanSchema, PlanType, PlanTypeSchema
+  Plan,
+  PlanProduct,
+  PlanProductFeature,
+  PlanProductFeatureSchema,
+  PlanProductModule,
+  PlanProductModulePermission,
+  PlanProductModulePermissionSchema,
+  PlanProductModuleSchema,
+  PlanProductSchema,
+  PlanSchema,
+  PlanType,
+  PlanTypeSchema,
 } from './schema';
 
 export const DbModels = [
@@ -44,5 +55,5 @@ export const DbModels = [
   {
     name: PlanType.name,
     schema: PlanTypeSchema,
-  }
+  },
 ];

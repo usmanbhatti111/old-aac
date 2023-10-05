@@ -13,4 +13,4 @@ import { PlanService } from './services/plan.services';
   controllers: [ExampleController, ProductsController, PlanController],
   providers: [ExampleService, ProductsService, PlanService],
 })
-export class SuperAdminModule { }
+export class SuperAdminModule {}

@@ -23,7 +23,6 @@ import {
 
 @Injectable()
 export class PlanService {
-
   constructor(
     @InjectModel(Plan.name) private planModel: Model<PlanDocument>,
     @InjectModel(PlanProduct.name)
@@ -34,7 +33,7 @@ export class PlanService {
     private planProductModuleModel: Model<PlanProductModuleDocument>,
     @InjectModel(PlanProductModulePermission.name)
     private planProductModulePermissionModel: Model<PlanProductModulePermissionDocument>
-  ) { }
+  ) {}
 
   async getPlans(payload: PaginationDto) {
     try {
@@ -158,7 +157,7 @@ export class PlanService {
 
       return successResponse(200, 'Success', planRes);
     } catch (error) {
-      console.log('errorrrrr', error)
+      console.log('errorrrrr', error);
       return errorResponse(400, 'Bad Request', error?.name);
     }
   }
