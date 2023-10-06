@@ -70,6 +70,11 @@ export class Ticket extends AbstractSchema {
     required: false,
   })
   catId: string;
+  @Prop({
+    type: [SchemaTypes.ObjectId],
+    required: false,
+  })
+  childTicketsId: [string];
 }
 
 export const TicketSchema = SchemaFactory.createForClass(Ticket);

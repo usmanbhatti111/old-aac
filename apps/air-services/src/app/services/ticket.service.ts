@@ -28,4 +28,28 @@ export class TicketService {
       return err;
     }
   }
+
+  async createChildTicket(payload: any) {
+    try {
+      const { ticketId, ...dto } = payload;
+
+      const childTicket = await this.ticketRepository.create({
+        ...dto,
+      });
+      const data = await this.ticketRepository.findOneAndUpdate(
+        { _id: ticketId },
+        { $push: { childTicketsId: childTicket._id } }
+      );
+
+      const response = successResponse(
+        HttpStatus.CREATED,
+        `ChildTicket Created Successfully`,
+        data
+      );
+      return response;
+    } catch (error) {
+      const err = errorResponse(HttpStatus.BAD_REQUEST, error?.meta?.cause);
+      return err;
+    }
+  }
 }

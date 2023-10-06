@@ -38,6 +38,7 @@ export const API_ENDPOINTS = {
   AIR_SERVICES: {
     TICKETS: {
       ticket: 'ticket',
+      ADD_CHILD_TICKET: 'add-child-ticket',
     },
     ASSETS: {
       INVENTORY: 'inventory',

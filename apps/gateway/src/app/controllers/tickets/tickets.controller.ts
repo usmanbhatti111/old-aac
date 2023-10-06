@@ -1,7 +1,16 @@
-import { Controller, Inject, Post, Res, Get, Body } from '@nestjs/common';
-import { ClientProxy } from '@nestjs/microservices';
-import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import {
+  Controller,
+  Inject,
+  Post,
+  Res,
+  Get,
+  Body,
+  Query,
+} from '@nestjs/common';
+import { ClientProxy } from '@nestjs/microservices';
+import { ApiBearerAuth, ApiQuery, ApiTags } from '@nestjs/swagger';
+import {
+  API_ENDPOINTS,
   API_TAGS,
   CONTROLLERS,
   RMQ_MESSAGES,
@@ -44,6 +53,32 @@ export class TicketController {
         this.ariServiceClient.send(
           RMQ_MESSAGES.AIR_SERVICES.TICKETS.GET_TICKET_DETAILS,
           {}
+        )
+      );
+      return res.status(response.statusCode).json(response);
+    } catch (err) {
+      return res.status(err.statusCode).json(err);
+    }
+  }
+
+  @Post(API_ENDPOINTS.AIR_SERVICES.TICKETS.ADD_CHILD_TICKET)
+  @ApiQuery({
+    type: String,
+    name: 'ticketId',
+  })
+  public async createChildTicket(
+    @Query('ticketId') ticketId: string,
+    @Body() dto: CreateTicketDTO,
+    @Res() res: Response | any
+  ) {
+    try {
+      const response = await firstValueFrom(
+        this.ariServiceClient.send(
+          RMQ_MESSAGES.AIR_SERVICES.TICKETS.CREATE_CHILD_TICKET,
+          {
+            ...dto,
+            ticketId,
+          }
         )
       );
       return res.status(response.statusCode).json(response);
