@@ -3,6 +3,7 @@ import {
   Controller,
   Get,
   Inject,
+  Patch,
   Post,
   Query,
   Res,
@@ -23,6 +24,7 @@ import {
 } from '@shared/constants';
 import {
   AddPlanDto,
+  EditPlanDto,
   GetResponseDto,
   PaginationDto,
   PostResponseDto,
@@ -38,26 +40,38 @@ export class PlanController {
     @Inject(SERVICES.SUPER_ADMIN) private superAdminServiceClient: ClientProxy
   ) {}
 
-  @Post(API_ENDPOINTS.PLAN.ADDPLAN)
+  @Post(API_ENDPOINTS.PLAN.ADD_PLAN)
   @ApiCreatedResponse({ type: PostResponseDto })
   public async createPlan(
     @Body() payload: AddPlanDto,
     @Res() res: Response | any
   ) {
     const response = await firstValueFrom(
-      this.superAdminServiceClient.send(RMQ_MESSAGES.PLAN.ADDPLAN, payload)
+      this.superAdminServiceClient.send(RMQ_MESSAGES.PLAN.ADD_PLAN, payload)
     );
     return res.status(response.statusCode).json(response);
   }
 
-  @Get(API_ENDPOINTS.PLAN.PLANLIST)
+  @Get(API_ENDPOINTS.PLAN.PLAN_LIST)
   @ApiOkResponse({ type: GetResponseDto })
   public async getPlans(
     @Query() payload: PaginationDto,
     @Res() res: Response | any
   ) {
     const response = await firstValueFrom(
-      this.superAdminServiceClient.send(RMQ_MESSAGES.PLAN.PLANLIST, payload)
+      this.superAdminServiceClient.send(RMQ_MESSAGES.PLAN.PLAN_LIST, payload)
+    );
+    return res.status(response.statusCode).json(response);
+  }
+
+  @Patch(API_ENDPOINTS.PLAN.EDIT_PLAN)
+  @ApiCreatedResponse({ type: PostResponseDto })
+  public async updatePlan(
+    @Body() payload: EditPlanDto,
+    @Res() res: Response | any
+  ) {
+    const response = await firstValueFrom(
+      this.superAdminServiceClient.send(RMQ_MESSAGES.PLAN.EDIT_PLAN, payload)
     );
     return res.status(response.statusCode).json(response);
   }

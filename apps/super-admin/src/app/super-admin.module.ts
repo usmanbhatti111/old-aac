@@ -7,7 +7,7 @@ import { ExampleService } from './services/examples.service';
 import { ProductsController } from './controllers/products.controller';
 import { ProductsService } from './services/products.service';
 import { JobsService } from './services/jobs.service';
-import { PlanController } from './controller/plan.controller';
+import { PlanController } from './controllers/plan.controller';
 import { PlanService } from './services/plan.services';
 
 @Module({

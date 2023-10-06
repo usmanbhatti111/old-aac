@@ -8,8 +8,9 @@ export const RMQ_MESSAGES = {
     SIGNUP: 'auth-login',
   },
   PLAN: {
-    ADDPLAN: 'add-plan',
-    PLANLIST: 'plan-list',
+    ADD_PLAN: 'add-plan',
+    PLAN_LIST: 'plan-list',
+    EDIT_PLAN: 'edit-plan',
   },
   JOBS: {
     CREATE_JOB: 'create-job',

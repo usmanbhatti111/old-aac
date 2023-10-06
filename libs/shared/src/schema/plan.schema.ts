@@ -1,5 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { PlanProduct } from '@prisma/client';
+import { MODEL } from '@shared/constants';
 import mongoose, { Document, HydratedDocument } from 'mongoose';
 
 export type PlanDocument = HydratedDocument<Plan>;
@@ -24,7 +25,7 @@ export class Plan extends Document {
   @Prop()
   additional_storage_price?: number;
 
-  @Prop({ required: true, type: mongoose.Types.ObjectId, ref: 'PlanType' })
+  @Prop({ required: true, type: mongoose.Types.ObjectId, ref: MODEL.PLAN_TYPE })
   plan_type_id: string;
 
   @Prop()

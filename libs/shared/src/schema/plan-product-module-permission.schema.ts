@@ -1,4 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { MODEL } from '@shared/constants';
 import mongoose, { Document, HydratedDocument } from 'mongoose';
 
 export type PlanProductModulePermissionDocument =
@@ -7,17 +8,21 @@ export type PlanProductModulePermissionDocument =
 @Schema()
 export class PlanProductModulePermission extends Document {
   @Prop({
-    type: [{ required: true, type: mongoose.Types.ObjectId, ref: 'Plan' }],
+    type: [{ required: true, type: mongoose.Types.ObjectId, ref: MODEL.PLAN }],
   })
   plan_id: string; // Reference to Plan _id
 
   @Prop({
-    type: [{ required: true, type: mongoose.Types.ObjectId, ref: 'Product' }],
+    type: [
+      { required: true, type: mongoose.Types.ObjectId, ref: MODEL.PRODUCT },
+    ],
   })
   product_id: string; // Reference to Product _id
 
   @Prop({
-    type: [{ required: true, type: mongoose.Types.ObjectId, ref: 'Module' }],
+    type: [
+      { required: true, type: mongoose.Types.ObjectId, ref: MODEL.MODULE },
+    ],
   })
   module_id: string; // Reference to Module _id
 
@@ -26,7 +31,7 @@ export class PlanProductModulePermission extends Document {
       {
         required: true,
         type: mongoose.Types.ObjectId,
-        ref: 'PlanProductModule',
+        ref: MODEL.PLAN_PRODUCT_MODULE,
       },
     ],
   })
@@ -37,7 +42,7 @@ export class PlanProductModulePermission extends Document {
       {
         required: true,
         type: mongoose.Types.ObjectId,
-        ref: 'ModulePermission',
+        ref: MODEL.MODULE_PERMISSION,
       },
     ],
   })

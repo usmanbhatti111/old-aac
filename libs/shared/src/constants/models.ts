@@ -4,4 +4,13 @@ export const MODEL = {
   TICKET: 'Ticket',
   JOBS: 'Jobs',
   FAQS: 'Faqs',
+  PLAN_TYPE: 'PlanType',
+  PRODUCT: 'Product',
+  PLAN: 'Plan',
+  PLAN_PRODUCT: 'PlanProduct',
+  MODULE: 'Module',
+  MODULE_PERMISSION: 'ModulePermission',
+  PLAN_PRODUCT_MODULE: 'PlanProductModule',
+  FEATURE: 'Feature',
+  PERMISSION: 'Permission',
 };

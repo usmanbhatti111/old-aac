@@ -1,7 +1,8 @@
 import { Injectable } from '@nestjs/common';
-import { errorResponse, successResponse } from '@shared/constants';
+import { MODEL, errorResponse, successResponse } from '@shared/constants';
 import {
   AddPlanDto,
+  EditPlanDto,
   PaginationDto,
   ProductFeatureDto,
   ProductModuleDto,
@@ -33,7 +34,7 @@ export class PlanService {
     private planProductModuleModel: Model<PlanProductModuleDocument>,
     @InjectModel(PlanProductModulePermission.name)
     private planProductModulePermissionModel: Model<PlanProductModulePermissionDocument>
-  ) {}
+  ) { }
 
   async getPlans(payload: PaginationDto) {
     try {
@@ -41,31 +42,44 @@ export class PlanService {
       const page = payload.page || 1;
       const skip = (page - 1) * take;
 
-      const data = await this.planModel.aggregate([
-        { $skip: skip }, // Skip documents
-        { $limit: take }, // Limit the number of documents
+      const data = await this.planModel
+        .find()
+        .skip(skip)
+        .limit(take)
+        .populate({
+          path: 'plan_type_id', // The field to populate
+          select: 'name', // Optionally, select specific fields from the populated document
+          model: MODEL.PLAN_TYPE, // The model to use for population
+          options: { lean: true }, // Any additional options you want to apply
+          // Alias the populated field as 'custom_plan_type'
+          //populate: { path: 'plan_types', model: MODEL.PLAN_TYPE },
+        })
+        .exec();
 
-        // Populate the 'plan_type' field
-        {
-          $lookup: {
-            from: 'PlanTypes', // The name of the referenced collection
-            localField: 'plan_type', // The field in the current collection
-            foreignField: '_id', // The field in the referenced collection
-            as: 'plan_type', // The alias for the populated field
-          },
-        },
-
-        // Populate the 'plan_product' field
-        {
-          $lookup: {
-            from: 'PlanProduct', // The name of the referenced collection
-            localField: 'plan_product', // The field in the current collection
-            foreignField: '_id', // The field in the referenced collection
-            as: 'plan_product', // The alias for the populated field
-          },
-        },
-      ]);
+      // const data = await this.planModel.aggregate([
+      //   { $skip: skip }, // Skip documents
+      //   { $limit: take }, // Limit the number of documents
+      //   // Populate the 'plan_type' field
+      //   {
+      //     $lookup: {
+      //       from: MODEL.PLAN_TYPE,
+      //       localField: 'plan_type_id',
+      //       foreignField: '_id',
+      //       as: 'plan_type',
+      //     },
+      //   },
+      // ]).exec();
       return successResponse(200, 'Success', data);
+    } catch (error) {
+      console.log('errrr', error);
+      return errorResponse(400, 'Bad Request', error?.name);
+    }
+  }
+
+  async editPlan(payload: EditPlanDto) {
+    try {
+      console.log('edit plan payload', payload)
+      return successResponse(200, 'Success', {});
     } catch (error) {
       return errorResponse(400, 'Bad Request', error?.name);
     }

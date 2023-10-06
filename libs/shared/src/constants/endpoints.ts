@@ -8,8 +8,9 @@ export const API_ENDPOINTS = {
     SIGNUP: 'signup',
   },
   PLAN: {
-    ADDPLAN: '',
-    PLANLIST: '',
+    ADD_PLAN: '/',
+    PLAN_LIST: '/',
+    EDIT_PLAN: '/',
   },
   JOBS: {
     GET_JOB: '/:id',
