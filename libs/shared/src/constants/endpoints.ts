@@ -8,6 +8,9 @@ export const API_ENDPOINTS = {
     SIGNUP: 'signup',
   },
   SUPER_ADMIN: {
+    BILLING_INVOICES: {
+      ASSIGN_PLAN: 'assign-plan',
+    },
     ADD_USER: 'add-user',
     USER_LIST: 'user-list',
     USER_PROFILE: 'user-profile/:userId',

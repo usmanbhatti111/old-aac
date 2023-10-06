@@ -58,3 +58,15 @@ export enum TicketStatusEnum {
   CLOSED = 'CLOSED',
   RESOLVED = 'RESOLVED',
 }
+
+export enum OrganizationPlanStatusEnum {
+  ACTIVE = 'ACTIVE',
+  INACTIVE = 'INACTIVE',
+}
+
+export enum BillingCycleEnum {
+  MONTHLY = 'MONTHLY',
+  QUARTERLY = 'QUARTERLY',
+  HALF_YEARLY = 'HALF_YEARLY',
+  YEARLY = 'YEARLY',
+}

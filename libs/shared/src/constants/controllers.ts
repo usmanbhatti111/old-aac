@@ -9,5 +9,6 @@ export const CONTROLLERS = {
   PRODUCTS: 'products',
   TICKET: 'ticket',
   ASSETS: 'assets',
+  ORGANIZATION_PLAN: 'organization-plan',
   AIR_SERVICES: 'air-services',
 };

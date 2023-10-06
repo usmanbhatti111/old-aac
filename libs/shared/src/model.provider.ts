@@ -3,6 +3,8 @@ import {
   InventorySchema,
   Example,
   ExampleSchema,
+  OrganizationPlan,
+  OrganizationPlanSchema,
   Ticket,
   TicketSchema,
   Task,
@@ -29,6 +31,10 @@ export const DbModels = [
   {
     name: Ticket.name,
     schema: TicketSchema,
+  },
+  {
+    name: OrganizationPlan.name,
+    schema: OrganizationPlanSchema,
   },
   {
     name: Task.name,
