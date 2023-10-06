@@ -25,7 +25,7 @@ import {
 import {
   AddPlanDto,
   EditPlanDto,
-  GetResponseDto,
+  GetPlansResponseDto,
   PaginationDto,
   PostResponseDto,
 } from '@shared/dto';
@@ -53,7 +53,7 @@ export class PlanController {
   }
 
   @Get(API_ENDPOINTS.PLAN.PLAN_LIST)
-  @ApiOkResponse({ type: GetResponseDto })
+  @ApiOkResponse({ type: GetPlansResponseDto })
   public async getPlans(
     @Query() payload: PaginationDto,
     @Res() res: Response | any
