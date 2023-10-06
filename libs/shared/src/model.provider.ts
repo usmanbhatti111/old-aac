@@ -17,6 +17,8 @@ import {
   FaqSchema,
   Job,
   JobSchema,
+  Payment,
+  PaymentSchema,
 } from './schema';
 export const DbModels = [
   {
@@ -55,5 +57,9 @@ export const DbModels = [
   {
     name: SuperAdmin.name,
     schema: SuperAdminSchema,
+  },
+  {
+    name: Payment.name,
+    schema: PaymentSchema,
   },
 ];

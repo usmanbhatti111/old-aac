@@ -240,7 +240,7 @@ export abstract class AbstractRepository<TDocument extends AbstractSchema> {
     limit = 10,
     returnKey,
     sort,
-    pipelines,
+    pipelines = [],
   }: {
     filterQuery?: FilterQuery<TDocument>;
     offset: number;

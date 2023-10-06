@@ -8,7 +8,7 @@ import {
   RMQ_MESSAGES,
   SERVICES,
 } from '@shared/constants';
-import { UserDto } from '@shared/dto';
+import { AddUserDto } from '@shared/dto';
 import { Response } from 'express';
 import { firstValueFrom } from 'rxjs';
 
@@ -19,7 +19,7 @@ export class UserController {
   constructor(@Inject(SERVICES.USER) private userServiceClient: ClientProxy) {}
 
   @Post(API_ENDPOINTS.AIR_SERVICES.TASK.ADD_TASK)
-  public async createUser(@Body() dto: UserDto, @Res() res: Response | any) {
+  public async createUser(@Body() dto: AddUserDto, @Res() res: Response | any) {
     const response = await firstValueFrom(
       this.userServiceClient.send(RMQ_MESSAGES.AIR_SERVICES.TASK.ADD_TASK, {
         ...dto,

@@ -8,6 +8,7 @@ import {
   TicketRepository,
   InventoryRepository,
   TaskRepository,
+  PaymentRepository,
 } from '../src/repositories/index';
 
 @Module({
@@ -23,6 +24,7 @@ import {
     TicketRepository,
     InventoryRepository,
     TaskRepository,
+    PaymentRepository,
   ],
   exports: [
     SharedService,
@@ -30,6 +32,7 @@ import {
     TicketRepository,
     InventoryRepository,
     TaskRepository,
+    PaymentRepository,
   ],
 })
 export class SharedModule {}
