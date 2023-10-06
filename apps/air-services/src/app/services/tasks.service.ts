@@ -14,4 +14,13 @@ export class TaskService {
       return errorResponse(HttpStatus.BAD_REQUEST, 'Bad Request', error?.name);
     }
   }
+
+  async getTasks(ticketId) {
+    try {
+      const res = await this.taskRepository.find({ ticketId });
+      return successResponse(HttpStatus.CREATED, 'Success', res);
+    } catch (error) {
+      return errorResponse(HttpStatus.BAD_REQUEST, 'Bad Request', error?.name);
+    }
+  }
 }

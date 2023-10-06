@@ -51,6 +51,7 @@ export const RMQ_MESSAGES = {
     },
     TASK: {
       ADD_TASK: 'add_task',
+      GET_TASKS: 'get-tasks',
     },
   },
   ORG_ADMIN: {

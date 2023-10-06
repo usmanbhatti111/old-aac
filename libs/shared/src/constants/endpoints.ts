@@ -43,7 +43,8 @@ export const API_ENDPOINTS = {
       INVENTORY: 'inventory',
     },
     TASK: {
-      ADD_TASK: 'add-task',
+      ADD_TASK: '/',
+      GET_TASK: '/',
     },
   },
   PAYMENTS: {

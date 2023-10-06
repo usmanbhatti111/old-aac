@@ -11,4 +11,9 @@ export class TaskController {
   public async createTask(@Payload() payload: AddTaskDto) {
     return this.taskService.addTask(payload);
   }
+
+  @MessagePattern(RMQ_MESSAGES.AIR_SERVICES.TASK.GET_TASKS)
+  getTasks(@Payload() payload: AddTaskDto) {
+    return this.taskService.getTasks(payload);
+  }
 }
