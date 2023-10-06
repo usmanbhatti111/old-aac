@@ -13,6 +13,7 @@ import {
   PlanProductModuleRepository,
   PlanProductModulePermissionRepository,
   PlanProductRepository,
+  PaymentRepository,
 } from '../src/repositories/index';
 
 @Module({
@@ -33,6 +34,7 @@ import {
     PlanProductModuleRepository,
     PlanProductModulePermissionRepository,
     PlanProductRepository,
+    PaymentRepository,
   ],
   exports: [
     SharedService,
@@ -45,6 +47,7 @@ import {
     PlanProductModuleRepository,
     PlanProductModulePermissionRepository,
     PlanProductRepository,
+    PaymentRepository,
   ],
 })
 export class SharedModule {}

@@ -50,4 +50,13 @@ export const RMQ_MESSAGES = {
       ADD_TASK: 'add_task',
     },
   },
+  ORG_ADMIN: {
+    PAYMENTS: {
+      ADD_PAYMENT: 'add-payment',
+      UPDATE_PAYMENT: 'update-payment',
+      GET_ALL_PAYMENTS: 'get-all-payments',
+      GET_ONE_PAYMENTS: 'get-one-payment',
+      DELETE_ONE_PAYMENTS: 'delete-one-payment',
+    },
+  },
 };

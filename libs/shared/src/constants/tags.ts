@@ -9,4 +9,5 @@ export const API_TAGS = {
   ASSETS: 'Assets',
   BILLING_INVOICES: 'Billing & Invoices',
   PRODUCTS: 'Products',
+  PAYMENTS: 'Payments',
 };

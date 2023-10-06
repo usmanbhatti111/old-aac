@@ -17,6 +17,7 @@ import { TicketController } from './controllers/tickets/tickets.controller';
 import { InvoiceController } from './controllers/super-admin/billing-invoices.controller';
 import { InventoryController } from './controllers/assets/inventory.controller';
 import { ProductsController } from './controllers/products.controller';
+import { PaymentController } from './controllers/org-admin/payment.controller';
 
 @Module({
   imports: [
@@ -37,6 +38,7 @@ import { ProductsController } from './controllers/products.controller';
     InventoryController,
     InvoiceController,
     TaskController,
+    PaymentController,
   ],
   providers: [
     // Connected to all the rabbitmq queues

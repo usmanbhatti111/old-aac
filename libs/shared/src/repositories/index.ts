@@ -6,3 +6,4 @@ export * from './plan-product.repository';
 export * from './plan-product-feature.repository';
 export * from './plan-product-module.repository';
 export * from './plan-product-module-permission.repository';
+export * from './org-admin';

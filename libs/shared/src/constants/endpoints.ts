@@ -46,4 +46,9 @@ export const API_ENDPOINTS = {
       ADD_TASK: 'add-task',
     },
   },
+  PAYMENTS: {
+    FIND_ONE: '/:id',
+    DELETE_ONE: '/:id',
+    UPDATE_ONE: '/:id',
+  },
 };
