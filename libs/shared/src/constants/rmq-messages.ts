@@ -27,6 +27,14 @@ export const RMQ_MESSAGES = {
     UPDATE_JOB: 'update-job',
     DELETE_JOB: 'delete-job',
   },
+
+  FAQS: {
+    CREATE_FAQ: 'create-faq',
+    GET_FAQ: 'get-faq',
+    GET_FAQS: 'get-faqs',
+    UPDATE_FAQ: 'update-faq',
+    DELETE_FAQ: 'delete-faq',
+  },
   PRODUCTS: {
     ADD_PRODUCT: 'add-product',
     GET_PRODUCTS: 'get-products',

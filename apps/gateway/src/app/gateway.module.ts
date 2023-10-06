@@ -16,6 +16,7 @@ import { TicketController } from './controllers/tickets/tickets.controller';
 import { InvoiceController } from './controllers/super-admin/billing-invoices.controller';
 import { InventoryController } from './controllers/assets/inventory.controller';
 import { ProductsController } from './controllers/products.controller';
+import { FaqsController } from './controllers/settings/faqs.controller';
 import { PaymentController } from './controllers/org-admin/payment.controller';
 
 @Module({
@@ -34,6 +35,7 @@ import { PaymentController } from './controllers/org-admin/payment.controller';
     ProductsController,
     TicketController,
     InventoryController,
+    FaqsController,
     InvoiceController,
     TaskController,
     PaymentController,

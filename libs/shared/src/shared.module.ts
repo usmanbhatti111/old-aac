@@ -8,6 +8,8 @@ import {
   TicketRepository,
   InventoryRepository,
   TaskRepository,
+  JobRepository,
+  FaqRepository,
   PaymentRepository,
 } from '../src/repositories/index';
 
@@ -24,6 +26,8 @@ import {
     TicketRepository,
     InventoryRepository,
     TaskRepository,
+    JobRepository,
+    FaqRepository,
     PaymentRepository,
   ],
   exports: [
@@ -32,6 +36,8 @@ import {
     TicketRepository,
     InventoryRepository,
     TaskRepository,
+    JobRepository,
+    FaqRepository,
     PaymentRepository,
   ],
 })

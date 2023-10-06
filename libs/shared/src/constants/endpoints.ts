@@ -22,7 +22,12 @@ export const API_ENDPOINTS = {
   JOBS: {
     GET_JOB: '/:id',
     UPDATE_JOB: '/:id',
-    DELETE_JOB: '/:id',
+    DELETE_JOB: '/',
+  },
+  FAQS: {
+    GET_FAQ: '/:id',
+    UPDATE_FAQ: '/:id',
+    DELETE_FAQ: '/:id',
   },
   PRODUCTS: {
     ADD_PRODUCT: '/',

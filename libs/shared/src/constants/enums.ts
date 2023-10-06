@@ -28,6 +28,14 @@ export enum EJobCategories {
   LOYALTY_PROGRAM = 'LOYALTY_PROGRAM',
 }
 
+export enum EFaqCategories {
+  SALES = 'SALES',
+  MARKETING = 'MARKETING',
+  SERVICES = 'SERVICES',
+  OPERATIONS = 'OPERATIONS',
+  LOYALTY_PROGRAM = 'LOYALTY_PROGRAM',
+}
+
 export enum EExperienceLevel {
   NO_EXPERIENCE = 'NO_EXPERIENCE',
   LESS_THAN_YEAR = 'LESS_THAN_YEAR',

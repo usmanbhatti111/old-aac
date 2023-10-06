@@ -1,15 +1,19 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsISO8601, IsOptional } from 'class-validator';
 import { paginationDTO } from '../pagination/pagination.dto';
-import { EJobCategories, EJobStatus } from '../../constants/enums';
+import {
+  EFaqCategories,
+  EJobCategories,
+  EJobStatus,
+} from '../../constants/enums';
 
-export class FilterJobsDto extends paginationDTO {
+export class FilterFaqsDto extends paginationDTO {
   @ApiProperty({
-    enum: EJobCategories,
+    enum: EFaqCategories,
     required: false,
   })
   @IsOptional()
-  jobCategory: string;
+  faqCategory: string;
 
   @ApiProperty({
     required: false,
@@ -27,14 +31,7 @@ export class FilterJobsDto extends paginationDTO {
   createdAt: string;
 
   @ApiProperty({
-    enum: EJobStatus,
-    required: false,
-  })
-  @IsOptional()
-  status: string;
-
-  @ApiProperty({
-    example: 'dev',
+    example: 'what is reactjs',
     required: false,
   })
   @IsOptional()

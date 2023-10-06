@@ -9,6 +9,8 @@ import { ExampleService } from './services/examples.service';
 import { ProductsController } from './controllers/products.controller';
 import { ProductsService } from './services/products.service';
 import { JobsService } from './services/jobs.service';
+import { FaqsController } from './controllers/faqs.controller';
+import { FaqsService } from './services/faqs.service';
 import { InvoiceController } from './controllers/invoice.controller';
 import { InvoiceService } from './services/invoice.service';
 
@@ -18,6 +20,7 @@ import { InvoiceService } from './services/invoice.service';
     ExampleController,
     ProductsController,
     JobsController,
+    FaqsController,
     InvoiceController,
     SuperAdminController,
   ],
@@ -25,6 +28,8 @@ import { InvoiceService } from './services/invoice.service';
     ExampleService,
     ProductsService,
     JobsService,
+    SuperAdminService,
+    FaqsService,
     InvoiceService,
     SuperAdminService,
   ],
