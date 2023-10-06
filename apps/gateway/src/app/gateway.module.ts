@@ -10,9 +10,12 @@ import { WinstonConfigService } from './config/winston.config';
 import { AuthController } from './controllers/auth.controller';
 import { HealthController } from './controllers/healthcheck.controller';
 import { PlanController } from './controllers/plan.controller';
+import { TaskController } from './controllers/tasks/task.controller';
+import { SuperAdminController } from './controllers/super-admin.controller';
 import { JobsController } from './controllers/settings/jobs.controller';
 import { TicketController } from './controllers/tickets/tickets.controller';
-import { InventoryController } from './controllers/inventory/inventory.controller';
+import { InvoiceController } from './controllers/super-admin/billing-invoices.controller';
+import { InventoryController } from './controllers/assets/inventory.controller';
 import { ProductsController } from './controllers/products.controller';
 
 @Module({
@@ -27,10 +30,13 @@ import { ProductsController } from './controllers/products.controller';
     AuthController,
     HealthController,
     PlanController,
+    SuperAdminController,
     JobsController,
     ProductsController,
     TicketController,
     InventoryController,
+    InvoiceController,
+    TaskController,
   ],
   providers: [
     // Connected to all the rabbitmq queues

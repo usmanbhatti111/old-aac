@@ -1,22 +1,23 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { MODEL } from '@shared/constants';
-import mongoose, { Document, HydratedDocument } from 'mongoose';
+import mongoose, { Document, HydratedDocument, ObjectId } from 'mongoose';
+import { AbstractSchema } from './abstract-repo/abstract.schema';
 
 export type PlanProductFeatureDocument = HydratedDocument<PlanProductFeature>;
 
 @Schema()
-export class PlanProductFeature extends Document {
+export class PlanProductFeature extends AbstractSchema {
   @Prop({
     type: [{ required: true, type: mongoose.Types.ObjectId, ref: MODEL.PLAN }],
   })
-  plan_id: string; // Reference to Plan _id
+  plan_id: string | mongoose.Types.ObjectId; // Reference to Plan _id
 
   @Prop({
     type: [
       { required: true, type: mongoose.Types.ObjectId, ref: MODEL.PRODUCT },
     ],
   })
-  product_id: string; // Reference to Product _id
+  product_id: string | mongoose.Types.ObjectId; // Reference to Product _id
 
   @Prop({
     type: [
@@ -27,14 +28,14 @@ export class PlanProductFeature extends Document {
       },
     ],
   })
-  plan_product_id: string; // Reference to PlanProduct _id
+  plan_product_id: mongoose.Types.ObjectId | string; // Reference to PlanProduct _id
 
   @Prop({
     type: [
       { required: true, type: mongoose.Types.ObjectId, ref: MODEL.FEATURE },
     ],
   })
-  feature_id: string; // Reference to Feature _id
+  feature_id: string | mongoose.Types.ObjectId; // Reference to Feature _id
 
   @Prop({ type: [{ required: false, type: String }] })
   deals_associations_detail: string;

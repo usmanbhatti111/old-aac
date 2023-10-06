@@ -8,7 +8,7 @@ import {
   RMQ_MESSAGES,
   SERVICES,
 } from '@shared/constants';
-import { AddAssetDto } from '@shared/dto';
+import { AddInventoryDto } from '@shared/dto';
 import { Response } from 'express';
 import { firstValueFrom } from 'rxjs';
 
@@ -19,15 +19,15 @@ export class InventoryController {
     @Inject(SERVICES.AIR_SERVICES) private airServiceClient: ClientProxy
   ) {}
 
-  @Post(API_ENDPOINTS.AIR_SERVICES.ASSETS.ADD_ASSETS)
-  public async addAssets(
-    @Body() payload: AddAssetDto,
+  @Post(API_ENDPOINTS.AIR_SERVICES.ASSETS.INVENTORY)
+  public async addInventory(
+    @Body() payload: AddInventoryDto,
     @Res() res: Response | any
   ) {
     try {
       const response = await firstValueFrom(
         this.airServiceClient.send(
-          RMQ_MESSAGES.AIR_SERVICES.ASSETS.ADD_ASSETS,
+          RMQ_MESSAGES.AIR_SERVICES.ASSETS.ADD_Inventory,
           payload
         )
       );
@@ -37,12 +37,12 @@ export class InventoryController {
       return res.status(err.statusCode).json(err);
     }
   }
-  @Get(API_ENDPOINTS.AIR_SERVICES.ASSETS.GET_ASSETS)
-  public async getAssets(@Res() res: Response | any) {
+  @Get(API_ENDPOINTS.AIR_SERVICES.ASSETS.INVENTORY)
+  public async getInventory(@Res() res: Response | any) {
     try {
       const response = await firstValueFrom(
         this.airServiceClient.send(
-          RMQ_MESSAGES.AIR_SERVICES.ASSETS.GET_ASSETS,
+          RMQ_MESSAGES.AIR_SERVICES.ASSETS.GET_Inventory,
           {}
         )
       );

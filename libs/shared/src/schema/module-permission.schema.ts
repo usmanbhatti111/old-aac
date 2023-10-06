@@ -2,11 +2,12 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { PlanProductModulePermission } from '@prisma/client';
 import { MODEL } from '@shared/constants';
 import mongoose, { Document, HydratedDocument } from 'mongoose';
+import { AbstractSchema } from './abstract-repo/abstract.schema';
 
 export type ModulePermissionDocument = HydratedDocument<ModulePermission>;
 
 @Schema()
-export class ModulePermission extends Document {
+export class ModulePermission extends AbstractSchema {
   @Prop({
     type: [
       { required: true, type: mongoose.Types.ObjectId, ref: MODEL.MODULE },

@@ -74,7 +74,6 @@ export class AppController {
 
       return res.status(response.statusCode).json(response);
     } catch (error) {
-      console.log('here');
       return res
         .status(HttpStatus.INTERNAL_SERVER_ERROR)
         .json(INTERNAL_SERVER_RESPONSE);

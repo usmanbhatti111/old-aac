@@ -12,6 +12,19 @@ export const RMQ_MESSAGES = {
     PLAN_LIST: 'plan-list',
     EDIT_PLAN: 'edit-plan',
   },
+  SUPER_ADMIN: {
+    BILLING_INVOICES: {
+      ASSIGN_PLAN: 'assign-plan',
+    },
+    ADD_USER: 'add-user',
+    USER_LIST: 'user-list',
+    USER_PROFILE: 'user-profile',
+    UPDATE_PROFILE: 'update-profile',
+    ADD_ACCOUNTS: 'add-accounts',
+    ACCOUNTS_LIST: 'accounts-list',
+    UPDATE_ACCOUNTS: 'update-accounts',
+  },
+
   JOBS: {
     CREATE_JOB: 'create-job',
     GET_JOB: 'get-job',
@@ -30,8 +43,11 @@ export const RMQ_MESSAGES = {
       GET_TICKET_DETAILS: 'get-ticket-details',
     },
     ASSETS: {
-      ADD_ASSETS: 'add-assets',
-      GET_ASSETS: 'get-assets',
+      ADD_Inventory: 'add-inventory',
+      GET_Inventory: 'get-inventory',
+    },
+    TASK: {
+      ADD_TASK: 'add_task',
     },
   },
 };

@@ -4,26 +4,23 @@ import { PlanProductFeature } from './plan-product-feature.schema';
 import { PlanProductModule } from './plan-product-module.schema';
 import { PlanProductModulePermission } from './plan-product-module-permission.schema';
 import { MODEL } from '@shared/constants';
+import { AbstractSchema } from './abstract-repo/abstract.schema';
 
 export type PlanProductDocument = HydratedDocument<PlanProduct>;
 
 @Schema()
-export class PlanProduct extends Document {
+export class PlanProduct extends AbstractSchema {
   @Prop({
     type: [{ required: true, type: mongoose.Types.ObjectId, ref: MODEL.PLAN }],
   })
-  plan_id: string; // Reference to Plan _id
+  plan_id: string | mongoose.Types.ObjectId; // Reference to Plan _id
 
   @Prop({
     type: [
       { required: true, type: mongoose.Types.ObjectId, ref: MODEL.PRODUCT },
     ],
   })
-  product_id: string; // Reference to Product _id
-
-  plan_product_feature: PlanProductFeature[];
-  plan_product_module: PlanProductModule[];
-  plan_product_module_permission: PlanProductModulePermission[];
+  product_id: string | mongoose.Types.ObjectId; // Reference to Product _id
   // Add other fields as needed
 }
 

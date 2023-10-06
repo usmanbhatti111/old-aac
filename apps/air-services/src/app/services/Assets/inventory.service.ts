@@ -1,25 +1,22 @@
 import { HttpStatus, Injectable } from '@nestjs/common';
-import { MODEL, errorResponse, successResponse } from '@shared/constants';
-import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import { errorResponse, successResponse } from '@shared/constants';
+import { InventoryRepository } from '@shared';
 
 @Injectable()
 export class InventoryService {
-  constructor(
-    @InjectModel(MODEL.ASSETS) private readonly assetModel: Model<any>
-  ) {}
+  constructor(private inventoryRepository: InventoryRepository) {}
 
-  async addAssets(payload: any) {
+  async addInventory(payload: any) {
     try {
-      const res = await this.assetModel.create({ ...payload });
+      const res = await this.inventoryRepository.create({ ...payload });
       return successResponse(HttpStatus.CREATED, 'Success', res);
     } catch (error) {
       return errorResponse(HttpStatus.BAD_REQUEST, 'Bad Request', error?.name);
     }
   }
-  async getAssets() {
+  async getInventory() {
     try {
-      const res = await this.assetModel.find();
+      const res = await this.inventoryRepository.find();
       return successResponse(HttpStatus.CREATED, 'Success', res);
     } catch (error) {
       return errorResponse(HttpStatus.BAD_REQUEST, 'Bad Request', error?.name);

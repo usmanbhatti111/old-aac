@@ -5,11 +5,12 @@ import {
   PlanProductModulePermission,
 } from '@prisma/client';
 import { Document, HydratedDocument } from 'mongoose';
+import { AbstractSchema } from './abstract-repo/abstract.schema';
 
 export type ModuleDocument = HydratedDocument<Module>;
 
 @Schema()
-export class Module extends Document {
+export class Module extends AbstractSchema {
   // Define fields for Module
   plan_product_module: PlanProductModule[];
   plan_product_module_permission: PlanProductModulePermission[];
