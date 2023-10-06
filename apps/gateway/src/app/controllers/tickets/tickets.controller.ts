@@ -18,7 +18,7 @@ import {
 } from '@shared/constants';
 import { Response } from 'express';
 import { firstValueFrom } from 'rxjs';
-import { CreateTicketDTO } from '@shared/dto';
+import { AssociateAssetsDTO, CreateTicketDTO } from '@shared/dto';
 
 @ApiTags(API_TAGS.TICKETS)
 @Controller(CONTROLLERS.TICKET)
@@ -26,7 +26,7 @@ import { CreateTicketDTO } from '@shared/dto';
 export class TicketController {
   constructor(
     @Inject(SERVICES.AIR_SERVICES) private ariServiceClient: ClientProxy
-  ) {}
+  ) { }
 
   @Post()
   public async createTicket(
@@ -60,7 +60,22 @@ export class TicketController {
       return res.status(err.statusCode).json(err);
     }
   }
-
+  @Post(API_ENDPOINTS.AIR_SERVICES.TICKETS.ASSOCIATE_ASSETS)
+  public async associateAssets(
+    @Body() payload: AssociateAssetsDTO,
+    @Res() res: Response | any) {
+    try {
+      const response = await firstValueFrom(
+        this.ariServiceClient.send(
+          RMQ_MESSAGES.AIR_SERVICES.TICKETS.ASSOCIATE_ASSETS,
+          payload
+        )
+      );
+      res.status(response.statusCode).json(response);
+    } catch (err) {
+      res.status(err.statusCode).json(err);
+    }
+  }
   @Post(API_ENDPOINTS.AIR_SERVICES.TICKETS.ADD_CHILD_TICKET)
   @ApiQuery({
     type: String,

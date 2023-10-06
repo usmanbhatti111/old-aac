@@ -1,10 +1,11 @@
 import { Injectable, HttpStatus } from '@nestjs/common';
 import { errorResponse, successResponse } from '@shared/constants';
 import { TicketRepository } from '@shared';
+import { AssociateAssetsDTO } from '@shared/dto';
 
 @Injectable()
 export class TicketService {
-  constructor(private ticketRepository: TicketRepository) {}
+  constructor(private ticketRepository: TicketRepository) { }
 
   async createTicket(payload) {
     try {
@@ -25,6 +26,24 @@ export class TicketService {
     } catch (error) {
       const err = errorResponse(HttpStatus.BAD_REQUEST, error?.meta?.cause);
       // TODO - Add logger
+      return err;
+    }
+  }
+
+  async associateAssets(payload: AssociateAssetsDTO) {
+    try {
+      const { id, assetIds } = payload
+      const res = await this.ticketRepository.findByIdAndUpdate({ _id: id }, { $addToSet: { associateAssets: { $each: assetIds } } });
+
+      const response = successResponse(
+        HttpStatus.OK,
+        `Associated`,
+        res
+      );
+
+      return response;
+    } catch (error) {
+      const err = errorResponse(HttpStatus.BAD_REQUEST, error?.meta?.cause);
       return err;
     }
   }

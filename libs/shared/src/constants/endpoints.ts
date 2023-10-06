@@ -39,6 +39,7 @@ export const API_ENDPOINTS = {
     TICKETS: {
       ticket: 'ticket',
       ADD_CHILD_TICKET: 'add-child-ticket',
+      ASSOCIATE_ASSETS:'associate-assets'
     },
     ASSETS: {
       INVENTORY: 'inventory',
