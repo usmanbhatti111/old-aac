@@ -1,24 +1,24 @@
 import { Schema, Prop, SchemaFactory } from '@nestjs/mongoose';
-import { Document } from 'mongoose';
+import { AbstractSchema } from './abstract-repo/abstract.schema';
 // import { Admin } from './admin.model'; // Import the Admin model if needed
 // import { JobApplicant } from './job-applicant.model'; // Import the JobApplicant model if needed
 
 @Schema({ timestamps: true })
-export class Faq extends Document {
+export class Faq extends AbstractSchema {
   @Prop({ type: String, required: true })
-  faq_question: string;
+  faqQuestion: string;
 
   @Prop({ type: String, required: true })
-  faq_category: string;
+  faqCategory: string;
 
   @Prop({ type: String, required: true })
-  faq_answer: string;
+  faqAnswer: string;
 
   @Prop({ type: String, required: true })
-  created_by_id: string;
+  createdById: string;
 
   @Prop({ type: Boolean, default: false })
-  isDeleted: boolean;
+  isDeleted?: boolean;
 
   //   // Define relationships if needed
   //   @Prop({ type: Schema.Types.ObjectId, ref: 'Admin' })
@@ -26,9 +26,3 @@ export class Faq extends Document {
 }
 
 export const FaqSchema = SchemaFactory.createForClass(Faq);
-
-FaqSchema.index({
-  faq_question: 'text',
-  faq_category: 'text',
-  faq_answer: 'text',
-});

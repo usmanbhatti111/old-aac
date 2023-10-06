@@ -12,3 +12,4 @@ export * from './air-services/task/index';
 export * from './example';
 export * from './billing-invoices';
 export * from './products';
+export * from './faq';

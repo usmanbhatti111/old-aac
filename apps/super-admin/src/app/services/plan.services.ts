@@ -1,5 +1,10 @@
-import { Injectable } from '@nestjs/common';
-import { MODEL, errorResponse, successResponse } from '@shared/constants';
+import { HttpStatus, Injectable } from '@nestjs/common';
+import {
+  MODEL,
+  ResponseMessage,
+  errorResponse,
+  successResponse,
+} from '@shared/constants';
 import {
   AddPlanDto,
   EditPlanDto,
@@ -32,7 +37,7 @@ export class PlanService {
       const page = payload.page || 1;
       const skip = (page - 1) * take;
 
-      const data = await this.planRepository.aggregate([
+      const pipelines = [
         { $skip: skip }, // Skip documents
         { $limit: take }, // Limit the number of documents
         {
@@ -43,10 +48,26 @@ export class PlanService {
             as: 'plan_type',
           },
         },
-      ]);
-      return successResponse(200, 'Success', data);
+      ];
+
+      const paginateRes = await this.planRepository.paginate({
+        filterQuery: {},
+        offset: skip,
+        limit: payload.limit,
+        pipelines,
+      });
+
+      return successResponse(
+        HttpStatus.OK,
+        ResponseMessage.SUCCESS,
+        paginateRes
+      );
     } catch (error) {
-      return errorResponse(400, 'Bad Request', error?.name);
+      return errorResponse(
+        HttpStatus.BAD_REQUEST,
+        ResponseMessage.BAD_REQUEST,
+        error
+      );
     }
   }
 

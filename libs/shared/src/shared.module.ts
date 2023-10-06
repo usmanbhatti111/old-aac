@@ -13,6 +13,8 @@ import {
   PlanProductModuleRepository,
   PlanProductModulePermissionRepository,
   PlanProductRepository,
+  JobRepository,
+  FaqRepository,
   PaymentRepository,
 } from '../src/repositories/index';
 
@@ -34,6 +36,8 @@ import {
     PlanProductModuleRepository,
     PlanProductModulePermissionRepository,
     PlanProductRepository,
+    JobRepository,
+    FaqRepository,
     PaymentRepository,
   ],
   exports: [
@@ -47,6 +51,8 @@ import {
     PlanProductModuleRepository,
     PlanProductModulePermissionRepository,
     PlanProductRepository,
+    JobRepository,
+    FaqRepository,
     PaymentRepository,
   ],
 })

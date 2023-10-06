@@ -1,24 +1,24 @@
 import { HttpStatus, Injectable } from '@nestjs/common';
-import { JobRepository } from '@shared';
+import { FaqRepository } from '@shared';
 import {
   ResponseMessage,
   errorResponse,
   successResponse,
 } from '@shared/constants';
-import { CreateJobDto, FilterJobsDto, IdDTO, UpdateJobDto } from '@shared/dto';
+import { CreateFaqDto, FilterFaqsDto, IdDTO, UpdateFaqDto } from '@shared/dto';
 import dayjs from 'dayjs';
 
 @Injectable()
-export class JobsService {
-  constructor(private jobRepository: JobRepository) {}
+export class FaqsService {
+  constructor(private faqRepository: FaqRepository) {}
 
   notDeletedFilter = {
     isDeleted: false,
   };
 
-  async createJob(payload: CreateJobDto) {
+  async createFaq(payload: CreateFaqDto) {
     try {
-      const res = await this.jobRepository.create(payload);
+      const res = await this.faqRepository.create(payload);
       return successResponse(HttpStatus.CREATED, ResponseMessage.CREATED, res);
     } catch (error) {
       return errorResponse(
@@ -29,12 +29,9 @@ export class JobsService {
     }
   }
 
-  async getJob(payload: IdDTO) {
+  async getFaq(payload: IdDTO) {
     try {
-      const res = await this.jobRepository.findOne({
-        _id: payload.id,
-        ...this.notDeletedFilter,
-      });
+      const res = await this.faqRepository.findOne({ _id: payload.id });
       return successResponse(HttpStatus.OK, ResponseMessage.SUCCESS, res);
     } catch (error) {
       return errorResponse(
@@ -45,7 +42,7 @@ export class JobsService {
     }
   }
 
-  async getJobs(payload: FilterJobsDto) {
+  async getFaqs(payload: FilterFaqsDto) {
     try {
       const { page, limit, search } = payload;
 
@@ -70,13 +67,19 @@ export class JobsService {
         searchFilter = {
           $or: [
             {
-              title: {
+              faqQuestion: {
                 $regex: search,
                 $options: 'i', // Optional: Case-insensitive search
               },
             },
             {
-              description: {
+              faqAnswer: {
+                $regex: search,
+                $options: 'i', // Optional: Case-insensitive search
+              },
+            },
+            {
+              faqCategory: {
                 $regex: search,
                 $options: 'i', // Optional: Case-insensitive search
               },
@@ -92,17 +95,13 @@ export class JobsService {
         ...searchFilter,
       };
 
-      const paginateRes = await this.jobRepository.paginate({
+      const res = await this.faqRepository.paginate({
         filterQuery,
         offset,
         limit,
       });
 
-      return successResponse(
-        HttpStatus.OK,
-        ResponseMessage.SUCCESS,
-        paginateRes
-      );
+      return successResponse(HttpStatus.OK, ResponseMessage.SUCCESS, res);
     } catch (error) {
       return errorResponse(
         HttpStatus.BAD_REQUEST,
@@ -112,11 +111,11 @@ export class JobsService {
     }
   }
 
-  async updateJob(payload: UpdateJobDto) {
+  async updateFaq(payload: UpdateFaqDto) {
     try {
       const { id } = payload;
       delete payload.id;
-      const res = await this.jobRepository.findOneAndUpdate(
+      const res = await this.faqRepository.findOneAndUpdate(
         { _id: id, ...this.notDeletedFilter },
         payload
       );
@@ -130,10 +129,10 @@ export class JobsService {
     }
   }
 
-  async deleteJob(payload: IdDTO) {
+  async deleteFaq(payload: IdDTO) {
     try {
       const { id } = payload;
-      const res = await this.jobRepository.updateMany(
+      const res = await this.faqRepository.updateMany(
         { _id: { $in: id } },
         {
           isDeleted: true,

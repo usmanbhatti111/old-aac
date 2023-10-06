@@ -1,34 +1,35 @@
 import { Schema, Prop, SchemaFactory } from '@nestjs/mongoose';
-import { Document, HydratedDocument } from 'mongoose';
+import { HydratedDocument } from 'mongoose';
+import { AbstractSchema } from './abstract-repo/abstract.schema';
 // import { Admin } from './admin.model'; // Import the Admin model if needed
 // import { JobApplicant } from './job-applicant.model'; // Import the JobApplicant model if needed
 
 export type JobDocument = HydratedDocument<Job>;
 @Schema()
-export class Job {
+export class Job extends AbstractSchema {
   @Prop({ type: String, required: true })
   title: string;
 
   @Prop({ type: String, required: true })
-  job_type: string;
+  jobType: string;
 
   @Prop({ type: String, required: true })
-  job_category: string;
+  jobCategory: string;
 
   @Prop({ type: String, required: true })
   experience: string;
 
   @Prop({ type: Number })
-  number_of_vacancy: number;
+  numberOfVacancy: number;
 
   @Prop({ type: Date })
   deadline: Date;
 
   @Prop({ type: String, default: 'OPEN' })
-  status: string;
+  status?: string;
 
   @Prop({ type: Boolean, default: false })
-  isDeleted: boolean;
+  isDeleted?: boolean;
 
   @Prop({ type: String })
   description: string;

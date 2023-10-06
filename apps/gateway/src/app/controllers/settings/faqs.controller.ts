@@ -21,49 +21,43 @@ import {
   SERVICES,
 } from '@shared/constants';
 import {
-  CreateJobDto,
-  CreateJobResponseDto,
-  FilterJobsDto,
-  GetJobResponseDto,
-  GetJobsResponseDto,
-  UpdateJobDto,
+  CreateFaqDto,
+  CreateFaqResponseDto,
+  FilterFaqsDto,
+  GetFaqResponseDto,
+  GetFaqsResponseDto,
+  UpdateFaqDto,
 } from '@shared/dto';
 import { Response } from 'express';
 import { firstValueFrom } from 'rxjs';
 
 @ApiTags(API_TAGS.SETTINGS)
-@Controller(CONTROLLERS.SETTINGS.JOBS)
+@Controller(CONTROLLERS.SETTINGS.FAQS)
 @ApiBearerAuth()
-export class JobsController {
+export class FaqsController {
   constructor(
-    @Inject(SERVICES.SUPER_ADMIN) private userServiceClient: ClientProxy
+    @Inject(SERVICES.SUPER_ADMIN) private faqServiceClient: ClientProxy
   ) {}
 
   @Post()
-  @ApiCreatedResponse({ type: CreateJobResponseDto })
-  public async createJob(
-    @Body() payload: CreateJobDto,
+  @ApiCreatedResponse({ type: CreateFaqResponseDto })
+  public async createFaq(
+    @Body() payload: CreateFaqDto,
     @Res() res: Response | any
   ) {
-    try {
-      const response = await firstValueFrom(
-        this.userServiceClient.send(
-          { cmd: RMQ_MESSAGES.JOBS.CREATE_JOB },
-          payload
-        )
-      );
-      res.status(response.statusCode).json(response);
-    } catch (err) {
-      res.status(HttpStatus.INTERNAL_SERVER_ERROR).json(err);
-    }
+    const response = await firstValueFrom(
+      this.faqServiceClient.send({ cmd: RMQ_MESSAGES.FAQS.CREATE_FAQ }, payload)
+    );
+
+    return res.status(response.statusCode).json(response);
   }
 
-  @Get(API_ENDPOINTS.JOBS.GET_JOB)
-  @ApiCreatedResponse({ type: GetJobResponseDto })
-  public async getJob(@Param('id') id: string, @Res() res: Response | any) {
+  @Get(API_ENDPOINTS.FAQS.GET_FAQ)
+  @ApiCreatedResponse({ type: GetFaqResponseDto })
+  public async getFaq(@Param('id') id: string, @Res() res: Response | any) {
     try {
       const response = await firstValueFrom(
-        this.userServiceClient.send({ cmd: RMQ_MESSAGES.JOBS.GET_JOB }, { id })
+        this.faqServiceClient.send({ cmd: RMQ_MESSAGES.FAQS.GET_FAQ }, { id })
       );
       res.status(response.statusCode).json(response);
     } catch (err) {
@@ -72,14 +66,14 @@ export class JobsController {
   }
 
   @Get()
-  @ApiCreatedResponse({ type: GetJobsResponseDto })
-  public async getJobs(
-    @Query() filter: FilterJobsDto,
+  @ApiCreatedResponse({ type: GetFaqsResponseDto })
+  public async getFaqs(
+    @Query() filter: FilterFaqsDto,
     @Res() res: Response | any
   ) {
     try {
       const response = await firstValueFrom(
-        this.userServiceClient.send({ cmd: RMQ_MESSAGES.JOBS.GET_JOBS }, filter)
+        this.faqServiceClient.send({ cmd: RMQ_MESSAGES.FAQS.GET_FAQS }, filter)
       );
       res.status(response.statusCode).json(response);
     } catch (err) {
@@ -87,16 +81,16 @@ export class JobsController {
     }
   }
 
-  @Patch(API_ENDPOINTS.JOBS.UPDATE_JOB)
-  @ApiCreatedResponse({ type: GetJobResponseDto })
-  public async updateJob(
-    @Body() payload: UpdateJobDto,
+  @Patch(API_ENDPOINTS.FAQS.UPDATE_FAQ)
+  @ApiCreatedResponse({ type: GetFaqResponseDto })
+  public async updateFaq(
+    @Body() payload: UpdateFaqDto,
     @Res() res: Response | any
   ) {
     try {
       const response = await firstValueFrom(
-        this.userServiceClient.send(
-          { cmd: RMQ_MESSAGES.JOBS.UPDATE_JOB },
+        this.faqServiceClient.send(
+          { cmd: RMQ_MESSAGES.FAQS.UPDATE_FAQ },
           payload
         )
       );
@@ -107,18 +101,17 @@ export class JobsController {
     }
   }
 
-  @Delete(API_ENDPOINTS.JOBS.DELETE_JOB)
-  @ApiCreatedResponse({ type: GetJobResponseDto })
-  public async deleteJob(
-    @Query('id') id: string[],
+  @Delete(API_ENDPOINTS.FAQS.DELETE_FAQ)
+  @ApiCreatedResponse({ type: GetFaqResponseDto })
+  public async deleteFaq(
+    @Query('id') id: [string],
     @Res() res: Response | any
   ) {
     try {
       if (typeof id === 'string') id = [id];
-
       const response = await firstValueFrom(
-        this.userServiceClient.send(
-          { cmd: RMQ_MESSAGES.JOBS.DELETE_JOB },
+        this.faqServiceClient.send(
+          { cmd: RMQ_MESSAGES.FAQS.DELETE_FAQ },
           { id }
         )
       );

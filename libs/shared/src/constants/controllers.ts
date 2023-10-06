@@ -6,6 +6,7 @@ export const CONTROLLERS = {
   SUPER_ADMIN: 'super-admin',
   SETTINGS: {
     JOBS: 'jobs',
+    FAQS: 'faqs',
   },
   PRODUCTS: 'products',
   TICKET: 'ticket',
