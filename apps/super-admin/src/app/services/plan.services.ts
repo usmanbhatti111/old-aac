@@ -34,7 +34,7 @@ export class PlanService {
     private planProductModuleModel: Model<PlanProductModuleDocument>,
     @InjectModel(PlanProductModulePermission.name)
     private planProductModulePermissionModel: Model<PlanProductModulePermissionDocument>
-  ) { }
+  ) {}
 
   async getPlans(payload: PaginationDto) {
     try {
@@ -78,7 +78,7 @@ export class PlanService {
 
   async editPlan(payload: EditPlanDto) {
     try {
-      console.log('edit plan payload', payload)
+      console.log('edit plan payload', payload);
       return successResponse(200, 'Success', {});
     } catch (error) {
       return errorResponse(400, 'Bad Request', error?.name);
