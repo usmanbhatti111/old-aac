@@ -6,8 +6,6 @@ import { SuperAdminController } from './controllers/super-admin.controller';
 import { SuperAdminService } from './services/super-admin.service';
 import { ExampleController } from './controllers/example.controller';
 import { ExampleService } from './services/examples.service';
-import { BillingController } from './controllers/billing.controller';
-import { BillingService } from './services/billing.service';
 import { ProductsController } from './controllers/products.controller';
 import { ProductsService } from './services/products.service';
 import { JobsService } from './services/jobs.service';
@@ -18,7 +16,6 @@ import { InvoiceService } from './services/invoice.service';
   imports: [SharedModule],
   controllers: [
     ExampleController,
-    BillingController,
     ProductsController,
     JobsController,
     InvoiceController,
@@ -26,9 +23,6 @@ import { InvoiceService } from './services/invoice.service';
   ],
   providers: [
     ExampleService,
-    BillingService,
-    ProductsService,
-    JobsService,
     ProductsService,
     JobsService,
     InvoiceService,

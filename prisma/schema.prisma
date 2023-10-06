@@ -51,10 +51,6 @@ enum RoleEnum {
   ADMIN
 }
 
-enum OrganizationPlanStatusEnum {
-  ACTIVE
-  INACTIVE
-}
 
 //////----------------Enums-End---------------------///////
 
@@ -91,13 +87,13 @@ type JobReferences {
 
 //////----------------Models-Start---------------------///////
 model Admin {
-  id               String             @id @default(auto()) @map("_id") @db.ObjectId
-  role             RoleEnum           @default(ADMIN)
-  is_product_owner Boolean            @default(false)
+  id               String   @id @default(auto()) @map("_id") @db.ObjectId
+  role             RoleEnum @default(ADMIN)
+  is_product_owner Boolean  @default(false)
   first_name       String
   middle_name      String?
   last_name        String
-  email            String             @unique
+  email            String   @unique
   phone_number     String?
   post_code        String?
   flat_or_unit     String?
@@ -109,19 +105,19 @@ model Admin {
   job_title        String?
   facebook_url     String?
   linked_url       String?
-  status           String             @default("active")
-  created_by_id    String?            @unique @db.ObjectId
-  created_by_user  Admin?             @relation(name: "creator", fields: [created_by_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  created_by       Admin?             @relation("creator")
-  updated_by_id    String?            @unique @db.ObjectId
-  updated_by_user  Admin?             @relation(name: "updater", fields: [updated_by_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  updated_by       Admin?             @relation("updater")
-  deleted_by_id    String?            @unique @db.ObjectId
-  deleted_by_user  Admin?             @relation(name: "deleter", fields: [deleted_by_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  deleted_by       Admin?             @relation("deleter")
-  created_at       DateTime           @default(now())
-  updated_at       DateTime           @updatedAt
-  deleted_at       DateTime           @default(now())
+  status           String   @default("active")
+  created_by_id    String?  @unique @db.ObjectId
+  created_by_user  Admin?   @relation(name: "creator", fields: [created_by_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  created_by       Admin?   @relation("creator")
+  updated_by_id    String?  @unique @db.ObjectId
+  updated_by_user  Admin?   @relation(name: "updater", fields: [updated_by_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  updated_by       Admin?   @relation("updater")
+  deleted_by_id    String?  @unique @db.ObjectId
+  deleted_by_user  Admin?   @relation(name: "deleter", fields: [deleted_by_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  deleted_by       Admin?   @relation("deleter")
+  created_at       DateTime @default(now())
+  updated_at       DateTime @updatedAt
+  deleted_at       DateTime @default(now())
   jobs             Job[]
   products         Product[]
 }
@@ -178,7 +174,7 @@ model Event {
 }
 
 model Plan {
-  id               String             @id @default(auto()) @map("_id") @db.ObjectId
+  id String @id @default(auto()) @map("_id") @db.ObjectId
 }
 
 model Role {
@@ -186,7 +182,7 @@ model Role {
 }
 
 model Organization {
-  id               String             @id @default(auto()) @map("_id") @db.ObjectId
+  id String @id @default(auto()) @map("_id") @db.ObjectId
 }
 
 model OrganizationSocialMediaIntegration {
@@ -292,38 +288,38 @@ model Asset {
 
 /////------------- Air Services Schema--------------/////////
 
-enum TicketStatusEnum {
+enum TicketStatusEnum { 
   OPEN
   CLOSED
   RESOLVED
 }
-
-enum TicketInternalTypeEnum {
+enum TicketInternalTypeEnum { 
   INTERNAL
 }
 
-enum TicketTypeEnum {
+enum TicketTypeEnum { 
   INTERNAL
   EXTERNAL
 }
 
-enum TicketPirorityEnum {
+enum TicketPirorityEnum { 
   HIGH
   LOW
 }
 
-model Tickets {
-  id            String                 @id @default(auto()) @map("_id") @db.ObjectId
-  details       Json
-  status        TicketStatusEnum
-  subject       String
-  pirority      TicketPirorityEnum
-  type          TicketTypeEnum
-  internal_type TicketInternalTypeEnum
-  ca_id         String?                @db.ObjectId
-  org_admin_id  String?                @db.ObjectId
-  cat_id        String?                @db.ObjectId
-  created_at    DateTime               @default(now())
+model Tickets { 
+    id String @id @default(auto()) @map("_id") @db.ObjectId
+    details Json
+    status TicketStatusEnum
+    subject String
+    pirority TicketPirorityEnum
+    type TicketTypeEnum
+    internal_type TicketInternalTypeEnum
+    ca_id String? @db.ObjectId
+    org_admin_id String? @db.ObjectId
+    cat_id  String? @db.ObjectId
+    created_at    DateTime @default(now())
 }
+
 
 ////////------------------ ---------///////

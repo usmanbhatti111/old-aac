@@ -7,19 +7,6 @@ export const API_ENDPOINTS = {
   AUTHENTICATION: {
     SIGNUP: 'signup',
   },
-  BILLING: {
-    ASSIGN_PLAN: 'assign-plan',
-    BILLING_DETAILS: 'billing-details',
-    ADD_DISCOUNT: 'add-discount',
-  },
-  INVOICES: {
-    GET_ONE: '/:id',
-  },
-  PAYMENTS: {
-    FIND_ONE: '/:id',
-    DELETE_ONE: '/:id',
-    UPDATE_ONE: '/:id',
-  },
   SUPER_ADMIN: {
     BILLING_INVOICES: {
       ASSIGN_PLAN: 'assign-plan',

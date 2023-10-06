@@ -9,9 +9,6 @@ import { WinstonModule } from 'nest-winston';
 import { WinstonConfigService } from './config/winston.config';
 import { AuthController } from './controllers/auth.controller';
 import { HealthController } from './controllers/healthcheck.controller';
-import { BillingController } from './controllers/super-admin/billing.controller';
-import { InvoicesController } from './controllers/org-admin/invoices.controller';
-import { PaymentController } from './controllers/org-admin/payment.controller';
 import { TaskController } from './controllers/tasks/task.controller';
 import { SuperAdminController } from './controllers/super-admin.controller';
 import { JobsController } from './controllers/settings/jobs.controller';
@@ -31,14 +28,11 @@ import { ProductsController } from './controllers/products.controller';
     AppController,
     AuthController,
     HealthController,
-    BillingController,
     SuperAdminController,
     JobsController,
     ProductsController,
     TicketController,
     InventoryController,
-    InvoicesController,
-    PaymentController,
     InvoiceController,
     TaskController,
   ],
