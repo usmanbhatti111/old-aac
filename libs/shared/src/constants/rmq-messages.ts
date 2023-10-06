@@ -7,6 +7,25 @@ export const RMQ_MESSAGES = {
   AUTHENTICATION: {
     SIGNUP: 'auth-login',
   },
+  BILLING: {
+    ASSIGN_PLAN: 'assign-plan',
+    BILLING_DETAILS: 'billing-detials',
+    ADD_DISCOUNT: 'add-discount',
+    ADD_PAYMENT: 'add-payment',
+  },
+  INVOICES: {
+    GET_ALL_INVOICES: 'get-all-invoices',
+    GET_ONE_INVOICE: 'get-one-invoice',
+  },
+  ORG_ADMIN: {
+    PAYMENTS: {
+      ADD_PAYMENT: 'add-payment',
+      UPDATE_PAYMENT: 'update-payment',
+      GET_ALL_PAYMENTS: 'get-all-payments',
+      GET_ONE_PAYMENTS: 'get-one-payment',
+      DELETE_ONE_PAYMENTS: 'delete-one-payment',
+    },
+  },
   SUPER_ADMIN: {
     BILLING_INVOICES: {
       ASSIGN_PLAN: 'assign-plan',
