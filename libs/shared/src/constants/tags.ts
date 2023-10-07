@@ -8,5 +8,7 @@ export const API_TAGS = {
   SETTINGS: 'Settings',
   TICKETS: 'Tickets',
   ASSETS: 'Assets',
+  BILLING_INVOICES: 'Billing & Invoices',
   PRODUCTS: 'Products',
+  PAYMENTS: 'Payments',
 };

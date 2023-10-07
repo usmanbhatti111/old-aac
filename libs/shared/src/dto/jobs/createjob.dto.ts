@@ -18,13 +18,13 @@ export class CreateJobDto {
     type: String,
     required: true,
   })
-  job_type: string;
+  jobType: string;
 
   @ApiProperty({
     enum: EJobCategories,
     required: true,
   })
-  job_category: string;
+  jobCategory: string;
 
   @ApiProperty({
     enum: EExperienceLevel,
@@ -35,14 +35,14 @@ export class CreateJobDto {
   @ApiProperty({
     example: 1,
   })
-  number_of_vacancy: number;
+  numberOfVacancy: number;
 
   @ApiProperty({
     example: '2023-09-27T12:00:00Z',
     required: false,
   })
   @IsISO8601()
-  deadline: string;
+  deadline: Date;
 
   @ApiProperty({
     example: '<h1>This is the description for job</h1>',
@@ -52,7 +52,7 @@ export class CreateJobDto {
   @ApiProperty({
     example: '5f8b14d073bce3c5f404f78c',
   })
-  created_by_id: string;
+  createdById: string;
 }
 
 export class UpdateJobDto {
@@ -73,13 +73,13 @@ export class UpdateJobDto {
     type: String,
   })
   @IsOptional()
-  job_type: string;
+  jobType: string;
 
   @ApiProperty({
     enum: EJobCategories,
   })
   @IsOptional()
-  job_category: string;
+  jobCategory: string;
 
   @ApiProperty({
     enum: EExperienceLevel,
@@ -91,7 +91,7 @@ export class UpdateJobDto {
     example: 1,
   })
   @IsOptional()
-  number_of_vacancy: number;
+  numberOfVacancy: number;
 
   @ApiProperty({
     example: '2023-09-27T12:00:00Z',
@@ -117,18 +117,18 @@ export class CreateJobResponseDto {
   @ApiProperty({
     example: {
       _id: '65154bdc3064871640f8ce14',
-      created_by_id: '65154bdc3064871640f8ce14',
+      createdById: '65154bdc3064871640f8ce14',
       title: 'nodejs dev',
-      job_type: 'FULL_TIME',
-      job_category: 'SALES',
+      jobType: 'FULL_TIME',
+      jobCategory: 'SALES',
       experience: 'NO_EXPERIENCE',
-      number_of_vacancy: 1,
+      numberOfVacancy: 1,
       deadline: '2023-09-27T12:00:00Z',
       status: 'OPEN',
       isDeleted: 'false',
       description: '<h1>This is the description for job</h1>',
-      created_at: '2023-09-27T12:00:00Z',
-      updated_at: '2023-09-27T12:00:00Z',
+      createdAt: '2023-09-27T12:00:00Z',
+      updatedAt: '2023-09-27T12:00:00Z',
     },
   })
   data: object;
@@ -147,18 +147,18 @@ export class GetJobResponseDto {
   @ApiProperty({
     example: {
       _id: '65154bdc3064871640f8ce14',
-      created_by_id: '65154bdc3064871640f8ce14',
+      createdById: '65154bdc3064871640f8ce14',
       title: 'nodejs dev',
-      job_type: 'FULL_TIME',
-      job_category: 'SALES',
+      jobType: 'FULL_TIME',
+      jobCategory: 'SALES',
       experience: 'NO_EXPERIENCE',
-      number_of_vacancy: 1,
+      numberOfVacancy: 1,
       deadline: '2023-09-27T12:00:00Z',
       status: 'OPEN',
       isDeleted: 'false',
       description: '<h1>This is the description for job</h1>',
-      created_at: '2023-09-27T12:00:00Z',
-      updated_at: '2023-09-27T12:00:00Z',
+      createdAt: '2023-09-27T12:00:00Z',
+      updatedAt: '2023-09-27T12:00:00Z',
     },
   })
   data: object;
@@ -178,18 +178,18 @@ export class GetJobsResponseDto {
     example: [
       {
         _id: '65154bdc3064871640f8ce14',
-        created_by_id: '65154bdc3064871640f8ce14',
+        createdById: '65154bdc3064871640f8ce14',
         title: 'nodejs dev',
-        job_type: 'FULL_TIME',
-        job_category: 'SALES',
+        jobType: 'FULL_TIME',
+        jobCategory: 'SALES',
         experience: 'NO_EXPERIENCE',
-        number_of_vacancy: 1,
+        numberOfVacancy: 1,
         deadline: '2023-09-27T12:00:00Z',
         status: 'OPEN',
         isDeleted: 'false',
         description: '<h1>This is the description for job</h1>',
-        created_at: '2023-09-27T12:00:00Z',
-        updated_at: '2023-09-27T12:00:00Z',
+        createdAt: '2023-09-27T12:00:00Z',
+        updatedAt: '2023-09-27T12:00:00Z',
       },
     ],
   })

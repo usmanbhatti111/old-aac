@@ -3,7 +3,7 @@ import { HydratedDocument } from 'mongoose';
 
 export type ExampleDocument = HydratedDocument<Example>;
 
-@Schema()
+@Schema({})
 export class Example {
   @Prop()
   title: string;

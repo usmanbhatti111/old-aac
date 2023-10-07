@@ -8,6 +8,9 @@ import {
   TicketRepository,
   InventoryRepository,
   TaskRepository,
+  JobRepository,
+  FaqRepository,
+  PaymentRepository,
 } from '../src/repositories/index';
 
 @Module({
@@ -18,11 +21,15 @@ import {
     }),
     MongooseModule.forFeature(DbModels),
   ],
+
   providers: [
     SharedService,
     TicketRepository,
     InventoryRepository,
     TaskRepository,
+    JobRepository,
+    FaqRepository,
+    PaymentRepository,
   ],
   exports: [
     SharedService,
@@ -30,6 +37,9 @@ import {
     TicketRepository,
     InventoryRepository,
     TaskRepository,
+    JobRepository,
+    FaqRepository,
+    PaymentRepository,
   ],
 })
 export class SharedModule {}

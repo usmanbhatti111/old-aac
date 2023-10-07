@@ -1,6 +1,5 @@
 import { Injectable } from '@nestjs/common';
 import { errorResponse, successResponse } from '@shared/constants';
-import { PrismaService } from '@shared/services';
 import { OrganizationCompanyAccountProductService } from './organization-company-account-product.service'
 import { OrganizationCompanyAccountRepository } from '@shared';
 @Injectable()

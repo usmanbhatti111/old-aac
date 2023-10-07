@@ -17,6 +17,9 @@ export const API_ENDPOINTS = {
     GET_ORGANIZATION_COMPANY_ACCOUNTS: '/:organization_id',
   },
   SUPER_ADMIN: {
+    BILLING_INVOICES: {
+      ASSIGN_PLAN: 'assign-plan',
+    },
     ADD_USER: 'add-user',
     USER_LIST: 'user-list',
     USER_PROFILE: 'user-profile/:userId',
@@ -28,7 +31,12 @@ export const API_ENDPOINTS = {
   JOBS: {
     GET_JOB: '/:id',
     UPDATE_JOB: '/:id',
-    DELETE_JOB: '/:id',
+    DELETE_JOB: '/',
+  },
+  FAQS: {
+    GET_FAQ: '/:id',
+    UPDATE_FAQ: '/:id',
+    DELETE_FAQ: '/:id',
   },
   PRODUCTS: {
     ADD_PRODUCT: '/',
@@ -39,12 +47,20 @@ export const API_ENDPOINTS = {
   AIR_SERVICES: {
     TICKETS: {
       ticket: 'ticket',
+      ADD_CHILD_TICKET: 'add-child-ticket',
+      ASSOCIATE_ASSETS:'associate-assets'
     },
     ASSETS: {
       INVENTORY: 'inventory',
     },
     TASK: {
-      ADD_TASK: 'add-task',
+      ADD_TASK: '/',
+      GET_TASK: '/',
     },
+  },
+  PAYMENTS: {
+    FIND_ONE: '/:id',
+    DELETE_ONE: '/:id',
+    UPDATE_ONE: '/:id',
   },
 };

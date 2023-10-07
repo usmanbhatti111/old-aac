@@ -52,7 +52,6 @@ export class JobsController {
           payload
         )
       );
-
       res.status(response.statusCode).json(response);
     } catch (err) {
       res.status(HttpStatus.INTERNAL_SERVER_ERROR).json(err);
@@ -110,8 +109,13 @@ export class JobsController {
 
   @Delete(API_ENDPOINTS.JOBS.DELETE_JOB)
   @ApiCreatedResponse({ type: GetJobResponseDto })
-  public async deleteJob(@Param('id') id: string, @Res() res: Response | any) {
+  public async deleteJob(
+    @Query('id') id: string[],
+    @Res() res: Response | any
+  ) {
     try {
+      if (typeof id === 'string') id = [id];
+
       const response = await firstValueFrom(
         this.userServiceClient.send(
           { cmd: RMQ_MESSAGES.JOBS.DELETE_JOB },

@@ -28,6 +28,14 @@ export enum EJobCategories {
   LOYALTY_PROGRAM = 'LOYALTY_PROGRAM',
 }
 
+export enum EFaqCategories {
+  SALES = 'SALES',
+  MARKETING = 'MARKETING',
+  SERVICES = 'SERVICES',
+  OPERATIONS = 'OPERATIONS',
+  LOYALTY_PROGRAM = 'LOYALTY_PROGRAM',
+}
+
 export enum EExperienceLevel {
   NO_EXPERIENCE = 'NO_EXPERIENCE',
   LESS_THAN_YEAR = 'LESS_THAN_YEAR',
@@ -57,4 +65,16 @@ export enum TicketStatusEnum {
   OPEN = 'OPEN',
   CLOSED = 'CLOSED',
   RESOLVED = 'RESOLVED',
+}
+
+export enum OrganizationPlanStatusEnum {
+  ACTIVE = 'ACTIVE',
+  INACTIVE = 'INACTIVE',
+}
+
+export enum BillingCycleEnum {
+  MONTHLY = 'MONTHLY',
+  QUARTERLY = 'QUARTERLY',
+  HALF_YEARLY = 'HALF_YEARLY',
+  YEARLY = 'YEARLY',
 }

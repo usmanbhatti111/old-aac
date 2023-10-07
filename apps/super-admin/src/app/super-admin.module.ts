@@ -9,6 +9,10 @@ import { ExampleService } from './services/examples.service';
 import { ProductsController } from './controllers/products.controller';
 import { ProductsService } from './services/products.service';
 import { JobsService } from './services/jobs.service';
+import { FaqsController } from './controllers/faqs.controller';
+import { FaqsService } from './services/faqs.service';
+import { InvoiceController } from './controllers/invoice.controller';
+import { InvoiceService } from './services/invoice.service';
 
 @Module({
   imports: [SharedModule],
@@ -16,8 +20,18 @@ import { JobsService } from './services/jobs.service';
     ExampleController,
     ProductsController,
     JobsController,
+    FaqsController,
+    InvoiceController,
     SuperAdminController,
   ],
-  providers: [ExampleService, ProductsService, JobsService, SuperAdminService],
+  providers: [
+    ExampleService,
+    ProductsService,
+    JobsService,
+    SuperAdminService,
+    FaqsService,
+    InvoiceService,
+    SuperAdminService,
+  ],
 })
 export class SuperAdminModule {}
