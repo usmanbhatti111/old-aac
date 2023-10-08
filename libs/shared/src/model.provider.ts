@@ -19,6 +19,10 @@ import {
   JobSchema,
   Payment,
   PaymentSchema,
+  Organization,
+  OrganizationCompanyAccount,
+  OrganizationSchema,
+  OrganizationCompanyAccountSchema
 } from './schema';
 export const DbModels = [
   {
@@ -63,4 +67,12 @@ export const DbModels = [
     name: Payment.name,
     schema: PaymentSchema,
   },
+  {
+    name: Organization.name,
+    schema: OrganizationSchema
+  },
+  {
+    name: OrganizationCompanyAccount.name,
+    schema: OrganizationCompanyAccountSchema
+  }
 ];

@@ -1,13 +1,11 @@
 import { Controller } from '@nestjs/common';
 import { MessagePattern, Payload } from '@nestjs/microservices';
 import { RMQ_MESSAGES } from '@shared/constants';
-import { PrismaService } from '@shared/services';
 import { OrganizationCompanyAccountService } from '../services/organization-company-account.service';
 
 @Controller()
 export class OrganizationCompanyAccountController {
   constructor(
-    private prisma: PrismaService,
     private readonly OrganizationCompanyAccountService: OrganizationCompanyAccountService
   ) {}
 

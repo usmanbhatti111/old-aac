@@ -1,39 +1,15 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsInt, IsNotEmpty, IsOptional } from 'class-validator';
 import { Type } from 'class-transformer';
-import { IOrganization } from './organization.dto';
 
 export interface IOrganizationCompanyAccount {
-  organization_id: string;
-  organization: IOrganization;
-  logo_url?: string;
-  account_name: string;
-  phone_no: string;
+  organizationId: string;
+  logoUrl?: string;
+  accountName: string;
+  phoneNo: string;
   address: string;
-  post_code: string;
-  // products :OrganizationCompanyAccountProduct[].
+  postCode: string;
   status: string;
-}
-export class OrganizationCompanyAccountProductDto {
-  @ApiProperty({
-    example: '1',
-    description: 'The unique identifier for the product.',
-  })
-  readonly id: string;
-
-  @ApiProperty({
-    example: '279389Afgd',
-    description:
-      'The unique identifier for the organization company account associated with this product.',
-  })
-  organization_company_account_id: string;
-
-  @ApiProperty({
-    example: 'Marketing',
-    description: 'The name of the product.',
-  })
-  @IsNotEmpty()
-  product: string;
 }
 
 export class CreateOrganizationCompanyAccountDto {
@@ -43,21 +19,21 @@ export class CreateOrganizationCompanyAccountDto {
       'The unique identifier for the organization associated with this account.',
   })
   @IsNotEmpty()
-  organization_id: string;
+  organizationId: string;
 
   @ApiProperty({
     example: 'My Company',
     description: 'The name of the account.',
   })
   @IsNotEmpty()
-  account_name: string;
+  accountName: string;
 
   @ApiProperty({
     example: '+1234567890',
     description: 'The phone number associated with the account.',
   })
   @IsNotEmpty()
-  phone_no: string;
+  phoneNo: string;
 
   @ApiProperty({
     example: '123 Main St',
@@ -71,19 +47,19 @@ export class CreateOrganizationCompanyAccountDto {
     description: 'The postal code of the account.',
   })
   @IsNotEmpty()
-  post_code: string;
+  postCode: string;
 
   @ApiProperty({
     example: 'https://example.com/logo.png',
     description: "The URL to the account's logo.",
   })
-  logo_url: string;
+  logoUrl: string;
 
   @ApiProperty({
-    type: [OrganizationCompanyAccountProductDto],
+    type: [String],
     description: 'The products associated with this account.',
   })
-  products: OrganizationCompanyAccountProductDto[];
+  products: string[];
 
   @ApiProperty({
     example: 'Active',
@@ -104,21 +80,21 @@ export class OrganizationCompanyAccountDto {
       'The unique identifier for the organization associated with this account.',
   })
   @IsNotEmpty()
-  organization_id: string;
+  organizationId: string;
 
   @ApiProperty({
     example: 'My Company',
     description: 'The name of the account.',
   })
   @IsNotEmpty()
-  account_name: string;
+  accountName: string;
 
   @ApiProperty({
     example: '+1234567890',
     description: 'The phone number associated with the account.',
   })
   @IsNotEmpty()
-  phone_no: string;
+  phoneNo: string;
 
   @ApiProperty({
     example: '123 Main St',
@@ -132,19 +108,19 @@ export class OrganizationCompanyAccountDto {
     description: 'The postal code of the account.',
   })
   @IsNotEmpty()
-  post_code: string;
+  postCode: string;
 
   @ApiProperty({
     example: 'https://example.com/logo.png',
     description: "The URL to the account's logo.",
   })
-  logo_url: string;
+  logoUrl: string;
 
   @ApiProperty({
-    type: [OrganizationCompanyAccountProductDto],
+    type: [String],
     description: 'The products associated with this account.',
   })
-  products: OrganizationCompanyAccountProductDto[];
+  products: string[];
 
   @ApiProperty({
     example: 'Active',

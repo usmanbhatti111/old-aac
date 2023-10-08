@@ -23,6 +23,7 @@ import {
   OrganizationCompanyAccountsResponseDto,
   GetOrganizationCompanyAccountDto
 } from '@shared/dto';
+import { log } from 'console';
 import { Response } from 'express';
 import { firstValueFrom } from 'rxjs';
 
@@ -68,20 +69,23 @@ export class OrganizationCompanyAccountController {
     type: OrganizationCompanyAccountsResponseDto,
   })
   public async getOrganizationAccount(
-    @Param('organization_id') organization_id: string,
+    @Param('organizationId') organizationId: string,
     @Query() query: GetOrganizationCompanyAccountDto,
     @Res() res: Response | any
   ) {
-    const response = await firstValueFrom(
+    
+      const response = await firstValueFrom(
       this.organizationServiceClient.send(
         {
           cmd: RMQ_MESSAGES.ORGANIZATION_COMPANY_ACCOUNT
             .GET_ORGANIZATION_COMPANY_ACCOUNTS,
         },
-        { organization_id,...query }
+        { organizationId,...query }
       )
     );
-
+        
     return res.status(response.statusCode).json(response);
+  
+    
   }
 }

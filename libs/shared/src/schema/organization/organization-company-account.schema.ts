@@ -1,5 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { HydratedDocument } from 'mongoose';
+import mongoose, { HydratedDocument, SchemaTypes } from 'mongoose';
 import { AbstractSchema } from '../abstract-repo/abstract.schema';
 import { IOrganizationCompanyAccount } from '../../dto/organization';
 import { Organization } from './organization.schema';
@@ -8,30 +8,34 @@ export type OrganizationCompanyAccountDocument = HydratedDocument<OrganizationCo
 
 @Schema()
 export class OrganizationCompanyAccount extends AbstractSchema implements IOrganizationCompanyAccount{
-  
-  @Prop()
-  organization_id: string;
 
-  @Prop()
-  organization: Organization;
+  @Prop({
+    type: SchemaTypes.ObjectId,
+    required: true,
+    ref: 'organization'
+  })
+  organizationId: string;
 
-  @Prop()
-  logo_url?: string;
+  @Prop({ type: String, required: false })
+  logoUrl?: string;
 
-  @Prop()
-  account_name: string;
+  @Prop({ type: String, required: true })
+  accountName: string;
 
-  @Prop()
-  phone_no: string;
+  @Prop({ type: String, required: true })
+  phoneNo: string;
 
-  @Prop()
+  @Prop({ type: String, required: true })
   address: string;
 
-  @Prop()
-  post_code: string;
+  @Prop({ type: String, required: true })
+  postCode: string;
 
-  @Prop()
+  @Prop({ type: String, required: false, default:'Active' })
   status: string;
+
+  @Prop({ type: [SchemaTypes.ObjectId], ref: 'products', default: [] }) 
+  products: string[]; 
 }
 
 export const OrganizationCompanyAccountSchema = SchemaFactory.createForClass(OrganizationCompanyAccount);

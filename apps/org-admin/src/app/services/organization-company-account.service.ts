@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { errorResponse, successResponse } from '@shared/constants';
-import { OrganizationCompanyAccountProductService } from './organization-company-account-product.service'
 import { OrganizationCompanyAccountRepository } from '@shared';
+import mongoose from 'mongoose';
 @Injectable()
 export class OrganizationCompanyAccountService {
   constructor(private organizationCompanyAccountRepository: OrganizationCompanyAccountRepository) { }
@@ -12,36 +12,28 @@ export class OrganizationCompanyAccountService {
 
   async createOrganizationCompanyAccount(payload: any) {
     try {
-      const { products, ...accountData } = payload; // Extract products from payload
-      // Check if a company with the same name already exists
-      const existingCompany = await this.organizationCompanyAccountRepository.findOne({
-        where: {
-          account_name: accountData.account_name,
-        },
-      });
 
-      if (existingCompany) {
+      // Check if a company with the same name already exists
+      const existingCompany = await this.organizationCompanyAccountRepository.find({
+        accountName: payload.accountName,
+      });
+      if (existingCompany.length>0) {
         return errorResponse(409, 'This company account already exist.');
       }
       const res = await this.organizationCompanyAccountRepository.create({
-        ...accountData
+        ...payload
       });
-      const productPromises = products.map(async (productPayload) => {
-        const product = await this.OrganizationCompanyAccountProductService.createProduct(productPayload, res.id);
-        return product;
-      });
-      const createdProducts = await Promise.all(productPromises);
       return successResponse(200, 'Company account added successfully', {
         res,
-        products: createdProducts
       });
     } catch (error) {
-      return errorResponse(400, error?.meta?.message);
+      return errorResponse(400, error?.response?.message);
     }
   }
 
   async getOrganizationCompanyAccounts(payload: any) {
     try {
+
       const page = payload.page || 1; // Default to page 1 if not specified
       const perPage = payload.limit || 10; // Default to 10 items per page if not specified
 
@@ -49,14 +41,13 @@ export class OrganizationCompanyAccountService {
 
       // Get the total count of records (without pagination)
       const totalCount = await this.organizationCompanyAccountRepository.count({
-        where: {
-          organization_id: payload.organization_id,
-        },
+          organizationId: payload.organizationId,
       });
+     
       const res = await this.organizationCompanyAccountRepository.paginate({
-        // {
-        //   organization_id: payload.organization_id,
-        // },
+        filterQuery: {
+            organizationId: new mongoose.Types.ObjectId(payload.organizationId),
+        },
         // include: {
         //   products: true,
         // },

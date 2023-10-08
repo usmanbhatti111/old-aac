@@ -17,20 +17,18 @@ export class OrganizationService {
       });
       return successResponse(200, 'Success', res);
     } catch (error) {
-      return errorResponse(400, error?.meta?.message);
+      return errorResponse(400, error?.response?.message);
     }
   }
 
   async getOrganization(payload: any) {
     try {
       const res = await this.organizationRepository.findOne({
-        where: {
-          id: payload.id,
-        },
+          _id: payload.id,
       });
       return successResponse(200, 'Success', res);
     } catch (error) {
-      return errorResponse(400, error?.meta?.message);
+      return errorResponse(400, error?.response?.message);
     }
   }
 
@@ -45,10 +43,10 @@ export class OrganizationService {
 
   async updateOrganization(payload: any) {
     try {
-      const { id, registration_number,name, ...updatedFields } = payload;
-
-      const res = await this.organizationRepository.findOneAndUpdate({
-        where: { id },},{...updatedFields}
+      const { id } = payload.id;
+      delete payload.id,payload.name,payload.registrationNumber;
+      const res = await this.organizationRepository.findOneAndUpdate(
+        { id },payload
       );
       return successResponse(200, 'Success', res);
     } catch (error) {

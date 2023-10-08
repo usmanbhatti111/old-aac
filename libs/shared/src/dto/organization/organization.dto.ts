@@ -2,22 +2,22 @@ import { ApiProperty } from '@nestjs/swagger';
 import { IsNotEmpty } from 'class-validator';
 
 export interface IOrganization {
-  logo_url?: string;
-  registration_number?: string;
+  logoUrl?: string;
+  registrationNumber?: string;
   name: string;
   email: string;
-  phone_no: string;
+  phoneNo: string;
   address: string;
-  post_code: string;
-  created_at: Date;
-  updated_at?: Date;
-  deleted_at?: Date;
+  postCode: string;
+  createdAt: Date;
+  updatedAt?: Date;
+  deletedAt?: Date;
 }
 export class CreateOrganizationDto {
   @ApiProperty({
     example: '8C68902',
   })
-  registration_number: string;
+  registrationNumber: string;
 
   @ApiProperty({
     example: 'Orcalo Holdings',
@@ -36,7 +36,7 @@ export class CreateOrganizationDto {
     example: '++13432121',
   })
   @IsNotEmpty()
-  phone_no: string;
+  phoneNo: string;
 
   @ApiProperty({
     required: true,
@@ -50,7 +50,7 @@ export class CreateOrganizationDto {
     example: 'CN789',
   })
   @IsNotEmpty()
-  post_code: string;
+  postCode: string;
 }
 
 export class OrganizationDto {
@@ -63,7 +63,7 @@ export class OrganizationDto {
   @ApiProperty({
     example: '8C68902',
   })
-  registration_number: string;
+  registrationNumber: string;
 
   @ApiProperty({
     example: 'Orcalo Holdings',
@@ -82,7 +82,7 @@ export class OrganizationDto {
     example: '++13432121',
   })
   @IsNotEmpty()
-  phone_no: string;
+  phoneNo: string;
 
   @ApiProperty({
     required: true,
@@ -96,7 +96,7 @@ export class OrganizationDto {
     example: 'CN789',
   })
   @IsNotEmpty()
-  post_code: string;
+  postCode: string;
 }
 
 export class OrganizationResponseDto {

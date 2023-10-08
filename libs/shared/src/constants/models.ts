@@ -5,6 +5,8 @@ export const MODEL = {
   TICKET: 'Ticket',
   CHILD_TICKET: 'ChildTicket',
   ORGANIZATION_PLAN: 'OrganizationPlan',
+  ORGANIZATION: 'Organization',
+  ORGANIZATION_COMPANY_ACCOUNT:'OrganizationCompanyAccount',
   TASK: 'Task',
   JOBS: 'Jobs',
   FAQS: 'Faqs',

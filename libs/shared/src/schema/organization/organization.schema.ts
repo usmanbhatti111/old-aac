@@ -11,7 +11,7 @@ export type OrganizationDocument = HydratedDocument<Organization>;
 export class Organization extends AbstractSchema implements IOrganization{
 
   @Prop({ type: String, required: true })
-  registration_number: string;
+  registrationNumber: string;
 
   @Prop({ type: String, required: true })
   name: string;
@@ -20,25 +20,25 @@ export class Organization extends AbstractSchema implements IOrganization{
   email: string;
 
   @Prop({ type: String, required: true })
-  phone_no: string;
+  phoneNo: string;
 
   @Prop({ type: String, required: true })
   address: string;
 
   @Prop({ type: String, required: true })
-  post_code: string;
+  postCode: string;
 
   @Prop({ type: String, required: false })
-  logo_url?: string;
+  logoUrl?: string;
 
-  @Prop()
-  created_at: Date;
+  @Prop({ type: Date, required: false })
+  createdAt: Date;
 
-  @Prop()
-  updated_at: Date;
+  @Prop({ type: Date, required: false })
+  updatedAt: Date;
 
-  @Prop()
-  deleted_at: Date;
+  @Prop({ type: Date, required: false })
+  deletedAt: Date;
 }
 
 export const OrganizationSchema = SchemaFactory.createForClass(Organization);
