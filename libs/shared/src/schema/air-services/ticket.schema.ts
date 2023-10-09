@@ -76,8 +76,8 @@ export class Ticket extends AbstractSchema {
     type: [{ type: SchemaTypes.ObjectId, ref: Inventory.name }],
     required: false,
   })
-  associateAssets: string[]; 
-  
+  associateAssets: string[];
+
   @Prop({
     type: [SchemaTypes.ObjectId],
     required: false,

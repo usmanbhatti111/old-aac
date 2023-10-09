@@ -48,14 +48,22 @@ export const API_ENDPOINTS = {
     TICKETS: {
       ticket: 'ticket',
       ADD_CHILD_TICKET: 'add-child-ticket',
-      ASSOCIATE_ASSETS:'associate-assets'
+      GET_CHILD_TICKETS: 'get-child-tickets/:ticketId',
+      ASSOCIATE_ASSETS: 'associate-assets',
     },
     ASSETS: {
       INVENTORY: 'inventory',
+      DELETE_INVENTORY: '/:id',
     },
     TASK: {
       ADD_TASK: '/',
       GET_TASK: '/',
+      UPDATE_TASK: '/:id',
+      DELETE_TASK: '/:id',
+    },
+    EXPENSE: {
+      ADD_EXPENSE: 'add-expense',
+      GET_EXPENSE: 'get-expense',
     },
   },
   PAYMENTS: {

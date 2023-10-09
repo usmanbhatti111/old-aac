@@ -21,4 +21,8 @@ export class TicketController {
   public async createChildTicket(@Payload() payload: CreateTicketDTO) {
     return this.ticketService.createChildTicket(payload);
   }
+  @MessagePattern(RMQ_MESSAGES.AIR_SERVICES.TICKETS.GET_CHILD_TICKETS)
+  public async getChildTicket(@Payload() payload: any) {
+    return this.ticketService.getChildTicket(payload);
+  }
 }

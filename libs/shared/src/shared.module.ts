@@ -13,6 +13,7 @@ import {
   PaymentRepository,
   OrganizationRepository,
   OrganizationCompanyAccountRepository,
+  ExpenseRepository,
 } from '../src/repositories/index';
 
 @Module({
@@ -23,7 +24,6 @@ import {
     }),
     MongooseModule.forFeature(DbModels),
   ],
-
   providers: [
     SharedService,
     TicketRepository,
@@ -34,6 +34,7 @@ import {
     PaymentRepository,
     OrganizationRepository,
     OrganizationCompanyAccountRepository,
+    ExpenseRepository,
   ],
   exports: [
     SharedService,
@@ -46,6 +47,7 @@ import {
     PaymentRepository,
     OrganizationRepository,
     OrganizationCompanyAccountRepository,
+    ExpenseRepository,
   ],
 })
 export class SharedModule {}

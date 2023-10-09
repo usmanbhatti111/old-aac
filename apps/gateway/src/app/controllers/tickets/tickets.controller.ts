@@ -6,9 +6,11 @@ import {
   Get,
   Body,
   Query,
+  Param,
 } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
-import { ApiBearerAuth, ApiQuery, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiParam, ApiQuery, ApiTags } from '@nestjs/swagger';
+
 import {
   API_ENDPOINTS,
   API_TAGS,
@@ -26,7 +28,7 @@ import { AssociateAssetsDTO, CreateTicketDTO } from '@shared/dto';
 export class TicketController {
   constructor(
     @Inject(SERVICES.AIR_SERVICES) private ariServiceClient: ClientProxy
-  ) { }
+  ) {}
 
   @Post()
   public async createTicket(
@@ -63,7 +65,8 @@ export class TicketController {
   @Post(API_ENDPOINTS.AIR_SERVICES.TICKETS.ASSOCIATE_ASSETS)
   public async associateAssets(
     @Body() payload: AssociateAssetsDTO,
-    @Res() res: Response | any) {
+    @Res() res: Response | any
+  ) {
     try {
       const response = await firstValueFrom(
         this.ariServiceClient.send(
@@ -92,6 +95,30 @@ export class TicketController {
           RMQ_MESSAGES.AIR_SERVICES.TICKETS.CREATE_CHILD_TICKET,
           {
             ...dto,
+            ticketId,
+          }
+        )
+      );
+      return res.status(response.statusCode).json(response);
+    } catch (err) {
+      return res.status(err.statusCode).json(err);
+    }
+  }
+
+  @Get(API_ENDPOINTS.AIR_SERVICES.TICKETS.GET_CHILD_TICKETS)
+  @ApiParam({
+    type: String,
+    name: 'ticketId',
+  })
+  public async getChildTicket(
+    @Res() res: Response | any,
+    @Param('ticketId') ticketId: string
+  ) {
+    try {
+      const response = await firstValueFrom(
+        this.ariServiceClient.send(
+          RMQ_MESSAGES.AIR_SERVICES.TICKETS.GET_CHILD_TICKETS,
+          {
             ticketId,
           }
         )

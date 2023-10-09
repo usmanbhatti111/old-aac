@@ -46,8 +46,9 @@ export abstract class AbstractRepository<TDocument extends AbstractSchema> {
     }
     this.singleName += `${this.friendlyName
       .slice(1, end)
-      .replace(/([A-Z]+)*([A-Z][a-z])/g, '$1 $2')}${end == -3 ? 'y' : ''
-      }`.toLowerCase();
+      .replace(/([A-Z]+)*([A-Z][a-z])/g, '$1 $2')}${
+      end == -3 ? 'y' : ''
+    }`.toLowerCase();
   }
 
   async create(document: TDocument, options?: SaveOptions): Promise<TDocument> {
@@ -192,10 +193,9 @@ export abstract class AbstractRepository<TDocument extends AbstractSchema> {
     return document;
   }
 
-
   async findByIdAndUpdate(
     filterQuery: FilterQuery<TDocument>,
-    update: UpdateQuery<TDocument>,
+    update: UpdateQuery<TDocument>
   ) {
     const document = await this.model.findByIdAndUpdate(filterQuery, update, {
       lean: true,

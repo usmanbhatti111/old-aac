@@ -3,6 +3,8 @@ import {
   ExampleSchema,
   Ticket,
   TicketSchema,
+  Expense,
+  ExpenseSchema,
   Inventory,
   InventorySchema,
   OrganizationPlan,
@@ -29,7 +31,6 @@ export const DbModels = [
     name: Example.name,
     schema: ExampleSchema,
   },
-  ,
   {
     name: Inventory.name,
     schema: InventorySchema,
@@ -40,6 +41,10 @@ export const DbModels = [
     schema: TicketSchema,
   },
   {
+    name: Expense.name,
+    schema: ExpenseSchema,
+  },
+  {
     name: OrganizationPlan.name,
     schema: OrganizationPlanSchema,
   },
@@ -47,6 +52,7 @@ export const DbModels = [
     name: Task.name,
     schema: TaskSchema,
   },
+
   {
     name: Job.name,
     schema: JobSchema,

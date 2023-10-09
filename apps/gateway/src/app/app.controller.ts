@@ -44,7 +44,7 @@ export class AppController {
 
   @Post(API_ENDPOINTS.EXAMPLE.CREATE_EXAMPLE)
   @ApiCreatedResponse({ type: CreateExampleResponseDto })
-  async create(@Body() body: CreateExampleDto, @Res() res: Response) {
+  async create(@Body() body: CreateExampleDto, @Res() res: Response | any) {
     try {
       const response = await firstValueFrom(
         this.serviceClient.send(
@@ -63,7 +63,7 @@ export class AppController {
 
   @Get(API_ENDPOINTS.EXAMPLE.GET_EXAMPLES)
   @ApiOkResponse({ type: GetExamplesResponseDto })
-  async getList(@Query() query: GetExamplesDto, @Res() res: Response) {
+  async getList(@Query() query: GetExamplesDto, @Res() res: Response | any) {
     try {
       const response = await firstValueFrom(
         this.serviceClient.send(

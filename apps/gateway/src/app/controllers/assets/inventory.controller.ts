@@ -1,4 +1,13 @@
-import { Body, Controller, Get, Inject, Post, Res } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Delete,
+  Inject,
+  Post,
+  Res,
+  Query,
+} from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
 import { ApiTags } from '@nestjs/swagger';
 import {
@@ -8,7 +17,7 @@ import {
   RMQ_MESSAGES,
   SERVICES,
 } from '@shared/constants';
-import { AddInventoryDto } from '@shared/dto';
+import { AddInventoryDto, GetInventoryDto } from '@shared/dto';
 import { Response } from 'express';
 import { firstValueFrom } from 'rxjs';
 
@@ -38,12 +47,33 @@ export class InventoryController {
     }
   }
   @Get(API_ENDPOINTS.AIR_SERVICES.ASSETS.INVENTORY)
-  public async getInventory(@Res() res: Response | any) {
+  public async getInventory(
+    @Query() payload: GetInventoryDto,
+    @Res() res: Response | any
+  ) {
     try {
       const response = await firstValueFrom(
         this.airServiceClient.send(
           RMQ_MESSAGES.AIR_SERVICES.ASSETS.GET_Inventory,
-          {}
+          { ...payload }
+        )
+      );
+
+      return res.status(response.statusCode).json(response);
+    } catch (err) {
+      return res.status(err.statusCode).json(err);
+    }
+  }
+  @Delete(API_ENDPOINTS.AIR_SERVICES.ASSETS.DELETE_INVENTORY)
+  public async deleteInventory(
+    @Query('ids') ids: string[],
+    @Res() res: Response | any
+  ) {
+    try {
+      const response = await firstValueFrom(
+        this.airServiceClient.send(
+          RMQ_MESSAGES.AIR_SERVICES.ASSETS.Delete_Inventory,
+          { ids }
         )
       );
 
