@@ -48,6 +48,8 @@ export const API_ENDPOINTS = {
     TASK: {
       ADD_TASK: '/',
       GET_TASK: '/',
+      UPDATE_TASK: '/:id',
+      DELETE_TASK: '/:id',
     },
   },
   PAYMENTS: {

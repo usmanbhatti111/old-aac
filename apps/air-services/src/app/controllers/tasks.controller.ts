@@ -16,4 +16,14 @@ export class TaskController {
   getTasks(@Payload() payload: AddTaskDto) {
     return this.taskService.getTasks(payload);
   }
+
+  @MessagePattern(RMQ_MESSAGES.AIR_SERVICES.TASK.UPDATE_TASK)
+  async updateTask(@Payload() payload: AddTaskDto) {
+    return this.taskService.updateTask(payload);
+  }
+
+  @MessagePattern(RMQ_MESSAGES.AIR_SERVICES.TASK.DELETE_TASK)
+  deleteTask(@Payload() payload: { ids: string[] }) {
+    return this.taskService.deleteTask(payload);
+  }
 }
