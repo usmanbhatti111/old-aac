@@ -51,6 +51,7 @@ export const RMQ_MESSAGES = {
     ASSETS: {
       ADD_Inventory: 'add-inventory',
       GET_Inventory: 'get-inventory',
+      Delete_Inventory: 'delete-inventory',
     },
     TASK: {
       ADD_TASK: 'add_task',

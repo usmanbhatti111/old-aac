@@ -21,7 +21,6 @@ import {
     }),
     MongooseModule.forFeature(DbModels),
   ],
-
   providers: [
     SharedService,
     TicketRepository,
