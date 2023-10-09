@@ -52,6 +52,10 @@ export const API_ENDPOINTS = {
       UPDATE_TASK: '/:id',
       DELETE_TASK: '/:id',
     },
+    EXPENSE: {
+      ADD_EXPENSE: 'add-expense',
+      GET_EXPENSE: 'get-expense',
+    },
   },
   PAYMENTS: {
     FIND_ONE: '/:id',

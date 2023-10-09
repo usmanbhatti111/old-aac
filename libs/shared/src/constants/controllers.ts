@@ -10,6 +10,7 @@ export const CONTROLLERS = {
   PRODUCTS: 'products',
   TICKET: 'ticket',
   ASSETS: 'assets',
+  EXPENSE: 'expense',
   ORGANIZATION_PLAN: 'organization-plan',
   AIR_SERVICES: 'air-services',
   PAYMENTS: 'payments',

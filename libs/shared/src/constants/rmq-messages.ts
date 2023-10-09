@@ -59,6 +59,10 @@ export const RMQ_MESSAGES = {
       UPDATE_TASK: 'update-task',
       DELETE_TASK: 'delete-task',
     },
+    EXPENSE: {
+      ADD_EXPENSE: 'add-expense',
+      GET_EXPENSE: 'get-expense',
+    },
   },
   ORG_ADMIN: {
     PAYMENTS: {
