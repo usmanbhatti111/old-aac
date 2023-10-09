@@ -21,7 +21,8 @@ import {
   CreateOrganizationCompanyAccountDto,
   OrganizationCompanyAccountResponseDto,
   OrganizationCompanyAccountsResponseDto,
-  GetOrganizationCompanyAccountDto
+  GetOrganizationCompanyAccountDto,
+  IdDto
 } from '@shared/dto';
 import { Response } from 'express';
 import { firstValueFrom } from 'rxjs';
@@ -80,6 +81,34 @@ export class OrganizationCompanyAccountController {
             .GET_ORGANIZATION_COMPANY_ACCOUNTS,
         },
         { organizationId,...query }
+      )
+    );
+        
+    return res.status(response.statusCode).json(response);
+  
+    
+  }
+
+  @Get(
+    API_ENDPOINTS.ORGANIZATION_COMPANY_ACCOUNT
+      .GET_ORGANIZATION_COMPANY_ACCOUNT
+  )
+  @ApiOkResponse({
+    description: 'Successfully retrieved the organization company account',
+    type: OrganizationCompanyAccountResponseDto,
+  })
+  public async getOrganizationAccount(
+    @Param() payload: IdDto,
+    @Res() res: Response | any
+  ) : Promise<OrganizationCompanyAccountResponseDto>{
+    
+      const response = await firstValueFrom(
+      this.organizationAccountServiceClient.send(
+        {
+          cmd: RMQ_MESSAGES.ORGANIZATION_COMPANY_ACCOUNT
+            .GET_ORGANIZATION_COMPANY_ACCOUNT,
+        },
+        payload
       )
     );
         

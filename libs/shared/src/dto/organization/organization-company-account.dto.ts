@@ -11,6 +11,13 @@ export interface IOrganizationCompanyAccount {
   address: string;
   postCode: string;
   status: string;
+  createdAt?: Date;
+  updatedAt?: Date;
+  deletedAt?: Date;
+  createdBy?: string;
+  updatedBy?: string;
+  deletedBy?: string;
+  isDeleted?: boolean;
 }
 
 export class CreateOrganizationCompanyAccountDto {

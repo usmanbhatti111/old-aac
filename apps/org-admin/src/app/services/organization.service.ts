@@ -25,7 +25,7 @@ export class OrganizationService {
   async getOrganization(payload: GetOrganizationDto) {
     try {
       const res = await this.organizationRepository.findOne({
-          _id: payload.id,
+          _id: payload?.id,
       });
       return successResponse(200, 'Success', res);
     } catch (error) {
@@ -45,9 +45,9 @@ export class OrganizationService {
   async updateOrganization(payload: UpdateOrganizationDto) {
     try {
       const { id } = payload;
-      delete payload.id;
-      delete payload.name;
-      delete payload.registrationNumber;
+      delete payload?.id;
+      delete payload?.name;
+      delete payload?.registrationNumber;
       const res = await this.organizationRepository.findOneAndUpdate(
         { _id:id },payload
       );

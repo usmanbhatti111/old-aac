@@ -17,6 +17,7 @@ export const RMQ_MESSAGES = {
   ORGANIZATION_COMPANY_ACCOUNT: {
     CREATE_ORGANIZATION_COMPANY_ACCOUNT: 'create-company-accounts',
     GET_ORGANIZATION_COMPANY_ACCOUNTS: 'get-company-accounts',
+    GET_ORGANIZATION_COMPANY_ACCOUNT: 'get-company-account',
   },
   SUPER_ADMIN: {
     BILLING_INVOICES: {

@@ -12,6 +12,10 @@ export interface IOrganization {
   createdAt?: Date;
   updatedAt?: Date;
   deletedAt?: Date;
+  createdBy?: string;
+  updatedBy?: string;
+  deletedBy?: string;
+  isDeleted?: boolean;
 }
 export class CreateOrganizationDto {
   @ApiProperty({
@@ -57,6 +61,10 @@ export class CreateOrganizationDto {
   deletedAt?: Date;
 }
 export class UpdateOrganizationDto extends CreateOrganizationDto {
+  @ApiProperty({
+    required: true,
+    example: '65152939f50394f42cee2db4',
+  })
   id?:string
 }
 export class OrganizationDto {
