@@ -45,7 +45,7 @@ export class OrganizationCompanyAccountController {
   public async createOrganizationAccount(
     @Body() payload: CreateOrganizationCompanyAccountDto,
     @Res() res: Response | any
-  ) {
+  ) : Promise<OrganizationCompanyAccountResponseDto>{
     const response = await firstValueFrom(
       this.organizationAccountServiceClient.send(
         {
@@ -71,7 +71,7 @@ export class OrganizationCompanyAccountController {
     @Param('organizationId') organizationId: string,
     @Query() query: GetOrganizationCompanyAccountDto,
     @Res() res: Response | any
-  ) {
+  ) : Promise<OrganizationCompanyAccountsResponseDto>{
     
       const response = await firstValueFrom(
       this.organizationAccountServiceClient.send(

@@ -25,7 +25,7 @@ export class OrganizationController {
         description: 'Successfully created an organization',
         type: OrganizationResponseDto,
     })
-    public async createOrganization(@Body() payload: CreateOrganizationDto, @Res() res: Response | any) {
+    public async createOrganization(@Body() payload: CreateOrganizationDto, @Res() res: Response | any) :Promise<OrganizationResponseDto>{
         const response = await firstValueFrom(
             this.organizationServiceClient.send({ cmd: RMQ_MESSAGES.ORGANIZATION.CREATE_ORGANTIZATION }, payload)
         );
@@ -39,7 +39,7 @@ export class OrganizationController {
         description: 'Successfully updated the organization.',
         type: OrganizationResponseDto,
     })
-    public async updateOrganization(@Param('id') id: string, @Body() payload: CreateOrganizationDto, @Res() res: Response | any) {
+    public async updateOrganization(@Param('id') id: string, @Body() payload: CreateOrganizationDto, @Res() res: Response | any) : Promise<OrganizationResponseDto>{
         const response = await firstValueFrom(
             this.organizationServiceClient.send({ cmd: RMQ_MESSAGES.ORGANIZATION.UPDATE_ORGANTIZATION }, {id,...payload})
         );
@@ -52,7 +52,7 @@ export class OrganizationController {
         description: 'Successfully retrieved the organization.',
         type: OrganizationResponseDto,
     })
-    public async getOrganization(@Param() payload: GetOrganizationDto, @Res() res: Response | any) {
+    public async getOrganization(@Param() payload: GetOrganizationDto, @Res() res: Response | any): Promise<OrganizationResponseDto> {
         const response = await firstValueFrom(
             this.organizationServiceClient.send({ cmd: RMQ_MESSAGES.ORGANIZATION.GET_ORGANTIZATION }, payload )
         );
