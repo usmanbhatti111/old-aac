@@ -9,7 +9,7 @@ import {
   Res,
 } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
-import { ApiBearerAuth, ApiCreatedResponse, ApiOkResponse, ApiParam, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiCreatedResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import {
   API_ENDPOINTS,
   API_TAGS,
@@ -23,7 +23,6 @@ import {
   OrganizationCompanyAccountsResponseDto,
   GetOrganizationCompanyAccountDto
 } from '@shared/dto';
-import { log } from 'console';
 import { Response } from 'express';
 import { firstValueFrom } from 'rxjs';
 
@@ -32,7 +31,7 @@ import { firstValueFrom } from 'rxjs';
 @ApiBearerAuth()
 export class OrganizationCompanyAccountController {
   constructor(
-    @Inject(SERVICES.ORG_ADMIN) private organizationServiceClient: ClientProxy
+    @Inject(SERVICES.ORG_ADMIN) private organizationAccountServiceClient: ClientProxy
   ) {}
 
   @Post(
@@ -48,7 +47,7 @@ export class OrganizationCompanyAccountController {
     @Res() res: Response | any
   ) {
     const response = await firstValueFrom(
-      this.organizationServiceClient.send(
+      this.organizationAccountServiceClient.send(
         {
           cmd: RMQ_MESSAGES.ORGANIZATION_COMPANY_ACCOUNT
             .CREATE_ORGANIZATION_COMPANY_ACCOUNT,
@@ -68,14 +67,14 @@ export class OrganizationCompanyAccountController {
     description: 'Successfully retrieved the organization company accounts',
     type: OrganizationCompanyAccountsResponseDto,
   })
-  public async getOrganizationAccount(
+  public async getOrganizationAccounts(
     @Param('organizationId') organizationId: string,
     @Query() query: GetOrganizationCompanyAccountDto,
     @Res() res: Response | any
   ) {
     
       const response = await firstValueFrom(
-      this.organizationServiceClient.send(
+      this.organizationAccountServiceClient.send(
         {
           cmd: RMQ_MESSAGES.ORGANIZATION_COMPANY_ACCOUNT
             .GET_ORGANIZATION_COMPANY_ACCOUNTS,

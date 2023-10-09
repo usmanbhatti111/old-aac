@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNotEmpty } from 'class-validator';
+import { IsMongoId, IsNotEmpty } from 'class-validator';
 
 export interface IOrganization {
   logoUrl?: string;
@@ -9,7 +9,7 @@ export interface IOrganization {
   phoneNo: string;
   address: string;
   postCode: string;
-  createdAt: Date;
+  createdAt?: Date;
   updatedAt?: Date;
   deletedAt?: Date;
 }
@@ -51,8 +51,14 @@ export class CreateOrganizationDto {
   })
   @IsNotEmpty()
   postCode: string;
-}
 
+  createdAt: Date;
+  updatedAt?: Date;
+  deletedAt?: Date;
+}
+export class UpdateOrganizationDto extends CreateOrganizationDto {
+  id?:string
+}
 export class OrganizationDto {
   @ApiProperty({
     example: '168927646',
@@ -119,4 +125,13 @@ export class OrganizationResponseDto {
     example: '',
   })
   error: string;
+}
+
+export class GetOrganizationDto {
+  @ApiProperty({
+    example: '651e6368a3a6baf2f193efb0',
+  })
+  @IsMongoId()
+  @IsNotEmpty()
+  id: string;
 }

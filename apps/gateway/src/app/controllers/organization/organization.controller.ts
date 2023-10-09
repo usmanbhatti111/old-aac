@@ -8,7 +8,7 @@ import {
     RMQ_MESSAGES,
     SERVICES,
 } from '@shared/constants';
-import { CreateOrganizationDto, OrganizationResponseDto } from '@shared/dto';
+import { CreateOrganizationDto, GetOrganizationDto, OrganizationResponseDto } from '@shared/dto';
 import { Response } from 'express';
 import { firstValueFrom } from 'rxjs';
 
@@ -52,9 +52,9 @@ export class OrganizationController {
         description: 'Successfully retrieved the organization.',
         type: OrganizationResponseDto,
     })
-    public async getOrganization(@Param('id') id: string, @Res() res: Response | any) {
+    public async getOrganization(@Param() payload: GetOrganizationDto, @Res() res: Response | any) {
         const response = await firstValueFrom(
-            this.organizationServiceClient.send({ cmd: RMQ_MESSAGES.ORGANIZATION.GET_ORGANTIZATION }, { id })
+            this.organizationServiceClient.send({ cmd: RMQ_MESSAGES.ORGANIZATION.GET_ORGANTIZATION }, payload )
         );
 
         return res.status(response.statusCode).json(response);

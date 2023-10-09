@@ -32,13 +32,13 @@ export class Organization extends AbstractSchema implements IOrganization{
   logoUrl?: string;
 
   @Prop({ type: Date, required: false })
-  createdAt: Date;
+  createdAt?: Date;
 
   @Prop({ type: Date, required: false })
-  updatedAt: Date;
+  updatedAt?: Date;
 
   @Prop({ type: Date, required: false })
-  deletedAt: Date;
+  deletedAt?: Date;
 }
 
 export const OrganizationSchema = SchemaFactory.createForClass(Organization);

@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { errorResponse, successResponse } from '@shared/constants';
 import { OrganizationCompanyAccountRepository } from '@shared';
 import mongoose from 'mongoose';
+import { CreateOrganizationCompanyAccountDto, GetAllOrganizationCompanyAccountsDto } from '@shared/dto';
 @Injectable()
 export class OrganizationCompanyAccountService {
   constructor(private organizationCompanyAccountRepository: OrganizationCompanyAccountRepository) { }
@@ -10,7 +11,7 @@ export class OrganizationCompanyAccountService {
     isDeleted: false
   }
 
-  async createOrganizationCompanyAccount(payload: any) {
+  async createOrganizationCompanyAccount(payload: CreateOrganizationCompanyAccountDto) {
     try {
 
       // Check if a company with the same name already exists
@@ -31,7 +32,7 @@ export class OrganizationCompanyAccountService {
     }
   }
 
-  async getOrganizationCompanyAccounts(payload: any) {
+  async getOrganizationCompanyAccounts(payload: GetAllOrganizationCompanyAccountsDto) {
     try {
 
       const page = payload.page || 1; // Default to page 1 if not specified

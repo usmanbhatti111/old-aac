@@ -1,6 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsInt, IsNotEmpty, IsOptional } from 'class-validator';
 import { Type } from 'class-transformer';
+import { paginationDTO } from '../pagination/pagination.dto';
 
 export interface IOrganizationCompanyAccount {
   organizationId: string;
@@ -66,6 +67,10 @@ export class CreateOrganizationCompanyAccountDto {
     description: 'The status of organization company account.',
   })
   readonly status: string;
+}
+
+export class GetAllOrganizationCompanyAccountsDto extends paginationDTO {
+  organizationId: string;
 }
 export class OrganizationCompanyAccountDto {
   @ApiProperty({

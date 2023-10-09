@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { errorResponse, successResponse } from '@shared/constants';
 import { OrganizationRepository } from '@shared';
+import { CreateOrganizationDto, GetOrganizationDto, UpdateOrganizationDto } from '@shared/dto';
 
 @Injectable()
 export class OrganizationService {
@@ -10,7 +11,7 @@ export class OrganizationService {
     isDeleted: false,
   };
 
-  async createOrganization(payload: any) {
+  async createOrganization(payload: CreateOrganizationDto) {
     try {
       const res = await this.organizationRepository.create({
         ...payload
@@ -21,7 +22,7 @@ export class OrganizationService {
     }
   }
 
-  async getOrganization(payload: any) {
+  async getOrganization(payload: GetOrganizationDto) {
     try {
       const res = await this.organizationRepository.findOne({
           _id: payload.id,
@@ -41,12 +42,14 @@ export class OrganizationService {
     }
   }
 
-  async updateOrganization(payload: any) {
+  async updateOrganization(payload: UpdateOrganizationDto) {
     try {
-      const { id } = payload.id;
-      delete payload.id,payload.name,payload.registrationNumber;
+      const { id } = payload;
+      delete payload.id;
+      delete payload.name;
+      delete payload.registrationNumber;
       const res = await this.organizationRepository.findOneAndUpdate(
-        { id },payload
+        { _id:id },payload
       );
       return successResponse(200, 'Success', res);
     } catch (error) {
