@@ -44,8 +44,9 @@ export const RMQ_MESSAGES = {
     TICKETS: {
       CREATE_TICKET: 'create-ticket',
       GET_TICKET_DETAILS: 'get-ticket-details',
-      ASSOCIATE_ASSETS:'associate-assets',
+      ASSOCIATE_ASSETS: 'associate-assets',
       CREATE_CHILD_TICKET: 'create_child_ticket',
+      GET_CHILD_TICKETS: 'get_child_ticket',
     },
     ASSETS: {
       ADD_Inventory: 'add-inventory',

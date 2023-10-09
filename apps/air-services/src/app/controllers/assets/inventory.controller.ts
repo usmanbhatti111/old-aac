@@ -6,7 +6,7 @@ import { InventoryService } from '../../services/assets/inventory.service';
 
 @Controller()
 export class InventoryController {
-  constructor(private readonly inventoryService: InventoryService) { }
+  constructor(private readonly inventoryService: InventoryService) {}
 
   @MessagePattern(RMQ_MESSAGES.AIR_SERVICES.ASSETS.ADD_Inventory)
   addInventory(@Payload() payload: AddInventoryDto) {
