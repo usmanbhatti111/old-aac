@@ -9,7 +9,12 @@ import {
   Res,
 } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
-import { ApiBearerAuth, ApiCreatedResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiCreatedResponse,
+  ApiOkResponse,
+  ApiTags,
+} from '@nestjs/swagger';
 import {
   API_ENDPOINTS,
   API_TAGS,
@@ -22,7 +27,7 @@ import {
   OrganizationCompanyAccountResponseDto,
   OrganizationCompanyAccountsResponseDto,
   GetOrganizationCompanyAccountDto,
-  IdDto
+  IdDto,
 } from '@shared/dto';
 import { Response } from 'express';
 import { firstValueFrom } from 'rxjs';
@@ -32,7 +37,8 @@ import { firstValueFrom } from 'rxjs';
 @ApiBearerAuth()
 export class OrganizationCompanyAccountController {
   constructor(
-    @Inject(SERVICES.ORG_ADMIN) private organizationAccountServiceClient: ClientProxy
+    @Inject(SERVICES.ORG_ADMIN)
+    private organizationAccountServiceClient: ClientProxy
   ) {}
 
   @Post(
@@ -40,13 +46,13 @@ export class OrganizationCompanyAccountController {
       .CREATE_ORGANIZATION_COMPANY_ACCOUNT
   )
   @ApiCreatedResponse({
-    description: 'Successfully created an organization\'s company accounts',
+    description: "Successfully created an organization's company accounts",
     type: OrganizationCompanyAccountResponseDto,
   })
   public async createOrganizationAccount(
     @Body() payload: CreateOrganizationCompanyAccountDto,
     @Res() res: Response | any
-  ) : Promise<OrganizationCompanyAccountResponseDto>{
+  ): Promise<OrganizationCompanyAccountResponseDto> {
     const response = await firstValueFrom(
       this.organizationAccountServiceClient.send(
         {
@@ -61,8 +67,7 @@ export class OrganizationCompanyAccountController {
   }
 
   @Get(
-    API_ENDPOINTS.ORGANIZATION_COMPANY_ACCOUNT
-      .GET_ORGANIZATION_COMPANY_ACCOUNTS
+    API_ENDPOINTS.ORGANIZATION_COMPANY_ACCOUNT.GET_ORGANIZATION_COMPANY_ACCOUNTS
   )
   @ApiOkResponse({
     description: 'Successfully retrieved the organization company accounts',
@@ -72,26 +77,22 @@ export class OrganizationCompanyAccountController {
     @Param('organizationId') organizationId: string,
     @Query() query: GetOrganizationCompanyAccountDto,
     @Res() res: Response | any
-  ) : Promise<OrganizationCompanyAccountsResponseDto>{
-    
-      const response = await firstValueFrom(
+  ): Promise<OrganizationCompanyAccountsResponseDto> {
+    const response = await firstValueFrom(
       this.organizationAccountServiceClient.send(
         {
           cmd: RMQ_MESSAGES.ORGANIZATION_COMPANY_ACCOUNT
             .GET_ORGANIZATION_COMPANY_ACCOUNTS,
         },
-        { organizationId,...query }
+        { organizationId, ...query }
       )
     );
-        
+
     return res.status(response.statusCode).json(response);
-  
-    
   }
 
   @Get(
-    API_ENDPOINTS.ORGANIZATION_COMPANY_ACCOUNT
-      .GET_ORGANIZATION_COMPANY_ACCOUNT
+    API_ENDPOINTS.ORGANIZATION_COMPANY_ACCOUNT.GET_ORGANIZATION_COMPANY_ACCOUNT
   )
   @ApiOkResponse({
     description: 'Successfully retrieved the organization company account',
@@ -100,9 +101,8 @@ export class OrganizationCompanyAccountController {
   public async getOrganizationAccount(
     @Param() payload: IdDto,
     @Res() res: Response | any
-  ) : Promise<OrganizationCompanyAccountResponseDto>{
-    
-      const response = await firstValueFrom(
+  ): Promise<OrganizationCompanyAccountResponseDto> {
+    const response = await firstValueFrom(
       this.organizationAccountServiceClient.send(
         {
           cmd: RMQ_MESSAGES.ORGANIZATION_COMPANY_ACCOUNT
@@ -111,9 +111,7 @@ export class OrganizationCompanyAccountController {
         payload
       )
     );
-        
+
     return res.status(response.statusCode).json(response);
-  
-    
   }
 }

@@ -1,7 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { errorResponse, successResponse } from '@shared/constants';
 import { OrganizationRepository } from '@shared';
-import { CreateOrganizationDto, GetOrganizationDto, UpdateOrganizationDto } from '@shared/dto';
+import {
+  CreateOrganizationDto,
+  GetOrganizationDto,
+  UpdateOrganizationDto,
+} from '@shared/dto';
 
 @Injectable()
 export class OrganizationService {
@@ -14,7 +18,7 @@ export class OrganizationService {
   async createOrganization(payload: CreateOrganizationDto) {
     try {
       const res = await this.organizationRepository.create({
-        ...payload
+        ...payload,
       });
       return successResponse(200, 'Success', res);
     } catch (error) {
@@ -25,7 +29,7 @@ export class OrganizationService {
   async getOrganization(payload: GetOrganizationDto) {
     try {
       const res = await this.organizationRepository.findOne({
-          _id: payload?.id,
+        _id: payload?.id,
       });
       return successResponse(200, 'Success', res);
     } catch (error) {
@@ -49,7 +53,8 @@ export class OrganizationService {
       delete payload?.name;
       delete payload?.registrationNumber;
       const res = await this.organizationRepository.findOneAndUpdate(
-        { _id:id },payload
+        { _id: id },
+        payload
       );
       return successResponse(200, 'Success', res);
     } catch (error) {

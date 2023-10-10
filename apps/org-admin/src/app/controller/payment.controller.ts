@@ -37,5 +37,4 @@ export class PaymentController {
   async deleteOnePayment(@Payload() payload: GetOnePaymentDto) {
     return this.paymentService.deleteOnePayment(payload);
   }
-
 }

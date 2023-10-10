@@ -4,15 +4,18 @@ import { AbstractSchema } from '../abstract-repo/abstract.schema';
 import { IOrganizationCompanyAccount } from '../../dto/organization';
 import { Organization } from './organization.schema';
 
-export type OrganizationCompanyAccountDocument = HydratedDocument<OrganizationCompanyAccount>;
+export type OrganizationCompanyAccountDocument =
+  HydratedDocument<OrganizationCompanyAccount>;
 
 @Schema()
-export class OrganizationCompanyAccount extends AbstractSchema implements IOrganizationCompanyAccount{
-
+export class OrganizationCompanyAccount
+  extends AbstractSchema
+  implements IOrganizationCompanyAccount
+{
   @Prop({
     type: SchemaTypes.ObjectId,
     required: true,
-    ref: 'organization'
+    ref: 'organization',
   })
   organizationId: string;
 
@@ -31,11 +34,11 @@ export class OrganizationCompanyAccount extends AbstractSchema implements IOrgan
   @Prop({ type: String, required: true })
   postCode: string;
 
-  @Prop({ type: String, required: false, default:'Active' })
+  @Prop({ type: String, required: false, default: 'Active' })
   status: string;
 
-  @Prop({ type: [SchemaTypes.ObjectId], ref: 'products', default: [] }) 
-  products: string[]; 
+  @Prop({ type: [SchemaTypes.ObjectId], ref: 'products', default: [] })
+  products: string[];
 
   @Prop({ type: Date, required: false })
   createdAt?: Date;
@@ -59,4 +62,6 @@ export class OrganizationCompanyAccount extends AbstractSchema implements IOrgan
   isDeleted?: boolean;
 }
 
-export const OrganizationCompanyAccountSchema = SchemaFactory.createForClass(OrganizationCompanyAccount);
+export const OrganizationCompanyAccountSchema = SchemaFactory.createForClass(
+  OrganizationCompanyAccount
+);

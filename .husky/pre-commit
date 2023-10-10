@@ -1,4 +1,4 @@
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
 
-nx format:write --all && nx run-many --all --target=lint
+nx format:write --all && nx run-many --all --target=lint && git add .

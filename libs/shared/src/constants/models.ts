@@ -7,7 +7,7 @@ export const MODEL = {
   CHILD_TICKET: 'ChildTicket',
   ORGANIZATION_PLAN: 'OrganizationPlan',
   ORGANIZATION: 'Organization',
-  ORGANIZATION_COMPANY_ACCOUNT:'OrganizationCompanyAccount',
+  ORGANIZATION_COMPANY_ACCOUNT: 'OrganizationCompanyAccount',
   INVOICE: 'Invoice',
   TASK: 'Task',
   JOBS: 'Jobs',

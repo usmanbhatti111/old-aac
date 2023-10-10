@@ -65,7 +65,7 @@ export class UpdateOrganizationDto extends CreateOrganizationDto {
     required: true,
     example: '65152939f50394f42cee2db4',
   })
-  id?:string
+  id?: string;
 }
 export class OrganizationDto {
   @ApiProperty({

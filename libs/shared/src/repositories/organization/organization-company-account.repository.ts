@@ -6,10 +6,13 @@ import { OrganizationCompanyAccount } from '../../schema';
 
 @Injectable()
 export class OrganizationCompanyAccountRepository extends AbstractRepository<OrganizationCompanyAccount> {
-  protected readonly logger = new Logger(OrganizationCompanyAccountRepository.name);
+  protected readonly logger = new Logger(
+    OrganizationCompanyAccountRepository.name
+  );
 
   constructor(
-    @InjectModel(OrganizationCompanyAccount.name) organizationModel: Model<OrganizationCompanyAccount>,
+    @InjectModel(OrganizationCompanyAccount.name)
+    organizationModel: Model<OrganizationCompanyAccount>,
     @InjectConnection() connection: Connection
   ) {
     super(organizationModel, connection);

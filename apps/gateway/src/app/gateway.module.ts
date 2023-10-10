@@ -37,7 +37,7 @@ import { PaymentController } from './controllers/org-admin/payment.controller';
     ProductsController,
     TicketController,
     InventoryController,
-    OrganizationController, 
+    OrganizationController,
     OrganizationCompanyAccountController,
     ExpenseController,
     FaqsController,

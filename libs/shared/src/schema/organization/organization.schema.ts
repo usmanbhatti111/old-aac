@@ -8,8 +8,7 @@ export type OrganizationDocument = HydratedDocument<Organization>;
   versionKey: false,
   timestamps: true,
 })
-export class Organization extends AbstractSchema implements IOrganization{
-  
+export class Organization extends AbstractSchema implements IOrganization {
   @Prop({ type: String, required: true })
   registrationNumber: string;
 
@@ -51,7 +50,6 @@ export class Organization extends AbstractSchema implements IOrganization{
 
   @Prop({ type: Boolean, default: false })
   isDeleted?: boolean;
-
 }
 
 export const OrganizationSchema = SchemaFactory.createForClass(Organization);

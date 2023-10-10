@@ -26,7 +26,7 @@ import {
   Organization,
   OrganizationCompanyAccount,
   OrganizationSchema,
-  OrganizationCompanyAccountSchema
+  OrganizationCompanyAccountSchema,
 } from './schema';
 export const DbModels = [
   {
@@ -81,10 +81,10 @@ export const DbModels = [
   },
   {
     name: Organization.name,
-    schema: OrganizationSchema
+    schema: OrganizationSchema,
   },
   {
     name: OrganizationCompanyAccount.name,
-    schema: OrganizationCompanyAccountSchema
-  }
+    schema: OrganizationCompanyAccountSchema,
+  },
 ];

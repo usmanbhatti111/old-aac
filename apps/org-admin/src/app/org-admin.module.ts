@@ -9,10 +9,18 @@ import { AppController } from './app.controller';
 import { PaymentService } from './services/payment.service';
 import { PaymentController } from './controller/payment.controller';
 
-
 @Module({
   imports: [SharedModule],
-  controllers: [OrganizationController, OrganizationCompanyAccountController,AppController, PaymentController],
-  providers: [OrganizationService, OrganizationCompanyAccountService, PaymentService],
+  controllers: [
+    OrganizationController,
+    OrganizationCompanyAccountController,
+    AppController,
+    PaymentController,
+  ],
+  providers: [
+    OrganizationService,
+    OrganizationCompanyAccountService,
+    PaymentService,
+  ],
 })
 export class OrgAdminModule {}
