@@ -10,6 +10,9 @@ export const API_ENDPOINTS = {
   SUPER_ADMIN: {
     BILLING_INVOICES: {
       ASSIGN_PLAN: 'assign-plan',
+      ORG_PLAN: 'org-plan',
+      ORG_PLANS: 'org-plans',
+      GENERATE_INVOICE: 'generate-invoice',
     },
     ADD_USER: 'add-user',
     USER_LIST: 'user-list',

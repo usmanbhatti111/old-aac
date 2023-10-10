@@ -6,6 +6,7 @@ export const MODEL = {
   EXPENSE: 'Expense',
   CHILD_TICKET: 'ChildTicket',
   ORGANIZATION_PLAN: 'OrganizationPlan',
+  INVOICE: 'Invoice',
   TASK: 'Task',
   JOBS: 'Jobs',
   FAQS: 'Faqs',
