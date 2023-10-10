@@ -19,6 +19,8 @@ import {
   FaqSchema,
   Job,
   JobSchema,
+  Invoice,
+  InvoiceSchema,
   Payment,
   PaymentSchema,
   Organization,
@@ -68,6 +70,10 @@ export const DbModels = [
   {
     name: SuperAdmin.name,
     schema: SuperAdminSchema,
+  },
+  {
+    name: Invoice.name,
+    schema: InvoiceSchema,
   },
   {
     name: Payment.name,

@@ -22,6 +22,9 @@ export const RMQ_MESSAGES = {
   SUPER_ADMIN: {
     BILLING_INVOICES: {
       ASSIGN_PLAN: 'assign-plan',
+      GET_ORG_PLAN: 'get-org-plan',
+      LIST_ORG_PLAN: 'list-org-plan',
+      GENERATE_INVOICE: 'generate-invoice',
     },
     ADD_USER: 'add-user',
     USER_LIST: 'user-list',

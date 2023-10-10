@@ -8,6 +8,7 @@ export const MODEL = {
   ORGANIZATION_PLAN: 'OrganizationPlan',
   ORGANIZATION: 'Organization',
   ORGANIZATION_COMPANY_ACCOUNT:'OrganizationCompanyAccount',
+  INVOICE: 'Invoice',
   TASK: 'Task',
   JOBS: 'Jobs',
   FAQS: 'Faqs',
