@@ -193,6 +193,23 @@ export abstract class AbstractRepository<TDocument extends AbstractSchema> {
     return document;
   }
 
+  async findByIdAndUpdate(
+    filterQuery: FilterQuery<TDocument>,
+    update: UpdateQuery<TDocument>
+  ) {
+    const document = await this.model.findByIdAndUpdate(filterQuery, update, {
+      lean: true,
+      new: true,
+    });
+
+    if (!document) {
+      this.logger.warn(`Document not found with filterQuery:`, filterQuery);
+      throw new NotFoundException('Document not found.');
+    }
+
+    return document;
+  }
+
   async upsert(
     filterQuery: FilterQuery<TDocument>,
     document: Partial<TDocument>

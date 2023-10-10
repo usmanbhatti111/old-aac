@@ -7,6 +7,7 @@ import {
   TicketInternalTypeEnum,
 } from '../../constants/index';
 import { AbstractSchema } from '../abstract-repo/abstract.schema';
+import { Inventory } from './inventory.schema';
 
 export type TicketDocument = HydratedDocument<Ticket>;
 
@@ -70,6 +71,18 @@ export class Ticket extends AbstractSchema {
     required: false,
   })
   catId: string;
+
+  @Prop({
+    type: [{ type: SchemaTypes.ObjectId, ref: Inventory.name }],
+    required: false,
+  })
+  associateAssets: string[];
+
+  @Prop({
+    type: [SchemaTypes.ObjectId],
+    required: false,
+  })
+  childTicketsId: [string];
 }
 
 export const TicketSchema = SchemaFactory.createForClass(Ticket);

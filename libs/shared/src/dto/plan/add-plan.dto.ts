@@ -1,14 +1,14 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
-import { IsNotEmpty, IsNumber, IsOptional, IsString } from 'class-validator';
+import {
+  IsMongoId,
+  IsNotEmpty,
+  IsNumber,
+  IsOptional,
+  IsString,
+} from 'class-validator';
 import { ProductFeatureDto } from './product-feature.dto';
 import { ProductModuleDto } from './product-module.dto';
-
-export enum PlanTypeEnum {
-  GROWTH = 'Growth',
-  ENTERPRISE = 'Enterprise',
-  PREMIUM = 'Premium',
-}
 
 export class AddPlanDto {
   @ApiProperty()
@@ -24,9 +24,9 @@ export class AddPlanDto {
 
   @ApiProperty({
     required: true,
-    enum: PlanTypeEnum,
-    enumName: 'Plan Type',
+    type: String,
   })
+  @IsMongoId()
   @IsNotEmpty()
   plan_type_id: string;
 

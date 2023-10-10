@@ -1,8 +1,8 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { PlanProduct } from '@prisma/client';
 import { MODEL } from '@shared/constants';
-import mongoose, { Document, HydratedDocument } from 'mongoose';
+import { HydratedDocument, SchemaTypes } from 'mongoose';
 import { AbstractSchema } from './abstract-repo/abstract.schema';
+import { Product } from './product.schema';
 
 export type PlanDocument = HydratedDocument<Plan>;
 
@@ -23,11 +23,14 @@ export class Plan extends AbstractSchema {
   @Prop()
   additional_per_user_price?: number;
 
+  @Prop({ type: [{ type: SchemaTypes.ObjectId, ref: MODEL.PRODUCT }] })
+  plan_products?: Product[];
+
   @Prop()
   additional_storage_price?: number;
 
-  @Prop({ required: true, type: mongoose.Types.ObjectId, ref: MODEL.PLAN_TYPE })
-  plan_type_id: string | mongoose.Types.ObjectId;
+  @Prop({ required: true, type: SchemaTypes.ObjectId, ref: MODEL.PLAN_TYPE })
+  plan_type_id: string;
 
   @Prop({ default: Date.now })
   created_at?: Date;

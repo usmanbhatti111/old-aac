@@ -16,6 +16,8 @@ import {
   JobRepository,
   FaqRepository,
   PaymentRepository,
+  ExpenseRepository,
+  ProductRepository,
 } from '../src/repositories/index';
 
 @Module({
@@ -39,6 +41,8 @@ import {
     JobRepository,
     FaqRepository,
     PaymentRepository,
+    ExpenseRepository,
+    ProductRepository,
   ],
   exports: [
     SharedService,
@@ -54,6 +58,8 @@ import {
     JobRepository,
     FaqRepository,
     PaymentRepository,
+    ExpenseRepository,
+    ProductRepository,
   ],
 })
 export class SharedModule {}

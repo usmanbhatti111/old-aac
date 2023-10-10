@@ -10,7 +10,8 @@ export const API_ENDPOINTS = {
   PLAN: {
     ADD_PLAN: '/',
     PLAN_LIST: '/',
-    EDIT_PLAN: '/',
+    EDIT_PLAN: '/:plan_id',
+    DELETE_PLAN: '/:plan_id',
   },
   SUPER_ADMIN: {
     BILLING_INVOICES: {
@@ -43,12 +44,23 @@ export const API_ENDPOINTS = {
   AIR_SERVICES: {
     TICKETS: {
       ticket: 'ticket',
+      ADD_CHILD_TICKET: 'add-child-ticket',
+      GET_CHILD_TICKETS: 'get-child-tickets/:ticketId',
+      ASSOCIATE_ASSETS: 'associate-assets',
     },
     ASSETS: {
       INVENTORY: 'inventory',
+      DELETE_INVENTORY: '/:id',
     },
     TASK: {
-      ADD_TASK: 'add-task',
+      ADD_TASK: '/',
+      GET_TASK: '/',
+      UPDATE_TASK: '/:id',
+      DELETE_TASK: '/:id',
+    },
+    EXPENSE: {
+      ADD_EXPENSE: 'add-expense',
+      GET_EXPENSE: 'get-expense',
     },
   },
   PAYMENTS: {

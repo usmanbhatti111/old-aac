@@ -3,6 +3,7 @@ import {
   Controller,
   Get,
   Inject,
+  Param,
   Patch,
   Post,
   Query,
@@ -15,6 +16,7 @@ import {
   ApiOkResponse,
   ApiTags,
 } from '@nestjs/swagger';
+import { Plan } from '@shared';
 import {
   API_ENDPOINTS,
   API_TAGS,
@@ -45,7 +47,7 @@ export class PlanController {
   public async createPlan(
     @Body() payload: AddPlanDto,
     @Res() res: Response | any
-  ) {
+  ): Promise<PostResponseDto<Plan>> {
     const response = await firstValueFrom(
       this.superAdminServiceClient.send(RMQ_MESSAGES.PLAN.ADD_PLAN, payload)
     );
@@ -57,7 +59,7 @@ export class PlanController {
   public async getPlans(
     @Query() payload: PaginationDto,
     @Res() res: Response | any
-  ) {
+  ): Promise<GetPlansResponseDto> {
     const response = await firstValueFrom(
       this.superAdminServiceClient.send(RMQ_MESSAGES.PLAN.PLAN_LIST, payload)
     );
@@ -67,9 +69,11 @@ export class PlanController {
   @Patch(API_ENDPOINTS.PLAN.EDIT_PLAN)
   @ApiCreatedResponse({ type: PostResponseDto })
   public async updatePlan(
+    @Param('plan_id') plan_id: string,
     @Body() payload: EditPlanDto,
     @Res() res: Response | any
-  ) {
+  ): Promise<PostResponseDto<Plan>> {
+    payload.plan_id = plan_id;
     const response = await firstValueFrom(
       this.superAdminServiceClient.send(RMQ_MESSAGES.PLAN.EDIT_PLAN, payload)
     );

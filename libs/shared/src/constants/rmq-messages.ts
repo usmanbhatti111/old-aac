@@ -49,13 +49,24 @@ export const RMQ_MESSAGES = {
     TICKETS: {
       CREATE_TICKET: 'create-ticket',
       GET_TICKET_DETAILS: 'get-ticket-details',
+      ASSOCIATE_ASSETS: 'associate-assets',
+      CREATE_CHILD_TICKET: 'create_child_ticket',
+      GET_CHILD_TICKETS: 'get_child_ticket',
     },
     ASSETS: {
       ADD_Inventory: 'add-inventory',
       GET_Inventory: 'get-inventory',
+      Delete_Inventory: 'delete-inventory',
     },
     TASK: {
       ADD_TASK: 'add_task',
+      GET_TASKS: 'get-tasks',
+      UPDATE_TASK: 'update-task',
+      DELETE_TASK: 'delete-task',
+    },
+    EXPENSE: {
+      ADD_EXPENSE: 'add-expense',
+      GET_EXPENSE: 'get-expense',
     },
   },
   ORG_ADMIN: {

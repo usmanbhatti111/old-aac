@@ -1,7 +1,6 @@
 import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { ClientProxyFactory, Transport } from '@nestjs/microservices';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-
 import { AppController } from './app.controller';
 import { SERVICES } from '@shared/constants';
 import { LoggerMiddleware } from './middleware/logger.middleware';
@@ -16,6 +15,7 @@ import { JobsController } from './controllers/settings/jobs.controller';
 import { TicketController } from './controllers/tickets/tickets.controller';
 import { InvoiceController } from './controllers/super-admin/billing-invoices.controller';
 import { InventoryController } from './controllers/assets/inventory.controller';
+import { ExpenseController } from './controllers/assets/expense.controller';
 import { ProductsController } from './controllers/products.controller';
 import { FaqsController } from './controllers/settings/faqs.controller';
 import { PaymentController } from './controllers/org-admin/payment.controller';
@@ -37,6 +37,7 @@ import { PaymentController } from './controllers/org-admin/payment.controller';
     ProductsController,
     TicketController,
     InventoryController,
+    ExpenseController,
     FaqsController,
     InvoiceController,
     TaskController,

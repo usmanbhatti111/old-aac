@@ -18,6 +18,7 @@ import {
   PlanProductModuleRepository,
   PlanProductRepository,
   PlanRepository,
+  ProductRepository,
 } from '@shared';
 import mongoose from 'mongoose';
 
@@ -25,6 +26,7 @@ import mongoose from 'mongoose';
 export class PlanService {
   constructor(
     private planRepository: PlanRepository,
+    private productRepository: ProductRepository,
     private planProductRepository: PlanProductRepository,
     private planProductFeatureRepository: PlanProductFeatureRepository,
     private planProductModuleRepository: PlanProductModuleRepository,
@@ -73,7 +75,8 @@ export class PlanService {
 
   async editPlan(payload: EditPlanDto) {
     try {
-      // removing unnesssery data in payload for plan  and insert plan data
+      const { plan_id } = payload;
+      delete payload.plan_id;
       const payloadPlan = {
         ...payload,
         suite: undefined,
@@ -82,31 +85,48 @@ export class PlanService {
         plan_module: undefined,
       };
 
-      const planRes = await this.planRepository.create(payloadPlan);
+      let planRes = await this.planRepository.findOneAndUpdate(
+        { _id: plan_id },
+        payloadPlan
+      );
 
-      if (payload.suite) {
+      if (payload.suite && payload.suite[0]) {
+        planRes = await this.planRepository.findOneAndUpdate(
+          { _id: plan_id },
+          { plan_products: [] }
+        );
         // if suites then looping through the suits consist of multiple product ids and inserting plan data
         for (const product_id of payload.suite) {
-          await this.savePlan(
-            planRes._id,
-            product_id,
-            payload.plan_feature,
-            payload.plan_module
+          const product = await this.productRepository.findOne({
+            _id: product_id,
+          });
+          planRes = await this.planRepository.findOneAndUpdate(
+            { _id: plan_id },
+            { plan_products: [...planRes.plan_products, product] }
           );
         }
-      } else {
         // if single product then using product id, insert plan data
-        await this.savePlan(
-          planRes._id,
-          payload.product_id,
-          payload.plan_feature,
-          payload.plan_module
+      } else if (payload.product_id) {
+        const product = await this.productRepository.findOne({
+          _id: payload.product_id,
+        });
+        await this.planRepository.findOneAndUpdate(
+          { _id: plan_id },
+          { plan_products: [product] }
         );
       }
 
-      return successResponse(200, 'Success', planRes);
+      return successResponse(
+        HttpStatus.CREATED,
+        ResponseMessage.CREATED,
+        planRes
+      );
     } catch (error) {
-      return errorResponse(400, 'Bad Request', error?.name);
+      return errorResponse(
+        HttpStatus.BAD_REQUEST,
+        ResponseMessage.BAD_REQUEST,
+        error
+      );
     }
   }
 
@@ -166,10 +186,26 @@ export class PlanService {
         plan_module: undefined,
       };
 
-      const planRes = await this.planRepository.create(payloadPlan);
+      let planRes = await this.planRepository.create(payloadPlan);
 
       if (payload.suite) {
         // if suites then looping through the suits consist of multiple product ids and inserting plan data
+
+        planRes = await this.planRepository.findOneAndUpdate(
+          { _id: planRes._id },
+          { plan_products: [] }
+        );
+        // if suites then looping through the suits consist of multiple product ids and inserting plan data
+        for (const product_id of payload.suite) {
+          const product = await this.productRepository.findOne({
+            _id: product_id,
+          });
+          planRes = await this.planRepository.findOneAndUpdate(
+            { _id: planRes._id },
+            { plan_products: [...planRes.plan_products, product] }
+          );
+        }
+
         for (const product_id of payload.suite) {
           await this.savePlan(
             planRes._id,
@@ -180,6 +216,13 @@ export class PlanService {
         }
       } else {
         // if single product then using product id, insert plan data
+        const product = await this.productRepository.findOne({
+          _id: payload.product_id,
+        });
+        await this.planRepository.findOneAndUpdate(
+          { _id: planRes._id },
+          { plan_products: [product] }
+        );
         await this.savePlan(
           planRes._id,
           payload.product_id,
@@ -188,9 +231,17 @@ export class PlanService {
         );
       }
 
-      return successResponse(200, 'Success', planRes);
+      return successResponse(
+        HttpStatus.CREATED,
+        ResponseMessage.CREATED,
+        planRes
+      );
     } catch (error) {
-      return errorResponse(400, 'Bad Request', error?.name);
+      return errorResponse(
+        HttpStatus.BAD_REQUEST,
+        ResponseMessage.BAD_REQUEST,
+        error
+      );
     }
   }
 }

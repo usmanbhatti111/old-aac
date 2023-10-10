@@ -1,8 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
-import { IsNotEmpty, IsNumber, IsOptional, IsString } from 'class-validator';
-import { ProductFeatureDto } from './product-feature.dto';
-import { ProductModuleDto } from './product-module.dto';
+import { IsMongoId, IsNumber, IsOptional, IsString } from 'class-validator';
 
 export class EditPlanDto {
   @ApiProperty()
@@ -19,7 +17,8 @@ export class EditPlanDto {
   @ApiProperty({
     required: true,
   })
-  @IsNotEmpty()
+  @IsMongoId()
+  @IsOptional()
   plan_type_id: string;
 
   @ApiProperty({
@@ -34,7 +33,8 @@ export class EditPlanDto {
     example: 12,
     type: Number,
   })
-  @IsNotEmpty()
+  @IsOptional()
+  @IsOptional()
   @IsNumber()
   @Type(() => Number)
   default_users: number;
@@ -43,7 +43,8 @@ export class EditPlanDto {
     required: true,
     example: 12,
   })
-  @IsNotEmpty()
+  @IsOptional()
+  @IsOptional()
   @IsNumber()
   @Type(() => Number)
   default_storage: number;
@@ -52,7 +53,7 @@ export class EditPlanDto {
     required: true,
     example: 12,
   })
-  @IsNotEmpty()
+  @IsOptional()
   @IsNumber()
   @Type(() => Number)
   plan_price: number;
@@ -73,17 +74,5 @@ export class EditPlanDto {
   @Type(() => Number)
   additional_storage_price: number;
 
-  @ApiProperty({
-    type: () => ProductFeatureDto,
-    isArray: true,
-  })
-  @Type(() => ProductFeatureDto)
-  plan_feature: ProductFeatureDto[];
-
-  @ApiProperty({
-    type: () => ProductModuleDto,
-    isArray: true,
-  })
-  @Type(() => ProductModuleDto)
-  plan_module: ProductModuleDto[];
+  plan_id: string;
 }

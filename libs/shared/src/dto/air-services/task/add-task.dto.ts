@@ -15,6 +15,15 @@ export class AddTaskDto {
   @IsString()
   @ApiProperty({
     type: String,
+    example: '651bdf53beeb02bc627d6804',
+    required: true,
+  })
+  ticketId: string;
+
+  @IsNotEmpty()
+  @IsString()
+  @ApiProperty({
+    type: String,
     example: 'Content will display here...',
     required: true,
   })
