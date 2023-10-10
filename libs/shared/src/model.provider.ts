@@ -31,6 +31,8 @@ import {
   FaqSchema,
   Job,
   JobSchema,
+  NewsAndEvent,
+  NewsAndEventSchema,
   Invoice,
   InvoiceSchema,
   Payment,
@@ -115,6 +117,10 @@ export const DbModels = [
   {
     name: SuperAdmin.name,
     schema: SuperAdminSchema,
+  },
+  {
+    name: NewsAndEvent.name,
+    schema: NewsAndEventSchema,
   },
   {
     name: Invoice.name,

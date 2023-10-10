@@ -6,6 +6,9 @@ export * from './super-admin/plan-product.repository';
 export * from './super-admin/plan-product-feature.repository';
 export * from './super-admin/plan-product-module.repository';
 export * from './super-admin/plan-product-module-permission.repository';
+
+export * from './superadmin';
+
 export * from './organization/index';
 export * from './super-admin/invoice.repository';
 export * from './super-admin/organization-plan.repository';

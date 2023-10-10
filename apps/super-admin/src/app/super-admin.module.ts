@@ -15,6 +15,8 @@ import { FaqsController } from './controllers/faqs.controller';
 import { FaqsService } from './services/faqs.service';
 import { InvoiceController } from './controllers/invoice.controller';
 import { InvoiceService } from './services/invoice.service';
+import { NewsAndEventsController } from './controllers/news-and-event.controller';
+import { NewsAndEventsService } from './services/news-and-event.service';
 
 @Module({
   imports: [SharedModule],
@@ -26,6 +28,7 @@ import { InvoiceService } from './services/invoice.service';
     InvoiceController,
     SuperAdminController,
     PlanController,
+    NewsAndEventsController,
   ],
   providers: [
     ExampleService,
@@ -36,6 +39,7 @@ import { InvoiceService } from './services/invoice.service';
     InvoiceService,
     SuperAdminService,
     PlanService,
+    NewsAndEventsService,
   ],
 })
 export class SuperAdminModule {}

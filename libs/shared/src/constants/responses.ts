@@ -3,6 +3,7 @@ export const ResponseMessage = {
   BAD_REQUEST: 'Bad Request',
   CREATED: 'Created',
   NOT_FOUND: 'Record Not Found',
+  INTERNAL_SERVER_ERROR: 'Something Went Wrong',
 };
 
 export const INTERNAL_SERVER_RESPONSE = {
