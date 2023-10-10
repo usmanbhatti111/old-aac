@@ -18,8 +18,18 @@ export class PlanController {
     return this.planService.getPlans(payload);
   }
 
+  @MessagePattern(RMQ_MESSAGES.PLAN.PLAN)
+  getPlan(@Payload() payload: string) {
+    return this.planService.getPlan(payload);
+  }
+
   @MessagePattern(RMQ_MESSAGES.PLAN.EDIT_PLAN)
   editPlan(@Payload() payload: EditPlanDto) {
     return this.planService.editPlan(payload);
+  }
+
+  @MessagePattern(RMQ_MESSAGES.PLAN.DELETE_PLAN)
+  deletePlan(@Payload() payload: string) {
+    return this.planService.deletePlan(payload);
   }
 }

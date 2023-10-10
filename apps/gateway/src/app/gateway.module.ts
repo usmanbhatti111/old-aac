@@ -9,6 +9,8 @@ import { WinstonConfigService } from './config/winston.config';
 import { AuthController } from './controllers/auth.controller';
 import { HealthController } from './controllers/healthcheck.controller';
 import { PlanController } from './controllers/plan.controller';
+import { OrganizationController } from './controllers/organization/organization.controller';
+import { OrganizationCompanyAccountController } from './controllers/organization/organization-company-account.controller';
 import { TaskController } from './controllers/tasks/task.controller';
 import { SuperAdminController } from './controllers/super-admin.controller';
 import { JobsController } from './controllers/settings/jobs.controller';
@@ -37,6 +39,8 @@ import { PaymentController } from './controllers/org-admin/payment.controller';
     ProductsController,
     TicketController,
     InventoryController,
+    OrganizationController,
+    OrganizationCompanyAccountController,
     ExpenseController,
     FaqsController,
     InvoiceController,

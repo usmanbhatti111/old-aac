@@ -78,3 +78,10 @@ export enum BillingCycleEnum {
   HALF_YEARLY = 'HALF_YEARLY',
   YEARLY = 'YEARLY',
 }
+
+export enum InvoiceStatusEnum {
+  PENDING = 'PENDING',
+  SELECTED = 'SELECTED',
+  PAID = 'PAID',
+  OVERDUE = 'OVERDUE',
+}

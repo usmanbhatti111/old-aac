@@ -1,7 +1,7 @@
 import { NestFactory } from '@nestjs/core';
 import { MicroserviceOptions, Transport } from '@nestjs/microservices';
 import { SERVICES } from '@shared/constants';
-import { OrgAdminModule } from './app/app.module';
+import { OrgAdminModule } from './app/org-admin.module';
 
 async function bootstrap() {
   const app = await NestFactory.createMicroservice<MicroserviceOptions>(

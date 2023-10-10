@@ -10,12 +10,26 @@ export const API_ENDPOINTS = {
   PLAN: {
     ADD_PLAN: '/',
     PLAN_LIST: '/',
+    PLAN: '/:plan_id',
     EDIT_PLAN: '/:plan_id',
     DELETE_PLAN: '/:plan_id',
+  },
+  ORGANIZATION: {
+    CREATE_ORGANIZATION: '/',
+    UPDATE_ORGANIZATION: '/:id',
+    GET_ORGANIZATION: '/:id',
+  },
+  ORGANIZATION_COMPANY_ACCOUNT: {
+    CREATE_ORGANIZATION_COMPANY_ACCOUNT: '/',
+    GET_ORGANIZATION_COMPANY_ACCOUNTS: 'get-accounts/:organizationId',
+    GET_ORGANIZATION_COMPANY_ACCOUNT: '/:id',
   },
   SUPER_ADMIN: {
     BILLING_INVOICES: {
       ASSIGN_PLAN: 'assign-plan',
+      ORG_PLAN: 'org-plan',
+      ORG_PLANS: 'org-plans',
+      GENERATE_INVOICE: 'generate-invoice',
     },
     ADD_USER: 'add-user',
     USER_LIST: 'user-list',

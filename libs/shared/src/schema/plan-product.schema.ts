@@ -1,8 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import mongoose, { Document, HydratedDocument } from 'mongoose';
-import { PlanProductFeature } from './plan-product-feature.schema';
-import { PlanProductModule } from './plan-product-module.schema';
-import { PlanProductModulePermission } from './plan-product-module-permission.schema';
+import mongoose, { HydratedDocument } from 'mongoose';
 import { MODEL } from '@shared/constants';
 import { AbstractSchema } from './abstract-repo/abstract.schema';
 

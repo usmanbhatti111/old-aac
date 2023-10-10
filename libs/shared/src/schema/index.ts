@@ -15,5 +15,6 @@ export * from './plan-product.schema';
 export * from './plan-type.schema';
 export * from './plan-product-module.schema';
 export * from './module.schema';
+export * from './organization/index';
 export * from './org-admin';
 export * from './product.schema';

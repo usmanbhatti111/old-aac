@@ -11,18 +11,43 @@ export class GetPlansResponseDto {
     example: {
       plans: [
         {
-          _id: '651e8b5c638f78f6b70924fc',
+          _id: '6524dcd6b418d73d1fbcde78',
           description: 'some description',
           default_users: 12,
           default_storage: 12,
           plan_price: 12,
           additional_per_user_price: 12,
+          plan_products: ['6523d0e3288b11e262ded0b5'],
           additional_storage_price: 12,
           plan_type_id: '651bee19040d3384e81b81ff',
-          plan_product: [],
           is_active: true,
-          created_at: '2023-10-05T10:09:32.658Z',
-          __v: 0,
+          created_at: '2023-10-10T05:10:46.581Z',
+          createdAt: '2023-10-10T05:10:46.586Z',
+          updatedAt: '2023-10-10T05:28:41.313Z',
+          plan_type: [
+            {
+              _id: '651bee19040d3384e81b81ff',
+              name: 'Growth',
+            },
+          ],
+        },
+        {
+          _id: '6524dc956f5b8e4b978a037f',
+          description: 'some description',
+          default_users: 12,
+          default_storage: 12,
+          plan_price: 12,
+          additional_per_user_price: 12,
+          plan_products: [
+            '6524d340be1197f49712edb9',
+            '6524d56be856be6371f20566',
+          ],
+          additional_storage_price: 12,
+          plan_type_id: '651bee19040d3384e81b81ff',
+          is_active: true,
+          created_at: '2023-10-10T05:09:41.761Z',
+          createdAt: '2023-10-10T05:09:41.765Z',
+          updatedAt: '2023-10-10T05:09:41.796Z',
           plan_type: [
             {
               _id: '651bee19040d3384e81b81ff',

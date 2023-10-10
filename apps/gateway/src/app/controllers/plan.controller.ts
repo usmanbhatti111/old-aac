@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Inject,
   Param,
@@ -27,6 +28,7 @@ import {
 import {
   AddPlanDto,
   EditPlanDto,
+  GetPlanResponseDto,
   GetPlansResponseDto,
   PaginationDto,
   PostResponseDto,
@@ -62,6 +64,30 @@ export class PlanController {
   ): Promise<GetPlansResponseDto> {
     const response = await firstValueFrom(
       this.superAdminServiceClient.send(RMQ_MESSAGES.PLAN.PLAN_LIST, payload)
+    );
+    return res.status(response.statusCode).json(response);
+  }
+
+  @Get(API_ENDPOINTS.PLAN.PLAN)
+  @ApiOkResponse({ type: GetPlanResponseDto })
+  public async getPlan(
+    @Param('plan_id') plan_id: string,
+    @Res() res: Response | any
+  ): Promise<GetPlanResponseDto> {
+    const response = await firstValueFrom(
+      this.superAdminServiceClient.send(RMQ_MESSAGES.PLAN.PLAN, plan_id)
+    );
+    return res.status(response.statusCode).json(response);
+  }
+
+  @Delete(API_ENDPOINTS.PLAN.DELETE_PLAN)
+  @ApiOkResponse({ type: PostResponseDto })
+  public async deletePlan(
+    @Param('plan_id') plan_id: string,
+    @Res() res: Response | any
+  ): Promise<PostResponseDto<Plan>> {
+    const response = await firstValueFrom(
+      this.superAdminServiceClient.send(RMQ_MESSAGES.PLAN.DELETE_PLAN, plan_id)
     );
     return res.status(response.statusCode).json(response);
   }

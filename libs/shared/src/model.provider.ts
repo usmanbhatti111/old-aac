@@ -9,7 +9,7 @@ import {
   PlanProductFeatureSchema,
   PlanProductModule,
   PlanProductModulePermission,
-  PlanProductModulePermissionSchema,
+  ProductModulePermissionSchema,
   PlanProductModuleSchema,
   PlanProductSchema,
   PlanSchema,
@@ -31,10 +31,22 @@ import {
   FaqSchema,
   Job,
   JobSchema,
+  Invoice,
+  InvoiceSchema,
   Payment,
   PaymentSchema,
   Product,
   ProductSchema,
+  Organization,
+  OrganizationCompanyAccount,
+  OrganizationSchema,
+  OrganizationCompanyAccountSchema,
+  Module,
+  ModuleSchema,
+  Feature,
+  FeatureSchema,
+  Permission,
+  PermissionSchema,
 } from './schema';
 
 export const DbModels = [
@@ -69,7 +81,7 @@ export const DbModels = [
   },
   {
     name: PlanProductModulePermission.name,
-    schema: PlanProductModulePermissionSchema,
+    schema: ProductModulePermissionSchema,
   },
   {
     name: PlanType.name,
@@ -105,11 +117,35 @@ export const DbModels = [
     schema: SuperAdminSchema,
   },
   {
+    name: Invoice.name,
+    schema: InvoiceSchema,
+  },
+  {
     name: Payment.name,
     schema: PaymentSchema,
   },
   {
     name: Product.name,
     schema: ProductSchema,
+  },
+  {
+    name: Organization.name,
+    schema: OrganizationSchema,
+  },
+  {
+    name: OrganizationCompanyAccount.name,
+    schema: OrganizationCompanyAccountSchema,
+  },
+  {
+    name: Module.name,
+    schema: ModuleSchema,
+  },
+  {
+    name: Feature.name,
+    schema: FeatureSchema,
+  },
+  {
+    name: Permission.name,
+    schema: PermissionSchema,
   },
 ];

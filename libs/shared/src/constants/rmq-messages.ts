@@ -11,10 +11,27 @@ export const RMQ_MESSAGES = {
     ADD_PLAN: 'add-plan',
     PLAN_LIST: 'plan-list',
     EDIT_PLAN: 'edit-plan',
+    PLAN: 'plan',
+    DELETE_PLAN: 'delete-plan',
+  },
+  ORGANIZATION: {
+    UPDATE_ORGANTIZATION: 'update-organization',
+    CREATE_ORGANTIZATION: 'create-organization',
+    GET_ORGANTIZATION: 'get-organization',
+    GET_ORGANTIZATIONS: 'get-organizations',
+    DELETE_ORGANTIZATION: 'delete-organization',
+  },
+  ORGANIZATION_COMPANY_ACCOUNT: {
+    CREATE_ORGANIZATION_COMPANY_ACCOUNT: 'create-company-accounts',
+    GET_ORGANIZATION_COMPANY_ACCOUNTS: 'get-company-accounts',
+    GET_ORGANIZATION_COMPANY_ACCOUNT: 'get-company-account',
   },
   SUPER_ADMIN: {
     BILLING_INVOICES: {
       ASSIGN_PLAN: 'assign-plan',
+      GET_ORG_PLAN: 'get-org-plan',
+      LIST_ORG_PLAN: 'list-org-plan',
+      GENERATE_INVOICE: 'generate-invoice',
     },
     ADD_USER: 'add-user',
     USER_LIST: 'user-list',

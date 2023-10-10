@@ -284,7 +284,19 @@ model Role {
 }
 
 model Organization {
-  id String @id @default(auto()) @map("_id") @db.ObjectId
+  id                  String   @id @default(auto()) @map("_id") @db.ObjectId
+  logo_url            String?
+  registration_number String?
+  name                String
+  email               String
+  phone_no            String
+  address             String
+  post_code           String
+  created_at          DateTime @default(now())
+  updated_at          DateTime @updatedAt
+  deleted_at          DateTime @default(now())
+
+  OrganizationCompanyAccount OrganizationCompanyAccount[]
 }
 
 model OrganizationSocialMediaIntegration {
@@ -300,7 +312,23 @@ model OrganizationProduct {
 }
 
 model OrganizationCompanyAccount {
-  id String @id @default(auto()) @map("_id") @db.ObjectId
+  id                                String                              @id @default(auto()) @map("_id") @db.ObjectId
+  organization_id                   String?                             @db.ObjectId
+  organization                      Organization?                       @relation(fields: [organization_id], references: [id])
+  logo_url                          String?
+  account_name                      String
+  phone_no                          String
+  address                           String
+  post_code                         String
+  products OrganizationCompanyAccountProduct[]
+  status           String   @default("active")
+}
+
+model OrganizationCompanyAccountProduct {
+  id                              String                      @id @default(auto()) @map("_id") @db.ObjectId
+  organization_company_account_id String?                     @db.ObjectId
+  organization_company_account    OrganizationCompanyAccount? @relation(fields: [organization_company_account_id], references: [id])
+  product                         String?
 }
 
 model OrganizationCompanyAccountRoleAndPermission {
@@ -328,10 +356,6 @@ model OrganizationCompanyAccountDocumentFolder {
 }
 
 model OrganizationCompanyAccountDocumentFolderFile {
-  id String @id @default(auto()) @map("_id") @db.ObjectId
-}
-
-model OrganizationCompanyAccountProduct {
   id String @id @default(auto()) @map("_id") @db.ObjectId
 }
 

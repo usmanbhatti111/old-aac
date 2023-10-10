@@ -3,6 +3,8 @@ import { MODEL } from '@shared/constants';
 import { HydratedDocument, SchemaTypes } from 'mongoose';
 import { AbstractSchema } from './abstract-repo/abstract.schema';
 import { Product } from './product.schema';
+import { PlanProductFeature } from './plan-product-feature.schema';
+import { PlanProductModulePermission } from './plan-product-module-permission.schema';
 
 export type PlanDocument = HydratedDocument<Plan>;
 
@@ -25,6 +27,12 @@ export class Plan extends AbstractSchema {
 
   @Prop({ type: [{ type: SchemaTypes.ObjectId, ref: MODEL.PRODUCT }] })
   plan_products?: Product[];
+
+  @Prop({ type: [{ type: SchemaTypes.ObjectId, ref: MODEL.PRODUCT }] })
+  plan_product_features?: PlanProductFeature[];
+
+  @Prop({ type: [{ type: SchemaTypes.ObjectId, ref: MODEL.PRODUCT }] })
+  plan_product_module_permissions?: PlanProductModulePermission[];
 
   @Prop()
   additional_storage_price?: number;

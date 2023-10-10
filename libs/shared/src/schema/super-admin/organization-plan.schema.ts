@@ -1,20 +1,24 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument, SchemaTypes } from 'mongoose';
 import { BillingCycleEnum, OrganizationPlanStatusEnum } from '../../constants';
+import { AbstractSchema } from '../abstract-repo/abstract.schema';
+import { SuperAdmin } from '../super-admin.schema';
 
 export type OrganizationPlanDocument = HydratedDocument<OrganizationPlan>;
 
 @Schema({ timestamps: true })
-export class OrganizationPlan {
+export class OrganizationPlan extends AbstractSchema {
   @Prop({
     type: SchemaTypes.ObjectId,
+    required: true,
     // ref: Organization.name
   })
   organizationId: string;
 
   @Prop({
     type: SchemaTypes.ObjectId,
-    // ref: Plan.name
+    required: true,
+    // ref: Plan.name,
   })
   planId: string;
 
@@ -49,7 +53,7 @@ export class OrganizationPlan {
   @Prop({
     type: SchemaTypes.ObjectId,
     required: true,
-    // ref: Admin.name
+    ref: SuperAdmin.name,
   })
   assignedBy: string;
 

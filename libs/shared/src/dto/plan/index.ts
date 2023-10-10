@@ -8,3 +8,4 @@ export * from './create-plan-product-module.dto';
 export * from './create-plan-product.dto';
 export * from './edit-plan.dto';
 export * from './get-plans-response.dto';
+export * from './get-plan-response.dto';
