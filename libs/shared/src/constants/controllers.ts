@@ -15,5 +15,7 @@ export const CONTROLLERS = {
   EXPENSE: 'expense',
   ORGANIZATION_PLAN: 'organization-plan',
   AIR_SERVICES: 'air-services',
+
+  NEWS_AND_EVENTS: 'news-and-events',
   PAYMENTS: 'payments',
 };

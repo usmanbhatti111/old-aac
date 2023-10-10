@@ -70,6 +70,15 @@ export const API_ENDPOINTS = {
       GET_EXPENSE: 'get-expense',
     },
   },
+
+  NEWS_AND_EVENTS: {
+    Add_NEWS_OR_EVENT: '/',
+    GET_NEWS_OR_EVENTS: '/',
+    EDIT_NEWS_OR_EVENT: '/:id',
+    GET_NEWS_OR_EVENT: '/:id',
+    DELETE_NEWS_OR_EVENTS: '/:ids',
+  },
+
   PAYMENTS: {
     FIND_ONE: '/:id',
     DELETE_ONE: '/:id',

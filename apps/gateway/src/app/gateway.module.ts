@@ -18,8 +18,11 @@ import { InvoiceController } from './controllers/super-admin/billing-invoices.co
 import { InventoryController } from './controllers/assets/inventory.controller';
 import { ExpenseController } from './controllers/assets/expense.controller';
 import { ProductsController } from './controllers/products.controller';
+import { NewsAndEventsController } from './controllers/super-admin/news-and-events.contoller';
 import { FaqsController } from './controllers/settings/faqs.controller';
 import { PaymentController } from './controllers/org-admin/payment.controller';
+import { APP_FILTER } from '@nestjs/core';
+import { ExceptionsFilter } from './shared/filters/exceptions.filter';
 
 @Module({
   imports: [
@@ -43,9 +46,13 @@ import { PaymentController } from './controllers/org-admin/payment.controller';
     FaqsController,
     InvoiceController,
     TaskController,
+    NewsAndEventsController,
     PaymentController,
   ],
   providers: [
+    // Exceptions Filter
+    { provide: APP_FILTER, useClass: ExceptionsFilter },
+
     // Connected to all the rabbitmq queues
     ...Object.values(SERVICES).map((SERVICE_NAME) => {
       return {

@@ -79,6 +79,16 @@ export enum BillingCycleEnum {
   YEARLY = 'YEARLY',
 }
 
+export enum ENewsAndEventsTypes {
+  EVENT = 'event',
+  NEWS = 'news',
+}
+
+export enum EStatusToggle {
+  ACTIVE = 'active',
+  INACTIVE = 'inactive',
+}
+
 export enum InvoiceStatusEnum {
   PENDING = 'PENDING',
   SELECTED = 'SELECTED',

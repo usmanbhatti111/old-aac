@@ -79,6 +79,15 @@ export const RMQ_MESSAGES = {
       GET_EXPENSE: 'get-expense',
     },
   },
+
+  NEWS_AND_EVENTS: {
+    ADD_NEWS_AND_EVENTS: 'add-news-and-event',
+    EDIT_NEWS_AND_EVENT: 'edit-news-and-event',
+    GET_NEWS_OR_EVENT: 'get-news-or-event',
+    GET_NEWS_OR_EVENTS: 'get-news-or-events',
+    DELETE_NEWS_OR_EVENTS: 'delete-news-or-events',
+  },
+
   ORG_ADMIN: {
     PAYMENTS: {
       ADD_PAYMENT: 'add-payment',

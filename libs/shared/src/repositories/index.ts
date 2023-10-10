@@ -1,6 +1,9 @@
 export * from './airservices/ticket.repository';
 export * from './airservices/inventory.repository';
 export * from './airservices/task.repository';
+
+export * from './superadmin';
+
 export * from './organization/index';
 export * from './super-admin/invoice.repository';
 export * from './super-admin/organization-plan.repository';
