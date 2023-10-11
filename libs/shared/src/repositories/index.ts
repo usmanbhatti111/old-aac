@@ -2,9 +2,7 @@ export * from './airservices/ticket.repository';
 export * from './airservices/inventory.repository';
 export * from './airservices/task.repository';
 export * from './super-admin/plan.repository';
-export * from './super-admin/plan-product.repository';
 export * from './super-admin/plan-product-feature.repository';
-export * from './super-admin/plan-product-module.repository';
 export * from './super-admin/plan-product-module-permission.repository';
 
 export * from './superadmin';

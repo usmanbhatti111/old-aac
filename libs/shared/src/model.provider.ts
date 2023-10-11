@@ -4,14 +4,10 @@ import {
   Ticket,
   TicketSchema,
   Plan,
-  PlanProduct,
   PlanProductFeature,
   PlanProductFeatureSchema,
-  PlanProductModule,
   PlanProductModulePermission,
   ProductModulePermissionSchema,
-  PlanProductModuleSchema,
-  PlanProductSchema,
   PlanSchema,
   PlanType,
   PlanTypeSchema,
@@ -70,16 +66,8 @@ export const DbModels = [
     schema: PlanSchema,
   },
   {
-    name: PlanProduct.name,
-    schema: PlanProductSchema,
-  },
-  {
     name: PlanProductFeature.name,
     schema: PlanProductFeatureSchema,
-  },
-  {
-    name: PlanProductModule.name,
-    schema: PlanProductModuleSchema,
   },
   {
     name: PlanProductModulePermission.name,

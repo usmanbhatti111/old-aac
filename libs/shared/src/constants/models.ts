@@ -15,10 +15,8 @@ export const MODEL = {
   PLAN_TYPE: 'plantypes',
   PRODUCT: 'Product',
   PLAN: 'Plan',
-  PLAN_PRODUCT: 'PlanProduct',
   MODULE: 'Module',
   MODULE_PERMISSION: 'ModulePermission',
-  PLAN_PRODUCT_MODULE: 'PlanProductModule',
   FEATURE: 'Feature',
   PERMISSION: 'Permission',
 };
