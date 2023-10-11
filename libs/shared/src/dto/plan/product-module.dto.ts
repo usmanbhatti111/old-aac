@@ -5,15 +5,15 @@ export class ProductModuleDto {
   @ApiProperty()
   @IsNotEmpty()
   @IsString()
-  module_id: string;
+  moduleId: string;
 
   @ApiProperty({ type: String })
   @IsNotEmpty()
   @IsString()
-  module_permission_id: string;
+  modulePermissionId: string;
 
   @ApiProperty()
   @IsNotEmpty()
   @IsString()
-  product_id: string;
+  productId: string;
 }

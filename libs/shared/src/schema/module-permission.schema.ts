@@ -22,7 +22,7 @@ export class ModulePermission extends AbstractSchema {
   })
   permission: string; // Reference to Permission _id
 
-  plan_product_module_permission: PlanProductModulePermission[];
+  planProductModulePermission: PlanProductModulePermission[];
   // Add other fields as needed
 }
 

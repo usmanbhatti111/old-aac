@@ -8,8 +8,8 @@ export type ModuleDocument = HydratedDocument<Module>;
 @Schema()
 export class Module extends AbstractSchema {
   // Define fields for Module
-  plan_product_module_permission: PlanProductModulePermission[];
-  module_permission: ModulePermission[];
+  planProductModulePermission: PlanProductModulePermission[];
+  modulePermission: ModulePermission[];
 }
 
 export const ModuleSchema = SchemaFactory.createForClass(Module);

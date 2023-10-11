@@ -435,7 +435,7 @@ model Asset {
 enum TicketStatusEnum {
   OPEN
   CLOSED
-  RESOLVED
+  RESOLVED   
 }
 
 enum TicketInternalTypeEnum {

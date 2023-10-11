@@ -8,7 +8,7 @@ export type PermissionDocument = HydratedDocument<Permission>;
 @Schema()
 export class Permission extends AbstractSchema {
   // Define fields for Permission
-  module_permission: ModulePermission[];
+  modulePermission: ModulePermission[];
 }
 
 export const PermissionSchema = SchemaFactory.createForClass(Permission);

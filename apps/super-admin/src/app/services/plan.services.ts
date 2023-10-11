@@ -114,10 +114,10 @@ export class PlanService {
 
   async editPlan(payload: EditPlanDto) {
     try {
-      const { plan_id } = payload;
-      await this.planRepository.findOne({ _id: plan_id });
+      const { planId } = payload;
+      await this.planRepository.findOne({ _id: planId });
 
-      delete payload.plan_id;
+      delete payload.planId;
       const payloadPlan = {
         ...payload,
         suite: undefined,
@@ -127,20 +127,20 @@ export class PlanService {
       };
 
       let planRes = await this.planRepository.findOneAndUpdate(
-        { _id: plan_id },
+        { _id: planId },
         payloadPlan
       );
 
       if (payload.suite && payload.suite[0]) {
         planRes = await this.planRepository.findOneAndUpdate(
-          { _id: plan_id },
+          { _id: planId },
           {
             plan_products: [],
-            plan_product_features: payload.plan_feature[0]
-              ? payload.plan_feature
+            plan_product_features: payload.planFeature[0]
+              ? payload.planFeature
               : [],
-            plan_product_module_permissions: payload.plan_module[0]
-              ? payload.plan_module
+            plan_product_module_permissions: payload.planModule[0]
+              ? payload.planModule
               : [],
           }
         );
@@ -149,30 +149,30 @@ export class PlanService {
           await this.savePlan(
             payloadPlan,
             product_id,
-            payload.plan_feature,
-            payload.plan_module,
+            payload.planFeature,
+            payload.planModule,
             planRes
           );
         }
         // if single product then using product id, insert plan data
-      } else if (payload.product_id) {
+      } else if (payload.productId) {
         planRes = await this.planRepository.findOneAndUpdate(
-          { _id: plan_id },
+          { _id: planId },
           {
             plan_products: [],
-            plan_product_features: payload.plan_feature[0]
+            plan_product_features: payload.planFeature[0]
               ? []
-              : payload.plan_feature,
-            plan_product_module_permissions: payload.plan_module[0]
+              : payload.planFeature,
+            plan_product_modulePermissions: payload.planModule[0]
               ? []
-              : payload.plan_module,
+              : payload.planModule,
           }
         );
         await this.savePlan(
           payloadPlan,
-          payload.product_id,
-          payload.plan_feature,
-          payload.plan_module,
+          payload.productId,
+          payload.planFeature,
+          payload.planModule,
           planRes
         );
       }
@@ -188,53 +188,53 @@ export class PlanService {
 
   async savePlan(
     payload: any = null,
-    product_id: string,
+    productId: string,
     featureProducts: ProductFeatureDto[],
     moduleProducts: ProductModuleDto[],
     plan: Plan = null
   ) {
     const featureProduct = featureProducts.find(
-      (val) => (val.product_id = product_id)
+      (val) => (val.productId = productId)
     );
     const moduleProduct = moduleProducts.find(
-      (val) => (val.product_id = product_id)
+      (val) => (val.productId = productId)
     );
 
     const product = await this.productRepository.findOne({
-      _id: product_id,
+      _id: productId,
     });
 
     await this.moduleRepository.findOne({
-      _id: moduleProduct.module_id,
+      _id: moduleProduct.moduleId,
     });
 
     await this.permissionRepository.findOne({
-      _id: moduleProduct.module_permission_id,
+      _id: moduleProduct.modulePermissionId,
     });
 
     await this.featureRepository.findOne({
-      _id: featureProduct.feature_id,
+      _id: featureProduct.featureId,
     });
 
     const productFeatureRes = this.productFeatureRepository.upsert(
       {
-        product_id,
-        feature_id: featureProduct.feature_id,
+        productId,
+        featureId: featureProduct.featureId,
       },
-      { deals_associations_detail: featureProduct?.deals_associations_detail }
+      { dealsAssociationsDetail: featureProduct?.dealsAssociationsDetail }
     ); // inserting plan product features data
 
     const productsModulePermissionRes =
       await this.productModulePermissionRepository.upsert(
         {
-          product_id,
-          module_id: moduleProduct.module_id,
-          module_permission_id: moduleProduct.module_permission_id,
+          productId,
+          module_id: moduleProduct.moduleId,
+          module_permission_id: moduleProduct.modulePermissionId,
         },
         {
-          product_id,
-          module_id: moduleProduct.module_id,
-          module_permission_id: moduleProduct.module_permission_id,
+          productId,
+          moduleId: moduleProduct.moduleId,
+          modulePermissionId: moduleProduct.modulePermissionId,
         }
       ); // inserting plan product module permission data
 
@@ -242,13 +242,13 @@ export class PlanService {
       plan = await this.planRepository.findOneAndUpdate(
         { _id: plan._id },
         {
-          plan_products: [...plan.plan_products, product],
+          plan_products: [...plan.planProducts, product],
           plan_product_features: [
-            ...plan.plan_product_features,
+            ...plan.planProductFeatures,
             productFeatureRes,
           ],
           plan_product_module_permissions: [
-            ...plan.plan_product_module_permissions,
+            ...plan.planProductModulePermissions,
             productsModulePermissionRes,
           ],
         }
@@ -256,13 +256,10 @@ export class PlanService {
     else {
       plan = await this.planRepository.create({
         ...payload,
-        plan_products: [...plan.plan_products, product],
-        plan_product_features: [
-          ...plan.plan_product_features,
-          productFeatureRes,
-        ],
+        plan_products: [...plan.planProducts, product],
+        plan_product_features: [...plan.planProductFeatures, productFeatureRes],
         plan_product_module_permissions: [
-          ...plan.plan_product_module_permissions,
+          ...plan.planProductModulePermissions,
           productsModulePermissionRes,
         ],
       });
@@ -290,8 +287,8 @@ export class PlanService {
           planRes = await this.savePlan(
             payloadPlan,
             product_id,
-            payload.plan_feature,
-            payload.plan_module,
+            payload.planFeature,
+            payload.planModule,
             planRes
           );
         }
@@ -299,9 +296,9 @@ export class PlanService {
         // if single product then using product id, insert plan data
         planRes = await this.savePlan(
           payloadPlan,
-          payload.product_id,
-          payload.plan_feature,
-          payload.plan_module,
+          payload.productId,
+          payload.planFeature,
+          payload.planModule,
           planRes
         );
       }

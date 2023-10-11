@@ -50,7 +50,7 @@ export class PlanController {
     @Body() payload: AddPlanDto,
     @Res() res: Response | any
   ): Promise<PostResponseDto<Plan>> {
-    payload.created_by = '65262d9c3686b5e9a4fc4222'; // TODO: get Id from token
+    payload.createdBy = '65262d9c3686b5e9a4fc4222'; // TODO: get Id from token
     const response = await firstValueFrom(
       this.superAdminServiceClient.send(RMQ_MESSAGES.PLAN.ADD_PLAN, payload)
     );
@@ -84,11 +84,11 @@ export class PlanController {
   @Delete(API_ENDPOINTS.PLAN.DELETE_PLAN)
   @ApiOkResponse({ type: PostResponseDto })
   public async deletePlan(
-    @Param('plan_id') plan_id: string,
+    @Param('planId') planId: string,
     @Res() res: Response | any
   ): Promise<PostResponseDto<Plan>> {
     const response = await firstValueFrom(
-      this.superAdminServiceClient.send(RMQ_MESSAGES.PLAN.DELETE_PLAN, plan_id)
+      this.superAdminServiceClient.send(RMQ_MESSAGES.PLAN.DELETE_PLAN, planId)
     );
     return res.status(response.statusCode).json(response);
   }
@@ -96,12 +96,12 @@ export class PlanController {
   @Patch(API_ENDPOINTS.PLAN.EDIT_PLAN)
   @ApiCreatedResponse({ type: PostResponseDto })
   public async updatePlan(
-    @Param('plan_id') plan_id: string,
+    @Param('planId') planId: string,
     @Body() payload: EditPlanDto,
     @Res() res: Response | any
   ): Promise<PostResponseDto<Plan>> {
-    payload.plan_id = plan_id;
-    payload.updated_by = '65262d5f0d1b96adb427985b'; // TODO: get Id from token
+    payload.planId = planId;
+    payload.updatedBy = '65262d5f0d1b96adb427985b'; // TODO: get Id from token
     const response = await firstValueFrom(
       this.superAdminServiceClient.send(RMQ_MESSAGES.PLAN.EDIT_PLAN, payload)
     );

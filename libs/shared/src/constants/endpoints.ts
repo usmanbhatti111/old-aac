@@ -10,9 +10,9 @@ export const API_ENDPOINTS = {
   PLAN: {
     ADD_PLAN: '/',
     PLAN_LIST: '/',
-    PLAN: '/:plan_id',
-    EDIT_PLAN: '/:plan_id',
-    DELETE_PLAN: '/:plan_id',
+    PLAN: '/:planId',
+    EDIT_PLAN: '/:planId',
+    DELETE_PLAN: '/:planId',
   },
   ORGANIZATION: {
     CREATE_ORGANIZATION: '/',

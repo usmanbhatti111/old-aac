@@ -13,7 +13,7 @@ import { ProductModuleDto } from './product-module.dto';
 export class AddPlanDto {
   @ApiProperty()
   @IsOptional()
-  product_id: string;
+  productId: string;
 
   @ApiProperty({
     type: String,
@@ -28,7 +28,7 @@ export class AddPlanDto {
   })
   @IsMongoId()
   @IsNotEmpty()
-  plan_type_id: string;
+  planTypeId: string;
 
   @ApiProperty({
     example: 'some description',
@@ -45,7 +45,7 @@ export class AddPlanDto {
   @IsNotEmpty()
   @IsNumber()
   @Type(() => Number)
-  default_users: number;
+  defaultUsers: number;
 
   @ApiProperty({
     required: true,
@@ -54,7 +54,7 @@ export class AddPlanDto {
   @IsNotEmpty()
   @IsNumber()
   @Type(() => Number)
-  default_storage: number;
+  defaultStorage: number;
 
   @ApiProperty({
     required: true,
@@ -63,7 +63,7 @@ export class AddPlanDto {
   @IsNotEmpty()
   @IsNumber()
   @Type(() => Number)
-  plan_price: number;
+  planPrice: number;
 
   @ApiProperty({
     example: 12,
@@ -71,7 +71,7 @@ export class AddPlanDto {
   @IsNumber()
   @IsOptional()
   @Type(() => Number)
-  additional_per_user_price: number;
+  additionalPerUserPrice: number;
 
   @ApiProperty({
     example: 12,
@@ -79,21 +79,21 @@ export class AddPlanDto {
   @IsNumber()
   @IsOptional()
   @Type(() => Number)
-  additional_storage_price: number;
+  additionalStoragePrice: number;
 
   @ApiProperty({
     type: () => ProductFeatureDto,
     isArray: true,
   })
   @Type(() => ProductFeatureDto)
-  plan_feature: ProductFeatureDto[];
+  planFeature: ProductFeatureDto[];
 
   @ApiProperty({
     type: () => ProductModuleDto,
     isArray: true,
   })
   @Type(() => ProductModuleDto)
-  plan_module: ProductModuleDto[];
+  planModule: ProductModuleDto[];
 
-  created_by: string;
+  createdBy: string;
 }

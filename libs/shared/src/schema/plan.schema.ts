@@ -14,46 +14,46 @@ export class Plan extends AbstractSchema {
   description?: string;
 
   @Prop({ required: true })
-  default_users: number;
+  defaultUsers: number;
 
   @Prop({ required: true })
-  default_storage: number;
+  defaultStorage: number;
 
   @Prop({ required: true })
-  plan_price: number;
+  planPrice: number;
 
   @Prop()
-  additional_per_user_price?: number;
+  additionalPerUserPrice?: number;
 
   @Prop({ type: [{ type: SchemaTypes.ObjectId, ref: MODEL.PRODUCT }] })
-  plan_products?: Product[];
+  planProducts?: Product[];
 
   @Prop({ type: [{ type: SchemaTypes.ObjectId, ref: MODEL.PRODUCT }] })
-  plan_product_features?: PlanProductFeature[];
+  planProductFeatures?: PlanProductFeature[];
 
   @Prop({ type: [{ type: SchemaTypes.ObjectId, ref: MODEL.PRODUCT }] })
-  plan_product_module_permissions?: PlanProductModulePermission[];
+  planProductModulePermissions?: PlanProductModulePermission[];
 
   @Prop()
-  additional_storage_price?: number;
+  additionalStoragePrice?: number;
 
   @Prop({ required: true, type: SchemaTypes.ObjectId, ref: MODEL.PLAN_TYPE })
-  plan_type_id: string;
+  planTypeId: string;
 
   @Prop({ required: true, type: SchemaTypes.ObjectId })
-  created_by?: string;
+  createdBy?: string;
 
   @Prop({ required: false, type: SchemaTypes.ObjectId })
-  updated_by?: string;
+  updatedBy?: string;
 
   @Prop({ default: Date.now })
-  created_at?: Date;
+  createdAt?: Date;
 
   @Prop()
-  updated_at?: Date;
+  updatedAt?: Date;
 
   @Prop({ default: true })
-  is_active?: boolean;
+  isActive?: boolean;
 }
 
 export const PlanSchema = SchemaFactory.createForClass(Plan);

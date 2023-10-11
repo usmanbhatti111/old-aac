@@ -15,15 +15,15 @@ export class PlanProductFeature extends AbstractSchema {
   @Prop({
     type: [{ required: true, type: SchemaTypes.ObjectId, ref: MODEL.PRODUCT }],
   })
-  product_id: string; // Reference to Product _id
+  productId: string; // Reference to Product _id
 
   @Prop({
     type: [{ required: true, type: SchemaTypes.ObjectId, ref: MODEL.FEATURE }],
   })
-  feature_id: string; // Reference to Feature _id
+  featureId: string; // Reference to Feature _id
 
   @Prop({ type: [{ required: false, type: String }] })
-  deals_associations_detail: string;
+  dealsAssociationsDetail: string;
 
   // Add other fields as needed
 }

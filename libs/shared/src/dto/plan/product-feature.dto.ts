@@ -5,15 +5,15 @@ export class ProductFeatureDto {
   @ApiProperty()
   @IsString()
   @IsOptional()
-  deals_associations_detail: string;
+  dealsAssociationsDetail: string;
 
   @ApiProperty()
   @IsNotEmpty()
   @IsString()
-  feature_id: string;
+  featureId: string;
 
   @ApiProperty()
   @IsNotEmpty()
   @IsString()
-  product_id: string;
+  productId: string;
 }

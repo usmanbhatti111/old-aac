@@ -13,14 +13,14 @@ export class PlanProductModulePermission extends AbstractSchema {
       { required: true, type: mongoose.Types.ObjectId, ref: MODEL.PRODUCT },
     ],
   })
-  product_id: string | mongoose.Types.ObjectId; // Reference to Product _id
+  productId: string | mongoose.Types.ObjectId; // Reference to Product _id
 
   @Prop({
     type: [
       { required: true, type: mongoose.Types.ObjectId, ref: MODEL.MODULE },
     ],
   })
-  module_id: string | mongoose.Types.ObjectId; // Reference to Module _id
+  moduleId: string | mongoose.Types.ObjectId; // Reference to Module _id
 
   @Prop({
     type: [
@@ -31,7 +31,7 @@ export class PlanProductModulePermission extends AbstractSchema {
       },
     ],
   })
-  module_permission_id: string | mongoose.Types.ObjectId; // Reference to ModulePermission _id
+  modulePermissionId: string | mongoose.Types.ObjectId; // Reference to ModulePermission _id
 
   // Add other fields as needed
 }
