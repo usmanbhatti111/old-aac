@@ -39,7 +39,7 @@ export class CreateTicketDTO {
   })
   @IsString()
   @IsNotEmpty()
-  pirority;
+  pirority: string;
 
   @ApiProperty({
     type: String,
@@ -49,7 +49,7 @@ export class CreateTicketDTO {
   })
   @IsString()
   @IsNotEmpty()
-  internalType;
+  internalType: string;
 
   @ApiProperty({
     type: String,
@@ -59,5 +59,5 @@ export class CreateTicketDTO {
   })
   @IsString()
   @IsNotEmpty()
-  type;
+  type: string;
 }

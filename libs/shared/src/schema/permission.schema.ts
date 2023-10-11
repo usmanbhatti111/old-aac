@@ -12,4 +12,4 @@
 // }
 
 // export const PermissionSchema = SchemaFactory.createForClass(Permission);
-export{}
+export {};

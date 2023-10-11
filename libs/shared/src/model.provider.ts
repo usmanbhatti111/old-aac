@@ -39,6 +39,9 @@ import {
   OrganizationCompanyAccount,
   OrganizationSchema,
   OrganizationCompanyAccountSchema,
+  AssetsSoftware,
+  AssetsSoftwareSchema,
+
   // Module,
   // ModuleSchema,
   Feature,
@@ -130,6 +133,14 @@ export const DbModels = [
     name: OrganizationCompanyAccount.name,
     schema: OrganizationCompanyAccountSchema,
   },
+  {
+    name: AssetsSoftware.name,
+    schema: AssetsSoftwareSchema,
+  },
+  // {
+  //   name: Module.name,
+  //   schema: ModuleSchema,
+  // },
   // {
   //   name: Module.name,
   //   schema: ModuleSchema,

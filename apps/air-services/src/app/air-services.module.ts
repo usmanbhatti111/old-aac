@@ -8,6 +8,8 @@ import { TaskController } from './controllers/tasks.controller';
 import { TaskService } from './services/tasks.service';
 import { InventoryController } from './controllers/assets/inventory.controller';
 import { InventoryService } from './services/assets/inventory.service';
+import { SoftwareController } from './controllers/assets/software.controller';
+import { SoftwareService } from './services/assets/software.service';
 
 @Module({
   imports: [SharedModule],
@@ -16,7 +18,14 @@ import { InventoryService } from './services/assets/inventory.service';
     InventoryController,
     TaskController,
     ExpenseController,
+    SoftwareController,
   ],
-  providers: [TicketService, InventoryService, TaskService, ExpenseService],
+  providers: [
+    TicketService,
+    InventoryService,
+    TaskService,
+    ExpenseService,
+    SoftwareService,
+  ],
 })
 export class AirServicesModule {}

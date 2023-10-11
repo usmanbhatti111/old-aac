@@ -95,3 +95,15 @@ export enum InvoiceStatusEnum {
   PAID = 'PAID',
   OVERDUE = 'OVERDUE',
 }
+export enum AssetsSoftwareStatusEnum {
+  RESTRICTED = 'Restricted',
+  IGNORED = 'Ignored',
+  MANAGED = 'Managed',
+  DISABLED = 'Disabled',
+  INREVIEW = 'InReview',
+}
+export enum AssetsSoftwareTypeEnum {
+  DESKTOP = 'Desktop',
+  SAAS = 'Saas',
+  MOBILE = 'Mobile',
+}

@@ -61,13 +61,16 @@ export const API_ENDPOINTS = {
     TICKETS: {
       ticket: 'ticket',
       ADD_CHILD_TICKET: 'add-child-ticket',
-      GET_CHILD_TICKETS: 'get-child-tickets/:ticketId',
+      GET_CHILD_TICKETS: 'get-child-tickets/:id',
+      DELETE_CHILD_TICKETS: 'delete-child-tickets/:id',
+      EDIT_CHILD_TICKETS: 'edit_child_tickets/:id',
       ASSOCIATE_ASSETS: 'associate-assets',
       DETACH_ASSETS: 'detach-assets',
     },
     ASSETS: {
       INVENTORY: 'inventory',
       DELETE_INVENTORY: '/:id',
+      ADD_SOFTWARE: 'add_software',
     },
     TASK: {
       ADD_TASK: '/',

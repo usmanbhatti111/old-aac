@@ -2,7 +2,9 @@ import { Injectable, HttpStatus } from '@nestjs/common';
 import { errorResponse, successResponse } from '@shared/constants';
 import { TicketRepository } from '@shared';
 import mongoose from 'mongoose';
-import { AssociateAssetsDTO, DetachAssetsDTO } from '@shared/dto';
+import { AssociateAssetsDTO, IdDto } from '@shared/dto';
+import { RpcException } from '@nestjs/microservices';
+import { DetachAssetsDTO } from '@shared/dto';
 
 @Injectable()
 export class TicketService {
@@ -69,13 +71,15 @@ export class TicketService {
   }
   async createChildTicket(payload: any) {
     try {
-      const { ticketId, ...dto } = payload;
+      const { id, ...dto } = payload;
 
       const childTicket = await this.ticketRepository.create({
+        isChildTicket: true,
         ...dto,
       });
       const data = await this.ticketRepository.findOneAndUpdate(
-        { _id: ticketId },
+        { _id: id.id },
+
         { $push: { childTicketsId: childTicket._id } }
       );
 
@@ -86,13 +90,12 @@ export class TicketService {
       );
       return response;
     } catch (error) {
-      const err = errorResponse(HttpStatus.BAD_REQUEST, error?.meta?.cause);
-      return err;
+      throw new RpcException(error);
     }
   }
-  async getChildTicket(payload: any) {
+  async getChildTicket(payload: IdDto) {
     try {
-      const { ticketId } = payload;
+      const { id } = payload;
       const data = await this.ticketRepository.aggregate([
         {
           $lookup: {
@@ -103,7 +106,7 @@ export class TicketService {
           },
         },
 
-        { $match: { _id: new mongoose.Types.ObjectId(ticketId) } },
+        { $match: { _id: new mongoose.Types.ObjectId(id) } },
       ]);
 
       const response = successResponse(
@@ -114,9 +117,44 @@ export class TicketService {
 
       return response;
     } catch (error) {
-      const err = errorResponse(HttpStatus.BAD_REQUEST, error?.meta?.cause);
-      // TODO - Add logger
-      return err;
+      throw new RpcException(error);
+    }
+  }
+
+  async deleteChildTicket(payload: any) {
+    try {
+      const { id } = payload;
+
+      const data = await this.ticketRepository.delete({
+        _id: id,
+        isChildTicket: true,
+      });
+      const response = successResponse(
+        HttpStatus.OK,
+        `ChildTicket Deleted Successfully`,
+        data
+      );
+      return response;
+    } catch (error) {
+      throw new RpcException(error);
+    }
+  }
+  async editChildTicket(payload: any) {
+    try {
+      const { id, ...dto } = payload;
+
+      const data = await this.ticketRepository.findOneAndUpdate(
+        { _id: id.id, isChildTicket: true },
+        { ...dto }
+      );
+      const response = successResponse(
+        HttpStatus.OK,
+        `ChildTicket Edit Successfully`,
+        data
+      );
+      return response;
+    } catch (error) {
+      throw new RpcException(error);
     }
   }
 }

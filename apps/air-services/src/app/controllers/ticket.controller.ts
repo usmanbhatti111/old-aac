@@ -2,11 +2,8 @@ import { Controller } from '@nestjs/common';
 import { MessagePattern, Payload } from '@nestjs/microservices';
 import { RMQ_MESSAGES } from '@shared/constants';
 import { TicketService } from '../services/ticket.service';
-import {
-  AssociateAssetsDTO,
-  CreateTicketDTO,
-  DetachAssetsDTO,
-} from '@shared/dto';
+import { AssociateAssetsDTO, CreateTicketDTO, IdDto } from '@shared/dto';
+import { DetachAssetsDTO } from '@shared/dto';
 @Controller()
 export class TicketController {
   constructor(private ticketService: TicketService) {}
@@ -29,7 +26,15 @@ export class TicketController {
     return this.ticketService.createChildTicket(payload);
   }
   @MessagePattern(RMQ_MESSAGES.AIR_SERVICES.TICKETS.GET_CHILD_TICKETS)
-  public async getChildTicket(@Payload() payload: any) {
+  public async getChildTicket(@Payload() payload: IdDto) {
     return this.ticketService.getChildTicket(payload);
+  }
+  @MessagePattern(RMQ_MESSAGES.AIR_SERVICES.TICKETS.DELETE_CHILD_TICKETS)
+  public async deleteChildTicket(@Payload() payload: IdDto) {
+    return this.ticketService.deleteChildTicket(payload);
+  }
+  @MessagePattern(RMQ_MESSAGES.AIR_SERVICES.TICKETS.EDIT_CHILD_TICKETS)
+  public async editChildTicket(@Payload() payload: IdDto) {
+    return this.ticketService.editChildTicket(payload);
   }
 }

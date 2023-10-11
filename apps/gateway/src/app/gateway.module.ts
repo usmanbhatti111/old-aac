@@ -26,6 +26,7 @@ import { FaqsController } from './controllers/settings/faqs.controller';
 import { PaymentController } from './controllers/org-admin/payment.controller';
 import { APP_FILTER } from '@nestjs/core';
 import { ExceptionsFilter } from './shared/filters/exceptions.filter';
+import { SoftwareController } from './controllers/assets/software.controller';
 
 @Module({
   imports: [
@@ -54,6 +55,7 @@ import { ExceptionsFilter } from './shared/filters/exceptions.filter';
     TaskController,
     NewsAndEventsController,
     PaymentController,
+    SoftwareController,
   ],
   providers: [
     // Exceptions Filter

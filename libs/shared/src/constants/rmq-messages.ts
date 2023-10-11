@@ -73,11 +73,14 @@ export const RMQ_MESSAGES = {
       DETACH_ASSETS: 'detach-assets',
       CREATE_CHILD_TICKET: 'create_child_ticket',
       GET_CHILD_TICKETS: 'get_child_ticket',
+      DELETE_CHILD_TICKETS: 'delete_child_tickets',
+      EDIT_CHILD_TICKETS: 'edit_child_tickets',
     },
     ASSETS: {
       ADD_Inventory: 'add-inventory',
       GET_Inventory: 'get-inventory',
       Delete_Inventory: 'delete-inventory',
+      ADD_SOFTWARE: 'add-software',
     },
     TASK: {
       ADD_TASK: 'add_task',

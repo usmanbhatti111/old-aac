@@ -83,6 +83,12 @@ export class Ticket extends AbstractSchema {
     required: false,
   })
   childTicketsId: [string];
+
+  @Prop({
+    type: Boolean,
+    default: false,
+  })
+  isChildTicket: boolean;
 }
 
 export const TicketSchema = SchemaFactory.createForClass(Ticket);

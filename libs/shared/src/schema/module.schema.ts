@@ -13,4 +13,4 @@
 // }
 
 // export const ModuleSchema = SchemaFactory.createForClass(Module);
-export { }
+export {};
