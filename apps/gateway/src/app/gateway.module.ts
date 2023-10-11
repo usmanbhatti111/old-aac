@@ -20,6 +20,7 @@ import { InvoiceController } from './controllers/super-admin/billing-invoices.co
 import { InventoryController } from './controllers/assets/inventory.controller';
 import { ExpenseController } from './controllers/assets/expense.controller';
 import { ProductsController } from './controllers/products.controller';
+import { ProductFeaturesController } from './controllers/product-features.controller';
 import { NewsAndEventsController } from './controllers/super-admin/news-and-events.contoller';
 import { FaqsController } from './controllers/settings/faqs.controller';
 import { PaymentController } from './controllers/org-admin/payment.controller';
@@ -44,6 +45,7 @@ import { ExceptionsFilter } from './shared/filters/exceptions.filter';
     ProductsController,
     TicketController,
     InventoryController,
+    ProductFeaturesController,
     OrganizationController,
     OrganizationCompanyAccountController,
     ExpenseController,

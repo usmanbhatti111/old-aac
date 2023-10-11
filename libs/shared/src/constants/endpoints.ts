@@ -79,6 +79,13 @@ export const API_ENDPOINTS = {
       GET_EXPENSE: 'get-expense',
     },
   },
+  PRODUCT_FEATURES: {
+    ADD_PRODUCT_FEATURE: '/',
+    GET_PRODUCTS_FEATURES: '/',
+    GET_PRODUCT_FEATURE: '/:id',
+    EDIT_PRODUCT_FEATURE: '/:id',
+    DELETE_PRODUCTS_FEATURES: '/:ids',
+  },
 
   NEWS_AND_EVENTS: {
     Add_NEWS_OR_EVENT: '/',

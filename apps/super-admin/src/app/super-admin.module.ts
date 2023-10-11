@@ -1,6 +1,5 @@
 import { Module } from '@nestjs/common';
 
-import { JobsController } from './controllers/jobs.controller';
 import { SharedModule } from '@shared';
 import { BillingController } from './controllers/billing.controller';
 import { BillingService } from './services/billing.service';
@@ -10,9 +9,12 @@ import { ExampleController } from './controllers/example.controller';
 import { ExampleService } from './services/examples.service';
 import { ProductsController } from './controllers/products.controller';
 import { ProductsService } from './services/products.service';
+import { JobsController } from './controllers/jobs.controller';
 import { JobsService } from './services/jobs.service';
 import { PlanController } from './controllers/plan.controller';
 import { PlanService } from './services/plan.services';
+import { ProductFeaturesController } from './controllers/product-features.controller';
+import { ProductFeaturesService } from './services/product-features.service';
 import { FaqsController } from './controllers/faqs.controller';
 import { FaqsService } from './services/faqs.service';
 import { InvoiceController } from './controllers/invoice.controller';
@@ -26,6 +28,7 @@ import { NewsAndEventsService } from './services/news-and-event.service';
     ExampleController,
     ProductsController,
     JobsController,
+    ProductFeaturesController,
     FaqsController,
     InvoiceController,
     SuperAdminController,
@@ -37,6 +40,7 @@ import { NewsAndEventsService } from './services/news-and-event.service';
     ExampleService,
     ProductsService,
     JobsService,
+    ProductFeaturesService,
     SuperAdminService,
     FaqsService,
     InvoiceService,
