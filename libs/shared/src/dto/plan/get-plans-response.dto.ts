@@ -11,47 +11,33 @@ export class GetPlansResponseDto {
     example: {
       plans: [
         {
-          _id: '6524dcd6b418d73d1fbcde78',
+          _id: '65265060b3f1860c66c7adce',
           description: 'some description',
-          default_users: 12,
-          default_storage: 12,
-          plan_price: 12,
-          additional_per_user_price: 12,
-          plan_products: ['6523d0e3288b11e262ded0b5'],
-          additional_storage_price: 12,
-          plan_type_id: '651bee19040d3384e81b81ff',
-          is_active: true,
-          created_at: '2023-10-10T05:10:46.581Z',
-          createdAt: '2023-10-10T05:10:46.586Z',
-          updatedAt: '2023-10-10T05:28:41.313Z',
-          plan_type: [
-            {
-              _id: '651bee19040d3384e81b81ff',
-              name: 'Growth',
-            },
-          ],
-        },
-        {
-          _id: '6524dc956f5b8e4b978a037f',
-          description: 'some description',
-          default_users: 12,
-          default_storage: 12,
-          plan_price: 12,
-          additional_per_user_price: 12,
-          plan_products: [
+          defaultUsers: 12,
+          defaultStorage: 12,
+          planPrice: 12,
+          additionalPerUserPrice: 12,
+          planProducts: [
             '6524d340be1197f49712edb9',
-            '6524d56be856be6371f20566',
+            '6523d0f009e8c90ad90dc338',
           ],
-          additional_storage_price: 12,
-          plan_type_id: '651bee19040d3384e81b81ff',
-          is_active: true,
-          created_at: '2023-10-10T05:09:41.761Z',
-          createdAt: '2023-10-10T05:09:41.765Z',
-          updatedAt: '2023-10-10T05:09:41.796Z',
-          plan_type: [
+          planProductFeatures: [
+            '652650601a6e84f64e08ca4f',
+            '652650601a6e84f64e08ca58',
+          ],
+          planProductModulePermissions: [
+            '652650601a6e84f64e08ca50',
+            '652650601a6e84f64e08ca59',
+          ],
+          additionalStoragePrice: 12,
+          planTypeId: '6524d3695bf6cc10405eaf2d',
+          createdBy: '65262d9c3686b5e9a4fc4222',
+          isActive: true,
+          createdAt: '2023-10-11T07:36:00.932Z',
+          updatedAt: '2023-10-11T07:36:00.964Z',
+          planType: [
             {
-              _id: '651bee19040d3384e81b81ff',
-              name: 'Growth',
+              _id: '6524d3695bf6cc10405eaf2d',
             },
           ],
         },

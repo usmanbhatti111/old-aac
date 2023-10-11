@@ -4,3 +4,5 @@ export * from './product-module.dto';
 export * from './edit-plan.dto';
 export * from './get-plans-response.dto';
 export * from './get-plan-response.dto';
+export * from './add-plan-response.dto';
+export * from './edit-plan-response.dto';

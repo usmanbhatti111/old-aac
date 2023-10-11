@@ -27,7 +27,9 @@ import {
 } from '@shared/constants';
 import {
   AddPlanDto,
+  AddPlanResponseDto,
   EditPlanDto,
+  EditPlanResponseDto,
   GetPlanResponseDto,
   GetPlansResponseDto,
   PaginationDto,
@@ -45,7 +47,7 @@ export class PlanController {
   ) {}
 
   @Post(API_ENDPOINTS.PLAN.ADD_PLAN)
-  @ApiCreatedResponse({ type: PostResponseDto })
+  @ApiCreatedResponse({ type: AddPlanResponseDto })
   public async createPlan(
     @Body() payload: AddPlanDto,
     @Res() res: Response | any
@@ -72,11 +74,11 @@ export class PlanController {
   @Get(API_ENDPOINTS.PLAN.PLAN)
   @ApiOkResponse({ type: GetPlanResponseDto })
   public async getPlan(
-    @Param('plan_id') plan_id: string,
+    @Param('planId') planId: string,
     @Res() res: Response | any
   ): Promise<GetPlanResponseDto> {
     const response = await firstValueFrom(
-      this.superAdminServiceClient.send(RMQ_MESSAGES.PLAN.PLAN, plan_id)
+      this.superAdminServiceClient.send(RMQ_MESSAGES.PLAN.PLAN, planId)
     );
     return res.status(response.statusCode).json(response);
   }
@@ -94,7 +96,7 @@ export class PlanController {
   }
 
   @Patch(API_ENDPOINTS.PLAN.EDIT_PLAN)
-  @ApiCreatedResponse({ type: PostResponseDto })
+  @ApiCreatedResponse({ type: EditPlanResponseDto })
   public async updatePlan(
     @Param('planId') planId: string,
     @Body() payload: EditPlanDto,

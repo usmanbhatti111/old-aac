@@ -43,9 +43,9 @@ export class PlanService {
         {
           $lookup: {
             from: MODEL.PLAN_TYPE,
-            localField: 'plan_type_id',
+            localField: 'planTypeId',
             foreignField: '_id',
-            as: 'plan_type',
+            as: 'planType',
           },
         },
         { $match: { _id: new mongoose.Types.ObjectId(planId) } },
@@ -72,14 +72,12 @@ export class PlanService {
       const skip = (page - 1) * take;
 
       const pipelines = [
-        { $skip: skip }, // Skip documents
-        { $limit: take }, // Limit the number of documents
         {
           $lookup: {
             from: MODEL.PLAN_TYPE,
-            localField: 'plan_type_id',
+            localField: 'planTypeId',
             foreignField: '_id',
-            as: 'plan_type',
+            as: 'planType',
           },
         },
       ];
@@ -121,9 +119,9 @@ export class PlanService {
       const payloadPlan = {
         ...payload,
         suite: undefined,
-        product_id: undefined,
-        plan_feature: undefined,
-        plan_module: undefined,
+        productId: undefined,
+        planFeature: undefined,
+        planModule: undefined,
       };
 
       let planRes = await this.planRepository.findOneAndUpdate(
@@ -135,20 +133,20 @@ export class PlanService {
         planRes = await this.planRepository.findOneAndUpdate(
           { _id: planId },
           {
-            plan_products: [],
-            plan_product_features: payload.planFeature[0]
+            planProducts: [],
+            planProductFeatures: payload.planFeature[0]
               ? payload.planFeature
               : [],
-            plan_product_module_permissions: payload.planModule[0]
+            planProductModulePermissions: payload.planModule[0]
               ? payload.planModule
               : [],
           }
         );
         // if suites then looping through the suits consist of multiple product ids and inserting plan data
-        for (const product_id of payload.suite) {
+        for (const productId of payload.suite) {
           await this.savePlan(
             payloadPlan,
-            product_id,
+            productId,
             payload.planFeature,
             payload.planModule,
             planRes
@@ -159,11 +157,11 @@ export class PlanService {
         planRes = await this.planRepository.findOneAndUpdate(
           { _id: planId },
           {
-            plan_products: [],
-            plan_product_features: payload.planFeature[0]
+            planProducts: [],
+            planProductFeatures: payload.planFeature[0]
               ? []
               : payload.planFeature,
-            plan_product_modulePermissions: payload.planModule[0]
+            planProductModulePermissions: payload.planModule[0]
               ? []
               : payload.planModule,
           }
@@ -194,10 +192,10 @@ export class PlanService {
     plan: Plan = null
   ) {
     const featureProduct = featureProducts.find(
-      (val) => (val.productId = productId)
+      (val) => val.productId == productId
     );
     const moduleProduct = moduleProducts.find(
-      (val) => (val.productId = productId)
+      (val) => val.productId == productId
     );
 
     const product = await this.productRepository.findOne({
@@ -228,8 +226,8 @@ export class PlanService {
       await this.productModulePermissionRepository.upsert(
         {
           productId,
-          module_id: moduleProduct.moduleId,
-          module_permission_id: moduleProduct.modulePermissionId,
+          moduleId: moduleProduct.moduleId,
+          modulePermissionId: moduleProduct.modulePermissionId,
         },
         {
           productId,
@@ -238,30 +236,36 @@ export class PlanService {
         }
       ); // inserting plan product module permission data
 
+    const productFeature = await productFeatureRes;
+    const productsModulePermission = await productsModulePermissionRes;
+
     if (plan)
       plan = await this.planRepository.findOneAndUpdate(
         { _id: plan._id },
         {
-          plan_products: [...plan.planProducts, product],
-          plan_product_features: [
-            ...plan.planProductFeatures,
-            productFeatureRes,
-          ],
-          plan_product_module_permissions: [
-            ...plan.planProductModulePermissions,
-            productsModulePermissionRes,
-          ],
+          planProducts: plan?.planProducts?.[0]
+            ? [...plan.planProducts, product]
+            : [product],
+          planProductFeatures: plan?.planProductFeatures?.[0]
+            ? [...plan.planProductFeatures, productFeature]
+            : [productFeature],
+          planProductModulePermissions: plan?.planProductModulePermissions?.[0]
+            ? [...plan.planProductModulePermissions, productsModulePermission]
+            : [productsModulePermission],
         }
       );
     else {
       plan = await this.planRepository.create({
         ...payload,
-        plan_products: [...plan.planProducts, product],
-        plan_product_features: [...plan.planProductFeatures, productFeatureRes],
-        plan_product_module_permissions: [
-          ...plan.planProductModulePermissions,
-          productsModulePermissionRes,
-        ],
+        planProducts: plan?.planProducts?.[0]
+          ? [...plan.planProducts, product]
+          : [product],
+        planProductFeatures: plan?.planProductFeatures?.[0]
+          ? [...plan.planProductFeatures, productFeature]
+          : [productFeature],
+        planProductModulePermissions: plan?.planProductModulePermissions?.[0]
+          ? [...plan.planProductModulePermissions, productsModulePermission]
+          : [productsModulePermission],
       });
     }
 
@@ -274,19 +278,19 @@ export class PlanService {
       const payloadPlan = {
         ...payload,
         suite: undefined,
-        product_id: undefined,
-        plan_feature: undefined,
-        plan_module: undefined,
+        productId: undefined,
+        planFeature: undefined,
+        planModule: undefined,
       };
 
       let planRes = null;
 
       if (payload.suite) {
         // if suites then looping through the suits consist of multiple product ids and inserting plan data
-        for (const product_id of payload.suite) {
+        for (const productId of payload.suite) {
           planRes = await this.savePlan(
             payloadPlan,
-            product_id,
+            productId,
             payload.planFeature,
             payload.planModule,
             planRes

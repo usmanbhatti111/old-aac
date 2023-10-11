@@ -1,10 +1,10 @@
 import { ApiProperty } from '@nestjs/swagger';
 
-export class GetPlanResponseDto {
+export class EditPlanResponseDto {
   @ApiProperty({ example: 200 })
   statusCode: number;
 
-  @ApiProperty({ example: 'Plans Fetched Successfully' })
+  @ApiProperty({ example: 'A new Plan added' })
   message: string;
 
   @ApiProperty({
@@ -30,11 +30,6 @@ export class GetPlanResponseDto {
       isActive: true,
       createdAt: '2023-10-11T07:36:00.932Z',
       updatedAt: '2023-10-11T07:36:00.964Z',
-      planType: [
-        {
-          _id: '6524d3695bf6cc10405eaf2d',
-        },
-      ],
     },
   })
   data: {};
