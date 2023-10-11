@@ -1,14 +1,5 @@
-import {
-  Body,
-  Controller,
-  Get,
-  HttpStatus,
-  Inject,
-  Post,
-  Query,
-  Res,
-} from '@nestjs/common';
-import { ClientProxy } from '@nestjs/microservices';
+import { Body, Controller, Get, Inject, Post, Query } from '@nestjs/common';
+import { ClientProxy, RpcException } from '@nestjs/microservices';
 import {
   ApiBearerAuth,
   ApiCreatedResponse,
@@ -19,10 +10,8 @@ import {
   API_ENDPOINTS,
   API_TAGS,
   CONTROLLERS,
-  INTERNAL_SERVER_RESPONSE,
   RMQ_MESSAGES,
   SERVICES,
-  errorResponse,
 } from '@shared/constants';
 import {
   AssignOrgPlanDto,
@@ -32,7 +21,6 @@ import {
   ListOrgPlan,
   ListOrgPlanResponseDto,
 } from '@shared/dto';
-import { Response } from 'express';
 import { firstValueFrom } from 'rxjs';
 
 @ApiTags(API_TAGS.BILLING_INVOICES)
@@ -45,34 +33,25 @@ export class InvoiceController {
 
   @Post(API_ENDPOINTS.SUPER_ADMIN.BILLING_INVOICES.ASSIGN_PLAN)
   @ApiCreatedResponse({ type: AssignOrgPlanResponseDto })
-  public async assignPlan(
-    @Body() payload: AssignOrgPlanDto,
-    @Res() res: Response | any
-  ) {
+  public async assignPlan(@Body() payload: AssignOrgPlanDto) {
     try {
-      const assignedBy = '65152930f50394f42cee2db3';
+      const assignedBy = '65152930f50394f42cee2db3'; // TODO: get Id from token
       const response = await firstValueFrom(
         this.superAdminServiceClient.send(
           { cmd: RMQ_MESSAGES.SUPER_ADMIN.BILLING_INVOICES.ASSIGN_PLAN },
           { ...payload, assignedBy }
         )
       );
-      res.status(response?.statusCode).json(response);
+      return response;
     } catch (error) {
-      const err = errorResponse(
-        HttpStatus.INTERNAL_SERVER_ERROR,
-        INTERNAL_SERVER_RESPONSE.message,
-        error
-      );
-      res.status(err?.statusCode).json(err);
+      throw new RpcException(error);
     }
   }
 
   @Get(API_ENDPOINTS.SUPER_ADMIN.BILLING_INVOICES.ORG_PLAN)
   @ApiOkResponse({ type: GetOrgPlanResponseDto })
   public async getOrgPlan(
-    @Query('organizationPlanId') organizationPlanId: string,
-    @Res() res: Response | any
+    @Query('organizationPlanId') organizationPlanId: string
   ) {
     try {
       const response = await firstValueFrom(
@@ -81,23 +60,15 @@ export class InvoiceController {
           organizationPlanId
         )
       );
-      res.status(response?.statusCode).json(response);
+      return response;
     } catch (error) {
-      const err = errorResponse(
-        HttpStatus.INTERNAL_SERVER_ERROR,
-        INTERNAL_SERVER_RESPONSE.message,
-        error
-      );
-      res.status(err?.statusCode).json(err);
+      throw new RpcException(error);
     }
   }
 
   @Get(API_ENDPOINTS.SUPER_ADMIN.BILLING_INVOICES.ORG_PLANS)
   @ApiOkResponse({ type: ListOrgPlanResponseDto })
-  public async listOrgPlan(
-    @Query() query: ListOrgPlan,
-    @Res() res: Response | any
-  ) {
+  public async listOrgPlan(@Query() query: ListOrgPlan) {
     try {
       const response = await firstValueFrom(
         this.superAdminServiceClient.send(
@@ -105,39 +76,26 @@ export class InvoiceController {
           { ...query }
         )
       );
-      res.status(response?.statusCode).json(response);
+      return response;
     } catch (error) {
-      const err = errorResponse(
-        HttpStatus.INTERNAL_SERVER_ERROR,
-        INTERNAL_SERVER_RESPONSE.message,
-        error
-      );
-      res.status(err?.statusCode).json(err);
+      throw new RpcException(error);
     }
   }
 
   @Post(API_ENDPOINTS.SUPER_ADMIN.BILLING_INVOICES.GENERATE_INVOICE)
   @ApiCreatedResponse({})
-  public async generateInvoice(
-    @Body() payload: CreateInvoiceDto,
-    @Res() res: Response | any
-  ) {
+  public async generateInvoice(@Body() payload: CreateInvoiceDto) {
     try {
-      const createdBy = '65152930f50394f42cee2db3';
+      const createdBy = '65152930f50394f42cee2db3'; // TODO: get Id from token
       const response = await firstValueFrom(
         this.superAdminServiceClient.send(
           { cmd: RMQ_MESSAGES.SUPER_ADMIN.BILLING_INVOICES.GENERATE_INVOICE },
           { ...payload, createdBy }
         )
       );
-      res.status(response?.statusCode).json(response);
+      return response;
     } catch (error) {
-      const err = errorResponse(
-        HttpStatus.INTERNAL_SERVER_ERROR,
-        INTERNAL_SERVER_RESPONSE.message,
-        error
-      );
-      res.status(err?.statusCode).json(err);
+      throw new RpcException(error);
     }
   }
 }
