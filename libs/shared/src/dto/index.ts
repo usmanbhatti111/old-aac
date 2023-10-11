@@ -5,6 +5,7 @@ export * from './common';
 export * from './auth';
 export * from './plan';
 export * from './common';
+export * from './billing-invoices';
 export * from './organization';
 export * from './super-admin';
 export * from './air-services/tickets/index';

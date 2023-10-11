@@ -51,6 +51,10 @@ enum RoleEnum {
   ADMIN
 }
 
+enum OrganizationPlanStatusEnum {
+  ACTIVE
+  INACTIVE
+}
 
 //////----------------Enums-End---------------------///////
 
@@ -87,13 +91,13 @@ type JobReferences {
 
 //////----------------Models-Start---------------------///////
 model Admin {
-  id               String   @id @default(auto()) @map("_id") @db.ObjectId
-  role             RoleEnum @default(ADMIN)
-  is_product_owner Boolean  @default(false)
+  id               String             @id @default(auto()) @map("_id") @db.ObjectId
+  role             RoleEnum           @default(ADMIN)
+  is_product_owner Boolean            @default(false)
   first_name       String
   middle_name      String?
   last_name        String
-  email            String   @unique
+  email            String             @unique
   phone_number     String?
   post_code        String?
   flat_or_unit     String?
@@ -105,20 +109,21 @@ model Admin {
   job_title        String?
   facebook_url     String?
   linked_url       String?
-  status           String   @default("active")
-  created_by_id    String?  @unique @db.ObjectId
-  created_by_user  Admin?   @relation(name: "creator", fields: [created_by_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  created_by       Admin?   @relation("creator")
-  updated_by_id    String?  @unique @db.ObjectId
-  updated_by_user  Admin?   @relation(name: "updater", fields: [updated_by_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  updated_by       Admin?   @relation("updater")
-  deleted_by_id    String?  @unique @db.ObjectId
-  deleted_by_user  Admin?   @relation(name: "deleter", fields: [deleted_by_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  deleted_by       Admin?   @relation("deleter")
-  created_at       DateTime @default(now())
-  updated_at       DateTime @updatedAt
-  deleted_at       DateTime @default(now())
+  status           String             @default("active")
+  created_by_id    String?            @unique @db.ObjectId
+  created_by_user  Admin?             @relation(name: "creator", fields: [created_by_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  created_by       Admin?             @relation("creator")
+  updated_by_id    String?            @unique @db.ObjectId
+  updated_by_user  Admin?             @relation(name: "updater", fields: [updated_by_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  updated_by       Admin?             @relation("updater")
+  deleted_by_id    String?            @unique @db.ObjectId
+  deleted_by_user  Admin?             @relation(name: "deleter", fields: [deleted_by_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  deleted_by       Admin?             @relation("deleter")
+  created_at       DateTime           @default(now())
+  updated_at       DateTime           @updatedAt
+  deleted_at       DateTime           @default(now())
   jobs             Job[]
+  organizationPlan OrganizationPlan[]
   products         Product[]
 }
 
@@ -245,14 +250,6 @@ model PlanProductModulePermission {
   module_permission      ModulePermission  @relation(fields: [module_permission_id], references: [id])
 }
 
-model Product {
-  id                             String                        @id @default(auto()) @map("_id") @db.ObjectId
-  plan_product                   PlanProduct[]
-  plan_product_feature           PlanProductFeature[]
-  plan_product_module            PlanProductModule[]
-  plan_product_module_permission PlanProductModulePermission[]
-}
-
 model Feature {
   id                   String               @id @default(auto()) @map("_id") @db.ObjectId
   plan_product_feature PlanProductFeature[]
@@ -375,6 +372,23 @@ model OrganizationCompanyAccountProductRoleAndPermission {
   id String @id @default(auto()) @map("_id") @db.ObjectId
 }
 
+model OrganizationPlan {
+  id                 String                      @id @default(auto()) @map("_id") @db.ObjectId
+  organization_id    String                      @db.ObjectId
+  plan_id            String                      @db.ObjectId
+  additional_users   Int?                        @default(0)
+  additional_storage Int?                        @default(0)
+  plan_discount      Int?                        @default(0)
+  billing_date       DateTime
+  status             OrganizationPlanStatusEnum? @default(ACTIVE)
+  assigned_by_id     String                      @unique @db.ObjectId
+  assigned_by        Admin                       @relation(fields: [assigned_by_id], references: [id])
+  created_at         DateTime                    @default(now())
+  updated_at         DateTime                    @updatedAt
+  deleted_at         DateTime                    @default(now())
+}
+
+
 model Task {
   id String @id @default(auto()) @map("_id") @db.ObjectId
   name  String
@@ -391,6 +405,10 @@ model Product {
   modified_by    Admin?   @relation(fields: [modifier_id], references: [id], onDelete: Restrict, onUpdate: Cascade)
   isDeleted      Boolean @default(false)  // For soft delete
   modified_at    DateTime @default(now())
+    plan_product                   PlanProduct[]
+  plan_product_feature           PlanProductFeature[]
+  plan_product_module            PlanProductModule[]
+  plan_product_module_permission PlanProductModulePermission[]
 }
 
 
@@ -414,38 +432,38 @@ model Asset {
 
 /////------------- Air Services Schema--------------/////////
 
-enum TicketStatusEnum { 
+enum TicketStatusEnum {
   OPEN
   CLOSED
   RESOLVED
 }
-enum TicketInternalTypeEnum { 
+
+enum TicketInternalTypeEnum {
   INTERNAL
 }
 
-enum TicketTypeEnum { 
+enum TicketTypeEnum {
   INTERNAL
   EXTERNAL
 }
 
-enum TicketPirorityEnum { 
+enum TicketPirorityEnum {
   HIGH
   LOW
 }
 
-model Tickets { 
-    id String @id @default(auto()) @map("_id") @db.ObjectId
-    details Json
-    status TicketStatusEnum
-    subject String
-    pirority TicketPirorityEnum
-    type TicketTypeEnum
-    internal_type TicketInternalTypeEnum
-    ca_id String? @db.ObjectId
-    org_admin_id String? @db.ObjectId
-    cat_id  String? @db.ObjectId
-    created_at    DateTime @default(now())
+model Tickets {
+  id            String                 @id @default(auto()) @map("_id") @db.ObjectId
+  details       Json
+  status        TicketStatusEnum
+  subject       String
+  pirority      TicketPirorityEnum
+  type          TicketTypeEnum
+  internal_type TicketInternalTypeEnum
+  ca_id         String?                @db.ObjectId
+  org_admin_id  String?                @db.ObjectId
+  cat_id        String?                @db.ObjectId
+  created_at    DateTime               @default(now())
 }
-
 
 ////////------------------ ---------///////

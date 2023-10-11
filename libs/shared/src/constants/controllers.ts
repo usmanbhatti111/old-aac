@@ -2,6 +2,7 @@ export const CONTROLLERS = {
   EXAMPLE: 'example',
   AUTHENTICATION: 'auth',
   PLAN: 'plan',
+  BILLING: 'billing',
   ORGANIZATION: 'organization',
   ORGANIZATION_COMPANY_ACCOUNT: 'org-company-account',
   TASK: 'task',

@@ -30,6 +30,8 @@ export const API_ENDPOINTS = {
       ORG_PLAN: 'org-plan',
       ORG_PLANS: 'org-plans',
       GENERATE_INVOICE: 'generate-invoice',
+      BILLING_DETAILS: 'billing-details',
+      ADD_DISCOUNT: 'add-discount',
     },
     ADD_USER: 'add-user',
     USER_LIST: 'user-list',
