@@ -1,9 +1,9 @@
 import { HttpStatus, Injectable, NotFoundException } from '@nestjs/common';
+import { RpcException } from '@nestjs/microservices';
 import { InvoiceRepository, OrganizationPlanRepository } from '@shared';
 import {
   OrganizationPlanStatusEnum,
   ResponseMessage,
-  errorResponse,
   successResponse,
 } from '@shared/constants';
 import { AssignOrgPlanDto, CreateInvoiceDto, ListOrgPlan } from '@shared/dto';
@@ -27,11 +27,7 @@ export class InvoiceService {
         response
       );
     } catch (error) {
-      return errorResponse(
-        HttpStatus.BAD_REQUEST,
-        ResponseMessage.BAD_REQUEST,
-        error
-      );
+      throw new RpcException(error);
     }
   }
 
@@ -62,11 +58,7 @@ export class InvoiceService {
         response[0]
       );
     } catch (error) {
-      return errorResponse(
-        HttpStatus.BAD_REQUEST,
-        ResponseMessage.BAD_REQUEST,
-        error
-      );
+      throw new RpcException(error);
     }
   }
 
@@ -86,7 +78,7 @@ export class InvoiceService {
             foreignField: '_id',
             as: 'assignedBy',
           },
-        },
+        }, // TODO: add pipeline to include other required table's data
       ];
       const params = {
         pipelines,
@@ -96,11 +88,7 @@ export class InvoiceService {
       const response = await this.orgPlanRepository.paginate(params);
       return successResponse(HttpStatus.OK, ResponseMessage.SUCCESS, response);
     } catch (error) {
-      return errorResponse(
-        HttpStatus.BAD_REQUEST,
-        ResponseMessage.BAD_REQUEST,
-        error
-      );
+      throw new RpcException(error);
     }
   }
 
@@ -115,11 +103,7 @@ export class InvoiceService {
         response
       );
     } catch (error) {
-      return errorResponse(
-        HttpStatus.BAD_REQUEST,
-        ResponseMessage.BAD_REQUEST,
-        error
-      );
+      throw new RpcException(error);
     }
   }
 }
