@@ -2,7 +2,12 @@ import { Controller } from '@nestjs/common';
 import { MessagePattern, Payload } from '@nestjs/microservices';
 import { RMQ_MESSAGES } from '@shared/constants';
 import { PlanService } from '../services/plan.services';
-import { AddPlanDto, EditPlanDto, PaginationDto } from '@shared/dto';
+import {
+  AddPlanDto,
+  EditPlanDto,
+  PaginationDto,
+  PlanDeleteDto,
+} from '@shared/dto';
 
 @Controller()
 export class PlanController {
@@ -29,7 +34,7 @@ export class PlanController {
   }
 
   @MessagePattern(RMQ_MESSAGES.PLAN.DELETE_PLAN)
-  deletePlan(@Payload() payload: string) {
+  deletePlan(@Payload() payload: PlanDeleteDto) {
     return this.planService.deletePlan(payload);
   }
 }

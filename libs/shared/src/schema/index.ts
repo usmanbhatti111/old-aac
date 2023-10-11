@@ -6,7 +6,6 @@ export * from './example.schema';
 export * from './super-admin.schema';
 export * from './products.schema';
 export * from './feature.schema';
-export * from './module-permission.schema';
 export * from './permission.schema';
 export * from './plan-product-feature.schema';
 export * from './plan-product-module-permission.schema';

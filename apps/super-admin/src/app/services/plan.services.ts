@@ -9,6 +9,7 @@ import {
   AddPlanDto,
   EditPlanDto,
   PaginationDto,
+  PlanDeleteDto,
   ProductFeatureDto,
   ProductModuleDto,
 } from '@shared/dto';
@@ -99,11 +100,15 @@ export class PlanService {
     }
   }
 
-  async deletePlan(planId: string) {
+  async deletePlan(payload: PlanDeleteDto) {
     try {
-      await this.planRepository.findOne({ _id: planId });
+      const { deletedBy, planId } = payload;
 
-      await this.planRepository.delete({ _id: planId });
+      await this.planRepository.findOneAndUpdate(
+        { _id: planId },
+        { isDeleted: true, deletedAt: Date.now, deletedBy }
+      );
+
       return successResponse(HttpStatus.OK, 'Plan Deleted Successfully', {});
     } catch (error) {
       throw new RpcException(error);
@@ -122,6 +127,7 @@ export class PlanService {
         productId: undefined,
         planFeature: undefined,
         planModule: undefined,
+        updatedAt: Date.now,
       };
 
       let planRes = await this.planRepository.findOneAndUpdate(

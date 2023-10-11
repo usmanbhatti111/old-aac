@@ -49,8 +49,17 @@ export class Plan extends AbstractSchema {
   @Prop({ default: Date.now })
   createdAt?: Date;
 
-  @Prop()
+  @Prop({ required: false })
   updatedAt?: Date;
+
+  @Prop({ required: false })
+  deletedAt?: Date;
+
+  @Prop({ required: false, type: SchemaTypes.ObjectId })
+  deletedBy?: string;
+
+  @Prop({ default: false })
+  isDeleted?: boolean;
 
   @Prop({ default: true })
   isActive?: boolean;

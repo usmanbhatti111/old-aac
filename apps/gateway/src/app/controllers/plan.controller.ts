@@ -33,6 +33,7 @@ import {
   GetPlanResponseDto,
   GetPlansResponseDto,
   PaginationDto,
+  PlanIdParamDto,
   PostResponseDto,
 } from '@shared/dto';
 import { Response } from 'express';
@@ -74,7 +75,7 @@ export class PlanController {
   @Get(API_ENDPOINTS.PLAN.PLAN)
   @ApiOkResponse({ type: GetPlanResponseDto })
   public async getPlan(
-    @Param('planId') planId: string,
+    @Param() { planId }: PlanIdParamDto,
     @Res() res: Response | any
   ): Promise<GetPlanResponseDto> {
     const response = await firstValueFrom(
@@ -86,11 +87,15 @@ export class PlanController {
   @Delete(API_ENDPOINTS.PLAN.DELETE_PLAN)
   @ApiOkResponse({ type: PostResponseDto })
   public async deletePlan(
-    @Param('planId') planId: string,
+    @Param() { planId }: PlanIdParamDto,
     @Res() res: Response | any
   ): Promise<PostResponseDto<Plan>> {
+    const deletedBy = '65262d9c3686b5e9a4fc4222'; // TODO: get Id from token
     const response = await firstValueFrom(
-      this.superAdminServiceClient.send(RMQ_MESSAGES.PLAN.DELETE_PLAN, planId)
+      this.superAdminServiceClient.send(RMQ_MESSAGES.PLAN.DELETE_PLAN, {
+        planId,
+        deletedBy,
+      })
     );
     return res.status(response.statusCode).json(response);
   }
@@ -98,7 +103,7 @@ export class PlanController {
   @Patch(API_ENDPOINTS.PLAN.EDIT_PLAN)
   @ApiCreatedResponse({ type: EditPlanResponseDto })
   public async updatePlan(
-    @Param('planId') planId: string,
+    @Param() { planId }: PlanIdParamDto,
     @Body() payload: EditPlanDto,
     @Res() res: Response | any
   ): Promise<PostResponseDto<Plan>> {

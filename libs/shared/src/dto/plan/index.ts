@@ -6,3 +6,5 @@ export * from './get-plans-response.dto';
 export * from './get-plan-response.dto';
 export * from './add-plan-response.dto';
 export * from './edit-plan-response.dto';
+export * from './plan-id-param.dto';
+export * from './plane-delete.dto';

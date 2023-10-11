@@ -8,7 +8,6 @@ export type FeatureDocument = HydratedDocument<Feature>;
 @Schema()
 export class Feature extends AbstractSchema {
   // Define fields for Feature
-  plan_product_feature: PlanProductFeature[];
 }
 
 export const FeatureSchema = SchemaFactory.createForClass(Feature);
