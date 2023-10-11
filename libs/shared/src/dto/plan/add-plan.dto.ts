@@ -94,4 +94,6 @@ export class AddPlanDto {
   })
   @Type(() => ProductModuleDto)
   plan_module: ProductModuleDto[];
+
+  created_by: string;
 }

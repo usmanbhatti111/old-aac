@@ -50,6 +50,7 @@ export class PlanController {
     @Body() payload: AddPlanDto,
     @Res() res: Response | any
   ): Promise<PostResponseDto<Plan>> {
+    payload.created_by = '65262d9c3686b5e9a4fc4222'; // TODO: get Id from token
     const response = await firstValueFrom(
       this.superAdminServiceClient.send(RMQ_MESSAGES.PLAN.ADD_PLAN, payload)
     );
@@ -100,6 +101,7 @@ export class PlanController {
     @Res() res: Response | any
   ): Promise<PostResponseDto<Plan>> {
     payload.plan_id = plan_id;
+    payload.updated_by = '65262d5f0d1b96adb427985b'; // TODO: get Id from token
     const response = await firstValueFrom(
       this.superAdminServiceClient.send(RMQ_MESSAGES.PLAN.EDIT_PLAN, payload)
     );

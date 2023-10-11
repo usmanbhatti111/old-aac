@@ -91,4 +91,6 @@ export class EditPlanDto {
   plan_module: ProductModuleDto[];
 
   plan_id: string;
+
+  updated_by?: string;
 }

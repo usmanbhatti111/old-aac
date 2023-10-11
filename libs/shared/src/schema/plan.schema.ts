@@ -40,6 +40,12 @@ export class Plan extends AbstractSchema {
   @Prop({ required: true, type: SchemaTypes.ObjectId, ref: MODEL.PLAN_TYPE })
   plan_type_id: string;
 
+  @Prop({ required: true, type: SchemaTypes.ObjectId })
+  created_by?: string;
+
+  @Prop({ required: false, type: SchemaTypes.ObjectId })
+  updated_by?: string;
+
   @Prop({ default: Date.now })
   created_at?: Date;
 
