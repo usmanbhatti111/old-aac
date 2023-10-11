@@ -11,3 +11,5 @@ export * from './airservices/expense.repository';
 export * from './settings/job.repository';
 export * from './settings/faq.repository';
 export * from './org-admin';
+
+export * from './superadmin';

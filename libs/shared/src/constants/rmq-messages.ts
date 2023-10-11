@@ -100,4 +100,11 @@ export const RMQ_MESSAGES = {
       DELETE_ONE_PAYMENTS: 'delete-one-payment',
     },
   },
+  PRODUCT_FEATURES: {
+    ADD_PRODUCT_FEATURE: 'add-product-feature',
+    EDIT_PRODUCT_FEATURE: 'edit-product-feature',
+    GET_PRODUCT_FEATURE: 'get-product-feature',
+    GET_PRODUCTS_FEATURES: 'get-products-features',
+    DELETE_PRODUCTS_FEATURES: 'delete-products-features',
+  },
 };

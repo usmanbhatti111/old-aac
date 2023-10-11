@@ -18,7 +18,7 @@ export class Products {
   isActive: boolean;
 
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'users' })
-  modifiedBy: boolean;
+  modifiedBy: string;
 
   @Prop({ type: Boolean, default: false })
   isDeleted: boolean;

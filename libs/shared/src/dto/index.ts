@@ -13,6 +13,7 @@ export * from './air-services/task/index';
 export * from './example';
 export * from './billing-invoices';
 export * from './products';
+export * from './product-features';
 
 export * from './news-and-event';
 export * from './faq';

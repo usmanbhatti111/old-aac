@@ -4,7 +4,7 @@ export class EditProductResponseDto {
   @ApiProperty({ example: 200 })
   statusCode: number;
 
-  @ApiProperty({ example: 'A new Product added' })
+  @ApiProperty({ example: 'Product Updated Successfully' })
   message: string;
 
   @ApiProperty({

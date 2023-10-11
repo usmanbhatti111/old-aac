@@ -20,6 +20,13 @@ export class ProductsService {
     try {
       const res = await this.productsModel.create(payload);
 
+      if (!res) {
+        return errorResponse(
+          HttpStatus.BAD_REQUEST,
+          ResponseMessage.BAD_REQUEST
+        );
+      }
+
       const response = successResponse(
         HttpStatus.CREATED,
         ResponseMessage.SUCCESS,

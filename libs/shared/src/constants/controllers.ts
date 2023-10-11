@@ -13,6 +13,7 @@ export const CONTROLLERS = {
   PRODUCTS: 'products',
   TICKET: 'ticket',
   ASSETS: 'assets',
+  PRODUCT_FEATURES: 'product-features',
   EXPENSE: 'expense',
   ORGANIZATION_PLAN: 'organization-plan',
   AIR_SERVICES: 'air-services',
