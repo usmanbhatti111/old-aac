@@ -23,6 +23,7 @@ import {
   ProductRepository,
 } from '@shared';
 import mongoose from 'mongoose';
+import { RpcException } from '@nestjs/microservices';
 
 @Injectable()
 export class PlanService {
@@ -60,11 +61,7 @@ export class PlanService {
         );
       }
     } catch (error) {
-      return errorResponse(
-        HttpStatus.BAD_REQUEST,
-        ResponseMessage.BAD_REQUEST,
-        error?.meta?.cause
-      );
+      throw new RpcException(error);
     }
   }
 
@@ -100,124 +97,92 @@ export class PlanService {
         paginateRes
       );
     } catch (error) {
-      return errorResponse(
-        HttpStatus.BAD_REQUEST,
-        ResponseMessage.BAD_REQUEST,
-        error
-      );
+      throw new RpcException(error);
     }
   }
 
   async deletePlan(planId: string) {
     try {
-      const data = await this.planRepository.findOne({ _id: planId });
+      await this.planRepository.findOne({ _id: planId });
 
-      if (data) {
-        await this.planRepository.delete({ _id: planId });
-        return successResponse(
-          HttpStatus.OK,
-          'Plan Deleted Successfully',
-          data[0]
-        );
-      } else {
-        return errorResponse(
-          HttpStatus.BAD_REQUEST,
-          ResponseMessage.NOT_FOUND,
-          []
-        );
-      }
+      await this.planRepository.delete({ _id: planId });
+      return successResponse(HttpStatus.OK, 'Plan Deleted Successfully', {});
     } catch (error) {
-      return errorResponse(
-        HttpStatus.BAD_REQUEST,
-        ResponseMessage.BAD_REQUEST,
-        error?.meta?.cause
-      );
+      throw new RpcException(error);
     }
   }
 
   async editPlan(payload: EditPlanDto) {
     try {
       const { plan_id } = payload;
-      const data = await this.planRepository.findOne({ _id: plan_id });
+      await this.planRepository.findOne({ _id: plan_id });
 
-      if (data) {
-        delete payload.plan_id;
-        const payloadPlan = {
-          ...payload,
-          suite: undefined,
-          product_id: undefined,
-          plan_feature: undefined,
-          plan_module: undefined,
-        };
+      delete payload.plan_id;
+      const payloadPlan = {
+        ...payload,
+        suite: undefined,
+        product_id: undefined,
+        plan_feature: undefined,
+        plan_module: undefined,
+      };
 
-        let planRes = await this.planRepository.findOneAndUpdate(
+      let planRes = await this.planRepository.findOneAndUpdate(
+        { _id: plan_id },
+        payloadPlan
+      );
+
+      if (payload.suite && payload.suite[0]) {
+        planRes = await this.planRepository.findOneAndUpdate(
           { _id: plan_id },
-          payloadPlan
-        );
-
-        if (payload.suite && payload.suite[0]) {
-          planRes = await this.planRepository.findOneAndUpdate(
-            { _id: plan_id },
-            {
-              plan_products: [],
-              plan_product_features: payload.plan_feature[0]
-                ? payload.plan_feature
-                : [],
-              plan_product_module_permissions: payload.plan_module[0]
-                ? payload.plan_module
-                : [],
-            }
-          );
-          // if suites then looping through the suits consist of multiple product ids and inserting plan data
-          for (const product_id of payload.suite) {
-            await this.savePlan(
-              payloadPlan,
-              product_id,
-              payload.plan_feature,
-              payload.plan_module,
-              planRes
-            );
+          {
+            plan_products: [],
+            plan_product_features: payload.plan_feature[0]
+              ? payload.plan_feature
+              : [],
+            plan_product_module_permissions: payload.plan_module[0]
+              ? payload.plan_module
+              : [],
           }
-          // if single product then using product id, insert plan data
-        } else if (payload.product_id) {
-          planRes = await this.planRepository.findOneAndUpdate(
-            { _id: plan_id },
-            {
-              plan_products: [],
-              plan_product_features: payload.plan_feature[0]
-                ? []
-                : payload.plan_feature,
-              plan_product_module_permissions: payload.plan_module[0]
-                ? []
-                : payload.plan_module,
-            }
-          );
+        );
+        // if suites then looping through the suits consist of multiple product ids and inserting plan data
+        for (const product_id of payload.suite) {
           await this.savePlan(
             payloadPlan,
-            payload.product_id,
+            product_id,
             payload.plan_feature,
             payload.plan_module,
             planRes
           );
         }
-        return successResponse(
-          HttpStatus.CREATED,
-          'Plan Updated Successfully',
+        // if single product then using product id, insert plan data
+      } else if (payload.product_id) {
+        planRes = await this.planRepository.findOneAndUpdate(
+          { _id: plan_id },
+          {
+            plan_products: [],
+            plan_product_features: payload.plan_feature[0]
+              ? []
+              : payload.plan_feature,
+            plan_product_module_permissions: payload.plan_module[0]
+              ? []
+              : payload.plan_module,
+          }
+        );
+        await this.savePlan(
+          payloadPlan,
+          payload.product_id,
+          payload.plan_feature,
+          payload.plan_module,
           planRes
         );
-      } else {
-        return errorResponse(
-          HttpStatus.BAD_REQUEST,
-          ResponseMessage.NOT_FOUND,
-          []
-        );
       }
-    } catch (error) {
-      return errorResponse(
-        HttpStatus.BAD_REQUEST,
-        ResponseMessage.BAD_REQUEST,
-        error
+      return successResponse(
+        HttpStatus.CREATED,
+        'Plan Updated Successfully',
+        planRes
       );
+    } catch (error) {
+      throw new RpcException(error);
     }
   }
 
@@ -347,11 +312,7 @@ export class PlanService {
         planRes
       );
     } catch (error) {
-      return errorResponse(
-        HttpStatus.BAD_REQUEST,
-        ResponseMessage.BAD_REQUEST,
-        error
-      );
+      throw new RpcException(error);
     }
   }
 }
