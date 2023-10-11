@@ -257,15 +257,9 @@ export class PlanService {
     else {
       plan = await this.planRepository.create({
         ...payload,
-        planProducts: plan?.planProducts?.[0]
-          ? [...plan.planProducts, product]
-          : [product],
-        planProductFeatures: plan?.planProductFeatures?.[0]
-          ? [...plan.planProductFeatures, productFeature]
-          : [productFeature],
-        planProductModulePermissions: plan?.planProductModulePermissions?.[0]
-          ? [...plan.planProductModulePermissions, productsModulePermission]
-          : [productsModulePermission],
+        planProducts: [product],
+        planProductFeatures: [productFeature],
+        planProductModulePermissions: [productsModulePermission],
       });
     }
 
