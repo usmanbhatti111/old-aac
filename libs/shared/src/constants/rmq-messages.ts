@@ -7,6 +7,7 @@ export const RMQ_MESSAGES = {
   AUTHENTICATION: {
     SIGNUP: 'auth-login',
   },
+
   ORGANIZATION: {
     UPDATE_ORGANTIZATION: 'update-organization',
     CREATE_ORGANTIZATION: 'create-organization',
@@ -25,6 +26,8 @@ export const RMQ_MESSAGES = {
       GET_ORG_PLAN: 'get-org-plan',
       LIST_ORG_PLAN: 'list-org-plan',
       GENERATE_INVOICE: 'generate-invoice',
+      BILLING_DETAILS: 'billing-detials',
+      ADD_DISCOUNT: 'add-discount',
     },
     ADD_USER: 'add-user',
     USER_LIST: 'user-list',

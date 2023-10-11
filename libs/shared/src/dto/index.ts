@@ -3,6 +3,7 @@ export * from './auth/signup.dto';
 export * from './jobs';
 export * from './common';
 export * from './auth';
+export * from './billing-invoices';
 export * from './organization';
 export * from './super-admin';
 export * from './air-services/tickets/index';

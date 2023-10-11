@@ -8,6 +8,7 @@ import { WinstonModule } from 'nest-winston';
 import { WinstonConfigService } from './config/winston.config';
 import { AuthController } from './controllers/auth.controller';
 import { HealthController } from './controllers/healthcheck.controller';
+import { BillingController } from './controllers/super-admin/billing.controller';
 import { OrganizationController } from './controllers/organization/organization.controller';
 import { OrganizationCompanyAccountController } from './controllers/organization/organization-company-account.controller';
 import { TaskController } from './controllers/tasks/task.controller';
@@ -35,6 +36,7 @@ import { ExceptionsFilter } from './shared/filters/exceptions.filter';
     AppController,
     AuthController,
     HealthController,
+    BillingController,
     SuperAdminController,
     JobsController,
     ProductsController,

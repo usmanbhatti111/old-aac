@@ -187,3 +187,87 @@ export class GetOrgPlanResponseDto {
   @ApiProperty({ example: null })
   error: string;
 }
+
+export class BillingDetailsDto {
+  @ApiProperty({
+    example: '65152930f50394f42cee2db3',
+  })
+  @IsMongoId()
+  @IsNotEmpty()
+  id: string;
+}
+
+export class BillingDetailsResponseDto {
+  @ApiProperty({ example: 200 })
+  statusCode: string;
+
+  @ApiProperty({ example: 'Success' })
+  message: string;
+
+  @ApiProperty({
+    example: {
+      _id: '6524f493acb9cefebd03d30c',
+      dueDate: '2023-10-31T00:00:00.000Z',
+      billingCycle: 'MONTHLY',
+      productName: 'Air Sale',
+      planType: 'Growth',
+      planPrice: 10,
+      additionalUsers: 10,
+      subTotal: 10,
+      billingDate: '2023-10-31T00:00:00.000Z',
+    },
+  })
+  data: object;
+
+  @ApiProperty({ example: null })
+  error: string;
+}
+
+export class AddDiscountDto {
+  @ApiProperty({
+    example: '65152930f50394f42cee2db3',
+  })
+  @IsMongoId()
+  @IsNotEmpty()
+  id: string;
+
+  @ApiProperty({
+    type: Number,
+    required: false,
+    example: 1,
+  })
+  @Type(() => Number)
+  @IsNumber()
+  @IsOptional()
+  invoiceDiscount?: number;
+}
+
+export class AddDiscountResponseDto {
+  @ApiProperty({ example: 200 })
+  statusCode: string;
+
+  @ApiProperty({ example: 'Success' })
+  message: string;
+
+  @ApiProperty({
+    example: {
+      id: '651e6657364160a7fca7921e',
+      organizationId: '57152930f50394f71cxz2cd7',
+      planId: '31172930f50394f42cee4da5',
+      additionalUsers: 2,
+      additionalStorage: 5,
+      planDiscount: 10,
+      billingCycle: 'MONTHLY',
+      billingDate: '2023-12-12T00:00:00.000+00:00',
+      status: 'ACTIVE',
+      assignedBy: '65152930f50394f42cee2db3',
+      created_at: '2023-10-05T07:31:35.099+00:00',
+      updated_at: '2023-10-05T07:31:35.099+00:00',
+      deleted_at: '2023-10-05T07:31:35.099+00:00',
+    },
+  })
+  data: object;
+
+  @ApiProperty({ example: null })
+  error: string;
+}
