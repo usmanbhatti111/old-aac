@@ -26,9 +26,10 @@ export class InventoryService {
         page,
         usedBy,
         departmentId,
+        search,
         assetType,
       } = payload;
-      const filterQuery = {};
+      let filterQuery = {};
       const offset = limit * (page - 1);
       if (impact) {
         filterQuery['impact'] = impact;
@@ -49,11 +50,21 @@ export class InventoryService {
       if (locationId) {
         filterQuery['locationId'] = new Types.ObjectId(locationId);
       }
+      if (search) {
+        filterQuery = {
+          displayName: {
+            $regex: search,
+            $options: 'i', // Optional: Case-insensitive search
+          },
+        };
+      }
+
       const res = await this.inventoryRepository.paginate({
         filterQuery,
         offset,
         limit,
       });
+
       return successResponse(HttpStatus.CREATED, 'Success', res);
     } catch (error) {
       return errorResponse(HttpStatus.BAD_REQUEST, 'Bad Request', error?.name);

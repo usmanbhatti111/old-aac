@@ -7,6 +7,7 @@ import {
   Body,
   Query,
   Param,
+  Delete,
 } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
 import { ApiBearerAuth, ApiParam, ApiQuery, ApiTags } from '@nestjs/swagger';
@@ -20,7 +21,11 @@ import {
 } from '@shared/constants';
 import { Response } from 'express';
 import { firstValueFrom } from 'rxjs';
-import { AssociateAssetsDTO, CreateTicketDTO } from '@shared/dto';
+import {
+  AssociateAssetsDTO,
+  CreateTicketDTO,
+  DetachAssetsDTO,
+} from '@shared/dto';
 
 @ApiTags(API_TAGS.TICKETS)
 @Controller(CONTROLLERS.TICKET)
@@ -79,6 +84,24 @@ export class TicketController {
       res.status(err.statusCode).json(err);
     }
   }
+  @Delete(API_ENDPOINTS.AIR_SERVICES.TICKETS.DETACH_ASSETS)
+  public async detachAssets(
+    @Query() payload: DetachAssetsDTO,
+    @Res() res: Response | any
+  ) {
+    try {
+      const response = await firstValueFrom(
+        this.ariServiceClient.send(
+          RMQ_MESSAGES.AIR_SERVICES.TICKETS.DETACH_ASSETS,
+          payload
+        )
+      );
+      res.status(response.statusCode).json(response);
+    } catch (err) {
+      res.status(err.statusCode).json(err);
+    }
+  }
+
   @Post(API_ENDPOINTS.AIR_SERVICES.TICKETS.ADD_CHILD_TICKET)
   @ApiQuery({
     type: String,

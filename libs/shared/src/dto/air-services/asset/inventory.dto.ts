@@ -108,7 +108,6 @@ export class GetInventoryDto extends paginationDTO {
   })
   assetId: string;
   @IsOptional()
-  @IsISO8601()
   @ApiProperty({
     example: new Date().toISOString(),
     required: false,
@@ -180,4 +179,10 @@ export class GetInventoryDto extends paginationDTO {
     required: false,
   })
   attachmentId: string;
+  @IsOptional()
+  @ApiProperty({
+    example: '',
+    required: false,
+  })
+  search: string;
 }

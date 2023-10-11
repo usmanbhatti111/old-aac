@@ -2,7 +2,7 @@ import { Injectable, HttpStatus } from '@nestjs/common';
 import { errorResponse, successResponse } from '@shared/constants';
 import { TicketRepository } from '@shared';
 import mongoose from 'mongoose';
-import { AssociateAssetsDTO } from '@shared/dto';
+import { AssociateAssetsDTO, DetachAssetsDTO } from '@shared/dto';
 
 @Injectable()
 export class TicketService {
@@ -47,7 +47,26 @@ export class TicketService {
       return err;
     }
   }
+  async detachAssets(payload: DetachAssetsDTO) {
+    try {
+      const { id, assetId } = payload;
+      const res = await this.ticketRepository.findByIdAndUpdate(
+        { _id: id },
+        { $pull: { associateAssets: assetId } }
+      );
 
+      const response = successResponse(
+        HttpStatus.OK,
+        `Asset Detached Successfully`,
+        res
+      );
+
+      return response;
+    } catch (error) {
+      const err = errorResponse(HttpStatus.BAD_REQUEST, error?.meta?.cause);
+      return err;
+    }
+  }
   async createChildTicket(payload: any) {
     try {
       const { ticketId, ...dto } = payload;
