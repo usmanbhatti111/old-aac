@@ -8,8 +8,8 @@ import {
 import {
   AddPlanDto,
   EditPlanDto,
-  PaginationDto,
   PlanDeleteDto,
+  PlanFilterDto,
   ProductFeatureDto,
   ProductModuleDto,
 } from '@shared/dto';
@@ -25,6 +25,7 @@ import {
 } from '@shared';
 import mongoose from 'mongoose';
 import { RpcException } from '@nestjs/microservices';
+import dayjs from 'dayjs';
 
 @Injectable()
 export class PlanService {
@@ -38,6 +39,10 @@ export class PlanService {
     private productModulePermissionRepository: PlanProductModulePermissionRepository
   ) {}
 
+  notDeletedFilter = {
+    isDeleted: false,
+  };
+
   async getPlan(planId: string) {
     try {
       const data = await this.planRepository.aggregate([
@@ -49,7 +54,12 @@ export class PlanService {
             as: 'planType',
           },
         },
-        { $match: { _id: new mongoose.Types.ObjectId(planId) } },
+        {
+          $match: {
+            _id: new mongoose.Types.ObjectId(planId),
+            ...this.notDeletedFilter,
+          },
+        },
       ]);
 
       if (data[0]) {
@@ -66,11 +76,60 @@ export class PlanService {
     }
   }
 
-  async getPlans(payload: PaginationDto) {
+  async getPlans(payload: PlanFilterDto) {
     try {
       const take = payload.limit || 10;
       const page = payload.page || 1;
       const skip = (page - 1) * take;
+
+      const { search } = payload;
+
+      delete payload.page;
+      delete payload.limit;
+      delete payload.search;
+      const createdAtFilter = {};
+      if (payload.createdAt) {
+        const startDate = dayjs(payload.createdAt).startOf('day');
+        const endDate = dayjs(payload.createdAt).endOf('day');
+
+        createdAtFilter['createdAt'] = {
+          gte: startDate.toDate(),
+          lte: endDate.toDate(),
+        };
+        delete payload.createdAt;
+      }
+
+      let searchFilter = {};
+      if (search) {
+        searchFilter = {
+          $or: [
+            {
+              description: {
+                $regex: search,
+                $options: 'i', // Optional: Case-insensitive search
+              },
+            },
+          ],
+        };
+      }
+
+      let planProductFilter = {};
+
+      if (payload.productId) {
+        planProductFilter = {
+          $elemMatch: { productId: { $eq: payload.productId } },
+        };
+      }
+
+      const filterQuery = {
+        ...createdAtFilter,
+        ...payload,
+        ...this.notDeletedFilter,
+        ...searchFilter,
+        ...planProductFilter,
+      };
+
+      delete payload.productId;
 
       const pipelines = [
         {
@@ -81,6 +140,7 @@ export class PlanService {
             as: 'planType',
           },
         },
+        { $match: filterQuery },
       ];
 
       const paginateRes = await this.planRepository.paginate({

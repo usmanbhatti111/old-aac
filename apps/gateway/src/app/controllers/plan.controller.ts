@@ -32,7 +32,7 @@ import {
   EditPlanResponseDto,
   GetPlanResponseDto,
   GetPlansResponseDto,
-  PaginationDto,
+  PlanFilterDto,
   PlanIdParamDto,
   PostResponseDto,
 } from '@shared/dto';
@@ -63,7 +63,7 @@ export class PlanController {
   @Get(API_ENDPOINTS.PLAN.PLAN_LIST)
   @ApiOkResponse({ type: GetPlansResponseDto })
   public async getPlans(
-    @Query() payload: PaginationDto,
+    @Query() payload: PlanFilterDto,
     @Res() res: Response | any
   ): Promise<GetPlansResponseDto> {
     const response = await firstValueFrom(

@@ -5,8 +5,8 @@ import { PlanService } from '../services/plan.services';
 import {
   AddPlanDto,
   EditPlanDto,
-  PaginationDto,
   PlanDeleteDto,
+  PlanFilterDto,
 } from '@shared/dto';
 
 @Controller()
@@ -19,7 +19,7 @@ export class PlanController {
   }
 
   @MessagePattern(RMQ_MESSAGES.PLAN.PLAN_LIST)
-  getPlans(@Payload() payload: PaginationDto) {
+  getPlans(@Payload() payload: PlanFilterDto) {
     return this.planService.getPlans(payload);
   }
 
