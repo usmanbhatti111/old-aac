@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNotEmpty } from 'class-validator';
+import { IsNotEmpty, IsOptional } from 'class-validator';
 
 export class SignupDto {
   @ApiProperty({
@@ -8,12 +8,24 @@ export class SignupDto {
   @IsNotEmpty()
   firstName: string;
 
-  @ApiProperty({
-    required: true,
-    example: 'Doe',
-  })
+  @ApiProperty({ type: String })
   @IsNotEmpty()
   lastName: string;
+
+  @ApiProperty({
+    example: 'ORG_ADMIN',
+    enum: ['SUPER_ADMIN', 'ORG_ADMIN'],
+  })
+  @IsNotEmpty()
+  role: string;
+
+  @ApiProperty({ type: Array, default: [] })
+  @IsOptional()
+  products?: [];
+
+  @ApiProperty({ type: String })
+  @IsOptional()
+  organization?: string;
 
   @ApiProperty({
     uniqueItems: true,
@@ -21,6 +33,13 @@ export class SignupDto {
   })
   @IsNotEmpty()
   email: string;
+
+  @ApiProperty({
+    uniqueItems: true,
+    example: '+44 2388 2399',
+  })
+  @IsNotEmpty()
+  phoneNumber: string;
 
   @ApiProperty({
     minLength: 8,

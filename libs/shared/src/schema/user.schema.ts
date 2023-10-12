@@ -1,13 +1,13 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 
 import mongoose, { HydratedDocument } from 'mongoose';
-export type UserDocument = HydratedDocument<User>;
+export type UserODocument = HydratedDocument<UserO>;
 
 import { AbstractSchema } from './abstract-repo/abstract.schema';
 import { UserRole } from '../constants/enums';
 
 @Schema({ timestamps: true, versionKey: false })
-export class User extends AbstractSchema {
+export class UserO extends AbstractSchema {
   @Prop({ type: String, default: UserRole.SUPER_ADMIN })
   role?: string;
 
@@ -96,4 +96,4 @@ export class User extends AbstractSchema {
   company?: mongoose.Schema.Types.ObjectId[];
 }
 
-export const UserSchema = SchemaFactory.createForClass(User);
+export const UserOSchema = SchemaFactory.createForClass(UserO);

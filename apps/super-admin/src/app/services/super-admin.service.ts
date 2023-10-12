@@ -3,20 +3,19 @@ import { ResponseMessage, successResponse } from '@shared/constants';
 
 import {
   AccountListDto,
-  AddAccountDto,
   AddUserDto,
   GetCompanyListDto,
   GetUserDto,
   UpdateAccountDto,
   UpdateUserDto,
 } from '@shared/dto';
-import { UserAccountsRepository, UserRepository } from '@shared';
+import { UserAccountsRepository, UserORepository } from '@shared';
 import { RpcException } from '@nestjs/microservices';
 
 @Injectable()
 export class SuperAdminService {
   constructor(
-    private userRepository: UserRepository,
+    private userRepository: UserORepository,
     private userAccountRepository: UserAccountsRepository
   ) {}
 
@@ -91,7 +90,7 @@ export class SuperAdminService {
     }
   }
 
-  async addAccounts(payload: AddAccountDto) {
+  async addAccounts(payload: any) {
     try {
       const user = await this.userAccountRepository.create(payload);
       return successResponse(HttpStatus.OK, ResponseMessage.SUCCESS, user);

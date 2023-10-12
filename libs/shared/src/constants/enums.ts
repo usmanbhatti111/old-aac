@@ -109,6 +109,12 @@ export enum InvoiceStatusEnum {
   PAID = 'PAID',
   OVERDUE = 'OVERDUE',
 }
+
+export enum StatusEnum {
+  ACTIVE,
+  INACTIVE,
+}
+
 export enum AssetsSoftwareStatusEnum {
   RESTRICTED = 'Restricted',
   IGNORED = 'Ignored',

@@ -6,7 +6,8 @@ import { SERVICES } from '@shared/constants';
 import { LoggerMiddleware } from './middleware/logger.middleware';
 import { WinstonModule } from 'nest-winston';
 import { WinstonConfigService } from './config/winston.config';
-import { AuthController } from './controllers/auth.controller';
+import { AuthController } from './controllers/user-account/auth.controller';
+import { RoleController } from './controllers/user-account/role.controller';
 import { HealthController } from './controllers/healthcheck.controller';
 import { PlanController } from './controllers/plan.controller';
 import { BillingController } from './controllers/super-admin/billing.controller';
@@ -24,8 +25,10 @@ import { ProductFeaturesController } from './controllers/product-features.contro
 import { NewsAndEventsController } from './controllers/super-admin/news-and-events.contoller';
 import { FaqsController } from './controllers/settings/faqs.controller';
 import { PaymentController } from './controllers/org-admin/payment.controller';
-import { APP_FILTER } from '@nestjs/core';
+import { APP_FILTER, APP_GUARD } from '@nestjs/core';
 import { ExceptionsFilter } from './shared/filters/exceptions.filter';
+import { UserController } from './controllers/user-account/user.controller';
+import { AuthGuard } from './shared/guards/auth.guard';
 import { SoftwareController } from './controllers/assets/software.controller';
 
 @Module({
@@ -38,6 +41,8 @@ import { SoftwareController } from './controllers/assets/software.controller';
   controllers: [
     AppController,
     AuthController,
+    RoleController,
+    UserController,
     HealthController,
     PlanController,
     BillingController,
@@ -60,8 +65,9 @@ import { SoftwareController } from './controllers/assets/software.controller';
   providers: [
     // Exceptions Filter
     { provide: APP_FILTER, useClass: ExceptionsFilter },
-
-    // Connected to all the rabbitmq queues
+    // Guards
+    { provide: APP_GUARD, useClass: AuthGuard },
+    // Connecting to all the rabbitmq queues
     ...Object.values(SERVICES).map((SERVICE_NAME) => {
       return {
         provide: SERVICE_NAME,

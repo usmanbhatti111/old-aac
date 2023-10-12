@@ -5,10 +5,10 @@ export interface IOrganization {
   logoUrl?: string;
   registrationNumber?: string;
   name: string;
-  email: string;
-  phoneNo: string;
-  address: string;
-  postCode: string;
+  email?: string;
+  phoneNo?: string;
+  address?: string;
+  postCode?: string;
   createdAt?: Date;
   updatedAt?: Date;
   deletedAt?: Date;

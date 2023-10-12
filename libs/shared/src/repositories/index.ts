@@ -11,6 +11,7 @@ export * from './super-admin/plan-product-module-permission.repository';
 export * from './superadmin';
 export * from './organization';
 export * from './org-admin';
+export * from './user-account';
 export * from './airservices/assets-software.repository';
 export * from './super-admin/product.repository';
 export * from './super-admin/permission.repository';

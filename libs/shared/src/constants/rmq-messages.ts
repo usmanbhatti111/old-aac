@@ -5,7 +5,21 @@ export const RMQ_MESSAGES = {
     EDIT_EXAMPLE: 'edit-example',
   },
   AUTHENTICATION: {
-    SIGNUP: 'auth-login',
+    SIGNUP: 'auth-signup',
+    SIGNIN: 'auth-signin',
+    VERIFY_TOKEN: 'verify-token',
+  },
+  USER: {
+    CREATE: 'create-user',
+    FIND_BY_EMAIL: 'find-user-by-email',
+    FIND_BY_COGNITO: 'find-user-by-cognito',
+  },
+  ROLE: {
+    CREATE_ROLE: 'create-role',
+    UPDATE_ROLE: 'update-role',
+    GET_ROLES: 'get-roles',
+    GET_ROLE: 'get-role',
+    DELETE_ROLE: 'delete-role',
   },
   PLAN: {
     ADD_PLAN: 'add-plan',

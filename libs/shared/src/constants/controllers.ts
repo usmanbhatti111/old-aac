@@ -1,6 +1,8 @@
 export const CONTROLLERS = {
   EXAMPLE: 'example',
   AUTHENTICATION: 'auth',
+  ROLE: 'role',
+  USER: 'user',
   PLAN: 'plan',
   BILLING: 'billing',
   ORGANIZATION: 'organization',

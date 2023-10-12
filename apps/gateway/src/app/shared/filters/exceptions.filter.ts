@@ -17,14 +17,21 @@ export class ExceptionsFilter implements ExceptionFilter {
 
     const ctx = host.switchToHttp();
 
-    this.logger.error(exception?.response);
+    this.logger.error(
+      exception?.response ||
+        exception?.message ||
+        'Something went wrong in exception'
+    );
 
     const httpStatus =
       exception?.response?.statusCode || HttpStatus.INTERNAL_SERVER_ERROR;
 
     const responseBody = {
       statusCode: httpStatus,
-      message: exception?.response?.message || 'Something Went Wrong',
+      message:
+        exception?.response?.message ||
+        exception?.message ||
+        'Something Went Wrong',
       error: exception?.response?.error || [
         {
           timestamp: new Date().toISOString(),

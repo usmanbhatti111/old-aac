@@ -1,20 +1,185 @@
-import { HttpStatus, Injectable } from '@nestjs/common';
-import { errorResponse, successResponse } from '@shared/constants';
-import { SignupDto } from '@shared/dto';
-import { PrismaService } from '@shared/services';
+import { BadRequestException, HttpStatus, Injectable } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
+import { RpcException } from '@nestjs/microservices';
+import { ResponseMessage, successResponse } from '@shared/constants';
+import { SignInDto, SignupDto } from '@shared/dto';
+import { CognitoJwtVerifier } from 'aws-jwt-verify';
+import AWS, { CognitoIdentityServiceProvider } from 'aws-sdk';
+import {
+  AdminUpdateUserAttributesRequest,
+  InitiateAuthRequest,
+  SignUpRequest,
+} from 'aws-sdk/clients/cognitoidentityserviceprovider';
+import { createHmac } from 'crypto';
+import { UserService } from '../services/user.service';
 
 @Injectable()
 export class AuthService {
-  constructor(private prisma: PrismaService) {}
+  public userPoolId = this.configService.get<string>('COGNITO_USERPOOL_ID');
+  public clientId = this.configService.get<string>('COGNITO_CLIENT_ID');
+  public region = this.configService.get<string>('COGNITO_REGION');
+  private cognito: CognitoIdentityServiceProvider;
 
-  async signup(payload: SignupDto) {
+  constructor(
+    private configService: ConfigService,
+    private userService: UserService
+  ) {
+    AWS.config.update({
+      accessKeyId: this.configService.get<string>('COGNITO_ACCESS_KEY'),
+      secretAccessKey: this.configService.get<string>('COGNITO_SECRET_KEY'),
+      region: this.region,
+    });
+    this.cognito = new CognitoIdentityServiceProvider({
+      region: this.region,
+    });
+  }
+
+  private createSecretHash(email: string): string {
+    const hmac = createHmac(
+      'sha256',
+      this.configService.get<string>('COGNITO_CLIENT_SECRET')
+    );
+    hmac.update(email);
+    hmac.update(this.clientId);
+    return hmac.digest('base64');
+  }
+
+  public async signup(user: SignupDto) {
+    const { email, password, firstName, lastName, role } = user;
+
+    const params: SignUpRequest = {
+      ClientId: this.clientId,
+      Username: email,
+      Password: password,
+      SecretHash: this.createSecretHash(email),
+      UserAttributes: [
+        { Name: 'email', Value: email },
+        { Name: 'name', Value: `${firstName} ${lastName}` },
+      ],
+    };
+
     try {
-      const res = await this.prisma.testStuff.findFirstOrThrow({
-        where: { email: payload.email },
+      const newUser = await this.cognito.signUp(params).promise();
+      await this.cognito
+        .adminAddUserToGroup({
+          UserPoolId: this.userPoolId,
+          Username: email,
+          GroupName: role,
+        })
+        .promise();
+
+      // Change it to sync with ig in the future
+      await this.adminConfirmPassword(email);
+      await this.confirmUserEmail(email);
+
+      delete user.password;
+      await this.userService.create({
+        ...user,
+        cognitoId: newUser?.UserSub,
+        role,
       });
-      return successResponse(HttpStatus.CREATED, 'Success', res);
+
+      return successResponse(201, 'Success', {});
     } catch (error) {
-      return errorResponse(HttpStatus.BAD_REQUEST, 'Bad Request', error?.name);
+      throw new RpcException(error);
+    }
+  }
+
+  public async confirmUserEmail(email: string) {
+    const params: AdminUpdateUserAttributesRequest = {
+      UserPoolId: this.userPoolId,
+      Username: email,
+      UserAttributes: [
+        {
+          Name: 'email_verified',
+          Value: 'true',
+        },
+      ],
+    };
+
+    try {
+      const confirmEmailResponse = await this.cognito
+        .adminUpdateUserAttributes(params)
+        .promise();
+
+      return successResponse(
+        HttpStatus.OK,
+        ResponseMessage.SUCCESS,
+        confirmEmailResponse
+      );
+    } catch (err) {
+      throw new RpcException(err);
+    }
+  }
+
+  public async adminConfirmPassword(email: string) {
+    return this.cognito
+      .adminConfirmSignUp({
+        UserPoolId: this.userPoolId,
+        Username: email,
+      })
+      .promise();
+  }
+
+  public async signin(user: SignInDto) {
+    const { email } = user;
+
+    await this.userService.findUserByUniqueFields({ email });
+
+    const secretKey = this.createSecretHash(email);
+
+    const params: InitiateAuthRequest = {
+      AuthFlow: 'USER_PASSWORD_AUTH',
+      ClientId: this.clientId,
+      AuthParameters: {
+        USERNAME: email,
+        PASSWORD: user.password,
+        SECRET_HASH: secretKey,
+      },
+    };
+
+    try {
+      const tokenResult: any = await this.cognito
+        .initiateAuth(params)
+        .promise();
+
+      const { AccessToken, RefreshToken, IdToken } =
+        tokenResult.AuthenticationResult;
+
+      await this.verifyToken(IdToken, 'id');
+      // if not verified throw error
+
+      return successResponse(HttpStatus.OK, ResponseMessage.SUCCESS, {
+        accessToken: AccessToken,
+        refreshToken: RefreshToken,
+        user: (await this.userService.loggedInUser({ email })).data,
+      });
+    } catch (err) {
+      throw new RpcException(err);
+    }
+  }
+
+  public async verifyToken(token: string, verifierType: 'access' | 'id') {
+    const verifier = CognitoJwtVerifier.create({
+      userPoolId: this.userPoolId,
+      clientId: this.clientId,
+      tokenUse: verifierType || 'access',
+    });
+    try {
+      const verify = await verifier.verify(token);
+      if (!verify) throw new BadRequestException('Invalid Token');
+
+      const user = await this.userService.findUserByUniqueFields({
+        cognitoId: verify.sub,
+      });
+
+      return successResponse(
+        HttpStatus.OK,
+        ResponseMessage.SUCCESS,
+        user?.data
+      );
+    } catch (err) {
+      throw new RpcException('Invald Token');
     }
   }
 }

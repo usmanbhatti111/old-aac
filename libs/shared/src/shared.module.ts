@@ -37,11 +37,13 @@ import {
   OrganizationRepository,
   OrganizationCompanyAccountRepository,
   ExpenseRepository,
+  AdminRoleRepository,
   AssetsSoftwareRepository,
   ProductRepository,
   FeatureRepository,
   ModuleRepository,
   PermissionRepository,
+  UserORepository,
 } from '../src/repositories/index';
 
 @Module({
@@ -101,11 +103,14 @@ import {
     OrganizationRepository,
     OrganizationCompanyAccountRepository,
     ExpenseRepository,
+    UserRepository,
+    AdminRoleRepository,
     AssetsSoftwareRepository,
     ProductRepository,
     FeatureRepository,
     ModuleRepository,
     PermissionRepository,
+    UserORepository,
   ],
   exports: [
     SharedService,
@@ -131,11 +136,14 @@ import {
     OrganizationRepository,
     OrganizationCompanyAccountRepository,
     ExpenseRepository,
+    UserRepository,
+    AdminRoleRepository,
     AssetsSoftwareRepository,
     ProductRepository,
     FeatureRepository,
     ModuleRepository,
     PermissionRepository,
+    UserORepository,
   ],
 })
 export class SharedModule {}

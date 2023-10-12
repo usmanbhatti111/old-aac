@@ -6,6 +6,22 @@ export const API_ENDPOINTS = {
   },
   AUTHENTICATION: {
     SIGNUP: 'signup',
+    SIGNIN: 'signin',
+    VERIFY_TOKEN: 'verify-token',
+  },
+  USER: {
+    GET: '/',
+    GET_ONE: '/:id',
+    CREATE: '/',
+    UPDATE: '/:id',
+    DELETE: '/:id',
+  },
+  ROLE: {
+    GET: '/',
+    GET_ONE: '/:id',
+    CREATE: '/',
+    UPDATE: '/:id',
+    DELETE: '/:id',
   },
   PLAN: {
     ADD_PLAN: '/',

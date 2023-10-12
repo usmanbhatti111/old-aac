@@ -27,8 +27,8 @@ import {
   FaqSchema,
   Job,
   JobSchema,
-  User,
-  UserSchema,
+  UserO,
+  UserOSchema,
   NewsAndEvent,
   NewsAndEventSchema,
   Invoice,
@@ -43,6 +43,10 @@ import {
   OrganizationCompanyAccount,
   OrganizationSchema,
   OrganizationCompanyAccountSchema,
+  User,
+  UserSchema,
+  AdminRole,
+  AdminRoleSchema,
   AssetsSoftware,
   AssetsSoftwareSchema,
   Module,
@@ -117,6 +121,10 @@ export const DbModels = [
     schema: UserSchema,
   },
   {
+    name: UserO.name,
+    schema: UserOSchema,
+  },
+  {
     name: NewsAndEvent.name,
     schema: NewsAndEventSchema,
   },
@@ -143,6 +151,14 @@ export const DbModels = [
   {
     name: OrganizationCompanyAccount.name,
     schema: OrganizationCompanyAccountSchema,
+  },
+  {
+    name: User.name,
+    schema: UserSchema,
+  },
+  {
+    name: AdminRole.name,
+    schema: AdminRoleSchema,
   },
   {
     name: AssetsSoftware.name,

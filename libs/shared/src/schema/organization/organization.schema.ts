@@ -1,7 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument, SchemaTypes } from 'mongoose';
+import { IOrganization } from '../../dto';
 import { AbstractSchema } from '../abstract-repo/abstract.schema';
-import { IOrganization } from '@shared/dto';
 export type OrganizationDocument = HydratedDocument<Organization>;
 
 @Schema({
@@ -15,17 +15,17 @@ export class Organization extends AbstractSchema implements IOrganization {
   @Prop({ type: String, required: true })
   name: string;
 
-  @Prop({ type: String, required: true })
-  email: string;
+  @Prop({ type: String, required: false })
+  email?: string;
 
-  @Prop({ type: String, required: true })
-  phoneNo: string;
+  @Prop({ type: String, required: false })
+  phoneNo?: string;
 
-  @Prop({ type: String, required: true })
-  address: string;
+  @Prop({ type: String, required: false })
+  address?: string;
 
-  @Prop({ type: String, required: true })
-  postCode: string;
+  @Prop({ type: String, required: false })
+  postCode?: string;
 
   @Prop({ type: String, required: false })
   logoUrl?: string;
