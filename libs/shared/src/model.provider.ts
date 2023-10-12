@@ -15,6 +15,7 @@ import {
   ExpenseSchema,
   Inventory,
   InventorySchema,
+  PurchaseSchema,
   OrganizationPlan,
   OrganizationPlanSchema,
   Task,
@@ -46,6 +47,8 @@ import {
   User,
   UserSchema,
   AdminRole,
+  ProductFeatures,
+  ProductFeaturesSchema,
   AdminRoleSchema,
   AssetsSoftware,
   AssetsSoftwareSchema,
@@ -55,6 +58,7 @@ import {
   FeatureSchema,
   Permission,
   PermissionSchema,
+  Purchase,
 } from './schema';
 
 export const DbModels = [
@@ -66,7 +70,14 @@ export const DbModels = [
     name: Inventory.name,
     schema: InventorySchema,
   },
-
+  {
+    name: Purchase.name,
+    schema: PurchaseSchema,
+  },
+  {
+    name: ProductFeatures.name,
+    schema: ProductFeaturesSchema,
+  },
   {
     name: Ticket.name,
     schema: TicketSchema,

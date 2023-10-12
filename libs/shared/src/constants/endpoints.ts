@@ -90,6 +90,9 @@ export const API_ENDPOINTS = {
     ASSETS: {
       INVENTORY: 'inventory',
       DELETE_INVENTORY: '/:id',
+      PURCHASE: 'purchase',
+      DELETE_PURCHASE: 'purchase/:id',
+      UPDATE_PURCHASE: 'update/:id',
       ADD_SOFTWARE: 'add_software',
     },
     TASK: {

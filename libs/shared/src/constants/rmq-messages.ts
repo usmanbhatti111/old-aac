@@ -95,8 +95,11 @@ export const RMQ_MESSAGES = {
     },
     ASSETS: {
       ADD_Inventory: 'add-inventory',
+      ADD_PURCHASE: 'add-purchase',
       GET_Inventory: 'get-inventory',
       Delete_Inventory: 'delete-inventory',
+      DELETE_PURCHASE: 'delete-purchase',
+      UPDATE_PURCHASE: 'update-purchase',
       ADD_SOFTWARE: 'add-software',
     },
     TASK: {
