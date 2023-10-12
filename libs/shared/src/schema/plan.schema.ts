@@ -28,10 +28,16 @@ export class Plan extends AbstractSchema {
   @Prop({ type: [{ type: SchemaTypes.ObjectId, ref: MODEL.PRODUCT }] })
   planProducts?: Product[];
 
-  @Prop({ type: [{ type: SchemaTypes.ObjectId, ref: MODEL.PRODUCT }] })
+  @Prop({
+    type: [{ type: SchemaTypes.ObjectId, ref: MODEL.PLAN_PRODUCT_FEATURE }],
+  })
   planProductFeatures?: PlanProductFeature[];
 
-  @Prop({ type: [{ type: SchemaTypes.ObjectId, ref: MODEL.PRODUCT }] })
+  @Prop({
+    type: [
+      { type: SchemaTypes.ObjectId, ref: MODEL.PLAN_PRODUCT_MODULE_PERMISSION },
+    ],
+  })
   planProductModulePermissions?: PlanProductModulePermission[];
 
   @Prop()

@@ -14,6 +14,8 @@ export const MODEL = {
   FAQS: 'Faqs',
   PLAN_TYPE: 'plantypes',
   PRODUCT: 'Product',
+  PLAN_PRODUCT_FEATURE: 'planproductfeatures',
+  PLAN_PRODUCT_MODULE_PERMISSION: 'planproductmodulepermissions',
   PLAN: 'Plan',
   MODULE: 'Module',
   MODULE_PERMISSION: 'ModulePermission',

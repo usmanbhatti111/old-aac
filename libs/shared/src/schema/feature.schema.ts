@@ -1,5 +1,4 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-// import { PlanProductFeature } from '@prisma/client';
 import { Document, HydratedDocument } from 'mongoose';
 import { AbstractSchema } from './abstract-repo/abstract.schema';
 

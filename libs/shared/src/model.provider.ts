@@ -41,13 +41,12 @@ import {
   OrganizationCompanyAccountSchema,
   AssetsSoftware,
   AssetsSoftwareSchema,
-
-  // Module,
-  // ModuleSchema,
+  Module,
+  ModuleSchema,
   Feature,
   FeatureSchema,
-  // Permission,
-  // PermissionSchema,
+  Permission,
+  PermissionSchema,
 } from './schema';
 
 export const DbModels = [
@@ -137,20 +136,16 @@ export const DbModels = [
     name: AssetsSoftware.name,
     schema: AssetsSoftwareSchema,
   },
-  // {
-  //   name: Module.name,
-  //   schema: ModuleSchema,
-  // },
-  // {
-  //   name: Module.name,
-  //   schema: ModuleSchema,
-  // },
+  {
+    name: Module.name,
+    schema: ModuleSchema,
+  },
   {
     name: Feature.name,
     schema: FeatureSchema,
   },
-  // {
-  //   name: Permission.name,
-  //   schema: PermissionSchema,
-  // },
+  {
+    name: Permission.name,
+    schema: PermissionSchema,
+  },
 ];

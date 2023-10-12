@@ -38,8 +38,8 @@ import {
   AssetsSoftwareRepository,
   ProductRepository,
   FeatureRepository,
-  // ModuleRepository,
-  // PermissionRepository,
+  ModuleRepository,
+  PermissionRepository,
 } from '../src/repositories/index';
 
 @Module({
@@ -97,8 +97,8 @@ import {
     AssetsSoftwareRepository,
     ProductRepository,
     FeatureRepository,
-    // ModuleRepository,
-    // PermissionRepository,
+    ModuleRepository,
+    PermissionRepository,
   ],
   exports: [
     SharedService,
@@ -122,8 +122,8 @@ import {
     AssetsSoftwareRepository,
     ProductRepository,
     FeatureRepository,
-    // ModuleRepository,
-    // PermissionRepository,
+    ModuleRepository,
+    PermissionRepository,
   ],
 })
 export class SharedModule {}
