@@ -39,6 +39,10 @@ export const API_ENDPOINTS = {
     UPDATE_PROFILE: 'update-profile/:userId',
     ADD_ACCOUNTS: 'add-accounts',
     ACCOUNTS_LIST: 'accounts-list',
+    UPDATE_ACCOUNT: 'update-account/:accountId',
+    ACCOUNT_DETAIL: 'account-detail/:accountId',
+    COMPANY_LIST: 'company-list',
+    PRODUCT_LIST: 'product-list',
   },
 
   JOBS: {

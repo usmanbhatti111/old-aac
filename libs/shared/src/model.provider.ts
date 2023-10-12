@@ -27,12 +27,16 @@ import {
   FaqSchema,
   Job,
   JobSchema,
+  User,
+  UserSchema,
   NewsAndEvent,
   NewsAndEventSchema,
   Invoice,
   InvoiceSchema,
   Payment,
   PaymentSchema,
+  UserAccounts,
+  UserAccountsSchema,
   Product,
   ProductSchema,
   Organization,
@@ -109,6 +113,10 @@ export const DbModels = [
     schema: SuperAdminSchema,
   },
   {
+    name: User.name,
+    schema: UserSchema,
+  },
+  {
     name: NewsAndEvent.name,
     schema: NewsAndEventSchema,
   },
@@ -119,6 +127,10 @@ export const DbModels = [
   {
     name: Payment.name,
     schema: PaymentSchema,
+  },
+  {
+    name: UserAccounts.name,
+    schema: UserAccountsSchema,
   },
   {
     name: Product.name,

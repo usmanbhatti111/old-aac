@@ -42,7 +42,10 @@ export const RMQ_MESSAGES = {
     UPDATE_PROFILE: 'update-profile',
     ADD_ACCOUNTS: 'add-accounts',
     ACCOUNTS_LIST: 'accounts-list',
+    ACCOUNT_DETAIL: 'account-detail',
     UPDATE_ACCOUNTS: 'update-accounts',
+    COMPANY_LIST: 'company-list',
+    PRODUCT_LIST: 'product-list',
   },
 
   JOBS: {

@@ -4,8 +4,14 @@ export enum UserStatus {
 }
 
 export enum UserRole {
-  SUPER_ADMIN = 'SUPER_ADMIN',
-  ORG_ADMIN = 'ORG_ADMIN',
+  SUPER_ADMIN = 'SUPER ADMIN',
+  ADMINISTRATOR = 'ADMINISTRATOR',
+  MARKETING_USER = 'MARKETING USER',
+  ORG_ADMIN = 'ORGANIZATION ADMIN',
+  ACCOUNT_ADMIN = 'ACCOUNT ADMIN',
+  RESTRICTED_USER = 'RESTRICTED USER',
+  SALES_USER = 'SALES USER',
+  SUPPORT_AGENT = 'SUPPORT AGENT',
 }
 
 export enum UserAccountStatus {
@@ -79,6 +85,14 @@ export enum BillingCycleEnum {
   YEARLY = 'YEARLY',
 }
 
+export enum ProductDropDown {
+  OrgAdminPanel = 'Org Admin panel',
+  Sales = 'Sales',
+  Services = 'Services',
+  Marketing = 'Marketing',
+  Operation = 'Operation',
+  LoyaltyProgram = 'Loyalty Program',
+}
 export enum ENewsAndEventsTypes {
   EVENT = 'event',
   NEWS = 'news',

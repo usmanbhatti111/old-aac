@@ -12,6 +12,7 @@ export const MODEL = {
   TASK: 'Task',
   JOBS: 'Jobs',
   FAQS: 'Faqs',
+  User: 'User',
   PLAN_TYPE: 'plantypes',
   PRODUCT: 'Product',
   PLAN_PRODUCT_FEATURE: 'planproductfeatures',

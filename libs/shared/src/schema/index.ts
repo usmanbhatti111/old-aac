@@ -1,10 +1,10 @@
 export * from './faqs.schema';
 export * from './jobs.schema';
-export * from './air-services/index';
-export * from './super-admin/index';
+export * from './air-services';
 export * from './example.schema';
 export * from './super-admin.schema';
 export * from './products.schema';
+export * from './user.schema';
 export * from './feature.schema';
 export * from './permission.schema';
 export * from './plan-product-feature.schema';
@@ -14,7 +14,6 @@ export * from './plan-type.schema';
 export * from './module.schema';
 
 export * from './super-admin';
-
 export * from './organization/index';
 export * from './org-admin';
 export * from './product.schema';

@@ -1,20 +1,22 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNotEmpty } from 'class-validator';
-import { UserAccountStatus, UserRole } from '../../constants/enums';
+import { UserAccountStatus, UserRole } from '@shared/constants';
+import { IsMongoId, IsNotEmpty } from 'class-validator';
+
 export class AddAccountDto {
   @ApiProperty({
     required: true,
-    example: '',
+    example: '65237e5b4a426328bd15f439',
   })
   @IsNotEmpty()
-  product: string;
+  products: string;
 
   @ApiProperty({
     required: true,
-    example: '',
+    example: '65237e5b4a426328bd15f439',
   })
   @IsNotEmpty()
-  compay: string;
+  @IsMongoId()
+  company: string;
 
   @ApiProperty({
     required: true,

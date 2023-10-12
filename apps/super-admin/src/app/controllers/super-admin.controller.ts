@@ -38,7 +38,22 @@ export class SuperAdminController {
   }
 
   @MessagePattern(RMQ_MESSAGES.SUPER_ADMIN.UPDATE_ACCOUNTS)
+  accountDetail({ accountId }) {
+    return this.superAdminService.accountDetail(accountId);
+  }
+
+  @MessagePattern(RMQ_MESSAGES.SUPER_ADMIN.UPDATE_ACCOUNTS)
   updateAccount({ userId, payload }) {
     return this.superAdminService.updateAccount(userId, payload);
+  }
+
+  @MessagePattern(RMQ_MESSAGES.SUPER_ADMIN.COMPANY_LIST)
+  companyList({ query }) {
+    return this.superAdminService.companyListForDropDown(query);
+  }
+
+  @MessagePattern(RMQ_MESSAGES.SUPER_ADMIN.PRODUCT_LIST)
+  productList() {
+    return this.superAdminService.productListForDropDown();
   }
 }
