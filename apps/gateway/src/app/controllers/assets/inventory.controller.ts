@@ -7,6 +7,8 @@ import {
   Post,
   Res,
   Query,
+  Patch,
+  Param,
 } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
 import { ApiTags } from '@nestjs/swagger';
@@ -17,7 +19,12 @@ import {
   RMQ_MESSAGES,
   SERVICES,
 } from '@shared/constants';
-import { AddInventoryDto, GetInventoryDto } from '@shared/dto';
+import {
+  AddInventoryDto,
+  EditInventoryDto,
+  GetInventoryDto,
+  IdDto,
+} from '@shared/dto';
 import { Response } from 'express';
 import { firstValueFrom } from 'rxjs';
 
@@ -46,6 +53,29 @@ export class InventoryController {
       return res.status(err.statusCode).json(err);
     }
   }
+
+  @Patch(API_ENDPOINTS.AIR_SERVICES.ASSETS.EDIT_INVENTORY)
+  async editInventory(
+    @Param() { id }: IdDto,
+    @Body() updateDataDto: EditInventoryDto,
+    @Res() res: Response | any
+  ) {
+    try {
+      const response = await firstValueFrom(
+        this.airServiceClient.send(
+          RMQ_MESSAGES.AIR_SERVICES.ASSETS.EDIT_Inventory,
+          {
+            id,
+            updateDataDto,
+          }
+        )
+      );
+      return res.status(response.statusCode).json(response);
+    } catch (error) {
+      return res.status(error.statusCode).json(error);
+    }
+  }
+
   @Get(API_ENDPOINTS.AIR_SERVICES.ASSETS.INVENTORY)
   public async getInventory(
     @Query() payload: GetInventoryDto,

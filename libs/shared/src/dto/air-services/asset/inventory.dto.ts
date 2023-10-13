@@ -151,6 +151,7 @@ export class GetInventoryDto extends paginationDTO {
     required: false,
   })
   locationId: string;
+
   @IsOptional()
   @IsMongoId()
   @ApiProperty({
@@ -185,4 +186,104 @@ export class GetInventoryDto extends paginationDTO {
     required: false,
   })
   search: string;
+}
+
+export class EditInventoryDto {
+  @IsOptional()
+  @IsNotEmpty()
+  @IsString()
+  @ApiProperty({
+    type: String,
+    example: 'Name',
+    required: true,
+  })
+  displayName: string;
+
+  @IsOptional()
+  @IsMongoId()
+  @ApiProperty({
+    required: false,
+    example: '651bdf53beeb02bc627d6804',
+  })
+  assetId: string;
+
+  @IsOptional()
+  @IsISO8601()
+  createdAt: string;
+
+  @IsOptional()
+  @IsNotEmpty()
+  @IsString()
+  @IsEnum(['services', 'hardware', 'software'])
+  @ApiProperty({
+    example: 'services',
+    enum: ['services', 'hardware', 'software'],
+  })
+  assetType: string;
+
+  @IsOptional()
+  @IsNotEmpty()
+  @IsEnum(['low', 'medium', 'high'])
+  @ApiProperty({
+    example: 'low',
+    enum: ['low', 'medium', 'high'],
+    required: true,
+  })
+  impact: string;
+
+  @IsOptional()
+  @IsString()
+  @ApiProperty({
+    example: 'description...',
+    required: false,
+  })
+  description: string;
+
+  @IsOptional()
+  @IsISO8601()
+  @ApiProperty({
+    example: new Date().toISOString(),
+    required: false,
+  })
+  assetLifeExpiry: string;
+
+  @IsOptional()
+  @IsMongoId()
+  @ApiProperty({
+    required: false,
+    example: '651bdf53beeb02bc627d6804',
+  })
+  locationId: string;
+
+  @IsOptional()
+  @IsMongoId()
+  @ApiProperty({
+    required: false,
+    example: '651bdf53beeb02bc627d6804',
+  })
+  departmentId: string;
+
+  @IsOptional()
+  @IsISO8601()
+  @ApiProperty({
+    required: false,
+    example: new Date().toISOString(),
+  })
+  assignedOn: string;
+
+  @IsOptional()
+  @IsMongoId()
+  @ApiProperty({
+    required: false,
+    example: '651bdf53beeb02bc627d6804',
+  })
+  usedBy: string;
+
+  @IsOptional()
+  @IsMongoId()
+  @ApiProperty({
+    required: false,
+    example: '651bdf53beeb02bc627d6804',
+  })
+  attachmentId: string;
 }

@@ -16,6 +16,20 @@ export class InventoryService {
       return errorResponse(HttpStatus.BAD_REQUEST, 'Bad Request', error?.name);
     }
   }
+
+  async editInventory(payload) {
+    try {
+      const { id, updateDataDto } = payload;
+      const res = await this.inventoryRepository.findByIdAndUpdate(
+        { _id: id },
+        { $set: updateDataDto }
+      );
+      return successResponse(HttpStatus.CREATED, 'Success', res);
+    } catch (error) {
+      return errorResponse(HttpStatus.BAD_REQUEST, 'Bad Request', error?.name);
+    }
+  }
+
   async getInventory(payload?: GetInventoryDto) {
     try {
       const {
