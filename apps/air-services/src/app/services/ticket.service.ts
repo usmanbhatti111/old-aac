@@ -1,7 +1,9 @@
 import { Injectable, HttpStatus } from '@nestjs/common';
 import { errorResponse, successResponse } from '@shared/constants';
 import { TicketRepository } from '@shared';
-import mongoose, { Types } from 'mongoose';
+import mongoose from 'mongoose';
+import { paginationDTO } from '@shared/dto';
+import { Types } from 'mongoose';
 import {
   AssociateAssetsDTO,
   GetAssociateAssetsDto,
@@ -122,14 +124,14 @@ export class TicketService {
   }
   async createChildTicket(payload: any) {
     try {
-      const { id, ...dto } = payload;
-
+      const { ticketId, ...dto } = payload;
+      const { id } = ticketId;
       const childTicket = await this.ticketRepository.create({
         isChildTicket: true,
         ...dto,
       });
       const data = await this.ticketRepository.findOneAndUpdate(
-        { _id: id.id },
+        { _id: id },
 
         { $push: { childTicketsId: childTicket._id } }
       );
@@ -144,10 +146,14 @@ export class TicketService {
       throw new RpcException(error);
     }
   }
-  async getChildTicket(payload: IdDto) {
+  async getChildTicket(payload: { id: IdDto; pagination: paginationDTO }) {
     try {
-      const { id } = payload;
-      const data = await this.ticketRepository.aggregate([
+      const { id, pagination } = payload;
+
+      const limit = pagination.limit;
+      const offset = pagination.page;
+      const pipelines = [
+        { $match: { _id: new mongoose.Types.ObjectId(id.id) } },
         {
           $lookup: {
             from: 'tickets',
@@ -156,16 +162,26 @@ export class TicketService {
             as: 'childTicketDetails',
           },
         },
-
-        { $match: { _id: new mongoose.Types.ObjectId(id) } },
-      ]);
-
+        {
+          $project: {
+            childTicketDetails: 1,
+          },
+        },
+        {
+          $unwind: '$childTicketDetails',
+        },
+      ];
+      const params = {
+        pipelines,
+        limit,
+        offset,
+      };
+      const data = await this.ticketRepository.paginate(params);
       const response = successResponse(
         HttpStatus.ACCEPTED,
         `ChildTicket Get Successfully`,
         data
       );
-
       return response;
     } catch (error) {
       throw new RpcException(error);
@@ -174,7 +190,7 @@ export class TicketService {
 
   async deleteChildTicket(payload: any) {
     try {
-      const { id } = payload;
+      const { id } = payload.id;
 
       const data = await this.ticketRepository.delete({
         _id: id,

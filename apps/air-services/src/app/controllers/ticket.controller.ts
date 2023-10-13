@@ -8,6 +8,7 @@ import {
   GetAssociateAssetsDto,
   GetTicketByIdDto,
   IdDto,
+  paginationDTO,
 } from '@shared/dto';
 import { DetachAssetsDTO } from '@shared/dto';
 @Controller()
@@ -42,7 +43,9 @@ export class TicketController {
     return this.ticketService.createChildTicket(payload);
   }
   @MessagePattern(RMQ_MESSAGES.AIR_SERVICES.TICKETS.GET_CHILD_TICKETS)
-  public async getChildTicket(@Payload() payload: IdDto) {
+  public async getChildTicket(
+    @Payload() payload: { id: IdDto; pagination: paginationDTO }
+  ) {
     return this.ticketService.getChildTicket(payload);
   }
   @MessagePattern(RMQ_MESSAGES.AIR_SERVICES.TICKETS.DELETE_CHILD_TICKETS)

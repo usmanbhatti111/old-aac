@@ -52,12 +52,8 @@ import {
   AdminRoleSchema,
   AssetsSoftware,
   AssetsSoftwareSchema,
-  Module,
-  ModuleSchema,
   Feature,
   FeatureSchema,
-  Permission,
-  PermissionSchema,
   Purchase,
 } from './schema';
 
@@ -164,6 +160,11 @@ export const DbModels = [
     schema: OrganizationCompanyAccountSchema,
   },
   {
+    name: AssetsSoftware.name,
+    schema: AssetsSoftwareSchema,
+  },
+
+  {
     name: User.name,
     schema: UserSchema,
   },
@@ -176,15 +177,7 @@ export const DbModels = [
     schema: AssetsSoftwareSchema,
   },
   {
-    name: Module.name,
-    schema: ModuleSchema,
-  },
-  {
     name: Feature.name,
     schema: FeatureSchema,
-  },
-  {
-    name: Permission.name,
-    schema: PermissionSchema,
   },
 ];

@@ -10,7 +10,8 @@ import {
   Delete,
   Put,
 } from '@nestjs/common';
-import { ClientProxy, RpcException } from '@nestjs/microservices';
+import { ClientProxy } from '@nestjs/microservices';
+import { RpcException } from '@nestjs/microservices';
 import { ApiOkResponse, ApiParam, ApiQuery, ApiTags } from '@nestjs/swagger';
 
 import {
@@ -27,10 +28,11 @@ import {
   CreateChildTicketResponse,
   CreateTicketDTO,
   DeleteChildTicketResponse,
+  DetachAssetsDTO,
   EditChildTicketResponse,
   GetChildTicketResponse,
   IdDto,
-  DetachAssetsDTO,
+  paginationDTO,
   GetAssociateAssetsDto,
   GetTicketByIdDto,
 } from '@shared/dto';
@@ -139,7 +141,7 @@ export class TicketController {
           RMQ_MESSAGES.AIR_SERVICES.TICKETS.CREATE_CHILD_TICKET,
           {
             ...dto,
-            id,
+            ticketId: id,
           }
         )
       );
@@ -153,13 +155,14 @@ export class TicketController {
   @ApiOkResponse({ type: GetChildTicketResponse })
   public async getChildTicket(
     @Res() res: Response | any,
-    @Param() id: IdDto
+    @Param() id: IdDto,
+    @Query() pagination: paginationDTO
   ): Promise<GetChildTicketResponse> {
     try {
       const response = await firstValueFrom(
         this.ariServiceClient.send(
           RMQ_MESSAGES.AIR_SERVICES.TICKETS.GET_CHILD_TICKETS,
-          id
+          { id, pagination }
         )
       );
       return res.status(response.statusCode).json(response);
@@ -183,7 +186,9 @@ export class TicketController {
       const response = await firstValueFrom(
         this.ariServiceClient.send(
           RMQ_MESSAGES.AIR_SERVICES.TICKETS.DELETE_CHILD_TICKETS,
-          id
+          {
+            id,
+          }
         )
       );
       return res.status(response.statusCode).json(response);

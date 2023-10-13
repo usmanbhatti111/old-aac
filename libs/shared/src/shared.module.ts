@@ -28,8 +28,6 @@ import {
   AssetsSoftwareRepository,
   ProductRepository,
   FeatureRepository,
-  ModuleRepository,
-  PermissionRepository,
   UserORepository,
 } from '../src/repositories/index';
 
@@ -70,8 +68,6 @@ import {
     AssetsSoftwareRepository,
     ProductRepository,
     FeatureRepository,
-    ModuleRepository,
-    PermissionRepository,
     UserORepository,
   ],
   exports: [
@@ -104,8 +100,6 @@ import {
     AssetsSoftwareRepository,
     ProductRepository,
     FeatureRepository,
-    ModuleRepository,
-    PermissionRepository,
     UserORepository,
   ],
 })

@@ -1,14 +1,16 @@
 import {
   Body,
   Controller,
+  Delete,
   Inject,
   Param,
-  Patch,
   Post,
+  Put,
+  Patch,
   Res,
 } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
-import { ApiOkResponse, ApiTags } from '@nestjs/swagger';
+import { ApiOkResponse, ApiParam, ApiTags } from '@nestjs/swagger';
 import {
   API_ENDPOINTS,
   API_TAGS,
@@ -20,6 +22,8 @@ import {
   AssetsSoftwareAssignDto,
   AssetsSoftwareDto,
   CreateAssetsSoftwareResponse,
+  DeleteAssetsSoftwareResponse,
+  EditAssetsSoftwareResponse,
   IdDto,
 } from '@shared/dto';
 import { firstValueFrom } from 'rxjs';
@@ -44,6 +48,59 @@ export class SoftwareController {
         )
       );
 
+      return res.status(response.statusCode).json(response);
+    } catch (err) {
+      return res.status(err.statusCode).json(err);
+    }
+  }
+  @Put(API_ENDPOINTS.AIR_SERVICES.ASSETS.EDIT_SOFTWARE)
+  @ApiOkResponse({ type: EditAssetsSoftwareResponse })
+  @ApiParam({
+    type: String,
+    name: 'id',
+    description: 'id should be Assets softwareId',
+  })
+  async editSoftware(
+    @Body() dto: AssetsSoftwareDto,
+    @Res() res: Response | any,
+    @Param() id: IdDto
+  ): Promise<EditAssetsSoftwareResponse> {
+    try {
+      const response = await firstValueFrom(
+        this.airServiceClient.send(
+          RMQ_MESSAGES.AIR_SERVICES.ASSETS.EDIT_SOFTWARE,
+          {
+            dto,
+            id,
+          }
+        )
+      );
+
+      return res.status(response.statusCode).json(response);
+    } catch (err) {
+      return res.status(err.statusCode).json(err);
+    }
+  }
+  @Delete(API_ENDPOINTS.AIR_SERVICES.ASSETS.DELETE_SOFTWARE)
+  @ApiOkResponse({ type: DeleteAssetsSoftwareResponse })
+  @ApiParam({
+    type: String,
+    name: 'id',
+    description: 'id should be Assets softwareId',
+  })
+  async deleteSoftware(
+    @Res() res: Response | any,
+    @Param() id: IdDto
+  ): Promise<DeleteAssetsSoftwareResponse> {
+    try {
+      const response = await firstValueFrom(
+        this.airServiceClient.send(
+          RMQ_MESSAGES.AIR_SERVICES.ASSETS.DELETE_SOFTWARE,
+          {
+            id,
+          }
+        )
+      );
       return res.status(response.statusCode).json(response);
     } catch (err) {
       return res.status(err.statusCode).json(err);
