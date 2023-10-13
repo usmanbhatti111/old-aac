@@ -188,6 +188,14 @@ export class GetInventoryDto extends paginationDTO {
   search: string;
 }
 
+export class SearchInventoryDto extends paginationDTO {
+  @ApiProperty({
+    type: String,
+    example: 'Name',
+    required: false,
+  })
+  displayName: string;
+}
 export class EditInventoryDto {
   @IsOptional()
   @IsNotEmpty()

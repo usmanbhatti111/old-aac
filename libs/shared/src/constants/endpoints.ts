@@ -95,6 +95,7 @@ export const API_ENDPOINTS = {
       DELETE_PURCHASE: 'purchase/:id',
       UPDATE_PURCHASE: 'update/:id',
       ADD_SOFTWARE: 'add_software',
+      SEARCH_INVENTORY: 'search-inventory',
     },
     TASK: {
       ADD_TASK: '/',

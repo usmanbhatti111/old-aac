@@ -21,6 +21,7 @@ import {
 } from '@shared/constants';
 import {
   AddInventoryDto,
+  SearchInventoryDto,
   EditInventoryDto,
   GetInventoryDto,
   IdDto,
@@ -45,6 +46,25 @@ export class InventoryController {
         this.airServiceClient.send(
           RMQ_MESSAGES.AIR_SERVICES.ASSETS.ADD_Inventory,
           payload
+        )
+      );
+
+      return res.status(response.statusCode).json(response);
+    } catch (err) {
+      return res.status(err.statusCode).json(err);
+    }
+  }
+
+  @Get(API_ENDPOINTS.AIR_SERVICES.ASSETS.SEARCH_INVENTORY)
+  public async searchInventory(
+    @Query() payload: SearchInventoryDto,
+    @Res() res: Response | any
+  ) {
+    try {
+      const response = await firstValueFrom(
+        this.airServiceClient.send(
+          RMQ_MESSAGES.AIR_SERVICES.ASSETS.SEARCH_INVENTORY,
+          { ...payload }
         )
       );
 

@@ -3,6 +3,7 @@ import { MessagePattern, Payload } from '@nestjs/microservices';
 import { RMQ_MESSAGES } from '@shared/constants';
 import {
   AddInventoryDto,
+  SearchInventoryDto,
   EditInventoryDto,
   GetInventoryDto,
 } from '@shared/dto';
@@ -15,6 +16,10 @@ export class InventoryController {
   @MessagePattern(RMQ_MESSAGES.AIR_SERVICES.ASSETS.ADD_Inventory)
   addInventory(@Payload() payload: AddInventoryDto) {
     return this.inventoryService.addInventory(payload);
+  }
+  @MessagePattern(RMQ_MESSAGES.AIR_SERVICES.ASSETS.SEARCH_INVENTORY)
+  searchInventory(@Payload() payload: SearchInventoryDto) {
+    return this.inventoryService.searchInventory(payload);
   }
 
   @MessagePattern(RMQ_MESSAGES.AIR_SERVICES.ASSETS.EDIT_Inventory)
