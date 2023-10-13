@@ -4,7 +4,7 @@ import {
   AssetsSoftwareStatusEnum,
   AssetsSoftwareTypeEnum,
 } from '../../constants/index';
-import { HydratedDocument } from 'mongoose';
+import mongoose, { HydratedDocument, SchemaTypes } from 'mongoose';
 
 export type AssetsSoftwareDocument = HydratedDocument<AssetsSoftware>;
 @Schema({
@@ -20,6 +20,8 @@ export class AssetsSoftware extends AbstractSchema {
   status: string;
   @Prop({ type: String, required: true, enum: AssetsSoftwareTypeEnum })
   type: string;
+  @Prop({ type: SchemaTypes.ObjectId, ref: 'Category', required: false })
+  categoryId?: mongoose.Schema.Types.ObjectId;
 }
 
 export const AssetsSoftwareSchema =

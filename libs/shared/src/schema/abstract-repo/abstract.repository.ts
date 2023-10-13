@@ -46,8 +46,9 @@ export abstract class AbstractRepository<TDocument extends AbstractSchema> {
     }
     this.singleName += `${this.friendlyName
       .slice(1, end)
-      .replace(/([A-Z]+)*([A-Z][a-z])/g, '$1 $2')}${end == -3 ? 'y' : ''
-      }`.toLowerCase();
+      .replace(/([A-Z]+)*([A-Z][a-z])/g, '$1 $2')}${
+      end == -3 ? 'y' : ''
+    }`.toLowerCase();
   }
 
   async create(document: TDocument, options?: SaveOptions): Promise<TDocument> {
@@ -398,7 +399,7 @@ export abstract class AbstractRepository<TDocument extends AbstractSchema> {
   async newPaginate(
     query: any,
     pipeline: any[],
-    options: { page?: number; limit?: number },
+    options: { page?: number; limit?: number }
   ): Promise<{ result: any[]; meta: any }> {
     const page = options.page || 1;
     const limit = options.limit || 10;
@@ -438,5 +439,5 @@ export abstract class AbstractRepository<TDocument extends AbstractSchema> {
         },
       }
     );
-  };
+  }
 }

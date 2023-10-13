@@ -10,14 +10,8 @@ import {
   Delete,
   Put,
 } from '@nestjs/common';
-import { ClientProxy } from '@nestjs/microservices';
-import {
-  ApiBearerAuth,
-  ApiOkResponse,
-  ApiParam,
-  ApiQuery,
-  ApiTags,
-} from '@nestjs/swagger';
+import { ClientProxy, RpcException } from '@nestjs/microservices';
+import { ApiOkResponse, ApiParam, ApiQuery, ApiTags } from '@nestjs/swagger';
 
 import {
   API_ENDPOINTS,
@@ -37,7 +31,8 @@ import {
   GetChildTicketResponse,
   IdDto,
   DetachAssetsDTO,
-  GetAssociateAssetsDto, GetTicketByIdDto
+  GetAssociateAssetsDto,
+  GetTicketByIdDto,
 } from '@shared/dto';
 
 @ApiTags(API_TAGS.TICKETS)
@@ -46,7 +41,7 @@ import {
 export class TicketController {
   constructor(
     @Inject(SERVICES.AIR_SERVICES) private ariServiceClient: ClientProxy
-  ) { }
+  ) {}
 
   @Post()
   public async createTicket(
@@ -66,9 +61,7 @@ export class TicketController {
     }
   }
   @Get(API_ENDPOINTS.AIR_SERVICES.TICKETS.ASSOCIATE_ASSETS)
-  public async getAssociateAssets(
-    @Query() queryParams: GetAssociateAssetsDto,
-  ) {
+  public async getAssociateAssets(@Query() queryParams: GetAssociateAssetsDto) {
     try {
       const response = await firstValueFrom(
         this.ariServiceClient.send(
@@ -76,15 +69,13 @@ export class TicketController {
           queryParams
         )
       );
-      return response
+      return response;
     } catch (err) {
-      throw err
+      throw new RpcException(err);
     }
   }
   @Get(':ticketId')
-  public async getTicketDetails(
-    @Param() params: GetTicketByIdDto,
-  ) {
+  public async getTicketDetails(@Param() params: GetTicketByIdDto) {
     try {
       const response = await firstValueFrom(
         this.ariServiceClient.send(
@@ -92,17 +83,14 @@ export class TicketController {
           params
         )
       );
-      return response
+      return response;
     } catch (err) {
-      throw err
+      throw new RpcException(err);
     }
   }
 
-
   @Post(API_ENDPOINTS.AIR_SERVICES.TICKETS.ASSOCIATE_ASSETS)
-  public async associateAssets(
-    @Body() payload: AssociateAssetsDTO,
-  ) {
+  public async associateAssets(@Body() payload: AssociateAssetsDTO) {
     try {
       const response = await firstValueFrom(
         this.ariServiceClient.send(
@@ -110,9 +98,9 @@ export class TicketController {
           payload
         )
       );
-      return response
+      return response;
     } catch (err) {
-      throw err
+      throw new RpcException(err);
     }
   }
   @Delete(API_ENDPOINTS.AIR_SERVICES.TICKETS.DETACH_ASSETS)

@@ -103,6 +103,7 @@ export const RMQ_MESSAGES = {
       DELETE_PURCHASE: 'delete-purchase',
       UPDATE_PURCHASE: 'update-purchase',
       ADD_SOFTWARE: 'add-software',
+      ASSIGN_CATEGORY: 'assign-category',
       SEARCH_INVENTORY: 'search-inventory',
     },
     TASK: {
