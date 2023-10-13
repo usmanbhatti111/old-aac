@@ -46,9 +46,8 @@ export abstract class AbstractRepository<TDocument extends AbstractSchema> {
     }
     this.singleName += `${this.friendlyName
       .slice(1, end)
-      .replace(/([A-Z]+)*([A-Z][a-z])/g, '$1 $2')}${
-      end == -3 ? 'y' : ''
-    }`.toLowerCase();
+      .replace(/([A-Z]+)*([A-Z][a-z])/g, '$1 $2')}${end == -3 ? 'y' : ''
+      }`.toLowerCase();
   }
 
   async create(document: TDocument, options?: SaveOptions): Promise<TDocument> {
@@ -395,4 +394,49 @@ export abstract class AbstractRepository<TDocument extends AbstractSchema> {
       },
     };
   }
+
+  async newPaginate(
+    query: any,
+    pipeline: any[],
+    options: { page?: number; limit?: number },
+  ): Promise<{ result: any[]; meta: any }> {
+    const page = options.page || 1;
+    const limit = options.limit || 10;
+    const skip = (page - 1) * limit;
+
+    const results = await this.aggregate([
+      { $match: query },
+      ...pipeline,
+      {
+        $facet: {
+          result: [{ $skip: skip }, { $limit: limit }],
+          metadata: [
+            { $count: 'total' },
+            {
+              $addFields: {
+                page,
+                limit,
+                totalPages: {
+                  $ceil: { $divide: ['$total', limit] },
+                },
+              },
+            },
+          ],
+        },
+      },
+      { $unwind: '$metadata' },
+    ]);
+
+    return (
+      results[0] ?? {
+        results: [],
+        metaData: {
+          total: 0,
+          page,
+          limit,
+          totalPages: 1,
+        },
+      }
+    );
+  };
 }

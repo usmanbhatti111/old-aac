@@ -2,15 +2,25 @@ import { Controller } from '@nestjs/common';
 import { MessagePattern, Payload } from '@nestjs/microservices';
 import { RMQ_MESSAGES } from '@shared/constants';
 import { TicketService } from '../services/ticket.service';
-import { AssociateAssetsDTO, CreateTicketDTO, IdDto } from '@shared/dto';
+import { AssociateAssetsDTO, CreateTicketDTO, GetAssociateAssetsDto, GetTicketByIdDto, IdDto } from '@shared/dto';
 import { DetachAssetsDTO } from '@shared/dto';
 @Controller()
 export class TicketController {
-  constructor(private ticketService: TicketService) {}
+  constructor(private ticketService: TicketService) { }
 
   @MessagePattern(RMQ_MESSAGES.AIR_SERVICES.TICKETS.CREATE_TICKET)
   public async createTicket(@Payload() payload: CreateTicketDTO) {
     return this.ticketService.createTicket(payload);
+  }
+
+  @MessagePattern(RMQ_MESSAGES.AIR_SERVICES.TICKETS.GET_TICKET_DETAILS,)
+  public async getTicketDetails(@Payload() payload: GetTicketByIdDto) {
+    return this.ticketService.getTicketDetails(payload);
+  }
+
+  @MessagePattern(RMQ_MESSAGES.AIR_SERVICES.TICKETS.GET_ASSOCIATE_ASSETS,)
+  public async getAssociateAssets(@Payload() payload: GetAssociateAssetsDto) {
+    return this.ticketService.getAssociateAssets(payload);
   }
 
   @MessagePattern(RMQ_MESSAGES.AIR_SERVICES.TICKETS.ASSOCIATE_ASSETS)

@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsNotEmpty, IsOptional } from 'class-validator';
-import { User } from '../../schema';
+import { User } from '../../schema/user-account';
 
 export class CreateUserDto extends User {
   @ApiProperty({ type: String })

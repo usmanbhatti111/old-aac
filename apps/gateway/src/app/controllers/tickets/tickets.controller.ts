@@ -37,15 +37,16 @@ import {
   GetChildTicketResponse,
   IdDto,
   DetachAssetsDTO,
+  GetAssociateAssetsDto, GetTicketByIdDto
 } from '@shared/dto';
 
 @ApiTags(API_TAGS.TICKETS)
 @Controller(CONTROLLERS.TICKET)
-@ApiBearerAuth()
+// @ApiBearerAuth()
 export class TicketController {
   constructor(
     @Inject(SERVICES.AIR_SERVICES) private ariServiceClient: ClientProxy
-  ) {}
+  ) { }
 
   @Post()
   public async createTicket(
@@ -64,25 +65,43 @@ export class TicketController {
       return res.status(err.statusCode).json(err);
     }
   }
-
+  @Get(API_ENDPOINTS.AIR_SERVICES.TICKETS.ASSOCIATE_ASSETS)
+  public async getAssociateAssets(
+    @Query() queryParams: GetAssociateAssetsDto,
+  ) {
+    try {
+      const response = await firstValueFrom(
+        this.ariServiceClient.send(
+          RMQ_MESSAGES.AIR_SERVICES.TICKETS.GET_ASSOCIATE_ASSETS,
+          queryParams
+        )
+      );
+      return response
+    } catch (err) {
+      throw err
+    }
+  }
   @Get(':ticketId')
-  public async getTicketDetails(@Res() res: Response | any) {
+  public async getTicketDetails(
+    @Param() params: GetTicketByIdDto,
+  ) {
     try {
       const response = await firstValueFrom(
         this.ariServiceClient.send(
           RMQ_MESSAGES.AIR_SERVICES.TICKETS.GET_TICKET_DETAILS,
-          {}
+          params
         )
       );
-      return res.status(response.statusCode).json(response);
+      return response
     } catch (err) {
-      return res.status(err.statusCode).json(err);
+      throw err
     }
   }
+
+
   @Post(API_ENDPOINTS.AIR_SERVICES.TICKETS.ASSOCIATE_ASSETS)
   public async associateAssets(
     @Body() payload: AssociateAssetsDTO,
-    @Res() res: Response | any
   ) {
     try {
       const response = await firstValueFrom(
@@ -91,9 +110,9 @@ export class TicketController {
           payload
         )
       );
-      res.status(response.statusCode).json(response);
+      return response
     } catch (err) {
-      res.status(err.statusCode).json(err);
+      throw err
     }
   }
   @Delete(API_ENDPOINTS.AIR_SERVICES.TICKETS.DETACH_ASSETS)

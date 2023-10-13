@@ -1,14 +1,14 @@
 import { Injectable, HttpStatus } from '@nestjs/common';
 import { errorResponse, successResponse } from '@shared/constants';
 import { TicketRepository } from '@shared';
-import mongoose from 'mongoose';
-import { AssociateAssetsDTO, IdDto } from '@shared/dto';
+import mongoose, { Types } from 'mongoose';
+import { AssociateAssetsDTO, GetAssociateAssetsDto, GetTicketByIdDto, IdDto } from '@shared/dto';
 import { RpcException } from '@nestjs/microservices';
 import { DetachAssetsDTO } from '@shared/dto';
 
 @Injectable()
 export class TicketService {
-  constructor(private ticketRepository: TicketRepository) {}
+  constructor(private ticketRepository: TicketRepository) { }
 
   async createTicket(payload) {
     try {
@@ -33,6 +33,47 @@ export class TicketService {
     }
   }
 
+
+  async getTicketDetails(payload: GetTicketByIdDto) {
+    try {
+      const res = await this.ticketRepository.findOne({ _id: payload?.ticketId });
+      return successResponse(HttpStatus.OK, `Success`, res);
+    } catch (error) {
+      throw new RpcException(error);
+    }
+  }
+
+  async getAssociateAssets(payload: GetAssociateAssetsDto) {
+    try {
+      const { page, limit } = payload
+      const filterQuery = { _id: new Types.ObjectId(payload?.ticketId) }
+      const pipeline = [
+        {
+          '$lookup': {
+            'from': 'assets',
+            'localField': 'associateAssets',
+            'foreignField': '_id',
+            'as': 'associateAssets'
+          }
+        }, {
+          '$unwind': {
+            'path': '$associateAssets',
+            'preserveNullAndEmptyArrays': true
+          }
+        },
+        {
+          '$project': {
+            'associateAssets': 1
+          }
+        }
+      ]
+      const response = await this.ticketRepository.newPaginate(filterQuery, pipeline, { page, limit });
+      return successResponse(HttpStatus.OK, `Success`, response);
+    } catch (error) {
+      throw new RpcException(error);
+    }
+  }
+
   async associateAssets(payload: AssociateAssetsDTO) {
     try {
       const { id, assetIds } = payload;
@@ -45,8 +86,7 @@ export class TicketService {
 
       return response;
     } catch (error) {
-      const err = errorResponse(HttpStatus.BAD_REQUEST, error?.meta?.cause);
-      return err;
+      throw new RpcException(error);
     }
   }
   async detachAssets(payload: DetachAssetsDTO) {
