@@ -19,4 +19,5 @@ export const API_TAGS = {
   NEWS_AND_EVENTS: 'News and Events',
 
   PAYMENTS: 'Payments',
+  CONTACT: 'contact',
 };

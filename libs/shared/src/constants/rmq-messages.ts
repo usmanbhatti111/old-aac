@@ -27,6 +27,7 @@ export const RMQ_MESSAGES = {
     EDIT_PLAN: 'edit-plan',
     PLAN: 'plan',
     DELETE_PLAN: 'delete-plan',
+    PLAN_TYPE_LIST: 'plan-type-list',
   },
 
   ORGANIZATION: {
@@ -68,6 +69,10 @@ export const RMQ_MESSAGES = {
     GET_JOBS: 'get-jobs',
     UPDATE_JOB: 'update-job',
     DELETE_JOB: 'delete-job',
+  },
+
+  CONTACT: {
+    CREATE_CONTACT: 'create-contact',
   },
 
   FAQS: {

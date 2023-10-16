@@ -23,6 +23,11 @@ export class PlanController {
     return this.planService.getPlans(payload);
   }
 
+  @MessagePattern(RMQ_MESSAGES.PLAN.PLAN_TYPE_LIST)
+  getPlanTypes() {
+    return this.planService.getPlanTypes();
+  }
+
   @MessagePattern(RMQ_MESSAGES.PLAN.PLAN)
   getPlan(@Payload() payload: string) {
     return this.planService.getPlan(payload);

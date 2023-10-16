@@ -11,6 +11,7 @@ import {
   TaskRepository,
   UserRepository,
   PlanRepository,
+  ContactRepository,
   PlanProductFeatureRepository,
   PlanProductModulePermissionRepository,
   NewsAndEventRepository,
@@ -29,6 +30,9 @@ import {
   ProductRepository,
   FeatureRepository,
   UserORepository,
+  PlanTypeRepository,
+  ModuleRepository,
+  PermissionRepository,
 } from '../src/repositories/index';
 
 @Module({
@@ -69,6 +73,10 @@ import {
     ProductRepository,
     FeatureRepository,
     UserORepository,
+    ContactRepository,
+    PlanTypeRepository,
+    ModuleRepository,
+    PermissionRepository,
   ],
   exports: [
     SharedService,
@@ -101,6 +109,10 @@ import {
     ProductRepository,
     FeatureRepository,
     UserORepository,
+    ContactRepository,
+    PlanTypeRepository,
+    ModuleRepository,
+    PermissionRepository,
   ],
 })
 export class SharedModule {}

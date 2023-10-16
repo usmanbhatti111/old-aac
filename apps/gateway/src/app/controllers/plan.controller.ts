@@ -32,6 +32,7 @@ import {
   EditPlanResponseDto,
   GetPlanResponseDto,
   GetPlansResponseDto,
+  GetPlansTypeResponseDto,
   PlanFilterDto,
   PlanIdParamDto,
   PostResponseDto,
@@ -68,6 +69,17 @@ export class PlanController {
   ): Promise<GetPlansResponseDto> {
     const response = await firstValueFrom(
       this.superAdminServiceClient.send(RMQ_MESSAGES.PLAN.PLAN_LIST, payload)
+    );
+    return res.status(response.statusCode).json(response);
+  }
+
+  @Get(API_ENDPOINTS.PLAN.PLAN_TYPE_LIST)
+  @ApiOkResponse({ type: GetPlansTypeResponseDto })
+  public async getPlanTypeList(
+    @Res() res: Response | any
+  ): Promise<GetPlansTypeResponseDto> {
+    const response = await firstValueFrom(
+      this.superAdminServiceClient.send(RMQ_MESSAGES.PLAN.PLAN_TYPE_LIST, {})
     );
     return res.status(response.statusCode).json(response);
   }

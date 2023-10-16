@@ -21,6 +21,7 @@ import {
   PlanProductFeatureRepository,
   PlanProductModulePermissionRepository,
   PlanRepository,
+  PlanTypeRepository,
   ProductRepository,
 } from '@shared';
 import mongoose from 'mongoose';
@@ -31,6 +32,7 @@ import dayjs from 'dayjs';
 export class PlanService {
   constructor(
     private planRepository: PlanRepository,
+    private planTypeRepository: PlanTypeRepository,
     private productRepository: ProductRepository,
     private moduleRepository: ModuleRepository,
     private featureRepository: FeatureRepository,
@@ -71,6 +73,20 @@ export class PlanService {
           []
         );
       }
+    } catch (error) {
+      throw new RpcException(error);
+    }
+  }
+
+  async getPlanTypes() {
+    try {
+      const res = await this.planTypeRepository.find();
+
+      return successResponse(
+        HttpStatus.OK,
+        'Plans Types Fetched Successfully',
+        res
+      );
     } catch (error) {
       throw new RpcException(error);
     }

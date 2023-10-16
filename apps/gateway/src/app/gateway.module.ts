@@ -31,6 +31,7 @@ import { ExceptionsFilter } from './shared/filters/exceptions.filter';
 import { UserController } from './controllers/user-account/user.controller';
 import { AuthGuard } from './shared/guards/auth.guard';
 import { SoftwareController } from './controllers/assets/software.controller';
+import { ContactController } from './controllers/common-features/contact.controller';
 
 @Module({
   imports: [
@@ -63,6 +64,7 @@ import { SoftwareController } from './controllers/assets/software.controller';
     NewsAndEventsController,
     PaymentController,
     SoftwareController,
+    ContactController,
   ],
   providers: [
     // Exceptions Filter

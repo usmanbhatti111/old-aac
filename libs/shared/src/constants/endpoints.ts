@@ -29,6 +29,7 @@ export const API_ENDPOINTS = {
     PLAN: '/:planId',
     EDIT_PLAN: '/:planId',
     DELETE_PLAN: '/:planId',
+    PLAN_TYPE_LIST: 'plan-type-list',
   },
   ORGANIZATION: {
     CREATE_ORGANIZATION: '/',

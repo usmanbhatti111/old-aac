@@ -55,7 +55,12 @@ import {
   Feature,
   FeatureSchema,
   Purchase,
+  Permission,
+  PermissionSchema,
+  Module,
+  ModuleSchema,
 } from './schema';
+import { Contact, ContactSchema } from './schema/common-feature';
 
 export const DbModels = [
   {
@@ -179,5 +184,17 @@ export const DbModels = [
   {
     name: Feature.name,
     schema: FeatureSchema,
+  },
+  {
+    name: Permission.name,
+    schema: PermissionSchema,
+  },
+  {
+    name: Contact.name,
+    schema: ContactSchema,
+  },
+  {
+    name: Module.name,
+    schema: ModuleSchema,
   },
 ];

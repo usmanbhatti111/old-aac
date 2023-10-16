@@ -9,3 +9,4 @@ export * from './edit-plan-response.dto';
 export * from './plan-id-param.dto';
 export * from './plane-delete.dto';
 export * from './plan-filter.dto';
+export * from './get-plan-types-response.dto';
