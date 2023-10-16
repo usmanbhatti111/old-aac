@@ -3,41 +3,13 @@ import { HydratedDocument, SchemaTypes } from 'mongoose';
 import { OrganizationPlan } from './organization-plan.schema';
 import { BillingCycleEnum, InvoiceStatusEnum } from '../../constants/enums';
 import { AbstractSchema } from '../abstract-repo/abstract.schema';
-
-export type InvoiceDocument = HydratedDocument<Invoice>;
+import { Organization } from '../organization';
 
 @Schema({
   versionKey: false,
   timestamps: true,
 })
-export class Invoice extends AbstractSchema {
-  @Prop({
-    type: SchemaTypes.ObjectId,
-    required: true,
-    ref: OrganizationPlan.name,
-  })
-  organizationPlanId: string;
-
-  @Prop({ type: String, required: false })
-  invoiceNo: string;
-
-  @Prop({ type: Date, required: true })
-  dueDate: Date;
-
-  @Prop({
-    type: String,
-    required: false,
-    enum: BillingCycleEnum,
-  })
-  billingCycle: BillingCycleEnum;
-
-  @Prop({
-    type: SchemaTypes.ObjectId,
-    required: true,
-    // ref: Plan.name
-  })
-  planId: string;
-
+export class ProductDetail {
   @Prop({
     type: SchemaTypes.ObjectId,
     required: true,
@@ -75,8 +47,67 @@ export class Invoice extends AbstractSchema {
   @Prop({ type: Number, required: false, default: 0 })
   additionalStorage?: number;
 
+  @Prop({ type: Number, required: false, default: 0 })
+  planDiscount: number;
+
+  @Prop({ type: Number, required: false, default: 0 })
+  invoiceDiscount: number;
+
   @Prop({ type: Number, required: true })
   subTotal: Number;
+}
+
+export const ProductDetailSchema = SchemaFactory.createForClass(ProductDetail);
+
+export type InvoiceDocument = HydratedDocument<Invoice>;
+
+@Schema({
+  versionKey: false,
+  timestamps: true,
+})
+export class Invoice extends AbstractSchema {
+  @Prop({
+    type: SchemaTypes.ObjectId,
+    required: true,
+    ref: Organization.name,
+  })
+  organizationId: string;
+
+  @Prop({
+    type: SchemaTypes.ObjectId,
+    required: true,
+    ref: OrganizationPlan.name,
+  })
+  organizationPlanId: string;
+
+  @Prop({ type: String, required: false })
+  invoiceNo: string;
+
+  @Prop({ type: Date, required: true })
+  billingDate: Date;
+
+  @Prop({
+    type: String,
+    required: false,
+    enum: BillingCycleEnum,
+  })
+  billingCycle: BillingCycleEnum;
+
+  @Prop({
+    type: SchemaTypes.ObjectId,
+    required: true,
+    // ref: Plan.name
+  })
+  planId: string;
+
+  @Prop({
+    type: [ProductDetailSchema],
+    required: false,
+  })
+  productDetails: ProductDetail[];
+
+  @Prop({ type: Number, required: true })
+  total: Number;
 
   @Prop({ type: Number, required: false, default: 0 })
   planDiscount: number;

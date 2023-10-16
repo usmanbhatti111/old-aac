@@ -141,6 +141,11 @@ export const RMQ_MESSAGES = {
       GET_ONE_PAYMENTS: 'get-one-payment',
       DELETE_ONE_PAYMENTS: 'delete-one-payment',
     },
+    INVOICES: {
+      GET_ALL_INVOICES: 'get-all-invoices',
+      GET_ONE_INVOICE: 'get-one-invoice',
+      PAY_NOW_INVOICE: 'pay-now-invoice',
+    },
   },
   PRODUCT_FEATURES: {
     ADD_PRODUCT_FEATURE: 'add-product-feature',

@@ -26,6 +26,7 @@ import { ProductFeaturesController } from './controllers/product-features.contro
 import { NewsAndEventsController } from './controllers/super-admin/news-and-events.contoller';
 import { FaqsController } from './controllers/settings/faqs.controller';
 import { PaymentController } from './controllers/org-admin/payment.controller';
+import { InvoicesController } from './controllers/org-admin/invoices.controller';
 import { APP_FILTER, APP_GUARD } from '@nestjs/core';
 import { ExceptionsFilter } from './shared/filters/exceptions.filter';
 import { UserController } from './controllers/user-account/user.controller';
@@ -63,6 +64,7 @@ import { ContactController } from './controllers/common-features/contact.control
     TaskController,
     NewsAndEventsController,
     PaymentController,
+    InvoicesController,
     SoftwareController,
     ContactController,
   ],

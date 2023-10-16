@@ -133,4 +133,11 @@ export const API_ENDPOINTS = {
     DELETE_ONE: '/:id',
     UPDATE_ONE: '/:id',
   },
+
+  ORG_ADMIN: {
+    INVOICES: {
+      GET_ONE: '/:id',
+      PAY_NOW_INVOICE: 'pay-now-invoice',
+    },
+  },
 };

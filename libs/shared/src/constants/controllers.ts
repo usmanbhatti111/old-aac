@@ -23,5 +23,9 @@ export const CONTROLLERS = {
 
   NEWS_AND_EVENTS: 'news-and-events',
   PAYMENTS: 'payments',
+  INVOICES: 'invoices',
+  ORG_ADMIN: {
+    INVOICES: 'org-admin/invoices',
+  },
   CONTACT: 'contact',
 };
