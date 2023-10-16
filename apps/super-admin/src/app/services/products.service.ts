@@ -1,31 +1,17 @@
 import { HttpStatus, Injectable } from '@nestjs/common';
-import {
-  ResponseMessage,
-  errorResponse,
-  successResponse,
-} from '@shared/constants';
+import { RpcException } from '@nestjs/microservices';
+import { ProductsRepository } from '@shared';
+import { ResponseMessage, successResponse } from '@shared/constants';
 import { AddProductDto, EditProductDto, GetProductsDto } from '@shared/dto';
-import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
-import { Products } from '@shared/schemas';
 import dayjs from 'dayjs';
 
 @Injectable()
 export class ProductsService {
-  constructor(
-    @InjectModel(Products.name) private readonly productsModel: Model<Products>
-  ) {}
+  constructor(private productsRepository: ProductsRepository) {}
 
   async addProduct(payload: AddProductDto) {
     try {
-      const res = await this.productsModel.create(payload);
-
-      if (!res) {
-        return errorResponse(
-          HttpStatus.BAD_REQUEST,
-          ResponseMessage.BAD_REQUEST
-        );
-      }
+      const res = await this.productsRepository.create(payload);
 
       const response = successResponse(
         HttpStatus.CREATED,
@@ -34,32 +20,32 @@ export class ProductsService {
       );
       return response;
     } catch (error) {
-      const err = errorResponse(
-        HttpStatus.INTERNAL_SERVER_ERROR,
-        ResponseMessage.BAD_REQUEST
-      );
-      return err;
+      throw new RpcException(error);
     }
   }
 
   async getProducts(payload: GetProductsDto) {
     try {
-      const filters = { isDeleted: false };
+      const { isActive, dateStart, dateEnd } = payload;
 
-      if (payload.isActive) {
-        filters['isActive'] = payload.isActive;
+      const filterQuery = { isDeleted: false };
+
+      if (isActive) {
+        filterQuery['isActive'] = isActive;
       }
 
-      if (payload.dateStart && payload.dateEnd) {
-        const startOfDate = dayjs(payload.dateStart)
-          .startOf('day')
-          .toISOString();
-        const endOfDate = dayjs(payload.dateEnd).endOf('day').toISOString();
+      if (dateStart && dateEnd) {
+        const startOfDate = dayjs(dateStart).startOf('day').toISOString();
+        const endOfDate = dayjs(dateEnd).endOf('day').toISOString();
 
-        filters['createdAt'] = { $gte: startOfDate, $lte: endOfDate };
+        filterQuery['createdAt'] = { $gte: startOfDate, $lte: endOfDate };
       }
 
-      const res = await this.productsModel.find(filters).sort('-createdAt');
+      const res = await this.productsRepository.find(
+        filterQuery,
+        {},
+        { sort: '-createdAt' }
+      );
 
       const response = successResponse(
         HttpStatus.CREATED,
@@ -69,26 +55,20 @@ export class ProductsService {
 
       return response;
     } catch (error) {
-      const err = errorResponse(
-        HttpStatus.INTERNAL_SERVER_ERROR,
-        ResponseMessage.BAD_REQUEST
-      );
-      return err;
+      throw new RpcException(error);
     }
   }
 
   async editProduct(payload: EditProductDto) {
     try {
-      const id = payload.id;
-      delete payload.id;
+      const { id } = payload;
 
-      const res = await this.productsModel.findByIdAndUpdate(id, payload, {
-        new: true,
-      });
+      const filter = { _id: id };
 
-      if (!res) {
-        return errorResponse(HttpStatus.BAD_REQUEST, ResponseMessage.NOT_FOUND);
-      }
+      const res = await this.productsRepository.findOneAndUpdate(
+        filter,
+        payload
+      );
 
       const response = successResponse(
         HttpStatus.OK,
@@ -98,11 +78,7 @@ export class ProductsService {
 
       return response;
     } catch (error) {
-      const err = errorResponse(
-        HttpStatus.INTERNAL_SERVER_ERROR,
-        ResponseMessage.BAD_REQUEST
-      );
-      return err;
+      throw new RpcException(error);
     }
   }
 }

@@ -28,5 +28,5 @@ export class AddProductDto {
   @IsOptional()
   logo: string;
 
-  modifiedBy: string;
+  createdBy: string;
 }

@@ -2,7 +2,7 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import mongoose, { HydratedDocument, SchemaTypes } from 'mongoose';
 import { AbstractSchema } from '../abstract-repo/abstract.schema';
 import { Organization } from '../organization';
-import { Products } from '../products.schema';
+import { Products } from '../super-admin';
 
 export type UserDocument = HydratedDocument<User>;
 

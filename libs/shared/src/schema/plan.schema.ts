@@ -1,9 +1,9 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument, SchemaTypes } from 'mongoose';
 import { AbstractSchema } from './abstract-repo/abstract.schema';
-import { Product } from './product.schema';
 import { PlanProductFeature } from './plan-product-feature.schema';
 import { PlanProductModulePermission } from './plan-product-module-permission.schema';
+import { Products } from './super-admin';
 import { PlanType } from './plan-type.schema';
 
 export type PlanDocument = HydratedDocument<Plan>;
@@ -25,8 +25,8 @@ export class Plan extends AbstractSchema {
   @Prop()
   additionalPerUserPrice?: number;
 
-  @Prop({ type: [{ type: SchemaTypes.ObjectId, ref: Product.name }] })
-  planProducts?: Product[];
+  @Prop({ type: [{ type: SchemaTypes.ObjectId, ref: Products.name }] })
+  planProducts?: Products[];
 
   @Prop({
     type: [{ type: SchemaTypes.ObjectId, ref: PlanProductFeature.name }],

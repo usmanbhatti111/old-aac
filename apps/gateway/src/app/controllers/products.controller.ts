@@ -7,7 +7,7 @@ import {
   Patch,
   Post,
   Query,
-  Res,
+  Req,
 } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
 import {
@@ -32,8 +32,9 @@ import {
   GetProductsResponseDto,
   IdDto,
 } from '@shared/dto';
-import { Response } from 'express';
 import { firstValueFrom } from 'rxjs';
+import { AppRequest } from '../shared/interface/request.interface';
+import { Auth } from '../decorators/auth.decorator';
 
 @ApiBearerAuth()
 @ApiTags(API_TAGS.PRODUCTS)
@@ -44,46 +45,48 @@ export class ProductsController {
     private superAdminService: ClientProxy
   ) {}
 
+  @Auth(true)
   @Post(API_ENDPOINTS.PRODUCTS.ADD_PRODUCT)
   @ApiCreatedResponse({ type: AddProductResponseDto })
   public async addProduct(
-    @Body() payload: AddProductDto,
-    @Res() res: Response | any
+    @Req() request: AppRequest,
+    @Body() payload: AddProductDto
   ): Promise<AddProductResponseDto> {
-    payload.modifiedBy = '56cb91bdc3464f14678934ca'; // TODO get user id from token data
+    payload.createdBy = request?.user?._id;
     const response = await firstValueFrom(
       this.superAdminService.send(RMQ_MESSAGES.PRODUCTS.ADD_PRODUCT, payload)
     );
 
-    return res.status(response.statusCode).json(response);
+    return response;
   }
 
+  @Auth(true)
   @Get(API_ENDPOINTS.PRODUCTS.GET_PRODUCTS)
   @ApiOkResponse({ type: GetProductsResponseDto })
   public async getProducts(
-    @Query() payload: GetProductsDto,
-    @Res() res: Response | any
+    @Query() payload: GetProductsDto
   ): Promise<GetProductsResponseDto> {
     const response = await firstValueFrom(
       this.superAdminService.send(RMQ_MESSAGES.PRODUCTS.GET_PRODUCTS, payload)
     );
 
-    return res.status(response.statusCode).json(response);
+    return response;
   }
 
+  @Auth(true)
   @Patch(API_ENDPOINTS.PRODUCTS.EDIT_PRODUCT)
   @ApiOkResponse({ type: EditProductResponseDto })
   public async editProduct(
+    @Req() request: AppRequest,
     @Param() params: IdDto,
-    @Body() payload: EditProductDto,
-    @Res() res: Response | any
+    @Body() payload: EditProductDto
   ): Promise<EditProductResponseDto> {
-    payload.modifiedBy = '56cb91bdc3464f14678934ca'; // TODO get user id from token data
+    payload.updatedBy = request?.user?._id;
     payload.id = params.id;
     const response = await firstValueFrom(
       this.superAdminService.send(RMQ_MESSAGES.PRODUCTS.EDIT_PRODUCT, payload)
     );
 
-    return res.status(response.statusCode).json(response);
+    return response;
   }
 }

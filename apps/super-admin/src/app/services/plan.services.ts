@@ -21,8 +21,8 @@ import {
   PlanProductFeatureRepository,
   PlanProductModulePermissionRepository,
   PlanRepository,
+  ProductsRepository,
   PlanTypeRepository,
-  ProductRepository,
 } from '@shared';
 import mongoose from 'mongoose';
 import { RpcException } from '@nestjs/microservices';
@@ -32,8 +32,8 @@ import dayjs from 'dayjs';
 export class PlanService {
   constructor(
     private planRepository: PlanRepository,
+    private productRepository: ProductsRepository,
     private planTypeRepository: PlanTypeRepository,
-    private productRepository: ProductRepository,
     private moduleRepository: ModuleRepository,
     private featureRepository: FeatureRepository,
     private permissionRepository: PermissionRepository,

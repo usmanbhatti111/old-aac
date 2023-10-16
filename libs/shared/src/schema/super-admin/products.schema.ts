@@ -1,10 +1,11 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import mongoose, { HydratedDocument } from 'mongoose';
+import { AbstractSchema } from '../abstract-repo/abstract.schema';
 
 export type ProductsDocument = HydratedDocument<Products>;
 
 @Schema({ versionKey: false, timestamps: true })
-export class Products {
+export class Products extends AbstractSchema {
   @Prop({ type: String, required: true })
   name: string;
 
@@ -15,13 +16,19 @@ export class Products {
   logo: string;
 
   @Prop({ type: Boolean, default: false })
-  isActive: boolean;
+  isActive?: boolean;
 
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'users' })
-  modifiedBy: string;
+  createdBy?: string;
+
+  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'users' })
+  updatedBy?: string;
+
+  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'users' })
+  deletedBy?: string;
 
   @Prop({ type: Boolean, default: false })
-  isDeleted: boolean;
+  isDeleted?: boolean;
 }
 
 export const ProductsSchema = SchemaFactory.createForClass(Products);

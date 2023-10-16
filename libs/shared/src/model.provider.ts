@@ -38,8 +38,6 @@ import {
   PaymentSchema,
   UserAccounts,
   UserAccountsSchema,
-  Product,
-  ProductSchema,
   Organization,
   OrganizationCompanyAccount,
   OrganizationSchema,
@@ -55,10 +53,10 @@ import {
   Feature,
   FeatureSchema,
   Purchase,
-  Permission,
-  PermissionSchema,
   Module,
   ModuleSchema,
+  Permission,
+  PermissionSchema,
 } from './schema';
 import { Contact, ContactSchema } from './schema/common-feature';
 
@@ -151,10 +149,6 @@ export const DbModels = [
   {
     name: UserAccounts.name,
     schema: UserAccountsSchema,
-  },
-  {
-    name: Product.name,
-    schema: ProductSchema,
   },
   {
     name: Organization.name,

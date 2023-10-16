@@ -31,12 +31,12 @@ export class EditProductDto {
 
   @ApiProperty({
     type: Boolean,
-    required: true,
+    required: false,
   })
   @IsNotEmpty()
   @IsOptional()
   isActive: boolean;
 
-  modifiedBy: string;
+  updatedBy: string;
   id: string;
 }
