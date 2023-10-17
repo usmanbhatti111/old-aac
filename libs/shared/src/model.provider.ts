@@ -55,10 +55,10 @@ import {
   Feature,
   FeatureSchema,
   Purchase,
-  Module,
-  ModuleSchema,
   Permission,
   PermissionSchema,
+  Module,
+  ModuleSchema,
   RequestLog,
   RequestLogSchema,
 } from './schema';

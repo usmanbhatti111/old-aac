@@ -6,7 +6,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { CognitoIdentityServiceProvider } from 'aws-sdk';
 import { UserService } from './services/user.service';
 import { UserController } from './controllers/user.controller';
-import {  RequestLogController } from './controllers/request-log.controller';
+import { RequestLogController } from './controllers/request-log.controller';
 import { RequestLogService } from './services/request-log.service';
 
 @Module({

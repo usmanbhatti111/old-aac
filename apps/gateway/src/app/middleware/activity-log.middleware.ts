@@ -36,11 +36,10 @@ export class ActivityLogMiddleware implements NestMiddleware {
           { cmd: RMQ_MESSAGES.LOGS.CREATE },
           {
             description,
-            user: verifyToken?.data?._id
+            user: verifyToken?.data?._id,
           }
         )
       );
-      
     } catch (error) {
       console.error('Error saving request log:', error);
     }

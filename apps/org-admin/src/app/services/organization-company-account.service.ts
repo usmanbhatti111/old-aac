@@ -27,14 +27,21 @@ export class OrganizationCompanyAccountService {
           accountName: payload?.accountName,
         });
       if (existingCompany.length > 0) {
-        return errorResponse(HttpStatus.CONFLICT, 'This company account already exist.');
+        return errorResponse(
+          HttpStatus.CONFLICT,
+          'This company account already exist.'
+        );
       }
       const res = await this.organizationCompanyAccountRepository.create({
         ...payload,
       });
-      return successResponse(HttpStatus.OK, 'Company account added successfully', {
-        res,
-      });
+      return successResponse(
+        HttpStatus.OK,
+        'Company account added successfully',
+        {
+          res,
+        }
+      );
     } catch (error) {
       return errorResponse(HttpStatus.BAD_REQUEST, error?.response?.message);
     }

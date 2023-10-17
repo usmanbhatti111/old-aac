@@ -58,7 +58,10 @@ export class OrganizationService {
       );
       return successResponse(HttpStatus.OK, 'Success', res);
     } catch (error) {
-      return errorResponse(HttpStatus.BAD_REQUEST, error?.meta?.message || error?.meta?.cause);
+      return errorResponse(
+        HttpStatus.BAD_REQUEST,
+        error?.meta?.message || error?.meta?.cause
+      );
     }
   }
 }

@@ -31,6 +31,14 @@ export const API_ENDPOINTS = {
     DELETE_PLAN: '/:planId',
     PLAN_TYPE_LIST: 'plan-type-list',
   },
+  CONTACT: {
+    CREATE_CONTACT: '/',
+    CONTACT_LIST: '/',
+    CONTACT: '/:contactId',
+    EDIT_CONTACT: '/:contactId',
+    DELETE_CONTACT: '/:contactId',
+    ASSIGN_CONTACT_OWNER: 'assign-contact-owner/:contactId',
+  },
   ORGANIZATION: {
     CREATE_ORGANIZATION: '/',
     UPDATE_ORGANIZATION: '/:id',

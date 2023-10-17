@@ -13,6 +13,7 @@ export class PostResponseDto<T> {
   @Expose()
   @ApiProperty({
     required: true,
+    example: '202',
   })
   @IsNumber()
   @IsOptional()
@@ -22,6 +23,7 @@ export class PostResponseDto<T> {
   @Expose()
   @ApiProperty({
     required: true,
+    example: 'Success',
   })
   @IsNotEmpty()
   @IsString()

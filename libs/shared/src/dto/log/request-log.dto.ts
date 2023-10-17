@@ -36,4 +36,3 @@ export class RequestLogsResponseDto {
   })
   error: string;
 }
-

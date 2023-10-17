@@ -35,7 +35,7 @@ import {
   ModuleRepository,
   PermissionRepository,
   UserORepository,
-  RequestLogRepository
+  RequestLogRepository,
 } from '../src/repositories/index';
 
 @Module({
@@ -87,7 +87,7 @@ import {
     PlanTypeRepository,
     ModuleRepository,
     PermissionRepository,
-    RequestLogRepository
+    RequestLogRepository,
   ],
   exports: [
     SharedService,
@@ -125,7 +125,7 @@ import {
     PlanTypeRepository,
     ModuleRepository,
     PermissionRepository,
-    RequestLogRepository
+    RequestLogRepository,
   ],
 })
 export class SharedModule {}

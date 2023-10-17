@@ -82,6 +82,11 @@ export const RMQ_MESSAGES = {
 
   CONTACT: {
     CREATE_CONTACT: 'create-contact',
+    CONTACT_LIST: 'contact-list',
+    EDIT_CONTACT: 'edit-contact',
+    CONTACT: 'contact',
+    DELETE_CONTACT: 'delete-contact',
+    ASSIGN_CONTACT_OWNER: 'assign-contact-owner',
   },
 
   FAQS: {
@@ -169,6 +174,6 @@ export const RMQ_MESSAGES = {
   LOGS: {
     CREATE: 'create-request-log',
     GET_LOGS: 'get-request-logs',
-    GET_LOGS_BY_USER: 'get-user-request-logs'
+    GET_LOGS_BY_USER: 'get-user-request-logs',
   },
 };

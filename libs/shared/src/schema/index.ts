@@ -17,4 +17,4 @@ export * from './organization/index';
 export * from './org-admin';
 export * from './super-admin';
 export * from './user-account';
-export * from './logs/request-log.schema'
+export * from './logs/request-log.schema';

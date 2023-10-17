@@ -21,8 +21,8 @@ import {
   PlanProductFeatureRepository,
   PlanProductModulePermissionRepository,
   PlanRepository,
-  ProductsRepository,
   PlanTypeRepository,
+  ProductsRepository,
 } from '@shared';
 import mongoose from 'mongoose';
 import { RpcException } from '@nestjs/microservices';
@@ -32,8 +32,8 @@ import dayjs from 'dayjs';
 export class PlanService {
   constructor(
     private planRepository: PlanRepository,
-    private productRepository: ProductsRepository,
     private planTypeRepository: PlanTypeRepository,
+    private productRepository: ProductsRepository,
     private moduleRepository: ModuleRepository,
     private featureRepository: FeatureRepository,
     private permissionRepository: PermissionRepository,
@@ -181,8 +181,8 @@ export class PlanService {
       const { deletedBy, planId } = payload;
 
       await this.planRepository.findOneAndUpdate(
-        { _id: planId },
-        { isDeleted: true, deletedAt: Date.now, deletedBy }
+        { _id: planId, ...this.notDeletedFilter },
+        { isDeleted: true, deletedAt: Date.now(), deletedBy }
       );
 
       return successResponse(HttpStatus.OK, 'Plan Deleted Successfully', {});
@@ -194,7 +194,10 @@ export class PlanService {
   async editPlan(payload: EditPlanDto) {
     try {
       const { planId } = payload;
-      await this.planRepository.findOne({ _id: planId });
+      await this.planRepository.findOne({
+        _id: planId,
+        ...this.notDeletedFilter,
+      });
 
       delete payload.planId;
       const payloadPlan = {
@@ -203,7 +206,7 @@ export class PlanService {
         productId: undefined,
         planFeature: undefined,
         planModule: undefined,
-        updatedAt: Date.now,
+        updatedAt: Date.now(),
       };
 
       let planRes = await this.planRepository.findOneAndUpdate(
