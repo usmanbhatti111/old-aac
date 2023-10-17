@@ -6,7 +6,12 @@ import {
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { RpcException } from '@nestjs/microservices';
-import { S3, ListObjectsV2Output, PutObjectCommand } from '@aws-sdk/client-s3';
+import {
+  S3,
+  ListObjectsV2Output,
+  PutObjectCommand,
+  ObjectCannedACL,
+} from '@aws-sdk/client-s3';
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 import { Upload } from '@aws-sdk/lib-storage';
 import { randomUUID } from 'crypto';
@@ -22,11 +27,12 @@ export class S3Service {
   ) {
     this._bucket = this.config.get('S3_BUCKET');
   }
+
   async uploadFile<T>(
     file: any,
     file_uri: string,
     metadata?: any,
-    acl_type: string = 'public-read'
+    acl_type: ObjectCannedACL = 'public-read'
   ): Promise<{ url: string; id: string } & T> {
     try {
       let key;

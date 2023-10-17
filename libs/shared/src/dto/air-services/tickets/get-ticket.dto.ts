@@ -1,6 +1,14 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsMongoId, IsNotEmpty, IsString } from 'class-validator';
+import {
+  IsArray,
+  IsMongoId,
+  IsNotEmpty,
+  IsOptional,
+  IsString,
+  ValidateNested,
+} from 'class-validator';
 import { PaginationDto } from '../../common';
+import { Transform, Type } from 'class-transformer';
 
 export class GetTicketByIdDto {
   @ApiProperty({
@@ -23,3 +31,5 @@ export class GetAssociateAssetsDto extends PaginationDto {
   @IsNotEmpty()
   ticketId: string;
 }
+
+export class ListTicketDTO extends PaginationDto {}

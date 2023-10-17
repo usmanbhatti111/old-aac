@@ -1,10 +1,10 @@
 import { ApiProperty } from '@nestjs/swagger';
 
-export class EditChildTicketResponse {
+export class EditTicketResponse {
   @ApiProperty({ example: 200 })
   statusCode: number;
   @ApiProperty({
-    example: 'ChildTicket Edit Successfully',
+    example: 'Ticket Edit Successfully',
   })
   message: string;
   @ApiProperty({

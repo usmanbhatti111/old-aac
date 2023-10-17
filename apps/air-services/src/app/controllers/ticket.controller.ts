@@ -8,6 +8,7 @@ import {
   GetAssociateAssetsDto,
   GetTicketByIdDto,
   IdDto,
+  ListTicketDTO,
   paginationDTO,
 } from '@shared/dto';
 import { DetachAssetsDTO } from '@shared/dto';
@@ -52,8 +53,26 @@ export class TicketController {
   public async deleteChildTicket(@Payload() payload: IdDto) {
     return this.ticketService.deleteChildTicket(payload);
   }
-  @MessagePattern(RMQ_MESSAGES.AIR_SERVICES.TICKETS.EDIT_CHILD_TICKETS)
-  public async editChildTicket(@Payload() payload: IdDto) {
-    return this.ticketService.editChildTicket(payload);
+  @MessagePattern(RMQ_MESSAGES.AIR_SERVICES.TICKETS.EDIT_TICKETS)
+  public async editTicket(@Payload() payload: IdDto) {
+    return this.ticketService.editTicket(payload);
+  }
+
+  @MessagePattern(RMQ_MESSAGES.AIR_SERVICES.TICKETS.DELETE_TICKETS)
+  public async deleteTickets(@Payload() payload: any) {
+    return this.ticketService.deleteTickets(payload);
+  }
+
+  @MessagePattern(RMQ_MESSAGES.AIR_SERVICES.TICKETS.CHANGE_STATUS)
+  public async updateTicketStatus(@Payload() payload: IdDto) {
+    return this.ticketService.updateTicketStatus(payload);
+  }
+
+  @MessagePattern(RMQ_MESSAGES.AIR_SERVICES.TICKETS.GET_TICKET_LIST)
+  public async getTicketList(payload: {
+    listTicketDTO: ListTicketDTO;
+    columnNames: string[];
+  }) {
+    return this.ticketService.getTicketList(payload);
   }
 }

@@ -38,6 +38,7 @@ import { ActivityLogMiddleware } from './middleware/activity-log.middleware';
 import { RequestLogController } from './controllers/log/request-log.controller';
 import { SubscriptionController } from './controllers/org-admin/subscription.controller';
 import { ContactController } from './controllers/common-features/contact.controller';
+import { ColumnPipe } from './pipes/column.pipe';
 
 @Module({
   imports: [
@@ -82,6 +83,7 @@ import { ContactController } from './controllers/common-features/contact.control
     { provide: APP_FILTER, useClass: ExceptionsFilter },
     // Guards
     { provide: APP_GUARD, useClass: AuthGuard },
+    ColumnPipe,
     // Connecting to all the rabbitmq queues
     ...Object.values(SERVICES).map((SERVICE_NAME) => {
       return {

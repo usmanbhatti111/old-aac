@@ -5,7 +5,7 @@ import {
   TicketStatusEnum,
   TicketTypeEnum,
 } from '@shared/constants';
-import { IsNotEmpty, IsObject, IsString } from 'class-validator';
+import { IsBoolean, IsNotEmpty, IsObject, IsString } from 'class-validator';
 
 export class CreateTicketDTO {
   @ApiProperty({
@@ -60,4 +60,13 @@ export class CreateTicketDTO {
   @IsString()
   @IsNotEmpty()
   type: string;
+
+  @ApiProperty({
+    type: Boolean,
+    required: true,
+    example: 'false',
+  })
+  @IsBoolean()
+  @IsNotEmpty()
+  isChildTicket: boolean;
 }

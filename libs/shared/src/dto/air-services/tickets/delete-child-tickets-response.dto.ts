@@ -1,10 +1,10 @@
 import { ApiProperty } from '@nestjs/swagger';
 
-export class DeleteChildTicketResponse {
+export class DeleteTicketResponse {
   @ApiProperty({ example: 200 })
   statusCode: number;
   @ApiProperty({
-    example: 'ChildTicket Deleted Successfully',
+    example: 'Ticket Deleted Successfully',
   })
   message: string;
   @ApiProperty({

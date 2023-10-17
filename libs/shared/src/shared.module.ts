@@ -3,7 +3,6 @@ import { SharedService } from './shared.service';
 import { MongooseConfig } from './config/mongo.config';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigModule } from '@nestjs/config';
-import { Example, ExampleSchema, Products, ProductsSchema } from './schema';
 import { DbModels } from '../src/model.provider';
 import {
   TicketRepository,
@@ -48,12 +47,6 @@ import { S3 } from 'aws-sdk';
     MongooseModule.forRootAsync({
       useClass: MongooseConfig,
     }),
-    MongooseModule.forFeature([
-      {
-        name: Example.name,
-        schema: ExampleSchema,
-      },
-    ]),
     MongooseModule.forFeature(DbModels),
   ],
   providers: [

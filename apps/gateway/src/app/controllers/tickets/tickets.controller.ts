@@ -9,6 +9,8 @@ import {
   Param,
   Delete,
   Put,
+  UsePipes,
+  ValidationPipe,
 } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
 import { RpcException } from '@nestjs/microservices';
@@ -20,22 +22,25 @@ import {
   CONTROLLERS,
   RMQ_MESSAGES,
   SERVICES,
+  TicketStatusEnum,
 } from '@shared/constants';
 import { Response } from 'express';
 import { firstValueFrom } from 'rxjs';
 import {
   AssociateAssetsDTO,
-  CreateChildTicketResponse,
   CreateTicketDTO,
-  DeleteChildTicketResponse,
   DetachAssetsDTO,
-  EditChildTicketResponse,
   GetChildTicketResponse,
   IdDto,
   paginationDTO,
   GetAssociateAssetsDto,
   GetTicketByIdDto,
+  CreateTicketResponse,
+  EditTicketResponse,
+  DeleteTicketResponse,
+  ListTicketDTO,
 } from '@shared/dto';
+import { ColumnPipe } from '../../pipes/column.pipe';
 
 @ApiTags(API_TAGS.TICKETS)
 @Controller(CONTROLLERS.TICKET)
@@ -62,6 +67,7 @@ export class TicketController {
       return res.status(err.statusCode).json(err);
     }
   }
+
   @Get(API_ENDPOINTS.AIR_SERVICES.TICKETS.ASSOCIATE_ASSETS)
   public async getAssociateAssets(@Query() queryParams: GetAssociateAssetsDto) {
     try {
@@ -76,6 +82,7 @@ export class TicketController {
       throw new RpcException(err);
     }
   }
+
   @Get(':ticketId')
   public async getTicketDetails(@Param() params: GetTicketByIdDto) {
     try {
@@ -86,6 +93,25 @@ export class TicketController {
         )
       );
       return response;
+    } catch (err) {
+      throw new RpcException(err);
+    }
+  }
+
+  @Delete()
+  @ApiOkResponse({ type: DeleteTicketResponse })
+  public async deleteTicket(
+    @Res() res: Response | any,
+    @Query('ids') ids: string[]
+  ) {
+    try {
+      const response = await firstValueFrom(
+        this.ariServiceClient.send(
+          RMQ_MESSAGES.AIR_SERVICES.TICKETS.DELETE_TICKETS,
+          ids
+        )
+      );
+      return res.status(response.statusCode).json(response);
     } catch (err) {
       throw new RpcException(err);
     }
@@ -105,6 +131,7 @@ export class TicketController {
       throw new RpcException(err);
     }
   }
+
   @Delete(API_ENDPOINTS.AIR_SERVICES.TICKETS.DETACH_ASSETS)
   public async detachAssets(
     @Query() payload: DetachAssetsDTO,
@@ -124,7 +151,7 @@ export class TicketController {
   }
 
   @Post(API_ENDPOINTS.AIR_SERVICES.TICKETS.ADD_CHILD_TICKET)
-  @ApiOkResponse({ type: CreateChildTicketResponse })
+  @ApiOkResponse({ type: CreateTicketResponse })
   @ApiQuery({
     type: String,
     name: 'id',
@@ -134,7 +161,7 @@ export class TicketController {
     @Query() id: IdDto,
     @Body() dto: CreateTicketDTO,
     @Res() res: Response | any
-  ): Promise<CreateChildTicketResponse> {
+  ): Promise<CreateTicketResponse> {
     try {
       const response = await firstValueFrom(
         this.ariServiceClient.send(
@@ -172,7 +199,7 @@ export class TicketController {
   }
 
   @Delete(API_ENDPOINTS.AIR_SERVICES.TICKETS.DELETE_CHILD_TICKETS)
-  @ApiOkResponse({ type: DeleteChildTicketResponse })
+  @ApiOkResponse({ type: DeleteTicketResponse })
   @ApiParam({
     type: String,
     name: 'id',
@@ -196,22 +223,56 @@ export class TicketController {
       return res.status(err.statusCode).json(err);
     }
   }
-  @Put(API_ENDPOINTS.AIR_SERVICES.TICKETS.EDIT_CHILD_TICKETS)
-  @ApiOkResponse({ type: EditChildTicketResponse })
+
+  @Put(API_ENDPOINTS.AIR_SERVICES.TICKETS.CHANGE_STATUS)
+  @ApiOkResponse({ type: EditTicketResponse })
   @ApiParam({
     type: String,
     name: 'id',
-    description: 'id should be childTicketId',
+    description: 'id should be ticket Id',
   })
-  public async editChildTicket(
+  @ApiQuery({
+    name: 'status',
+    enum: TicketStatusEnum,
+    required: true,
+  })
+  public async updateStatusForTicket(
     @Res() res: Response | any,
     @Param() id: IdDto,
-    @Body() dto: CreateTicketDTO
-  ): Promise<EditChildTicketResponse> {
+    @Query('status') status: string
+  ): Promise<EditTicketResponse> {
     try {
       const response = await firstValueFrom(
         this.ariServiceClient.send(
-          RMQ_MESSAGES.AIR_SERVICES.TICKETS.EDIT_CHILD_TICKETS,
+          RMQ_MESSAGES.AIR_SERVICES.TICKETS.CHANGE_STATUS,
+          {
+            id,
+            status,
+          }
+        )
+      );
+      return res.status(response.statusCode).json(response);
+    } catch (err) {
+      throw new RpcException(err);
+    }
+  }
+
+  @Put(':id')
+  @ApiOkResponse({ type: EditTicketResponse })
+  @ApiParam({
+    type: String,
+    name: 'id',
+    description: 'id should be childTicketId or ticket Id',
+  })
+  public async editTicket(
+    @Res() res: Response | any,
+    @Param() id: IdDto,
+    @Body() dto: CreateTicketDTO
+  ): Promise<EditTicketResponse> {
+    try {
+      const response = await firstValueFrom(
+        this.ariServiceClient.send(
+          RMQ_MESSAGES.AIR_SERVICES.TICKETS.EDIT_TICKETS,
           {
             id,
             ...dto,
@@ -221,6 +282,30 @@ export class TicketController {
       return res.status(response.statusCode).json(response);
     } catch (err) {
       return res.status(err.statusCode).json(err);
+    }
+  }
+
+  @Get()
+  @ApiQuery({
+    name: 'columnNames',
+    example: 'subject',
+  })
+  @UsePipes(new ValidationPipe({ transform: true }))
+  public async getTicketList(
+    @Query() listTicketDTO: ListTicketDTO,
+    @Query('columnNames', ColumnPipe) columnNames: string[],
+    @Res() res: Response | any
+  ) {
+    try {
+      const response = await firstValueFrom(
+        this.ariServiceClient.send(
+          RMQ_MESSAGES.AIR_SERVICES.TICKETS.GET_TICKET_LIST,
+          { listTicketDTO, columnNames }
+        )
+      );
+      return res.status(response.statusCode).json(response);
+    } catch (err) {
+      throw new RpcException(err);
     }
   }
 }

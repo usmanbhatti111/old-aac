@@ -99,9 +99,10 @@ export const API_ENDPOINTS = {
       ADD_CHILD_TICKET: 'add-child-ticket',
       GET_CHILD_TICKETS: 'get-child-tickets/:id',
       DELETE_CHILD_TICKETS: 'delete-child-tickets/:id',
-      EDIT_CHILD_TICKETS: 'edit_child_tickets/:id',
+      EDIT_CHILD_TICKETS: 'edit-child-tickets/:id',
       ASSOCIATE_ASSETS: 'associate-assets',
       DETACH_ASSETS: 'detach-assets',
+      CHANGE_STATUS: 'status/:id',
     },
     ASSETS: {
       INVENTORY: 'inventory',

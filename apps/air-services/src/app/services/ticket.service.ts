@@ -2,7 +2,7 @@ import { Injectable, HttpStatus } from '@nestjs/common';
 import { errorResponse, successResponse } from '@shared/constants';
 import { TicketRepository } from '@shared';
 import mongoose from 'mongoose';
-import { paginationDTO } from '@shared/dto';
+import { ListTicketDTO, paginationDTO } from '@shared/dto';
 import { Types } from 'mongoose';
 import {
   AssociateAssetsDTO,
@@ -196,6 +196,7 @@ export class TicketService {
         _id: id,
         isChildTicket: true,
       });
+      //should also remove  from parent ticket
       const response = successResponse(
         HttpStatus.OK,
         `ChildTicket Deleted Successfully`,
@@ -206,19 +207,77 @@ export class TicketService {
       throw new RpcException(error);
     }
   }
-  async editChildTicket(payload: any) {
+
+  async deleteTickets(payload: any) {
+    try {
+      const data = await this.ticketRepository.deleteMany({}, payload.ids);
+      //should also remove  all the traces
+      const response = successResponse(
+        HttpStatus.OK,
+        `Tickets Deleted Successfully`,
+        data
+      );
+      return response;
+    } catch (error) {
+      throw new RpcException(error);
+    }
+  }
+
+  async editTicket(payload: any) {
     try {
       const { id, ...dto } = payload;
-
       const data = await this.ticketRepository.findOneAndUpdate(
-        { _id: id.id, isChildTicket: true },
+        { _id: id.id, isChildTicket: dto.isChildTicket },
         { ...dto }
+      );
+      const response = successResponse(
+        HttpStatus.OK,
+        `Ticket Edit Successfully`,
+        data
+      );
+      return response;
+    } catch (error) {
+      throw new RpcException(error);
+    }
+  }
+
+  async updateTicketStatus(payload: any) {
+    try {
+      const { id, status } = payload;
+      const data = await this.ticketRepository.findOneAndUpdate(
+        { _id: id.id },
+        { status }
       );
       const response = successResponse(
         HttpStatus.OK,
         `ChildTicket Edit Successfully`,
         data
       );
+      return response;
+    } catch (error) {
+      throw new RpcException(error);
+    }
+  }
+
+  async getTicketList(payload: {
+    listTicketDTO: ListTicketDTO;
+    columnNames: string[];
+  }) {
+    try {
+      const { limit, page } = payload.listTicketDTO;
+      const offset = limit * (page - 1);
+      const filterQuery = {};
+      const pipeline = [{ $project: payload.columnNames }];
+      //TODO attachment code
+      const res = await this.ticketRepository.paginate({
+        filterQuery,
+        offset,
+        limit,
+        pipelines: pipeline,
+      });
+      const response = successResponse(HttpStatus.OK, `Retrived`, res);
+      // TODO - Add Logger
+
       return response;
     } catch (error) {
       throw new RpcException(error);

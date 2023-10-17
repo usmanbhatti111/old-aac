@@ -26,7 +26,7 @@ export class InventoryService {
         filterQuery = {
           displayName: {
             $regex: displayName,
-            $options: 'i', // Optional: Case-insensitive search
+            $options: 'i',
           },
         };
       }
