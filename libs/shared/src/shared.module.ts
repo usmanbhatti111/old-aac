@@ -38,6 +38,9 @@ import {
   PlanTypeRepository,
   RequestLogRepository,
 } from '../src/repositories/index';
+import { S3Service } from './services';
+import { ConfigService } from '@nestjs/config';
+import { S3 } from 'aws-sdk';
 
 @Module({
   imports: [
@@ -92,6 +95,19 @@ import {
     ModuleRepository,
     PermissionRepository,
     RequestLogRepository,
+    {
+      provide: 'S3',
+      useFactory: (config: ConfigService) =>
+        new S3({
+          region: config.get('S3_REGION'),
+          credentials: {
+            accessKeyId: config.get('S3_AWS_ACCESS_KEY'),
+            secretAccessKey: config.get('S3_AWS_SECRET_KEY'),
+          },
+        }),
+      inject: [ConfigService],
+    },
+    S3Service,
   ],
   exports: [
     SharedService,
@@ -133,6 +149,7 @@ import {
     ModuleRepository,
     PermissionRepository,
     RequestLogRepository,
+    S3Service,
   ],
 })
 export class SharedModule {}
