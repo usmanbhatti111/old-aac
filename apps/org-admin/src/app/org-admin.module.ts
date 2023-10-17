@@ -7,6 +7,8 @@ import { SharedModule } from '@shared';
 import { PaymentController } from './controllers/payment.controller';
 import { InvoiceController } from './controllers/invoice.controller';
 import { PaymentService } from './services/payment.service';
+import { SubscriptionController } from './controllers/subscription.controller';
+import { SubscriptionService } from './services/subscription.service';
 import { InvoiceService } from './services/invoice.service';
 
 @Module({
@@ -15,12 +17,14 @@ import { InvoiceService } from './services/invoice.service';
     OrganizationController,
     OrganizationCompanyAccountController,
     PaymentController,
+    SubscriptionController,
     InvoiceController,
   ],
   providers: [
     OrganizationService,
     OrganizationCompanyAccountService,
     PaymentService,
+    SubscriptionService,
     InvoiceService,
   ],
 })

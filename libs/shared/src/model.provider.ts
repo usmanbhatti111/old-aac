@@ -84,6 +84,10 @@ export const DbModels = [
     schema: TicketSchema,
   },
   {
+    name: Products.name,
+    schema: ProductsSchema,
+  },
+  {
     name: Plan.name,
     schema: PlanSchema,
   },
@@ -123,6 +127,7 @@ export const DbModels = [
   {
     name: Products.name,
     schema: ProductsSchema,
+    collection: 'products',
   },
   {
     name: SuperAdmin.name,

@@ -33,6 +33,7 @@ import { ExceptionsFilter } from './shared/filters/exceptions.filter';
 import { UserController } from './controllers/user-account/user.controller';
 import { AuthGuard } from './shared/guards/auth.guard';
 import { SoftwareController } from './controllers/assets/software.controller';
+import { SubscriptionController } from './controllers/org-admin/subscription.controller';
 import { ContactController } from './controllers/common-features/contact.controller';
 
 @Module({
@@ -68,6 +69,7 @@ import { ContactController } from './controllers/common-features/contact.control
     QuickLinksController,
     InvoicesController,
     SoftwareController,
+    SubscriptionController,
     ContactController,
   ],
   providers: [

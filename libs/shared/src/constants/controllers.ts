@@ -27,6 +27,7 @@ export const CONTROLLERS = {
   INVOICES: 'invoices',
   ORG_ADMIN: {
     INVOICES: 'org-admin/invoices',
+    SUBSCRIPTIONS: 'org-admin/subscriptions',
   },
   CONTACT: 'contact',
 };

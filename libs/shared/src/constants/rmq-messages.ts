@@ -151,6 +151,9 @@ export const RMQ_MESSAGES = {
       DELETE_ONE_PAYMENTS: 'delete-one-payment',
     },
     INVOICES: {
+      GET_ALL_SUBSCRIPTION: 'get-all-subscriptions',
+      ASSIGN_PLAN: 'assign-plan',
+      UPDATE_ASSIGN_PLAN: 'update-assign-plan',
       GET_ALL_INVOICES: 'get-all-invoices',
       GET_ONE_INVOICE: 'get-one-invoice',
       PAY_NOW_INVOICE: 'pay-now-invoice',

@@ -3,6 +3,8 @@ import { HydratedDocument, SchemaTypes } from 'mongoose';
 import { BillingCycleEnum, OrganizationPlanStatusEnum } from '../../constants';
 import { AbstractSchema } from '../abstract-repo/abstract.schema';
 import { SuperAdmin } from '../super-admin.schema';
+import { Organization } from '../organization';
+import { Plan } from '../plan.schema';
 
 export type OrganizationPlanDocument = HydratedDocument<OrganizationPlan>;
 
@@ -11,14 +13,14 @@ export class OrganizationPlan extends AbstractSchema {
   @Prop({
     type: SchemaTypes.ObjectId,
     required: true,
-    // ref: Organization.name
+    ref: Organization.name,
   })
   organizationId: string;
 
   @Prop({
     type: SchemaTypes.ObjectId,
     required: true,
-    // ref: Plan.name,
+    ref: Plan.name,
   })
   planId: string;
 
@@ -59,6 +61,9 @@ export class OrganizationPlan extends AbstractSchema {
 
   @Prop({ type: Date, required: false })
   deletedAt: Date;
+
+  @Prop({ type: Boolean, default: false })
+  isDeleted: boolean;
 }
 
 export const OrganizationPlanSchema =

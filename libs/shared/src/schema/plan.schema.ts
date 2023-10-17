@@ -3,8 +3,8 @@ import { HydratedDocument, SchemaTypes } from 'mongoose';
 import { AbstractSchema } from './abstract-repo/abstract.schema';
 import { PlanProductFeature } from './plan-product-feature.schema';
 import { PlanProductModulePermission } from './plan-product-module-permission.schema';
-import { Products } from './super-admin';
 import { PlanType } from './plan-type.schema';
+import { Products } from './super-admin';
 
 export type PlanDocument = HydratedDocument<Plan>;
 
@@ -25,7 +25,7 @@ export class Plan extends AbstractSchema {
   @Prop()
   additionalPerUserPrice?: number;
 
-  @Prop({ type: [{ type: SchemaTypes.ObjectId, ref: Products.name }] })
+  @Prop({ type: [{ type: SchemaTypes.ObjectId, ref: 'products' }] })
   planProducts?: Products[];
 
   @Prop({
