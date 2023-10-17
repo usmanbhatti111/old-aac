@@ -6,3 +6,4 @@ export * from './create-assets-software-response.dto';
 export * from './edit-assets-software.dto';
 export * from './edit-assets-software-response.dto';
 export * from './delete-assets-software-response.dto';
+export * from './get-assets-software-details.dto';

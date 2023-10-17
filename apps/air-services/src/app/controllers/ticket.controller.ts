@@ -5,13 +5,14 @@ import { TicketService } from '../services/ticket.service';
 import {
   AssociateAssetsDTO,
   CreateTicketDTO,
-  GetAssociateAssetsDto,
-  GetTicketByIdDto,
   IdDto,
+  DetachAssetsDTO,
   ListTicketDTO,
   paginationDTO,
+  GetTicketByIdDto,
+  GetAssociateAssetsDto,
 } from '@shared/dto';
-import { DetachAssetsDTO } from '@shared/dto';
+
 @Controller()
 export class TicketController {
   constructor(private ticketService: TicketService) {}

@@ -44,7 +44,6 @@ import { ColumnPipe } from '../../pipes/column.pipe';
 
 @ApiTags(API_TAGS.TICKETS)
 @Controller(CONTROLLERS.TICKET)
-// @ApiBearerAuth()
 export class TicketController {
   constructor(
     @Inject(SERVICES.AIR_SERVICES) private ariServiceClient: ClientProxy
@@ -64,7 +63,7 @@ export class TicketController {
       );
       return res.status(response.statusCode).json(response);
     } catch (err) {
-      return res.status(err.statusCode).json(err);
+      throw new RpcException(err);
     }
   }
 
@@ -174,7 +173,7 @@ export class TicketController {
       );
       return res.status(response.statusCode).json(response);
     } catch (err) {
-      return res.status(err.statusCode).json(err);
+      throw new RpcException(err);
     }
   }
 
@@ -194,7 +193,7 @@ export class TicketController {
       );
       return res.status(response.statusCode).json(response);
     } catch (err) {
-      return res.status(err.statusCode).json(err);
+      throw new RpcException(err);
     }
   }
 
@@ -220,7 +219,7 @@ export class TicketController {
       );
       return res.status(response.statusCode).json(response);
     } catch (err) {
-      return res.status(err.statusCode).json(err);
+      throw new RpcException(err);
     }
   }
 
@@ -281,7 +280,7 @@ export class TicketController {
       );
       return res.status(response.statusCode).json(response);
     } catch (err) {
-      return res.status(err.statusCode).json(err);
+      throw new RpcException(err);
     }
   }
 

@@ -127,7 +127,14 @@ export enum AssetsSoftwareTypeEnum {
   SAAS = 'Saas',
   MOBILE = 'Mobile',
 }
-
+export enum AssetSoftwareCreatedAtEnum {
+  NONE = 'None',
+  ALL_TIME = 'AllTime',
+  TODAY = 'Today',
+  YESTERDAY = 'Yesterday',
+  PREVIOUS_WEEK = 'PreviousWeek',
+  PREVIOUS_MONTH = 'PreviousMonth',
+}
 export enum ETaskType {
   CALL = 'Call',
   EMAIL = 'Email',

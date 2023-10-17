@@ -6,3 +6,4 @@ export * from './organization-plan.repository';
 export * from './products.repository';
 export * from './product-features.reposity';
 export * from './news-and-events.resposity';
+export * from './product.repository';

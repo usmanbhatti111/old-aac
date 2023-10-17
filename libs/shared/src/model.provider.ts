@@ -39,7 +39,7 @@ import {
   UserAccounts,
   UserAccountsSchema,
   Organization,
-  OrganizationCompanyAccount,
+  // OrganizationCompanyAccount,
   OrganizationSchema,
   OrganizationCompanyAccountSchema,
   QuickLinks,
@@ -165,10 +165,10 @@ export const DbModels = [
     name: Organization.name,
     schema: OrganizationSchema,
   },
-  {
-    name: OrganizationCompanyAccount.name,
-    schema: OrganizationCompanyAccountSchema,
-  },
+  // {
+  //   name: OrganizationCompanyAccount.name,
+  //   schema: OrganizationCompanyAccountSchema,
+  // },
   {
     name: QuickLinks.name,
     schema: QuickLinksSchema,
@@ -177,7 +177,6 @@ export const DbModels = [
     name: AssetsSoftware.name,
     schema: AssetsSoftwareSchema,
   },
-
   {
     name: User.name,
     schema: UserSchema,

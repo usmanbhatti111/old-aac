@@ -1,9 +1,14 @@
 import { Controller } from '@nestjs/common';
 import { MessagePattern, Payload } from '@nestjs/microservices';
 import { RMQ_MESSAGES } from '@shared/constants';
-import { AssetsSoftwareDto, IdDto } from '@shared/dto';
+import {
+  AssetsSoftwareAssignDto,
+  AssetsSoftwareDto,
+  GetAssetsSoftwareDetails,
+  IdDto,
+  PaginationDto,
+} from '@shared/dto';
 
-import { AssetsSoftwareAssignDto } from '@shared/dto';
 import { SoftwareService } from '../../services/assets/software.service';
 
 @Controller()
@@ -22,6 +27,17 @@ export class SoftwareController {
   deleteSoftware(@Payload() payload: { id: IdDto }) {
     return this.softwareService.deleteSoftware(payload);
   }
+  @MessagePattern(RMQ_MESSAGES.AIR_SERVICES.ASSETS.GET_SOFTWARE)
+  getSoftware(
+    @Payload()
+    payload: {
+      dto: GetAssetsSoftwareDetails;
+      pagination: PaginationDto;
+    }
+  ) {
+    return this.softwareService.getSoftware(payload);
+  }
+
   @MessagePattern(RMQ_MESSAGES.AIR_SERVICES.ASSETS.ASSIGN_CATEGORY)
   assignCatToSoftware(@Payload() payload: AssetsSoftwareAssignDto) {
     return this.softwareService.assignCatToSoftware(payload);

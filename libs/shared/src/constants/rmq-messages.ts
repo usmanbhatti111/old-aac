@@ -127,6 +127,7 @@ export const RMQ_MESSAGES = {
       ADD_SOFTWARE: 'add-software',
       EDIT_SOFTWARE: 'edit-software',
       DELETE_SOFTWARE: 'delete-software',
+      GET_SOFTWARE: 'get-software',
       ASSIGN_CATEGORY: 'assign-category',
       SEARCH_INVENTORY: 'search-inventory',
     },

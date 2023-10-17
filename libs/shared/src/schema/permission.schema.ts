@@ -2,6 +2,10 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 
 import { HydratedDocument } from 'mongoose';
 import { AbstractSchema } from './abstract-repo/abstract.schema';
+// import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+// import { ModulePermission } from '@prisma/client';
+// import { Document, HydratedDocument } from 'mongoose';
+// import { AbstractSchema } from './abstract-repo/abstract.schema';
 
 export type PermissionDocument = HydratedDocument<Permission>;
 

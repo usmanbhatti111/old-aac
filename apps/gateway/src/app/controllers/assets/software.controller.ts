@@ -2,10 +2,12 @@ import {
   Body,
   Controller,
   Delete,
+  Get,
   Inject,
   Param,
   Post,
   Put,
+  Query,
   Patch,
   Res,
 } from '@nestjs/common';
@@ -24,7 +26,9 @@ import {
   CreateAssetsSoftwareResponse,
   DeleteAssetsSoftwareResponse,
   EditAssetsSoftwareResponse,
+  GetAssetsSoftwareDetails,
   IdDto,
+  PaginationDto,
 } from '@shared/dto';
 import { firstValueFrom } from 'rxjs';
 @ApiTags(API_TAGS.ASSETS)
@@ -106,7 +110,28 @@ export class SoftwareController {
       return res.status(err.statusCode).json(err);
     }
   }
-
+  @Get(API_ENDPOINTS.AIR_SERVICES.ASSETS.GET_SOFTWARE)
+  @ApiOkResponse({ type: DeleteAssetsSoftwareResponse })
+  async getSoftware(
+    @Res() res: Response | any,
+    @Query() dto: GetAssetsSoftwareDetails,
+    @Query() pagination: PaginationDto
+  ): Promise<DeleteAssetsSoftwareResponse> {
+    try {
+      const response = await firstValueFrom(
+        this.airServiceClient.send(
+          RMQ_MESSAGES.AIR_SERVICES.ASSETS.GET_SOFTWARE,
+          {
+            dto,
+            pagination,
+          }
+        )
+      );
+      return res.status(response.statusCode).json(response);
+    } catch (err) {
+      return res.status(err.statusCode).json(err);
+    }
+  }
   @Patch(API_ENDPOINTS.AIR_SERVICES.ASSETS.ASSIGN_CATEGORY)
   @ApiOkResponse({ type: AssetsSoftwareAssignDto })
   async assignCatToSoftware(

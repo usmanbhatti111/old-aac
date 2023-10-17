@@ -1,8 +1,8 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { InjectModel, InjectConnection } from '@nestjs/mongoose';
 import { Model, Connection } from 'mongoose';
-import { Products } from '../../schema';
 import { AbstractRepository } from '../../schema/abstract-repo/abstract.repository';
+import { Products } from '../../schema/super-admin';
 
 @Injectable()
 export class ProductRepository extends AbstractRepository<Products> {

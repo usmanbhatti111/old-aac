@@ -2,14 +2,14 @@ import { Injectable, HttpStatus } from '@nestjs/common';
 import { errorResponse, successResponse } from '@shared/constants';
 import { TicketRepository } from '@shared';
 import mongoose from 'mongoose';
-import { ListTicketDTO, paginationDTO } from '@shared/dto';
-import { Types } from 'mongoose';
 import {
   AssociateAssetsDTO,
-  GetAssociateAssetsDto,
-  GetTicketByIdDto,
+  ListTicketDTO,
   IdDto,
+  paginationDTO,
 } from '@shared/dto';
+import { Types } from 'mongoose';
+import { GetAssociateAssetsDto, GetTicketByIdDto } from '@shared/dto';
 import { RpcException } from '@nestjs/microservices';
 import { DetachAssetsDTO } from '@shared/dto';
 
@@ -193,7 +193,7 @@ export class TicketService {
       const { id } = payload.id;
 
       const data = await this.ticketRepository.delete({
-        _id: id,
+        _id: id.id,
         isChildTicket: true,
       });
       //should also remove  from parent ticket
