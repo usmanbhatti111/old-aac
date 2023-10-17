@@ -1,3 +1,4 @@
+export * from './quick-links.repository';
 export * from './user.repository';
 export * from './user-accounts.repository';
 export * from './invoice.repository';

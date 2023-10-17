@@ -50,6 +50,13 @@ export const API_ENDPOINTS = {
       BILLING_DETAILS: 'billing-details',
       ADD_DISCOUNT: 'add-discount',
     },
+    QUICK_LINKS: {
+      ADD_QUICK_LINK: '/',
+      GET_QUICK_LINKS_GROUP_BY_PRODUCT: '/get-quick-links-group-by-product',
+      GET_QUICK_LINKS: '/',
+      DELETE_QUICK_LINKS: '/:ids',
+      EDIT_QUICK_LINK: '/:id',
+    },
     ADD_USER: 'add-user',
     USER_LIST: 'user-list',
     USER_PROFILE: 'user-profile/:userId',

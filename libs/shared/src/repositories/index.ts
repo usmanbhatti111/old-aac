@@ -17,6 +17,7 @@ export * from './settings/job.repository';
 export * from './settings/faq.repository';
 export * from './organization';
 export * from './org-admin';
+export * from './super-admin';
 export * from './user-account';
 export * from './airservices/assets-software.repository';
 export * from './super-admin/permission.repository';

@@ -15,4 +15,5 @@ export * from './module.schema';
 export * from './super-admin';
 export * from './organization/index';
 export * from './org-admin';
+export * from './super-admin';
 export * from './user-account';

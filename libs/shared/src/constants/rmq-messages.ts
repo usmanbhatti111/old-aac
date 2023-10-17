@@ -51,6 +51,15 @@ export const RMQ_MESSAGES = {
       BILLING_DETAILS: 'billing-detials',
       ADD_DISCOUNT: 'add-discount',
     },
+
+    QUICK_LINKS: {
+      ADD_QUICK_LINK: 'add-quick-link',
+      GET_QUICK_LINKS: 'get-quick-links',
+      DELETE_QUICK_LINKS: 'delete-quick-links',
+      EDIT_QUICK_LINK: 'edit-quick-link',
+      GET_QUICK_LINKS_GROUP_BY_PRODUCT: 'get-quick-links-group-by-product',
+    },
+
     ADD_USER: 'add-user',
     USER_LIST: 'user-list',
     USER_PROFILE: 'user-profile',

@@ -20,6 +20,8 @@ import { FaqsController } from './controllers/faqs.controller';
 import { FaqsService } from './services/faqs.service';
 import { InvoiceController } from './controllers/invoice.controller';
 import { InvoiceService } from './services/invoice.service';
+import { QuickLinksController } from './controllers/quick-links.controller';
+import { QuickLinksService } from './services/quick-links.service';
 import { NewsAndEventsController } from './controllers/news-and-event.controller';
 import { NewsAndEventsService } from './services/news-and-event.service';
 
@@ -33,6 +35,7 @@ import { NewsAndEventsService } from './services/news-and-event.service';
     FaqsController,
     InvoiceController,
     SuperAdminController,
+    QuickLinksController,
     PlanController,
     BillingController,
     NewsAndEventsController,
@@ -46,6 +49,7 @@ import { NewsAndEventsService } from './services/news-and-event.service';
     FaqsService,
     InvoiceService,
     SuperAdminService,
+    QuickLinksService,
     PlanService,
     BillingService,
     NewsAndEventsService,

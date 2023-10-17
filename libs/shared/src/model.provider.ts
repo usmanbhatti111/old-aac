@@ -42,6 +42,8 @@ import {
   OrganizationCompanyAccount,
   OrganizationSchema,
   OrganizationCompanyAccountSchema,
+  QuickLinks,
+  QuickLinksSchema,
   User,
   UserSchema,
   AdminRole,
@@ -157,6 +159,10 @@ export const DbModels = [
   {
     name: OrganizationCompanyAccount.name,
     schema: OrganizationCompanyAccountSchema,
+  },
+  {
+    name: QuickLinks.name,
+    schema: QuickLinksSchema,
   },
   {
     name: AssetsSoftware.name,
