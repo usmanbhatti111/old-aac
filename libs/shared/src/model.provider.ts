@@ -54,9 +54,11 @@ import {
   AssetsSoftwareSchema,
   Feature,
   FeatureSchema,
-  Purchase,
   Permission,
   PermissionSchema,
+  TaskManagement,
+  TaskManagementSchema,
+  Purchase,
   Module,
   ModuleSchema,
   RequestLog,
@@ -195,6 +197,10 @@ export const DbModels = [
   {
     name: Permission.name,
     schema: PermissionSchema,
+  },
+  {
+    name: TaskManagement.name,
+    schema: TaskManagementSchema,
   },
   {
     name: RequestLog.name,

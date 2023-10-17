@@ -1,4 +1,9 @@
-import { Inject, Injectable, NestMiddleware } from '@nestjs/common';
+import {
+  BadRequestException,
+  Inject,
+  Injectable,
+  NestMiddleware,
+} from '@nestjs/common';
 import { Request, Response, NextFunction } from 'express';
 import { RequestDescriptions } from '../shared/request-descriptions.enum';
 import { RMQ_MESSAGES, SERVICES } from '@shared/constants';
@@ -31,7 +36,7 @@ export class ActivityLogMiddleware implements NestMiddleware {
           token: req.headers.authorization?.split(' ')?.[1],
         })
       );
-      const response = await firstValueFrom(
+      await firstValueFrom(
         this.userServiceClient.send(
           { cmd: RMQ_MESSAGES.LOGS.CREATE },
           {
@@ -41,7 +46,7 @@ export class ActivityLogMiddleware implements NestMiddleware {
         )
       );
     } catch (error) {
-      console.error('Error saving request log:', error);
+      throw new BadRequestException('Error saving request log:');
     }
 
     next();

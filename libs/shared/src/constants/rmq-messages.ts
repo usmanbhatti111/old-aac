@@ -133,6 +133,13 @@ export const RMQ_MESSAGES = {
       UPDATE_TASK: 'update-task',
       DELETE_TASK: 'delete-task',
     },
+    TASK_MANAGEMENT: {
+      CREATE_TASK: 'create-task',
+      TASK_LIST: 'task-list',
+      TASK_DETAIL: 'task-detail',
+      EDIT_TASK: 'edit-task',
+      DELETE_TASK: 'delete-task',
+    },
     EXPENSE: {
       ADD_EXPENSE: 'add-expense',
       GET_EXPENSE: 'get-expense',

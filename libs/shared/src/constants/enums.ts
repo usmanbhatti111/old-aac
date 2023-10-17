@@ -127,3 +127,34 @@ export enum AssetsSoftwareTypeEnum {
   SAAS = 'Saas',
   MOBILE = 'Mobile',
 }
+
+export enum ETaskType {
+  CALL = 'Call',
+  EMAIL = 'Email',
+}
+
+export enum ETaskPriority {
+  LOW = 'Low',
+  MEDIUM = 'Medium',
+  HIGH = 'High',
+}
+
+export enum ETaskStatus {
+  PENDING = 'Pending',
+  INPROGRESS = 'Inprogress',
+  COMPLETED = 'Complete',
+}
+
+export enum ETaskAssociate {
+  COMPANIES = 'Companies',
+  CONTACTS = 'Contacts',
+  DEALS = 'Deals',
+  TICKETS = 'Tickets',
+}
+
+export enum ETaskReminder {
+  TODAY = 'Today',
+  TOMORROW = 'Tomorrow',
+  IN_1_BUSINESS_DAY = 'in1businessday',
+  IN_2_BUSINESS_DAY = 'in2businessday',
+}
