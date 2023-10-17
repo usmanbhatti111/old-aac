@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpStatus, Injectable } from '@nestjs/common';
 import { errorResponse, successResponse } from '@shared/constants';
 import { OrganizationCompanyAccountRepository } from '@shared';
 import mongoose from 'mongoose';
@@ -27,16 +27,16 @@ export class OrganizationCompanyAccountService {
           accountName: payload?.accountName,
         });
       if (existingCompany.length > 0) {
-        return errorResponse(409, 'This company account already exist.');
+        return errorResponse(HttpStatus.CONFLICT, 'This company account already exist.');
       }
       const res = await this.organizationCompanyAccountRepository.create({
         ...payload,
       });
-      return successResponse(200, 'Company account added successfully', {
+      return successResponse(HttpStatus.OK, 'Company account added successfully', {
         res,
       });
     } catch (error) {
-      return errorResponse(400, error?.response?.message);
+      return errorResponse(HttpStatus.BAD_REQUEST, error?.response?.message);
     }
   }
 
@@ -65,13 +65,13 @@ export class OrganizationCompanyAccountService {
         limit: perPage,
       });
 
-      return successResponse(200, 'Success', res, {
+      return successResponse(HttpStatus.OK, 'Success', res, {
         count: totalCount,
         page: page,
         limit: perPage,
       });
     } catch (error) {
-      return errorResponse(400, error?.meta?.message);
+      return errorResponse(HttpStatus.BAD_REQUEST, error?.meta?.message);
     }
   }
 
@@ -80,9 +80,9 @@ export class OrganizationCompanyAccountService {
       const res = await this.organizationCompanyAccountRepository.findOne({
         _id: payload?.id,
       });
-      return successResponse(200, 'Success', res);
+      return successResponse(HttpStatus.OK, 'Success', res);
     } catch (error) {
-      return errorResponse(400, error?.response?.message);
+      return errorResponse(HttpStatus.BAD_REQUEST, error?.response?.message);
     }
   }
 }

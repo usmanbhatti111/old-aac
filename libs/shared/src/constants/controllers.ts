@@ -23,6 +23,7 @@ export const CONTROLLERS = {
 
   NEWS_AND_EVENTS: 'news-and-events',
   PAYMENTS: 'payments',
+  LOGS: 'requests-log',
   QUICK_LINKS: 'quick-links',
   INVOICES: 'invoices',
   ORG_ADMIN: {

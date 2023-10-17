@@ -59,6 +59,8 @@ import {
   ModuleSchema,
   Permission,
   PermissionSchema,
+  RequestLog,
+  RequestLogSchema,
 } from './schema';
 import { Contact, ContactSchema } from './schema/common-feature';
 
@@ -193,6 +195,10 @@ export const DbModels = [
   {
     name: Permission.name,
     schema: PermissionSchema,
+  },
+  {
+    name: RequestLog.name,
+    schema: RequestLogSchema,
   },
   {
     name: Contact.name,

@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpStatus, Injectable } from '@nestjs/common';
 import { errorResponse, successResponse } from '@shared/constants';
 import { OrganizationRepository } from '@shared';
 import {
@@ -20,9 +20,9 @@ export class OrganizationService {
       const res = await this.organizationRepository.create({
         ...payload,
       });
-      return successResponse(200, 'Success', res);
+      return successResponse(HttpStatus.OK, 'Success', res);
     } catch (error) {
-      return errorResponse(400, error?.response?.message);
+      return errorResponse(HttpStatus.BAD_REQUEST, error?.response?.message);
     }
   }
 
@@ -31,18 +31,18 @@ export class OrganizationService {
       const res = await this.organizationRepository.findOne({
         _id: payload?.id,
       });
-      return successResponse(200, 'Success', res);
+      return successResponse(HttpStatus.OK, 'Success', res);
     } catch (error) {
-      return errorResponse(400, error?.response?.message);
+      return errorResponse(HttpStatus.BAD_REQUEST, error?.response?.message);
     }
   }
 
   async getOrganizations() {
     try {
       const res = await this.organizationRepository.find();
-      return successResponse(200, 'Success', res);
+      return successResponse(HttpStatus.OK, 'Success', res);
     } catch (error) {
-      return errorResponse(400, error?.meta?.message);
+      return errorResponse(HttpStatus.BAD_REQUEST, error?.meta?.message);
     }
   }
 
@@ -56,9 +56,9 @@ export class OrganizationService {
         { _id: id },
         payload
       );
-      return successResponse(200, 'Success', res);
+      return successResponse(HttpStatus.OK, 'Success', res);
     } catch (error) {
-      return errorResponse(400, error?.meta?.message || error?.meta?.cause);
+      return errorResponse(HttpStatus.BAD_REQUEST, error?.meta?.message || error?.meta?.cause);
     }
   }
 }

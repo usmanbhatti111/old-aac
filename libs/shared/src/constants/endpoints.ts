@@ -141,6 +141,10 @@ export const API_ENDPOINTS = {
     UPDATE_ONE: '/:id',
   },
 
+  LOGS: {
+    GET_LOGS: '/',
+    GET_LOGS_BY_USER: '/:id',
+  },
   ORG_ADMIN: {
     INVOICES: {
       GET_ONE: '/:id',

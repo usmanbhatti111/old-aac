@@ -166,4 +166,9 @@ export const RMQ_MESSAGES = {
     GET_PRODUCTS_FEATURES: 'get-products-features',
     DELETE_PRODUCTS_FEATURES: 'delete-products-features',
   },
+  LOGS: {
+    CREATE: 'create-request-log',
+    GET_LOGS: 'get-request-logs',
+    GET_LOGS_BY_USER: 'get-user-request-logs'
+  },
 };

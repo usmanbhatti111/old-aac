@@ -23,4 +23,5 @@ export * from './airservices/assets-software.repository';
 export * from './super-admin/permission.repository';
 export * from './super-admin/feature.repository';
 export * from './super-admin/module.repository';
+export * from './logs';
 export * from './common-feature';

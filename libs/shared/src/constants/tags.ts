@@ -19,6 +19,7 @@ export const API_TAGS = {
   NEWS_AND_EVENTS: 'News and Events',
 
   PAYMENTS: 'Payments',
+  LOGS: 'Requests log',
   QUICK_LINKS: 'Quick Links',
   INVOICES: 'Invoices',
   CONTACT: 'contact',

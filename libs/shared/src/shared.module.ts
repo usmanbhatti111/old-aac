@@ -31,10 +31,11 @@ import {
   AdminRoleRepository,
   AssetsSoftwareRepository,
   FeatureRepository,
-  UserORepository,
   PlanTypeRepository,
   ModuleRepository,
   PermissionRepository,
+  UserORepository,
+  RequestLogRepository
 } from '../src/repositories/index';
 
 @Module({
@@ -86,6 +87,7 @@ import {
     PlanTypeRepository,
     ModuleRepository,
     PermissionRepository,
+    RequestLogRepository
   ],
   exports: [
     SharedService,
@@ -123,6 +125,7 @@ import {
     PlanTypeRepository,
     ModuleRepository,
     PermissionRepository,
+    RequestLogRepository
   ],
 })
 export class SharedModule {}

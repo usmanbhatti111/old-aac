@@ -33,6 +33,8 @@ import { ExceptionsFilter } from './shared/filters/exceptions.filter';
 import { UserController } from './controllers/user-account/user.controller';
 import { AuthGuard } from './shared/guards/auth.guard';
 import { SoftwareController } from './controllers/assets/software.controller';
+import { ActivityLogMiddleware } from './middleware/activity-log.middleware';
+import { RequestLogController } from './controllers/log/request-log.controller';
 import { SubscriptionController } from './controllers/org-admin/subscription.controller';
 import { ContactController } from './controllers/common-features/contact.controller';
 
@@ -69,6 +71,7 @@ import { ContactController } from './controllers/common-features/contact.control
     QuickLinksController,
     InvoicesController,
     SoftwareController,
+    RequestLogController,
     SubscriptionController,
     ContactController,
   ],
@@ -106,5 +109,6 @@ export class GatewayModule implements NestModule {
       consumer.apply(LoggerMiddleware).forRoutes('*');
     }
     consumer.apply(LoggerMiddleware).exclude('healthcheck(.*)').forRoutes('*');
+    consumer.apply(ActivityLogMiddleware).forRoutes('*');
   }
 }
