@@ -6,3 +6,5 @@ export * from './task.schema';
 export * from './purchase.schema';
 export * from './assets-software.schema';
 export * from './task-management.schema';
+export * from './contract.schema';
+

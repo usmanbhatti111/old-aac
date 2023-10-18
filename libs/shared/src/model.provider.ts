@@ -65,6 +65,8 @@ import {
   UserOSchema,
   UserSchema,
   OrganizationCompanyAccountSchema,
+  Contract,
+  ContractSchema,
 } from './schema';
 import { Contact, ContactSchema } from './schema/common-feature';
 
@@ -218,5 +220,9 @@ export const DbModels = [
   {
     name: ProductCategories.name,
     schema: ProductCategoriesSchema,
+  },
+  {
+    name: Contract.name,
+    schema: ContractSchema,
   },
 ];

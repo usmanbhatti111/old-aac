@@ -143,7 +143,7 @@ export const API_ENDPOINTS = {
 
     CONTRACT: {
       ADD_CONTRACT: 'add-contract',
-      GET_CONTRACT: 'get-contract',
+      GET_CONTRACTS: 'get-contracts',
     },
   },
   PRODUCT_FEATURES: {
