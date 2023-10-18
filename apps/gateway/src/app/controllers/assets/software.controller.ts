@@ -9,9 +9,8 @@ import {
   Put,
   Query,
   Patch,
-  Res,
 } from '@nestjs/common';
-import { ClientProxy } from '@nestjs/microservices';
+import { ClientProxy, RpcException } from '@nestjs/microservices';
 import { ApiOkResponse, ApiParam, ApiTags } from '@nestjs/swagger';
 import {
   API_ENDPOINTS,
@@ -22,6 +21,7 @@ import {
 } from '@shared/constants';
 import {
   AssetsSoftwareAssignDto,
+  AssetsSoftwareDeviceDto,
   AssetsSoftwareDto,
   CreateAssetsSoftwareResponse,
   DeleteAssetsSoftwareResponse,
@@ -41,8 +41,7 @@ export class SoftwareController {
   @Post(API_ENDPOINTS.AIR_SERVICES.ASSETS.ADD_SOFTWARE)
   @ApiOkResponse({ type: CreateAssetsSoftwareResponse })
   async addSoftware(
-    @Body() dto: AssetsSoftwareDto,
-    @Res() res: Response | any
+    @Body() dto: AssetsSoftwareDto
   ): Promise<CreateAssetsSoftwareResponse> {
     try {
       const response = await firstValueFrom(
@@ -52,9 +51,9 @@ export class SoftwareController {
         )
       );
 
-      return res.status(response.statusCode).json(response);
+      return response;
     } catch (err) {
-      return res.status(err.statusCode).json(err);
+      throw new RpcException(err);
     }
   }
   @Put(API_ENDPOINTS.AIR_SERVICES.ASSETS.EDIT_SOFTWARE)
@@ -66,7 +65,6 @@ export class SoftwareController {
   })
   async editSoftware(
     @Body() dto: AssetsSoftwareDto,
-    @Res() res: Response | any,
     @Param() id: IdDto
   ): Promise<EditAssetsSoftwareResponse> {
     try {
@@ -80,9 +78,9 @@ export class SoftwareController {
         )
       );
 
-      return res.status(response.statusCode).json(response);
+      return response;
     } catch (err) {
-      return res.status(err.statusCode).json(err);
+      throw new RpcException(err);
     }
   }
   @Delete(API_ENDPOINTS.AIR_SERVICES.ASSETS.DELETE_SOFTWARE)
@@ -93,7 +91,6 @@ export class SoftwareController {
     description: 'id should be Assets softwareId',
   })
   async deleteSoftware(
-    @Res() res: Response | any,
     @Param() id: IdDto
   ): Promise<DeleteAssetsSoftwareResponse> {
     try {
@@ -105,15 +102,14 @@ export class SoftwareController {
           }
         )
       );
-      return res.status(response.statusCode).json(response);
+      return response;
     } catch (err) {
-      return res.status(err.statusCode).json(err);
+      throw new RpcException(err);
     }
   }
   @Get(API_ENDPOINTS.AIR_SERVICES.ASSETS.GET_SOFTWARE)
   @ApiOkResponse({ type: DeleteAssetsSoftwareResponse })
   async getSoftware(
-    @Res() res: Response | any,
     @Query() dto: GetAssetsSoftwareDetails,
     @Query() pagination: PaginationDto
   ): Promise<DeleteAssetsSoftwareResponse> {
@@ -127,17 +123,16 @@ export class SoftwareController {
           }
         )
       );
-      return res.status(response.statusCode).json(response);
+      return response;
     } catch (err) {
-      return res.status(err.statusCode).json(err);
+      throw new RpcException(err);
     }
   }
   @Patch(API_ENDPOINTS.AIR_SERVICES.ASSETS.ASSIGN_CATEGORY)
   @ApiOkResponse({ type: AssetsSoftwareAssignDto })
   async assignCatToSoftware(
     @Param() { id }: IdDto,
-    @Body() category: AssetsSoftwareAssignDto,
-    @Res() res: Response | any
+    @Body() category: AssetsSoftwareAssignDto
   ): Promise<AssetsSoftwareAssignDto> {
     try {
       const response = await firstValueFrom(
@@ -150,9 +145,48 @@ export class SoftwareController {
         )
       );
 
-      return res.status(response.statusCode).json(response);
+      return response;
     } catch (err) {
-      return res.status(err.statusCode).json(err);
+      throw new RpcException(err);
+    }
+  }
+
+  @Patch(API_ENDPOINTS.AIR_SERVICES.ASSETS.ADD_SOFTWARE_DEVICE)
+  async addSoftwareDevice(
+    @Param() { id }: IdDto,
+    @Body() softwareId: AssetsSoftwareDeviceDto
+  ) {
+    try {
+      const response = await firstValueFrom(
+        this.airServiceClient.send(
+          RMQ_MESSAGES.AIR_SERVICES.ASSETS.ADD_SOFTWARE_DEVICE,
+          { id, softwareId }
+        )
+      );
+      return response;
+    } catch (err) {
+      throw new RpcException(err);
+    }
+  }
+
+  @Patch(API_ENDPOINTS.AIR_SERVICES.ASSETS.DELETE_SOFTWARE_DEVICE)
+  async removeSoftwareDevice(
+    @Param() { id }: IdDto,
+    @Body() softwareId: AssetsSoftwareDeviceDto
+  ) {
+    try {
+      const response = await firstValueFrom(
+        this.airServiceClient.send(
+          RMQ_MESSAGES.AIR_SERVICES.ASSETS.DELETE_SOFTWARE_DEVICE,
+          {
+            id,
+            softwareId,
+          }
+        )
+      );
+      return response;
+    } catch (err) {
+      throw new RpcException(err);
     }
   }
 }

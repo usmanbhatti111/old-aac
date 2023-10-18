@@ -115,11 +115,13 @@ export const API_ENDPOINTS = {
       DELETE_PURCHASEORDER: 'purchaseorder/:id',
       UPDATE_PURCHASEORDER: 'purchaseorder/:id',
       ADD_SOFTWARE: 'add_software',
+      ADD_SOFTWARE_DEVICE: 'add-software-device/:id',
       EDIT_SOFTWARE: 'edit-software/:id',
       DELETE_SOFTWARE: 'delete-software/:id',
       GET_SOFTWARE: 'get-software',
       ASSIGN_CATEGORY: 'assign-category/:id',
       SEARCH_INVENTORY: 'search-inventory',
+      DELETE_SOFTWARE_DEVICE: 'software-device/:id',
     },
     TASK: {
       ADD_TASK: '/',

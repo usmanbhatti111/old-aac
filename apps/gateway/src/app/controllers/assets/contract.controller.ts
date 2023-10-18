@@ -1,4 +1,4 @@
-import { Controller, Inject, Post, Res, Body } from '@nestjs/common';
+import { Controller, Inject, Post, Body } from '@nestjs/common';
 import { ClientProxy, RpcException } from '@nestjs/microservices';
 import { ApiTags } from '@nestjs/swagger';
 import {
@@ -9,8 +9,6 @@ import {
   SERVICES,
 } from '@shared/constants';
 import { CreateContractDTO } from '@shared/dto';
-
-import { Response } from 'express';
 import { firstValueFrom } from 'rxjs';
 
 @ApiTags(API_TAGS.CONTRACT)
@@ -18,12 +16,10 @@ import { firstValueFrom } from 'rxjs';
 export class ContractController {
   constructor(
     @Inject(SERVICES.AIR_SERVICES) private airServiceClient: ClientProxy
-  ) { }
+  ) {}
 
   @Post(API_ENDPOINTS.AIR_SERVICES.CONTRACT.ADD_CONTRACT)
-  public async addContract(
-    @Body() payload: CreateContractDTO,
-  ) {
+  public async addContract(@Body() payload: CreateContractDTO) {
     try {
       const response = await firstValueFrom(
         this.airServiceClient.send(
@@ -32,9 +28,9 @@ export class ContractController {
         )
       );
 
-      return response
+      return response;
     } catch (err) {
-      throw new RpcException(err)
+      throw new RpcException(err);
     }
   }
 }

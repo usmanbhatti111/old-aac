@@ -12,6 +12,8 @@ import { InventoryService } from './services/assets/inventory.service';
 import { PurchaseOrderService } from './services/assets/purchase.service';
 import { SoftwareController } from './controllers/assets/software.controller';
 import { SoftwareService } from './services/assets/software.service';
+import { SoftwareDeviceService } from './services/assets/software-device.service';
+import { SoftwareDeviceController } from './controllers/assets/software-device.controller';
 import { TaskManagementController } from './controllers/task-management.controller';
 import { TaskManagementService } from './services/task-management.service';
 import { ContractController } from './controllers/assets/contract.controller';
@@ -26,6 +28,7 @@ import { ContractService } from './services/assets/contract.service';
     PurchaseOrderController,
     ExpenseController,
     SoftwareController,
+    SoftwareDeviceController,
     TaskManagementController,
     ContractController,
   ],
@@ -36,6 +39,7 @@ import { ContractService } from './services/assets/contract.service';
     ExpenseService,
     PurchaseOrderService,
     SoftwareService,
+    SoftwareDeviceService,
     TaskManagementService,
     ContractService,
   ],

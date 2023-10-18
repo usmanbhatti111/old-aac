@@ -1,5 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { SchemaTypes, HydratedDocument } from 'mongoose';
+import { SchemaTypes, HydratedDocument, Types } from 'mongoose';
 import { AbstractSchema } from './../abstract-repo/abstract.schema';
 
 export type InventoryDocument = HydratedDocument<Inventory>;
@@ -11,6 +11,12 @@ export type InventoryDocument = HydratedDocument<Inventory>;
 export class Inventory extends AbstractSchema {
   @Prop({ type: String, required: false })
   displayName: string;
+
+  @Prop({
+    type: [SchemaTypes.ObjectId],
+    required: false,
+  })
+  deviceIds: [string];
 
   @Prop({
     type: SchemaTypes.ObjectId,
