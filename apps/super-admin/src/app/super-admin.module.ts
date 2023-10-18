@@ -1,8 +1,5 @@
 import { Module } from '@nestjs/common';
-
 import { SharedModule } from '@shared';
-import { BillingController } from './controllers/billing.controller';
-import { BillingService } from './services/billing.service';
 import { SuperAdminController } from './controllers/super-admin.controller';
 import { SuperAdminService } from './services/super-admin.service';
 import { ExampleController } from './controllers/example.controller';
@@ -37,7 +34,6 @@ import { NewsAndEventsService } from './services/news-and-event.service';
     SuperAdminController,
     QuickLinksController,
     PlanController,
-    BillingController,
     NewsAndEventsController,
   ],
   providers: [
@@ -51,7 +47,6 @@ import { NewsAndEventsService } from './services/news-and-event.service';
     SuperAdminService,
     QuickLinksService,
     PlanService,
-    BillingService,
     NewsAndEventsService,
   ],
 })

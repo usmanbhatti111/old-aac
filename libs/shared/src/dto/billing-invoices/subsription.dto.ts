@@ -369,3 +369,91 @@ export class OrganizationPlanId {
   @IsNotEmpty()
   organizationPlanId: string;
 }
+
+export class UpdateAssignOrgPlanSuperAdminDto {
+  @ApiProperty({
+    example: '6526558a8f723637f754487d',
+  })
+  @IsMongoId()
+  @IsNotEmpty()
+  planId: string;
+
+  @ApiProperty({
+    example: 0,
+  })
+  @IsNumber()
+  @IsOptional()
+  @Type(() => Number)
+  additionalUsers?: number;
+
+  @ApiProperty({
+    example: 0,
+  })
+  @IsNumber()
+  @IsOptional()
+  @Type(() => Number)
+  additionalStorage?: number;
+
+  @ApiProperty({
+    example: 0,
+  })
+  @IsNumber()
+  @IsOptional()
+  @Type(() => Number)
+  planDiscount?: number;
+
+  @ApiProperty({
+    example: '2023-10-20',
+  })
+  @IsISO8601({ strict: true })
+  @IsNotEmpty()
+  billingDate: Date;
+
+  @ApiProperty({
+    required: false,
+    enum: OrganizationPlanStatusEnum,
+    default: OrganizationPlanStatusEnum.ACTIVE,
+  })
+  status: OrganizationPlanStatusEnum;
+
+  @ApiProperty({
+    type: String,
+    required: false,
+    enum: BillingCycleEnum,
+  })
+  billingCycle: BillingCycleEnum;
+
+  organizationPlanId?: string;
+  organizationId: string;
+  assignedBy: string;
+}
+
+export class UpdateAssignOrgPlanResponseSuperAdminDto {
+  @ApiProperty({ example: 200 })
+  statusCode: string;
+
+  @ApiProperty({ example: 'Success' })
+  message: string;
+
+  @ApiProperty({
+    example: {
+      _id: '651e6657364160a7fca7921e',
+      organizationId: '57152930f50394f71cxz2cd7',
+      planId: '31172930f50394f42cee4da5',
+      additionalUsers: 2,
+      additionalStorage: 5,
+      planDiscount: 10,
+      billingCycle: 'MONTHLY',
+      billingDate: '2023-12-12T00:00:00.000+00:00',
+      status: 'ACTIVE',
+      assignedBy: '65152930f50394f42cee2db3',
+      created_at: '2023-10-05T07:31:35.099+00:00',
+      updated_at: '2023-10-05T07:31:35.099+00:00',
+      deleted_at: '2023-10-05T07:31:35.099+00:00',
+    },
+  })
+  data: object;
+
+  @ApiProperty({ example: null })
+  error: string;
+}

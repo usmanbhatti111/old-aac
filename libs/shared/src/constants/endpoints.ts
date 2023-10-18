@@ -52,11 +52,12 @@ export const API_ENDPOINTS = {
   SUPER_ADMIN: {
     BILLING_INVOICES: {
       ASSIGN_PLAN: 'assign-plan',
-      ORG_PLAN: 'org-plan',
-      ORG_PLANS: 'org-plans',
+      ORG_PLAN: 'get-one-orgplan',
+      ORG_PLANS: 'get-all-orgplans',
       GENERATE_INVOICE: 'generate-invoice',
       BILLING_DETAILS: 'billing-details',
       ADD_DISCOUNT: 'add-discount',
+      UPDATE_ASSIGN_PLAN: 'update-assign-plan',
     },
     QUICK_LINKS: {
       ADD_QUICK_LINK: '/',

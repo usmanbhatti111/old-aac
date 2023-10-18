@@ -1,4 +1,13 @@
-import { Body, Controller, Get, Inject, Post, Query } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Inject,
+  Patch,
+  Post,
+  Query,
+  Req,
+} from '@nestjs/common';
 import { ClientProxy, RpcException } from '@nestjs/microservices';
 import {
   ApiBearerAuth,
@@ -14,28 +23,70 @@ import {
   SERVICES,
 } from '@shared/constants';
 import {
+  AddDiscountDto,
+  AddDiscountResponseDto,
   AssignOrgPlanDto,
   AssignOrgPlanResponseDto,
+  BillingDetailsDto,
+  BillingDetailsResponseDto,
   CreateInvoiceDto,
   GetOrgPlanResponseDto,
   ListOrgPlan,
   ListOrgPlanResponseDto,
+  OrganizationPlanId,
+  UpdateAssignOrgPlanResponseSuperAdminDto,
+  UpdateAssignOrgPlanSuperAdminDto,
 } from '@shared/dto';
 import { firstValueFrom } from 'rxjs';
+import { Auth } from '../../decorators/auth.decorator';
+import { AppRequest } from '../../shared/interface/request.interface';
 
 @ApiTags(API_TAGS.BILLING_INVOICES)
-@Controller(CONTROLLERS.ORGANIZATION_PLAN)
+@Controller(CONTROLLERS.SUPER_ADMIN)
 @ApiBearerAuth()
 export class InvoiceController {
   constructor(
     @Inject(SERVICES.SUPER_ADMIN) private superAdminServiceClient: ClientProxy
   ) {}
 
+  @Get(API_ENDPOINTS.SUPER_ADMIN.BILLING_INVOICES.ORG_PLANS)
+  @Auth(true)
+  @ApiOkResponse({ type: ListOrgPlanResponseDto })
+  public async listOrgPlan(@Query() query: ListOrgPlan) {
+    const response = await firstValueFrom(
+      this.superAdminServiceClient.send(
+        { cmd: RMQ_MESSAGES.SUPER_ADMIN.BILLING_INVOICES.LIST_ORG_PLAN },
+        { ...query }
+      )
+    );
+    return response;
+  }
+
+  @Get(API_ENDPOINTS.SUPER_ADMIN.BILLING_INVOICES.ORG_PLAN)
+  @Auth(true)
+  @ApiOkResponse({ type: GetOrgPlanResponseDto })
+  public async getOrgPlan(
+    @Query('organizationPlanId') organizationPlanId: string
+  ) {
+    const response = await firstValueFrom(
+      this.superAdminServiceClient.send(
+        { cmd: RMQ_MESSAGES.SUPER_ADMIN.BILLING_INVOICES.GET_ORG_PLAN },
+        { organizationPlanId }
+      )
+    );
+    return response;
+  }
+
   @Post(API_ENDPOINTS.SUPER_ADMIN.BILLING_INVOICES.ASSIGN_PLAN)
+  @Auth(true)
   @ApiCreatedResponse({ type: AssignOrgPlanResponseDto })
-  public async assignPlan(@Body() payload: AssignOrgPlanDto) {
+  public async assignPlan(
+    @Body() payload: AssignOrgPlanDto,
+    @Req() request: AppRequest
+  ) {
     try {
-      const assignedBy = '65152930f50394f42cee2db3'; // TODO: get Id from token
+      const { user } = request;
+      const assignedBy = user?._id;
       const response = await firstValueFrom(
         this.superAdminServiceClient.send(
           { cmd: RMQ_MESSAGES.SUPER_ADMIN.BILLING_INVOICES.ASSIGN_PLAN },
@@ -48,45 +99,38 @@ export class InvoiceController {
     }
   }
 
-  @Get(API_ENDPOINTS.SUPER_ADMIN.BILLING_INVOICES.ORG_PLAN)
-  @ApiOkResponse({ type: GetOrgPlanResponseDto })
-  public async getOrgPlan(
-    @Query('organizationPlanId') organizationPlanId: string
+  @Patch(API_ENDPOINTS.SUPER_ADMIN.BILLING_INVOICES.UPDATE_ASSIGN_PLAN)
+  @Auth(true)
+  @ApiCreatedResponse({ type: UpdateAssignOrgPlanResponseSuperAdminDto })
+  public async updateAssignPlan(
+    @Query() organizationPlanId: OrganizationPlanId,
+    @Body() payload: UpdateAssignOrgPlanSuperAdminDto,
+    @Req() request: AppRequest
   ) {
-    try {
-      const response = await firstValueFrom(
-        this.superAdminServiceClient.send(
-          { cmd: RMQ_MESSAGES.SUPER_ADMIN.BILLING_INVOICES.GET_ORG_PLAN },
-          organizationPlanId
-        )
-      );
-      return response;
-    } catch (error) {
-      throw new RpcException(error);
-    }
-  }
-
-  @Get(API_ENDPOINTS.SUPER_ADMIN.BILLING_INVOICES.ORG_PLANS)
-  @ApiOkResponse({ type: ListOrgPlanResponseDto })
-  public async listOrgPlan(@Query() query: ListOrgPlan) {
-    try {
-      const response = await firstValueFrom(
-        this.superAdminServiceClient.send(
-          { cmd: RMQ_MESSAGES.SUPER_ADMIN.BILLING_INVOICES.LIST_ORG_PLAN },
-          { ...query }
-        )
-      );
-      return response;
-    } catch (error) {
-      throw new RpcException(error);
-    }
+    const { user } = request;
+    const response = await firstValueFrom(
+      this.superAdminServiceClient.send(
+        { cmd: RMQ_MESSAGES.SUPER_ADMIN.BILLING_INVOICES.UPDATE_ASSIGN_PLAN },
+        {
+          ...payload,
+          organizationPlanId: organizationPlanId.organizationPlanId,
+          userId: user._id,
+        }
+      )
+    );
+    return response;
   }
 
   @Post(API_ENDPOINTS.SUPER_ADMIN.BILLING_INVOICES.GENERATE_INVOICE)
+  @Auth(true)
   @ApiCreatedResponse({})
-  public async generateInvoice(@Body() payload: CreateInvoiceDto) {
+  public async generateInvoice(
+    @Body() payload: CreateInvoiceDto,
+    @Req() request: AppRequest
+  ) {
     try {
-      const createdBy = '65152930f50394f42cee2db3'; // TODO: get Id from token
+      const { user } = request;
+      const createdBy = user?._id; // TODO: get Id from token
       const response = await firstValueFrom(
         this.superAdminServiceClient.send(
           { cmd: RMQ_MESSAGES.SUPER_ADMIN.BILLING_INVOICES.GENERATE_INVOICE },
@@ -97,5 +141,31 @@ export class InvoiceController {
     } catch (error) {
       throw new RpcException(error);
     }
+  }
+
+  @Get(API_ENDPOINTS.SUPER_ADMIN.BILLING_INVOICES.BILLING_DETAILS)
+  @Auth(true)
+  @ApiCreatedResponse({ type: BillingDetailsResponseDto })
+  public async billingDetails(@Query() payload: BillingDetailsDto) {
+    const response = await firstValueFrom(
+      this.superAdminServiceClient.send(
+        { cmd: RMQ_MESSAGES.SUPER_ADMIN.BILLING_INVOICES.BILLING_DETAILS },
+        { ...payload }
+      )
+    );
+    return response;
+  }
+
+  @Patch(API_ENDPOINTS.SUPER_ADMIN.BILLING_INVOICES.ADD_DISCOUNT)
+  @Auth(true)
+  @ApiCreatedResponse({ type: AddDiscountResponseDto })
+  public async addDiscount(@Query() payload: AddDiscountDto) {
+    const response = await firstValueFrom(
+      this.superAdminServiceClient.send(
+        { cmd: RMQ_MESSAGES.SUPER_ADMIN.BILLING_INVOICES.ADD_DISCOUNT },
+        { ...payload }
+      )
+    );
+    return response;
   }
 }

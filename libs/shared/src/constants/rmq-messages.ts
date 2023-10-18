@@ -50,6 +50,7 @@ export const RMQ_MESSAGES = {
       GENERATE_INVOICE: 'generate-invoice',
       BILLING_DETAILS: 'billing-detials',
       ADD_DISCOUNT: 'add-discount',
+      UPDATE_ASSIGN_PLAN: 'update-assign-plan',
     },
 
     QUICK_LINKS: {

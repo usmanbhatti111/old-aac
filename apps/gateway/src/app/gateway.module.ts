@@ -10,7 +10,6 @@ import { AuthController } from './controllers/user-account/auth.controller';
 import { RoleController } from './controllers/user-account/role.controller';
 import { HealthController } from './controllers/healthcheck.controller';
 import { PlanController } from './controllers/plan.controller';
-import { BillingController } from './controllers/super-admin/billing.controller';
 import { OrganizationController } from './controllers/organization/organization.controller';
 import { OrganizationCompanyAccountController } from './controllers/organization/organization-company-account.controller';
 import { TaskController } from './controllers/tasks/task.controller';
@@ -55,7 +54,6 @@ import { ColumnPipe } from './pipes/column.pipe';
     UserController,
     HealthController,
     PlanController,
-    BillingController,
     SuperAdminController,
     JobsController,
     ProductsController,
@@ -115,6 +113,6 @@ export class GatewayModule implements NestModule {
       consumer.apply(LoggerMiddleware).forRoutes('*');
     }
     consumer.apply(LoggerMiddleware).exclude('healthcheck(.*)').forRoutes('*');
-    // consumer.apply(ActivityLogMiddleware).forRoutes('*');
+    //consumer.apply(ActivityLogMiddleware).forRoutes('*');
   }
 }

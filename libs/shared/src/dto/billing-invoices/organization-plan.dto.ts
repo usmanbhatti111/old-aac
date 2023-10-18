@@ -11,14 +11,14 @@ import {
 
 export class AssignOrgPlanDto {
   @ApiProperty({
-    example: '',
+    example: '652e0304169f73fd01fd4956',
   })
   @IsMongoId()
   @IsNotEmpty()
   organizationId: string;
 
   @ApiProperty({
-    example: '',
+    example: '652677e726623bafa178e6a1',
   })
   @IsMongoId()
   @IsNotEmpty()
@@ -49,9 +49,16 @@ export class AssignOrgPlanDto {
   planDiscount?: number;
 
   @ApiProperty({
-    example: '',
+    example: 'MONTHLY',
   })
-  @IsISO8601({ strict: true })
+  @IsOptional()
+  @IsString()
+  billingCycle: string;
+
+  @ApiProperty({
+    example: '2023-10-30',
+  })
+  @IsISO8601()
   @IsNotEmpty()
   billingDate: Date;
 
@@ -65,7 +72,7 @@ export class ListOrgPlan {
   @Type(() => Number)
   page: number;
 
-  @ApiProperty({ example: 1, required: false })
+  @ApiProperty({ example: 10, required: false })
   @IsNumber()
   @IsOptional()
   @Type(() => Number)
@@ -77,15 +84,31 @@ export class ListOrgPlan {
   })
   @IsString()
   @IsOptional()
-  product: string;
+  search: string;
 
   @ApiProperty({
     example: '',
     required: false,
   })
-  @IsString()
+  @IsMongoId()
   @IsOptional()
-  planType: string;
+  organizationId: string;
+
+  @ApiProperty({
+    example: '',
+    required: false,
+  })
+  @IsMongoId()
+  @IsOptional()
+  productId: string;
+
+  @ApiProperty({
+    example: '',
+    required: false,
+  })
+  @IsMongoId()
+  @IsOptional()
+  planTypeId: string;
 }
 
 export class AssignOrgPlanResponseDto {
@@ -119,7 +142,7 @@ export class AssignOrgPlanResponseDto {
 }
 
 export class ListOrgPlanResponseDto {
-  @ApiProperty({ example: 201 })
+  @ApiProperty({ example: 200 })
   statusCode: string;
 
   @ApiProperty({ example: 'Success' })
@@ -194,7 +217,7 @@ export class BillingDetailsDto {
   })
   @IsMongoId()
   @IsNotEmpty()
-  id: string;
+  organizationPlanId: string;
 }
 
 export class BillingDetailsResponseDto {
@@ -205,19 +228,58 @@ export class BillingDetailsResponseDto {
   message: string;
 
   @ApiProperty({
-    example: {
-      _id: '6524f493acb9cefebd03d30c',
-      dueDate: '2023-10-31T00:00:00.000Z',
-      billingCycle: 'MONTHLY',
-      productName: 'Air Sale',
-      planType: 'Growth',
-      planPrice: 10,
-      additionalUsers: 10,
-      subTotal: 10,
-      billingDate: '2023-10-31T00:00:00.000Z',
-    },
+    example: [
+      {
+        _id: '652e59d289e8854e1d24c00b',
+        organizationPlanId: '652dff82d73b5bebfb0ab482',
+        planId: '652677e726623bafa178e6a1',
+        organizationplans: {
+          _id: '652dff82d73b5bebfb0ab482',
+          organizationId: '652e0304169f73fd01fd4956',
+          planId: '652677e726623bafa178e6a1',
+          additionalUsers: 0,
+          additionalStorage: 0,
+          planDiscount: 0,
+          billingCycle: 'MONTHLY',
+          billingDate: '2023-09-30T00:00:00.000Z',
+          status: 'ACTIVE',
+          assignedBy: '65152930f50394f42cee2db3',
+          isDeleted: false,
+          createdAt: '2023-10-17T03:29:06.199Z',
+          updatedAt: '2023-10-17T03:29:06.199Z',
+          __v: 0,
+        },
+        plans: {
+          _id: '652677e726623bafa178e6a1',
+          description: 'Plan A',
+          defaultUsers: 12,
+          defaultStorage: 12,
+          planPrice: 12,
+          additionalPerUserPrice: 12,
+          planProducts: [
+            '652e0073d73b5bebfb0ab48c',
+            '652e007ad73b5bebfb0ab48e',
+          ],
+          planProductFeatures: [
+            '652650601a6e84f64e08ca4f',
+            '652650601a6e84f64e08ca58',
+          ],
+          planProductModulePermissions: [
+            '652650601a6e84f64e08ca50',
+            '652650601a6e84f64e08ca59',
+          ],
+          additionalStoragePrice: 12,
+          planTypeId: '651bee19040d3384e81b81ff',
+          createdBy: '65262d9c3686b5e9a4fc4222',
+          isDeleted: false,
+          isActive: true,
+          createdAt: '2023-10-11T10:24:39.025Z',
+          updatedAt: '2023-10-11T10:24:39.057Z',
+        },
+      },
+    ],
   })
-  data: object;
+  data: object[];
 
   @ApiProperty({ example: null })
   error: string;
