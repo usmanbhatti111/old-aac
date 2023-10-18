@@ -7,9 +7,9 @@ import { SharedModule } from '@shared';
 import { TaskController } from './controllers/tasks.controller';
 import { TaskService } from './services/tasks.service';
 import { InventoryController } from './controllers/assets/inventory.controller';
-import { PurchaseController } from './controllers/assets/purchase.controller';
+import { PurchaseOrderController } from './controllers/assets/purchase.controller';
 import { InventoryService } from './services/assets/inventory.service';
-import { PurchaseService } from './services/assets/purchase.service';
+import { PurchaseOrderService } from './services/assets/purchase.service';
 import { SoftwareController } from './controllers/assets/software.controller';
 import { SoftwareService } from './services/assets/software.service';
 import { TaskManagementController } from './controllers/task-management.controller';
@@ -21,7 +21,7 @@ import { TaskManagementService } from './services/task-management.service';
     TicketController,
     InventoryController,
     TaskController,
-    PurchaseController,
+    PurchaseOrderController,
     ExpenseController,
     SoftwareController,
     TaskManagementController,
@@ -31,7 +31,7 @@ import { TaskManagementService } from './services/task-management.service';
     InventoryService,
     TaskService,
     ExpenseService,
-    PurchaseService,
+    PurchaseOrderService,
     SoftwareService,
     TaskManagementService,
   ],

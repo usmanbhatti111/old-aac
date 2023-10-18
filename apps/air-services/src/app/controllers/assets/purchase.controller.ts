@@ -2,25 +2,42 @@ import { Controller } from '@nestjs/common';
 import { MessagePattern, Payload } from '@nestjs/microservices';
 import { RMQ_MESSAGES } from '@shared/constants';
 import {
-  AddPurchaseDto,
-  DeletePurchaseDto,
-  UpdatePurchaseDto,
+  addPurchaseOrderDto,
+  DeletePurchaseOrderDto,
+  UpdatePurchaseOrderDto,
+  FilterPurchaseOrderDto,
+  IdDTO,
 } from '@shared/dto';
-import { PurchaseService } from '../../services/assets/purchase.service';
+import { PurchaseOrderService } from '../../services/assets/purchase.service';
 
 @Controller()
-export class PurchaseController {
-  constructor(private readonly purchaseService: PurchaseService) {}
-  @MessagePattern(RMQ_MESSAGES.AIR_SERVICES.ASSETS.ADD_PURCHASE)
-  addPurchase(@Payload() payload: AddPurchaseDto) {
-    return this.purchaseService.addPurchase(payload);
+export class PurchaseOrderController {
+  constructor(private readonly purchaseService: PurchaseOrderService) {}
+
+  @MessagePattern(RMQ_MESSAGES.AIR_SERVICES.ASSETS.ADD_PURCHASEORDER)
+  async addPurchaseOrder(@Payload() payload: addPurchaseOrderDto) {
+    return await this.purchaseService.addPurchaseOrder(payload);
   }
-  @MessagePattern(RMQ_MESSAGES.AIR_SERVICES.ASSETS.DELETE_PURCHASE)
-  deletePurchase(@Payload() payload: DeletePurchaseDto) {
-    return this.purchaseService.deletePurchase(payload);
+
+  @MessagePattern(RMQ_MESSAGES.AIR_SERVICES.ASSETS.DELETE_PURCHASEORDER)
+  deletePurchase(@Payload() payload: DeletePurchaseOrderDto) {
+    return this.purchaseService.deletePurchaseOrder(payload);
   }
-  @MessagePattern({ cmd: RMQ_MESSAGES.AIR_SERVICES.ASSETS.UPDATE_PURCHASE })
-  async updatePurchase(@Payload() payload: UpdatePurchaseDto) {
-    return await this.purchaseService.updatePurchase(payload);
+  @MessagePattern({
+    cmd: RMQ_MESSAGES.AIR_SERVICES.ASSETS.UPDATE_PURCHASEORDER,
+  })
+  async updatePurchase(@Payload() payload: UpdatePurchaseOrderDto) {
+    return await this.purchaseService.updatePurchaseOrder(payload);
+  }
+
+  @MessagePattern({ cmd: RMQ_MESSAGES.AIR_SERVICES.ASSETS.GET_PURCHASEORDER })
+  async getPurchase(@Payload() payload: IdDTO) {
+    return await this.purchaseService.getPurchaseOrder(payload);
+  }
+  @MessagePattern({
+    cmd: RMQ_MESSAGES.AIR_SERVICES.ASSETS.GET_PURCHASEORDERLIST,
+  })
+  async getPurchases(@Payload() payload: FilterPurchaseOrderDto) {
+    return await this.purchaseService.getPurchaseOrderList(payload);
   }
 }

@@ -18,7 +18,7 @@ import { JobsController } from './controllers/settings/jobs.controller';
 import { TicketController } from './controllers/tickets/tickets.controller';
 import { InvoiceController } from './controllers/super-admin/billing-invoices.controller';
 import { InventoryController } from './controllers/assets/inventory.controller';
-import { PurchaseController } from './controllers/assets/purchase.controller';
+import { PurchaseOrderController } from './controllers/assets/purchase.controller';
 import { ExpenseController } from './controllers/assets/expense.controller';
 import { ProductsController } from './controllers/products.controller';
 import { ProductFeaturesController } from './controllers/product-features.controller';
@@ -59,7 +59,7 @@ import { ColumnPipe } from './pipes/column.pipe';
     ProductsController,
     TicketController,
     InventoryController,
-    PurchaseController,
+    PurchaseOrderController,
     ProductFeaturesController,
     OrganizationController,
     OrganizationCompanyAccountController,
