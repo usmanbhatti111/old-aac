@@ -19,6 +19,7 @@ export const CONTROLLERS = {
   ASSETS: 'assets',
   PRODUCT_FEATURES: 'product-features',
   EXPENSE: 'expense',
+  CONTRACT: 'contract',
   ORGANIZATION_PLAN: 'organization-plan',
   AIR_SERVICES: 'air-services',
 

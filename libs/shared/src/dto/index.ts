@@ -11,6 +11,7 @@ export * from './super-admin';
 export * from './air-services/tickets/index';
 export * from './air-services/asset/index';
 export * from './air-services/expense/index';
+export * from './air-services/contracts/index';
 export * from './air-services/task/index';
 export * from './example';
 export * from './billing-invoices';

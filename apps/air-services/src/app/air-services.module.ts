@@ -14,6 +14,8 @@ import { SoftwareController } from './controllers/assets/software.controller';
 import { SoftwareService } from './services/assets/software.service';
 import { TaskManagementController } from './controllers/task-management.controller';
 import { TaskManagementService } from './services/task-management.service';
+import { ContractController } from './controllers/assets/contract.controller';
+import { ContractService } from './services/assets/contract.service';
 
 @Module({
   imports: [SharedModule],
@@ -25,6 +27,7 @@ import { TaskManagementService } from './services/task-management.service';
     ExpenseController,
     SoftwareController,
     TaskManagementController,
+    ContractController,
   ],
   providers: [
     TicketService,
@@ -34,6 +37,7 @@ import { TaskManagementService } from './services/task-management.service';
     PurchaseOrderService,
     SoftwareService,
     TaskManagementService,
+    ContractService,
   ],
 })
 export class AirServicesModule {}

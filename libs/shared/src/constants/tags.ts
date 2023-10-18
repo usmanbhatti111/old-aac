@@ -13,6 +13,7 @@ export const API_TAGS = {
   TICKETS: 'Tickets',
   ASSETS: 'Assets',
   EXPENSE: 'Expense',
+  CONTRACT: 'Contract',
   BILLING_INVOICES: 'Billing & Invoices',
   PRODUCTS: 'Products',
   PRODUCT_FEATURES: 'Product Features',

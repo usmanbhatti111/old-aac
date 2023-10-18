@@ -138,6 +138,11 @@ export const API_ENDPOINTS = {
       ADD_EXPENSE: 'add-expense',
       GET_EXPENSE: 'get-expense',
     },
+
+    CONTRACT: {
+      ADD_CONTRACT: 'add-contract',
+      GET_CONTRACT: 'get-contract',
+    },
   },
   PRODUCT_FEATURES: {
     ADD_PRODUCT_FEATURE: '/',

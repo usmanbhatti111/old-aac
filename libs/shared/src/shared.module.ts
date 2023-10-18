@@ -28,6 +28,7 @@ import {
   PurchaseRepository,
   QuickLinksRepository,
   RequestLogRepository,
+  ContractRepository,
   TaskManagementRepository,
   TaskRepository,
   TicketRepository,
@@ -90,6 +91,7 @@ import { S3Service } from './services';
     PermissionRepository,
     ProductCategoriesRepository,
     RequestLogRepository,
+    ContractRepository,
     OrganizationCompanyAccountRepository,
     {
       provide: 'S3',
@@ -146,6 +148,7 @@ import { S3Service } from './services';
     PermissionRepository,
     ProductCategoriesRepository,
     RequestLogRepository,
+    ContractRepository,
     S3Service,
   ],
 })

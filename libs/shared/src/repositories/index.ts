@@ -13,6 +13,7 @@ export * from './organization/index';
 export * from './super-admin/invoice.repository';
 export * from './super-admin/organization-plan.repository';
 export * from './airservices/expense.repository';
+export * from './airservices/contract.repository';
 export * from './settings/job.repository';
 export * from './settings/faq.repository';
 export * from './organization';

@@ -152,6 +152,9 @@ export const RMQ_MESSAGES = {
       ADD_EXPENSE: 'add-expense',
       GET_EXPENSE: 'get-expense',
     },
+    CONTRACT: {
+      ADD_CONTRACT: 'add-contract',
+    },
   },
 
   NEWS_AND_EVENTS: {
