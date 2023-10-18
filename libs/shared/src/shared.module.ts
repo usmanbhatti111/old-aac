@@ -1,45 +1,47 @@
 import { Module } from '@nestjs/common';
-import { SharedService } from './shared.service';
-import { MongooseConfig } from './config/mongo.config';
-import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigModule } from '@nestjs/config';
+import { MongooseModule } from '@nestjs/mongoose';
 import { DbModels } from '../src/model.provider';
 import {
-  TicketRepository,
-  InventoryRepository,
-  PurchaseRepository,
-  TaskRepository,
-  ProductsRepository,
-  UserRepository,
-  PlanRepository,
-  ContactRepository,
-  PlanProductFeatureRepository,
-  PlanProductModulePermissionRepository,
-  NewsAndEventRepository,
-  JobRepository,
-  FaqRepository,
-  PaymentRepository,
-  UserAccountsRepository,
-  InvoiceRepository,
-  OrganizationPlanRepository,
-  ProductFeaturesRepository,
-  OrganizationRepository,
-  OrganizationCompanyAccountRepository,
-  ExpenseRepository,
-  QuickLinksRepository,
   AdminRoleRepository,
   AssetsSoftwareRepository,
+  ContactRepository,
+  ExpenseRepository,
+  FaqRepository,
   FeatureRepository,
+  InventoryRepository,
+  InvoiceRepository,
+  JobRepository,
   ModuleRepository,
+  NewsAndEventRepository,
+  OrganizationPlanRepository,
+  OrganizationRepository,
+  PaymentRepository,
   PermissionRepository,
-  TaskManagementRepository,
-  UserORepository,
+  PlanProductFeatureRepository,
+  PlanProductModulePermissionRepository,
+  PlanRepository,
   PlanTypeRepository,
+  ProductCategoriesRepository,
+  ProductFeaturesRepository,
+  ProductsRepository,
+  PurchaseRepository,
+  QuickLinksRepository,
   RequestLogRepository,
+  TaskManagementRepository,
+  TaskRepository,
+  TicketRepository,
+  UserAccountsRepository,
+  UserORepository,
+  UserRepository,
+  OrganizationCompanyAccountRepository,
 } from '../src/repositories/index';
-import { S3Service } from './services';
+import { MongooseConfig } from './config/mongo.config';
+import { SharedService } from './shared.service';
+
 import { ConfigService } from '@nestjs/config';
 import { S3 } from 'aws-sdk';
+import { S3Service } from './services';
 
 @Module({
   imports: [
@@ -86,7 +88,9 @@ import { S3 } from 'aws-sdk';
     PlanTypeRepository,
     ModuleRepository,
     PermissionRepository,
+    ProductCategoriesRepository,
     RequestLogRepository,
+    OrganizationCompanyAccountRepository,
     {
       provide: 'S3',
       useFactory: (config: ConfigService) =>
@@ -125,7 +129,7 @@ import { S3 } from 'aws-sdk';
     OrganizationPlanRepository,
     ProductFeaturesRepository,
     OrganizationRepository,
-    // OrganizationCompanyAccountRepository,
+    OrganizationCompanyAccountRepository,
     ExpenseRepository,
     QuickLinksRepository,
     UserRepository,
@@ -140,6 +144,7 @@ import { S3 } from 'aws-sdk';
     PlanTypeRepository,
     ModuleRepository,
     PermissionRepository,
+    ProductCategoriesRepository,
     RequestLogRepository,
     S3Service,
   ],

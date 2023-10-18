@@ -168,4 +168,10 @@ export const API_ENDPOINTS = {
       PAY_NOW_INVOICE: 'pay-now-invoice',
     },
   },
+
+  PRODUCT_CATEGORIES: {
+    ADD_PRODUCT_CATEGORY: '/',
+    GET_PRODUCT_CATEGORIES: '/',
+    EDIT_PRODUCT_CATEGORY: '/:id',
+  },
 };

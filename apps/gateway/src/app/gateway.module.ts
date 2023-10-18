@@ -34,10 +34,11 @@ import { UserController } from './controllers/user-account/user.controller';
 import { AuthGuard } from './shared/guards/auth.guard';
 import { SoftwareController } from './controllers/assets/software.controller';
 import { TaskManagementController } from './controllers/tasks/task-management.controller';
-import { ActivityLogMiddleware } from './middleware/activity-log.middleware';
+// import { ActivityLogMiddleware } from './middleware/activity-log.middleware';
 import { RequestLogController } from './controllers/log/request-log.controller';
 import { SubscriptionController } from './controllers/org-admin/subscription.controller';
 import { ContactController } from './controllers/common-features/contact.controller';
+import { ProductCategoriesController } from './controllers/org-admin/product-category.controller';
 import { ColumnPipe } from './pipes/column.pipe';
 
 @Module({
@@ -77,6 +78,7 @@ import { ColumnPipe } from './pipes/column.pipe';
     RequestLogController,
     SubscriptionController,
     ContactController,
+    ProductCategoriesController,
   ],
   providers: [
     // Exceptions Filter
@@ -113,6 +115,6 @@ export class GatewayModule implements NestModule {
       consumer.apply(LoggerMiddleware).forRoutes('*');
     }
     consumer.apply(LoggerMiddleware).exclude('healthcheck(.*)').forRoutes('*');
-    consumer.apply(ActivityLogMiddleware).forRoutes('*');
+    // consumer.apply(ActivityLogMiddleware).forRoutes('*');
   }
 }

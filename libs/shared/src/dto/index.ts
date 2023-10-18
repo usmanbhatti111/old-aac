@@ -21,3 +21,5 @@ export * from './news-and-event';
 export * from './faq';
 export * from './log';
 export * from './contact';
+
+export * from './org-admin';

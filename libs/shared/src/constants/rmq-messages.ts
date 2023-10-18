@@ -174,6 +174,11 @@ export const RMQ_MESSAGES = {
       GET_ONE_INVOICE: 'get-one-invoice',
       PAY_NOW_INVOICE: 'pay-now-invoice',
     },
+    PRODUCT_CATEGORIES: {
+      ADD_PRODUCT_CATEGORY: 'add-product-category',
+      GET_PRODUCT_CATEGORIES: 'edit-product-categories',
+      EDIT_PRODUCT_CATEGORY: 'edit-product-category',
+    },
   },
   PRODUCT_FEATURES: {
     ADD_PRODUCT_FEATURE: 'add-product-feature',

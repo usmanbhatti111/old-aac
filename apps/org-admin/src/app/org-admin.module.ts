@@ -10,6 +10,8 @@ import { PaymentService } from './services/payment.service';
 import { SubscriptionController } from './controllers/subscription.controller';
 import { SubscriptionService } from './services/subscription.service';
 import { InvoiceService } from './services/invoice.service';
+import { ProductCategoriesController } from './controllers/product-categories.controller';
+import { ProductCategoriesService } from './services/product-categories.service';
 
 @Module({
   imports: [SharedModule],
@@ -19,6 +21,7 @@ import { InvoiceService } from './services/invoice.service';
     PaymentController,
     SubscriptionController,
     InvoiceController,
+    ProductCategoriesController,
   ],
   providers: [
     OrganizationService,
@@ -26,6 +29,7 @@ import { InvoiceService } from './services/invoice.service';
     PaymentService,
     SubscriptionService,
     InvoiceService,
+    ProductCategoriesService,
   ],
 })
 export class OrgAdminModule {}
