@@ -122,6 +122,49 @@ export class TicketService {
       return err;
     }
   }
+
+  async addAssociatePurchaseOrder(payload) {
+    try {
+      const { id, ticketsIds } = payload;
+      const updatedTickets = await this.ticketRepository.updateMany(
+        { _id: { $in: ticketsIds } },
+        { $set: { associatePurchaseOrders: id } }
+      );
+      const response = successResponse(
+        HttpStatus.OK,
+        'Success',
+        updatedTickets
+      );
+      return response;
+    } catch (error) {
+      throw new RpcException(error);
+    }
+  }
+
+  async dissociatePurchaseOrder(payload) {
+    try {
+      const { id, purchaseOrderId } = payload;
+      const res = await this.ticketRepository.findByIdAndUpdate(
+        { _id: id },
+        {
+          $pull: {
+            associatePurchaseOrders: purchaseOrderId.associateOrderId,
+          },
+        }
+      );
+
+      const response = successResponse(
+        HttpStatus.OK,
+        `Asset Detached Successfully`,
+        res
+      );
+
+      return response;
+    } catch (error) {
+      throw new RpcException(error);
+    }
+  }
+
   async createChildTicket(payload: any) {
     try {
       const { ticketId, ...dto } = payload;

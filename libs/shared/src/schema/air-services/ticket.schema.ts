@@ -8,6 +8,7 @@ import {
 } from '../../constants/index';
 import { AbstractSchema } from '../abstract-repo/abstract.schema';
 import { Inventory } from './inventory.schema';
+import { Purchase } from './purchase.schema';
 
 export type TicketDocument = HydratedDocument<Ticket>;
 
@@ -77,6 +78,12 @@ export class Ticket extends AbstractSchema {
     required: false,
   })
   associateAssets: string[];
+
+  @Prop({
+    type: [{ type: SchemaTypes.ObjectId, ref: Purchase.name }],
+    required: false,
+  })
+  associatePurchaseOrders: string[];
 
   @Prop({
     type: [SchemaTypes.ObjectId],

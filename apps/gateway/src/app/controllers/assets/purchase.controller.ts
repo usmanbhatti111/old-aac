@@ -25,6 +25,9 @@ import {
   GetPurchaseResponseOrderDto,
   UpdatePurchaseOrderDto,
   GetPurchasesResponseOrderDto,
+  IdDto,
+  DeleteAssociatePurchaseOrderDto,
+  AssociatePurchaseOrderDto,
 } from '@shared/dto';
 
 import { firstValueFrom } from 'rxjs';
@@ -80,6 +83,51 @@ export class PurchaseOrderController {
       throw new RpcException(error);
     }
   }
+
+  @Patch(API_ENDPOINTS.AIR_SERVICES.ASSETS.ADD_ASSOCIATE_ORDER)
+  public async addAssociatePurchaseOrder(
+    @Param() { id }: IdDto,
+    @Body() associatePurchaseOrderDto: AssociatePurchaseOrderDto
+  ) {
+    try {
+      const response = await firstValueFrom(
+        this.airServiceClient.send(
+          RMQ_MESSAGES.AIR_SERVICES.ASSETS.ADD_ASSOCIATE_ORDER,
+          {
+            id,
+            ticketsIds: associatePurchaseOrderDto.ticketsIds,
+          }
+        )
+      );
+
+      return response;
+    } catch (error) {
+      throw new RpcException(error);
+    }
+  }
+
+  @Patch(API_ENDPOINTS.AIR_SERVICES.ASSETS.DELETE_ASSOCIATE_ORDER)
+  public async dissociatePurchaseOrder(
+    @Param() { id }: IdDto,
+    @Body() purchaseOrderId: DeleteAssociatePurchaseOrderDto
+  ) {
+    try {
+      const response = await firstValueFrom(
+        this.airServiceClient.send(
+          RMQ_MESSAGES.AIR_SERVICES.ASSETS.DELETE_ASSOCIATE_ORDER,
+          {
+            id,
+            purchaseOrderId,
+          }
+        )
+      );
+
+      return response;
+    } catch (error) {
+      throw new RpcException(error);
+    }
+  }
+
   @Get(API_ENDPOINTS.AIR_SERVICES.ASSETS.GET_PURCHASEORDER)
   @ApiCreatedResponse({ type: GetPurchaseResponseOrderDto })
   public async getPurchaseOrder(@Param('id') id: string) {

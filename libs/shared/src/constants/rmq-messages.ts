@@ -127,6 +127,7 @@ export const RMQ_MESSAGES = {
       Delete_Inventory: 'delete-inventory',
       DELETE_PURCHASEORDER: 'delete-purchaseorder',
       UPDATE_PURCHASEORDER: 'update-purchaseorder',
+      ADD_ASSOCIATE_ORDER: 'add-associate-order',
       ADD_SOFTWARE: 'add-software',
       ADD_SOFTWARE_DEVICE: 'add-software-device',
       GET_PURCHASEORDERLIST: 'get-purchaseorderlist',
@@ -137,6 +138,7 @@ export const RMQ_MESSAGES = {
       ASSIGN_CATEGORY: 'assign-category',
       SEARCH_INVENTORY: 'search-inventory',
       DELETE_SOFTWARE_DEVICE: 'delete-software-device',
+      DELETE_ASSOCIATE_ORDER: 'delete-associate-order',
     },
     TASK: {
       ADD_TASK: 'add_task',

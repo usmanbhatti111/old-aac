@@ -11,6 +11,8 @@ import {
   paginationDTO,
   GetTicketByIdDto,
   GetAssociateAssetsDto,
+  AssociatePurchaseOrderDto,
+  DeleteAssociatePurchaseOrderDto,
 } from '@shared/dto';
 
 @Controller()
@@ -75,5 +77,23 @@ export class TicketController {
     columnNames: string[];
   }) {
     return this.ticketService.getTicketList(payload);
+  }
+
+  @MessagePattern(RMQ_MESSAGES.AIR_SERVICES.ASSETS.ADD_ASSOCIATE_ORDER)
+  async addAssociatePurchaseOrder(
+    @Payload() payload: { id: IdDto; ticketsIds: AssociatePurchaseOrderDto }
+  ) {
+    return await this.ticketService.addAssociatePurchaseOrder(payload);
+  }
+
+  @MessagePattern(RMQ_MESSAGES.AIR_SERVICES.ASSETS.DELETE_ASSOCIATE_ORDER)
+  async dissociatePurchaseOrder(
+    @Payload()
+    payload: {
+      id: IdDto;
+      purchaseOrderId: DeleteAssociatePurchaseOrderDto;
+    }
+  ) {
+    return await this.ticketService.dissociatePurchaseOrder(payload);
   }
 }

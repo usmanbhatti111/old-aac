@@ -115,6 +115,8 @@ export const API_ENDPOINTS = {
       GET_PURCHASEORDERLIST: 'purchaseorderlist',
       DELETE_PURCHASEORDER: 'purchaseorder/:id',
       UPDATE_PURCHASEORDER: 'purchaseorder/:id',
+      ADD_ASSOCIATE_ORDER: 'add-associate-order/:id',
+      DELETE_ASSOCIATE_ORDER: 'delete-associate-order/:id',
       ADD_SOFTWARE: 'add_software',
       ADD_SOFTWARE_DEVICE: 'add-software-device/:id',
       EDIT_SOFTWARE: 'edit-software/:id',

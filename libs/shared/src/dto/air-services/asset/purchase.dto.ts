@@ -8,6 +8,7 @@ import {
   IsNumber,
   IsString,
   IsArray,
+  ArrayNotEmpty,
 } from 'class-validator';
 import { EPurchaseOrderStatus } from '../../../constants/enums';
 import { paginationDTO } from '../../pagination/pagination.dto';
@@ -379,4 +380,28 @@ export class FilterPurchaseOrderDto extends paginationDTO {
   })
   @IsOptional()
   search: string;
+}
+export class AssociatePurchaseOrderDto {
+  @IsArray()
+  @ArrayNotEmpty()
+  @IsMongoId({ each: true })
+  @ApiProperty({
+    type: [String],
+    example: [
+      '652ffb62436eb52662f9752e',
+      '652ffb69436eb52662f97534',
+      '652ffb6a436eb52662f97536',
+    ],
+    required: false,
+  })
+  ticketsIds: [string];
+}
+export class DeleteAssociatePurchaseOrderDto {
+  @IsMongoId()
+  @ApiProperty({
+    type: String,
+    example: '652ffb62436eb52662f9752e',
+    required: false,
+  })
+  associateOrderId: string;
 }
