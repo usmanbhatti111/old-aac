@@ -6,7 +6,6 @@ import {
   ContactStatus,
   ContactStatusSchema,
   Contract,
-  ContractSchema,
   Example,
   ExampleSchema,
   Expense,
@@ -78,6 +77,7 @@ import {
   UserAccountsSchema,
   UserO,
   UserOSchema,
+  ContractSchema,
   UserSchema,
 } from './schema';
 import {

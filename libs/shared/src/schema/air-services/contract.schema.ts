@@ -1,11 +1,9 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-
 import { HydratedDocument, SchemaTypes } from 'mongoose';
-
 import { AbstractSchema } from '../abstract-repo/abstract.schema';
+import { EExtendRenewStatus } from '../../constants/index';
 import { Inventory } from './inventory.schema';
 import { EContractStatus } from '../../constants/enums';
-
 export type ContractDocument = HydratedDocument<Contract>;
 
 @Schema({
@@ -17,19 +15,25 @@ export class Contract extends AbstractSchema {
   name: string;
 
   @Prop({ type: String, required: false })
-  contractNumber: string;
-
-  @Prop({ type: SchemaTypes.ObjectId, required: false })
   type: string;
+
+  @Prop({ type: String, required: false })
+  cost: string;
+
+  @Prop()
+  startDate: Date;
+
+  @Prop()
+  endDate: Date;
+
+  @Prop({ type: String, required: false })
+  contractNumber: string;
 
   @Prop({
     type: [{ type: SchemaTypes.ObjectId, ref: Inventory.name }],
     required: false,
   })
   associateAssets: string[];
-
-  @Prop({ type: Number, required: false })
-  cost: number;
 
   @Prop({
     type: String,
@@ -45,12 +49,6 @@ export class Contract extends AbstractSchema {
   @Prop({ type: SchemaTypes.ObjectId, required: false })
   approver: string;
 
-  @Prop()
-  startDate: Date;
-
-  @Prop()
-  endDate: Date;
-
   @Prop({
     type: Boolean,
     default: false,
@@ -63,7 +61,14 @@ export class Contract extends AbstractSchema {
   })
   notifyExpiry: boolean;
 
-  @Prop({ type: SchemaTypes.ObjectId, required: false }) //hardwareId or softwareId
+  @Prop({
+    type: String,
+    required: false,
+    enum: EExtendRenewStatus,
+  })
+  statusRenewExtend: string;
+
+  @Prop({ type: SchemaTypes.ObjectId, required: false })
   assetId: string;
 
   @Prop({

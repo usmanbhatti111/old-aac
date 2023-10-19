@@ -1,10 +1,13 @@
 import { HttpStatus, Injectable } from '@nestjs/common';
-import { EContractExpiry } from '@shared/constants';
 import { successResponse } from '@shared/constants';
 import { ContractRepository, mongooseDateFilter } from '@shared';
 import { RpcException } from '@nestjs/microservices';
-import { GetContactsDto } from '@shared/dto';
-import dayjs from 'dayjs';
+import {
+  DeleteContractDto,
+  ExtendRenewContractDTO,
+  UpdateContractDTO,
+  GetContactsDto,
+} from '@shared/dto';
 
 @Injectable()
 export class ContractService {
@@ -18,12 +21,35 @@ export class ContractService {
       throw new RpcException(error);
     }
   }
+  async deleteContract(payload: DeleteContractDto) {
+    try {
+      const { id } = payload;
+      const res = await this.contractRepository.delete({ _id: id });
+
+      return successResponse(HttpStatus.OK, 'Success', res);
+    } catch (error) {
+      throw new RpcException(error);
+    }
+  }
+  async updateContract(payload: UpdateContractDTO | ExtendRenewContractDTO) {
+    try {
+      const { id } = payload;
+      delete payload.id;
+      const res = await this.contractRepository.findOneAndUpdate(
+        { _id: id },
+        payload
+      );
+      return successResponse(HttpStatus.OK, 'Success', res);
+    } catch (error) {
+      throw new RpcException(error);
+    }
+  }
 
   async getContracts(payload: GetContactsDto) {
     try {
       const { page, limit, status, search, expiry } = payload;
-      let filterQuery = {};
-      let searchFilter = {};
+      const filterQuery = {};
+      const searchFilter = {};
       let expiryFilter = {};
       const pipeline = [];
 

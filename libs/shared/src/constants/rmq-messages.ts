@@ -157,6 +157,9 @@ export const RMQ_MESSAGES = {
     },
     CONTRACT: {
       ADD_CONTRACT: 'add-contract',
+      DELETE_CONTRACT: 'delete-contract',
+      UPDATE_CONTRACT: 'update-contract',
+      RENEW_EXTEND_CONTRACT: 'renew-extend-contract',
       GET_CONTRACTS: 'get-contracts',
     },
   },

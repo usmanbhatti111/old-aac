@@ -3,6 +3,9 @@ import {
   Inject,
   Post,
   Body,
+  Param,
+  Delete,
+  Patch,
   Query,
   Get,
   Res,
@@ -16,7 +19,13 @@ import {
   RMQ_MESSAGES,
   SERVICES,
 } from '@shared/constants';
-import { CreateContractDTO, GetContactsDto } from '@shared/dto';
+import {
+  CreateContractDTO,
+  DeleteContractDto,
+  UpdateContractDTO,
+  ExtendRenewContractDTO,
+  GetContactsDto,
+} from '@shared/dto';
 import { DownloadService } from '@shared/services';
 import { firstValueFrom } from 'rxjs';
 
@@ -43,7 +52,51 @@ export class ContractController {
       throw new RpcException(err);
     }
   }
+  @Delete(API_ENDPOINTS.AIR_SERVICES.CONTRACT.DELETE_CONTRACT)
+  public async deleteContract(@Param() payload: DeleteContractDto) {
+    try {
+      const response = await firstValueFrom(
+        this.airServiceClient.send(
+          RMQ_MESSAGES.AIR_SERVICES.CONTRACT.DELETE_CONTRACT,
+          { ...payload }
+        )
+      );
 
+      return response;
+    } catch (error) {
+      throw new RpcException(error);
+    }
+  }
+  @Patch(API_ENDPOINTS.AIR_SERVICES.CONTRACT.UPDATE_CONTRACT)
+  public async UpdateContract(@Body() payload: UpdateContractDTO) {
+    try {
+      const response = await firstValueFrom(
+        this.airServiceClient.send(
+          { cmd: RMQ_MESSAGES.AIR_SERVICES.CONTRACT.UPDATE_CONTRACT },
+          payload
+        )
+      );
+
+      return response;
+    } catch (error) {
+      throw new RpcException(error);
+    }
+  }
+  @Patch(API_ENDPOINTS.AIR_SERVICES.CONTRACT.RENEW_EXTEND_CONTRACT)
+  public async renewContract(@Body() payload: ExtendRenewContractDTO) {
+    try {
+      const response = await firstValueFrom(
+        this.airServiceClient.send(
+          { cmd: RMQ_MESSAGES.AIR_SERVICES.CONTRACT.RENEW_EXTEND_CONTRACT },
+          payload
+        )
+      );
+
+      return response;
+    } catch (error) {
+      throw new RpcException(error);
+    }
+  }
   @Get(API_ENDPOINTS.AIR_SERVICES.CONTRACT.GET_CONTRACTS)
   public async getContracts(
     @Query() queryParams: GetContactsDto,

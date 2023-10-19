@@ -44,6 +44,10 @@ export enum EPurchaseOrderStatus {
   CLOSED = 'CLOSED',
   REJECTED = 'REJECTED',
 }
+export enum EExtendRenewStatus {
+  EXTEND = 'EXTEND',
+  RENEW = 'RENEW',
+}
 export enum EFaqCategories {
   SALES = 'SALES',
   MARKETING = 'MARKETING',
