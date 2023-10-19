@@ -41,6 +41,7 @@ import { DocumentsController } from './controllers/common-features/documents.con
 import { ContractController } from './controllers/assets/contract.controller';
 import { ProductCategoriesController } from './controllers/org-admin/product-category.controller';
 import { ColumnPipe } from './pipes/column.pipe';
+import { ContactStatusController } from './controllers/org-admin/contact-status.controller';
 
 @Module({
   imports: [
@@ -79,6 +80,7 @@ import { ColumnPipe } from './pipes/column.pipe';
     RequestLogController,
     SubscriptionController,
     ContactController,
+    ContactStatusController,
     DocumentsController,
     ContractController,
     ProductCategoriesController,

@@ -184,6 +184,13 @@ export const RMQ_MESSAGES = {
       GET_ONE_INVOICE: 'get-one-invoice',
       PAY_NOW_INVOICE: 'pay-now-invoice',
     },
+    CONTACT_STATUS: {
+      ADD_CONTACT_STATUS: 'add-contact-status',
+      GET_CONTACT_STATUSES: 'get-contact-statuses',
+      GET_CONTACT_STATUS: 'get-contact-status',
+      EDIT_CONTACT_STATUS: 'edit-contact-status',
+      DELETE_CONTACT_STATUS: 'delete-contact-status',
+    },
     PRODUCT_CATEGORIES: {
       ADD_PRODUCT_CATEGORY: 'add-product-category',
       GET_PRODUCT_CATEGORIES: 'edit-product-categories',

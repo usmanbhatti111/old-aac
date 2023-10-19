@@ -1,23 +1,27 @@
 import { Module } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
+import { S3 } from 'aws-sdk';
 import { DbModels } from '../src/model.provider';
 import {
+  AdminRoleRepository,
+  AssetsSoftwareRepository,
   ContactRepository,
+  ContactStateRepository,
+  ContractRepository,
+  ExpenseRepository,
   FaqRepository,
+  FeatureRepository,
+  FileRepository,
+  FolderRepository,
   InventoryRepository,
   InvoiceRepository,
   JobRepository,
+  ModuleRepository,
   NewsAndEventRepository,
+  OrganizationCompanyAccountRepository,
   OrganizationPlanRepository,
   OrganizationRepository,
-  ExpenseRepository,
-  AdminRoleRepository,
-  AssetsSoftwareRepository,
-  FeatureRepository,
-  FolderRepository,
-  FileRepository,
-  ModuleRepository,
   PaymentRepository,
   PermissionRepository,
   PlanProductFeatureRepository,
@@ -30,21 +34,16 @@ import {
   PurchaseRepository,
   QuickLinksRepository,
   RequestLogRepository,
-  ContractRepository,
   TaskManagementRepository,
   TaskRepository,
   TicketRepository,
   UserAccountsRepository,
   UserORepository,
   UserRepository,
-  OrganizationCompanyAccountRepository,
 } from '../src/repositories/index';
 import { MongooseConfig } from './config/mongo.config';
-import { SharedService } from './shared.service';
-
-import { ConfigService } from '@nestjs/config';
-import { S3 } from 'aws-sdk';
 import { S3Service } from './services';
+import { SharedService } from './shared.service';
 
 @Module({
   imports: [
@@ -96,6 +95,8 @@ import { S3Service } from './services';
     FileRepository,
     ProductCategoriesRepository,
     RequestLogRepository,
+    OrganizationCompanyAccountRepository,
+    ContactStateRepository,
     ContractRepository,
     OrganizationCompanyAccountRepository,
     {
@@ -158,6 +159,7 @@ import { S3Service } from './services';
     RequestLogRepository,
     ContractRepository,
     S3Service,
+    ContactStateRepository,
   ],
 })
 export class SharedModule {}

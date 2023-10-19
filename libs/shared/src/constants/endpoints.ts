@@ -186,6 +186,13 @@ export const API_ENDPOINTS = {
       GET_ONE: '/:id',
       PAY_NOW_INVOICE: 'pay-now-invoice',
     },
+    CONTACT_STATUS: {
+      ADD_CONTACT_STATUS: '/',
+      GET_CONTACT_STATUSES: '/',
+      EDIT_CONTACT_STATUS: '/:id',
+      GET_CONTACT_STATUS: '/:id',
+      DELETE_CONTACT_STATUS: '/:id',
+    },
   },
 
   PRODUCT_CATEGORIES: {

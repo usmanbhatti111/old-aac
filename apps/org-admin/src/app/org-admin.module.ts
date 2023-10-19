@@ -10,6 +10,8 @@ import { PaymentService } from './services/payment.service';
 import { SubscriptionController } from './controllers/subscription.controller';
 import { SubscriptionService } from './services/subscription.service';
 import { InvoiceService } from './services/invoice.service';
+import { ContactStatusController } from './controllers/contact-status.controller';
+import { ContactStatusService } from './services/contact-status.service';
 import { ProductCategoriesController } from './controllers/product-categories.controller';
 import { ProductCategoriesService } from './services/product-categories.service';
 
@@ -21,6 +23,7 @@ import { ProductCategoriesService } from './services/product-categories.service'
     PaymentController,
     SubscriptionController,
     InvoiceController,
+    ContactStatusController,
     ProductCategoriesController,
   ],
   providers: [
@@ -29,6 +32,7 @@ import { ProductCategoriesService } from './services/product-categories.service'
     PaymentService,
     SubscriptionService,
     InvoiceService,
+    ContactStatusService,
     ProductCategoriesService,
   ],
 })

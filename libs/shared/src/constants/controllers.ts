@@ -34,5 +34,6 @@ export const CONTROLLERS = {
     SUBSCRIPTIONS: 'org-admin/subscriptions',
   },
   CONTACT: 'contact',
+  CONTACT_STATUS: 'contact-status',
   PRODUCT_CATEGORIES: 'product-categories',
 };

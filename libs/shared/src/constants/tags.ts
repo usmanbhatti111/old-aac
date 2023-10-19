@@ -27,6 +27,7 @@ export const API_TAGS = {
   QUICK_LINKS: 'Quick Links',
   INVOICES: 'Invoices',
   CONTACT: 'contact',
+  CONTACT_STATUS: 'contact-status',
 
   PRODUCT_CATEGORIES: 'Product Categories',
 };
