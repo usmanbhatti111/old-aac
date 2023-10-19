@@ -46,9 +46,8 @@ import {
   ContactCallRepository,
 } from '../src/repositories/index';
 import { MongooseConfig } from './config/mongo.config';
-import { S3Service } from './services';
 import { SharedService } from './shared.service';
-
+import { DownloadService, S3Service } from './services';
 @Module({
   imports: [
     ConfigModule.forRoot(),
@@ -121,6 +120,7 @@ import { SharedService } from './shared.service';
       inject: [ConfigService],
     },
     S3Service,
+    DownloadService,
   ],
   exports: [
     SharedService,
@@ -171,6 +171,7 @@ import { SharedService } from './shared.service';
     RequestLogRepository,
     ContractRepository,
     S3Service,
+    DownloadService,
     ContactStateRepository,
     ContactCallRepository,
     LifecycleStagesRepository,

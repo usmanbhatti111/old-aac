@@ -1,4 +1,12 @@
-import { Controller, Inject, Post, Body } from '@nestjs/common';
+import {
+  Controller,
+  Inject,
+  Post,
+  Body,
+  Query,
+  Get,
+  Res,
+} from '@nestjs/common';
 import { ClientProxy, RpcException } from '@nestjs/microservices';
 import { ApiTags } from '@nestjs/swagger';
 import {
@@ -8,14 +16,16 @@ import {
   RMQ_MESSAGES,
   SERVICES,
 } from '@shared/constants';
-import { CreateContractDTO } from '@shared/dto';
+import { CreateContractDTO, GetContactsDto } from '@shared/dto';
+import { DownloadService } from '@shared/services';
 import { firstValueFrom } from 'rxjs';
 
 @ApiTags(API_TAGS.CONTRACT)
 @Controller(CONTROLLERS.CONTRACT)
 export class ContractController {
   constructor(
-    @Inject(SERVICES.AIR_SERVICES) private airServiceClient: ClientProxy
+    @Inject(SERVICES.AIR_SERVICES) private airServiceClient: ClientProxy,
+    private readonly downloadService: DownloadService
   ) {}
 
   @Post(API_ENDPOINTS.AIR_SERVICES.CONTRACT.ADD_CONTRACT)
@@ -34,17 +44,24 @@ export class ContractController {
     }
   }
 
-  @Post(API_ENDPOINTS.AIR_SERVICES.CONTRACT.GET_CONTRACTS)
-  public async getContracts(@Body() payload: CreateContractDTO) {
+  @Get(API_ENDPOINTS.AIR_SERVICES.CONTRACT.GET_CONTRACTS)
+  public async getContracts(
+    @Query() queryParams: GetContactsDto,
+    @Res() res: any
+  ) {
     try {
+      const { exportType } = queryParams;
       const response = await firstValueFrom(
         this.airServiceClient.send(
-          RMQ_MESSAGES.AIR_SERVICES.CONTRACT.ADD_CONTRACT,
-          payload
+          RMQ_MESSAGES.AIR_SERVICES.CONTRACT.GET_CONTRACTS,
+          queryParams
         )
       );
 
-      return response;
+      if (exportType) {
+        const data = response?.data?.result || [];
+        return this.downloadService.downloadFile(exportType, data, res);
+      } else return res.status(200).json(response);
     } catch (err) {
       throw new RpcException(err);
     }

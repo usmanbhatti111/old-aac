@@ -1,14 +1,8 @@
 import { ApiProperty } from '@nestjs/swagger';
-import {
-  TicketInternalTypeEnum,
-  TicketPirorityEnum,
-  TicketStatusEnum,
-  TicketTypeEnum,
-} from '@shared/constants';
-import { IsNotEmpty, IsObject, IsString } from 'class-validator';
+import { ArrayNotEmpty, IsBoolean, IsISO8601, IsMongoId, IsNotEmpty, IsNumber, IsOptional, IsString } from 'class-validator';
 
 export class CreateContractDTO {
-  @ApiProperty({ example: 'Microsoft' })
+  @ApiProperty({ example: 'contract name' })
   @IsString()
   @IsNotEmpty()
   name: string;
@@ -16,55 +10,52 @@ export class CreateContractDTO {
   @ApiProperty({ example: 'CNTW-6' })
   @IsString()
   @IsNotEmpty()
-  number: string;
+  contractNumber: string;
 
-  @ApiProperty({ example: 'type' })
-  @IsString()
+  @ApiProperty({ example: '651d72b06c9932a97b031a34' })
+  @IsMongoId()
   @IsNotEmpty()
   type: string;
 
-  @ApiProperty({ example: 'Dell Monitor' })
-  @IsString()
-  @IsNotEmpty()
+  @ApiProperty({
+    type: [String],
+    example: ['651d72b06c9932a97b031a34'],
+  })
+  @ArrayNotEmpty()
   associateAssets: string;
 
-  @ApiProperty({ example: '200' })
-  @IsString()
-  @IsNotEmpty()
+  @ApiProperty({ type: Number, example: 200 })
+  @IsNumber()
+  @IsOptional()
   cost: string;
 
-  @ApiProperty({ example: '20' })
-  @IsString()
-  @IsNotEmpty()
-  status: string;
-
-  @ApiProperty({ example: 'draft' })
-  @IsString()
-  @IsNotEmpty()
+  @ApiProperty({ example: '651d72b06c9932a97b031a34' })
+  @IsMongoId()
+  @IsOptional()
   vendor: string;
 
-  @ApiProperty({ example: '10/04/2022' })
-  @IsString()
+  @ApiProperty({ example: new Date().toISOString().slice(0, 10) })
+  @IsISO8601()
   @IsNotEmpty()
   startDate: string;
 
-  @ApiProperty({ example: '10/04/2022' })
-  @IsString()
+  @ApiProperty({ example: new Date(new Date().setFullYear(new Date().getFullYear() + 1)).toISOString().slice(0, 10) })
+  @IsISO8601()
   @IsNotEmpty()
   endDate: string;
 
   @ApiProperty({ example: false })
-  @IsString()
-  @IsNotEmpty()
-  autoRenew: string;
+  @IsBoolean()
+  @IsOptional()
+  autoRenew: boolean;
 
   @ApiProperty({ example: true })
-  @IsString()
-  @IsNotEmpty()
-  notifyExpiry: string;
+  @IsBoolean()
+  @IsOptional()
+  notifyExpiry: boolean;
 
-  @ApiProperty({ example: '651d8c552d3ef0d603ed4210' })
-  @IsString()
-  @IsNotEmpty()
+  @ApiProperty({ example: '651d72b06c9932a97b031a34' })
+  @IsMongoId()
+  @IsOptional()
   assetId: string;
 }

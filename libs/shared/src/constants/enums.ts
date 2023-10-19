@@ -183,3 +183,29 @@ export enum ETaskReminder {
   IN_1_BUSINESS_DAY = 'in1businessday',
   IN_2_BUSINESS_DAY = 'in2businessday',
 }
+
+export enum EContractStatus {
+  DRAFT = 'DRAFT',
+  PENDING_APPROVAL = 'PENDING_APPROVAL',
+  APPROVED = 'APPROVED',
+  ACTIVE = 'ACTIVE',
+  EXPIRED = 'EXPIRED',
+  REJECTED = 'REJECTED',
+  TERMINATED = 'TERMINATED',
+}
+
+export enum EContractExpiry {
+  NONE = 'NONE',
+  ALL_TIME = 'ALL_TIME',
+  TODAY = 'TODAY',
+  YESTERDAY = 'YESTERDAY',
+  PREVIOUS_WEEK = 'PREVIOUS_WEEK',
+  PREVIOUS_MONTH = 'PREVIOUS_MONTH',
+  NEXT_WEEK = 'NEXT_WEEK',
+  NEXT_MONTH = 'NEXT_MONTH',
+}
+
+export enum EExportFile {
+  CSV = 'CSV',
+  XLS = 'XLS',
+}
