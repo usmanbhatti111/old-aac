@@ -47,7 +47,7 @@ export class ContractController {
   @Get(API_ENDPOINTS.AIR_SERVICES.CONTRACT.GET_CONTRACTS)
   public async getContracts(
     @Query() queryParams: GetContactsDto,
-    @Res() res: any
+    @Res() res: Response | any
   ) {
     try {
       const { exportType } = queryParams;
