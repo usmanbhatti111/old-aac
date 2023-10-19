@@ -35,9 +35,7 @@ export class ContractController {
   }
 
   @Post(API_ENDPOINTS.AIR_SERVICES.CONTRACT.GET_CONTRACTS)
-  public async getContracts(
-    @Body() payload: CreateContractDTO,
-  ) {
+  public async getContracts(@Body() payload: CreateContractDTO) {
     try {
       const response = await firstValueFrom(
         this.airServiceClient.send(
@@ -46,9 +44,9 @@ export class ContractController {
         )
       );
 
-      return response
+      return response;
     } catch (err) {
-      throw new RpcException(err)
+      throw new RpcException(err);
     }
   }
 }

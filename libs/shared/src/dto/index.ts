@@ -20,6 +20,8 @@ export * from './product-features';
 
 export * from './news-and-event';
 export * from './faq';
+export * from './documents';
+
 export * from './log';
 export * from './contact';
 

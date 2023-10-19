@@ -167,7 +167,16 @@ export const API_ENDPOINTS = {
     DELETE_ONE: '/:id',
     UPDATE_ONE: '/:id',
   },
-
+  DOCUMENTS: {
+    CREATE_FOLDER: '/folder',
+    CREATE_FILE: '/file',
+    GET_FOLDERS: '/folders',
+    DELETE_FOLDERS: '/folder/:id',
+    GET_FILES: '/files',
+    DELETE_FILES: '/files/:id',
+    EDIT_FILE: '/file/:id',
+    EDIT_FOLDER: '/folder/:id',
+  },
   LOGS: {
     GET_LOGS: '/',
     GET_LOGS_BY_USER: '/:id',

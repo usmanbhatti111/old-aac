@@ -156,7 +156,7 @@ export const RMQ_MESSAGES = {
     },
     CONTRACT: {
       ADD_CONTRACT: 'add-contract',
-      GET_CONTRACTS: 'get-contracts'
+      GET_CONTRACTS: 'get-contracts',
     },
   },
 
@@ -189,6 +189,16 @@ export const RMQ_MESSAGES = {
       GET_PRODUCT_CATEGORIES: 'edit-product-categories',
       EDIT_PRODUCT_CATEGORY: 'edit-product-category',
     },
+  },
+  DOCUMENTS: {
+    ADD_FOLDER: 'add_folder',
+    GET_FOLDERS: 'get-folders',
+    CREATE_FILE: 'create-file',
+    DELETE_FOLDERS: 'delete-folders',
+    GET_FILES: 'get-files',
+    DELETE_FILES: 'delete-files',
+    EDIT_FILE: '/edit-file',
+    EDIT_FOLDER: '/edit-folder',
   },
   PRODUCT_FEATURES: {
     ADD_PRODUCT_FEATURE: 'add-product-feature',

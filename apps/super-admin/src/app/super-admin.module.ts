@@ -21,7 +21,6 @@ import { QuickLinksController } from './controllers/quick-links.controller';
 import { QuickLinksService } from './services/quick-links.service';
 import { NewsAndEventsController } from './controllers/news-and-event.controller';
 import { NewsAndEventsService } from './services/news-and-event.service';
-
 @Module({
   imports: [SharedModule],
   controllers: [

@@ -37,6 +37,7 @@ import { TaskManagementController } from './controllers/tasks/task-management.co
 import { RequestLogController } from './controllers/log/request-log.controller';
 import { SubscriptionController } from './controllers/org-admin/subscription.controller';
 import { ContactController } from './controllers/common-features/contact.controller';
+import { DocumentsController } from './controllers/common-features/documents.controller';
 import { ContractController } from './controllers/assets/contract.controller';
 import { ProductCategoriesController } from './controllers/org-admin/product-category.controller';
 import { ColumnPipe } from './pipes/column.pipe';
@@ -70,6 +71,7 @@ import { ColumnPipe } from './pipes/column.pipe';
     TaskController,
     NewsAndEventsController,
     PaymentController,
+    SoftwareController,
     QuickLinksController,
     InvoicesController,
     SoftwareController,
@@ -77,6 +79,7 @@ import { ColumnPipe } from './pipes/column.pipe';
     RequestLogController,
     SubscriptionController,
     ContactController,
+    DocumentsController,
     ContractController,
     ProductCategoriesController,
   ],
