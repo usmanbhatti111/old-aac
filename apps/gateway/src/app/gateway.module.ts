@@ -42,6 +42,7 @@ import { ContractController } from './controllers/assets/contract.controller';
 import { ProductCategoriesController } from './controllers/org-admin/product-category.controller';
 import { ColumnPipe } from './pipes/column.pipe';
 import { ContactStatusController } from './controllers/org-admin/contact-status.controller';
+import { LifecycleStagesController } from './controllers/org-admin/lifecycle-stages.controller';
 
 @Module({
   imports: [
@@ -84,6 +85,7 @@ import { ContactStatusController } from './controllers/org-admin/contact-status.
     DocumentsController,
     ContractController,
     ProductCategoriesController,
+    LifecycleStagesController,
   ],
   providers: [
     // Exceptions Filter

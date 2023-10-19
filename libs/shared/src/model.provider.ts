@@ -25,6 +25,8 @@ import {
   InvoiceSchema,
   Job,
   JobSchema,
+  LifecycleStages,
+  LifecycleStagesSchema,
   Module,
   ModuleSchema,
   NewsAndEvent,
@@ -243,5 +245,10 @@ export const DbModels = [
   {
     name: Contract.name,
     schema: ContractSchema,
+  },
+  {
+    name: LifecycleStages.name,
+    schema: LifecycleStagesSchema,
+    collection: 'lifecycleStages',
   },
 ];

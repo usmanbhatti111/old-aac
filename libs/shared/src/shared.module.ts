@@ -17,6 +17,7 @@ import {
   InventoryRepository,
   InvoiceRepository,
   JobRepository,
+  LifecycleStagesRepository,
   ModuleRepository,
   NewsAndEventRepository,
   OrganizationCompanyAccountRepository,
@@ -99,6 +100,7 @@ import { SharedService } from './shared.service';
     ContactStateRepository,
     ContractRepository,
     OrganizationCompanyAccountRepository,
+    LifecycleStagesRepository,
     {
       provide: 'S3',
       useFactory: (config: ConfigService) =>
@@ -160,6 +162,7 @@ import { SharedService } from './shared.service';
     ContractRepository,
     S3Service,
     ContactStateRepository,
+    LifecycleStagesRepository,
   ],
 })
 export class SharedModule {}

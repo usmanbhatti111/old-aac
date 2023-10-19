@@ -193,6 +193,13 @@ export const API_ENDPOINTS = {
       GET_CONTACT_STATUS: '/:id',
       DELETE_CONTACT_STATUS: '/:id',
     },
+    LIFECYCLE_STAGES: {
+      ADD_LIFECYCLE_STAGE: '/',
+      GET_LIFECYCLE_STAGES: '/',
+      GET_LIFECYCLE_STAGE: '/:id',
+      EDIT_LIFECYCLE_STAGE: '/:id',
+      DELETE_LIFECYCLE_STAGE: '/:id',
+    },
   },
 
   PRODUCT_CATEGORIES: {

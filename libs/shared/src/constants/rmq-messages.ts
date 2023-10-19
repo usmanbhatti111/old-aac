@@ -196,6 +196,13 @@ export const RMQ_MESSAGES = {
       GET_PRODUCT_CATEGORIES: 'edit-product-categories',
       EDIT_PRODUCT_CATEGORY: 'edit-product-category',
     },
+    LIFECYCLE_STAGES: {
+      ADD_LIFECYCLE_STAGE: 'add-lifecycle-stage',
+      GET_LIFECYCLE_STAGES: 'get-lifecycle-stages',
+      GET_LIFECYCLE_STAGE: 'get-lifecycle-stage',
+      EDIT_LIFECYCLE_STAGE: 'edit-lifecycle-stage',
+      DELETE_LIFECYCLE_STAGE: 'delete-lifecycle-stage',
+    },
   },
   DOCUMENTS: {
     ADD_FOLDER: 'add_folder',

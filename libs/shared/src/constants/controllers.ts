@@ -36,4 +36,5 @@ export const CONTROLLERS = {
   CONTACT: 'contact',
   CONTACT_STATUS: 'contact-status',
   PRODUCT_CATEGORIES: 'product-categories',
+  LIFECYCLE_STAGES: 'lifecycle-stages',
 };
