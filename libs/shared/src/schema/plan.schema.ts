@@ -1,9 +1,9 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { MODEL } from '@shared/constants';
 import { HydratedDocument, SchemaTypes } from 'mongoose';
 import { AbstractSchema } from './abstract-repo/abstract.schema';
 import { PlanProductFeature } from './plan-product-feature.schema';
 import { PlanProductModulePermission } from './plan-product-module-permission.schema';
-import { PlanType } from './plan-type.schema';
 import { Products } from './super-admin';
 
 export type PlanDocument = HydratedDocument<Plan>;
@@ -25,17 +25,17 @@ export class Plan extends AbstractSchema {
   @Prop()
   additionalPerUserPrice?: number;
 
-  @Prop({ type: [{ type: SchemaTypes.ObjectId, ref: 'products' }] })
+  @Prop({ type: [{ type: SchemaTypes.ObjectId, ref: MODEL.PRODUCT }] })
   planProducts?: Products[];
 
   @Prop({
-    type: [{ type: SchemaTypes.ObjectId, ref: PlanProductFeature.name }],
+    type: [{ type: SchemaTypes.ObjectId, ref: MODEL.PLAN_PRODUCT_FEATURE }],
   })
   planProductFeatures?: PlanProductFeature[];
 
   @Prop({
     type: [
-      { type: SchemaTypes.ObjectId, ref: PlanProductModulePermission.name },
+      { type: SchemaTypes.ObjectId, ref: MODEL.PLAN_PRODUCT_MODULE_PERMISSION },
     ],
   })
   planProductModulePermissions?: PlanProductModulePermission[];
@@ -43,7 +43,7 @@ export class Plan extends AbstractSchema {
   @Prop()
   additionalStoragePrice?: number;
 
-  @Prop({ required: true, type: SchemaTypes.ObjectId, ref: PlanType.name })
+  @Prop({ required: true, type: SchemaTypes.ObjectId, ref: MODEL.PLAN_TYPE })
   planTypeId: string;
 
   @Prop({ required: true, type: SchemaTypes.ObjectId })

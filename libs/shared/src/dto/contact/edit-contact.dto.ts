@@ -12,12 +12,13 @@ import {
 
 export class EditContactDto {
   @ApiProperty({
-    required: true,
+    required: false,
     type: String,
     maxLength: 50,
     example: 'maarij.bhatti@ceative.co.uk',
   })
   @IsEmail()
+  @IsOptional()
   email: string;
 
   @IsOptional()
@@ -46,8 +47,8 @@ export class EditContactDto {
   lastName: string;
 
   @ApiProperty({
-    example: 'Bhatti',
-    required: true,
+    example: 'lahore',
+    required: false,
     type: String,
     maxLength: 50,
   })
@@ -114,8 +115,6 @@ export class EditContactDto {
     example: '651bdf53beeb02bc627d6804',
   })
   statusId: string;
-
-  createdBy?: string;
 
   updatedBy?: string;
 

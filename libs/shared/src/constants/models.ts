@@ -25,4 +25,6 @@ export const MODEL = {
   MODULE_PERMISSION: 'ModulePermission',
   FEATURE: 'Feature',
   PERMISSION: 'Permission',
+  CONTACT: 'contacts',
+  USER: 'users',
 };

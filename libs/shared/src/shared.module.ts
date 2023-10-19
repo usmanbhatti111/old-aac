@@ -40,7 +40,10 @@ import {
   TicketRepository,
   UserAccountsRepository,
   UserORepository,
+  LifeCycleStageRepository,
+  ContactNoteRepository,
   UserRepository,
+  ContactCallRepository,
 } from '../src/repositories/index';
 import { MongooseConfig } from './config/mongo.config';
 import { S3Service } from './services';
@@ -91,6 +94,9 @@ import { SharedService } from './shared.service';
     PlanTypeRepository,
     ModuleRepository,
     PermissionRepository,
+    RequestLogRepository,
+    LifeCycleStageRepository,
+    ContactNoteRepository,
     UserORepository,
     FolderRepository,
     FileRepository,
@@ -100,6 +106,7 @@ import { SharedService } from './shared.service';
     ContactStateRepository,
     ContractRepository,
     OrganizationCompanyAccountRepository,
+    ContactCallRepository,
     LifecycleStagesRepository,
     {
       provide: 'S3',
@@ -154,6 +161,9 @@ import { SharedService } from './shared.service';
     PlanTypeRepository,
     ModuleRepository,
     PermissionRepository,
+    RequestLogRepository,
+    LifeCycleStageRepository,
+    ContactNoteRepository,
     UserORepository,
     FolderRepository,
     FileRepository,
@@ -162,6 +172,7 @@ import { SharedService } from './shared.service';
     ContractRepository,
     S3Service,
     ContactStateRepository,
+    ContactCallRepository,
     LifecycleStagesRepository,
   ],
 })

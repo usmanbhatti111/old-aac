@@ -56,11 +56,15 @@ import {
   Products,
   ProductsSchema,
   Purchase,
+  RequestLog,
+  RequestLogSchema,
+  Status,
+  StatusSchema,
+  LifeCycleStage,
+  LifeCycleStageSchema,
   PurchaseSchema,
   QuickLinks,
   QuickLinksSchema,
-  RequestLog,
-  RequestLogSchema,
   SuperAdmin,
   SuperAdminSchema,
   Task,
@@ -76,7 +80,14 @@ import {
   UserOSchema,
   UserSchema,
 } from './schema';
-import { Contact, ContactSchema } from './schema/common-feature';
+import {
+  Contact,
+  ContactCall,
+  ContactCallSchema,
+  ContactNote,
+  ContactNoteSchema,
+  ContactSchema,
+} from './schema/common-feature';
 
 export const DbModels = [
   {
@@ -234,6 +245,18 @@ export const DbModels = [
     schema: ModuleSchema,
   },
   {
+    name: Status.name,
+    schema: StatusSchema,
+  },
+  {
+    name: LifeCycleStage.name,
+    schema: LifeCycleStageSchema,
+  },
+  {
+    name: ContactNote.name,
+    schema: ContactNoteSchema,
+  },
+  {
     name: ContactStatus.name,
     schema: ContactStatusSchema,
     collection: 'conatactStatus',
@@ -245,6 +268,10 @@ export const DbModels = [
   {
     name: Contract.name,
     schema: ContractSchema,
+  },
+  {
+    name: ContactCall.name,
+    schema: ContactCallSchema,
   },
   {
     name: LifecycleStages.name,

@@ -28,6 +28,7 @@ import {
   ContactFilterDto,
   ContactIdParamDto,
   CreateContactDto,
+  CreateContactNoteDto,
   CreateContactResponseDto,
   EditContactDto,
   EditContactResponseDto,
@@ -59,6 +60,23 @@ export class ContactController {
     const response = await firstValueFrom(
       this.commonFeatureClient.send(
         RMQ_MESSAGES.CONTACT.CREATE_CONTACT,
+        payload
+      )
+    );
+    return response;
+  }
+
+  @Auth(true)
+  @Post(API_ENDPOINTS.CONTACT.CREATE_CONTACT_NOTE)
+  @ApiCreatedResponse({ type: CreateContactResponseDto })
+  public async createContactNote(
+    @Body() payload: CreateContactNoteDto,
+    @Req() req: AppRequest
+  ): Promise<CreateContactResponseDto> {
+    payload.updatedBy = req.user._id;
+    const response = await firstValueFrom(
+      this.commonFeatureClient.send(
+        RMQ_MESSAGES.CONTACT.CREATE_CONTACT_NOTE,
         payload
       )
     );

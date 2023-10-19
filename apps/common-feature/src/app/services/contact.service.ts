@@ -1,13 +1,24 @@
 import { HttpStatus, Injectable } from '@nestjs/common';
 import { RpcException } from '@nestjs/microservices';
-import { ContactRepository, UserRepository } from '@shared';
+import {
+  ContactCallRepository,
+  ContactNoteRepository,
+  ContactRepository,
+  ContactStateRepository,
+  LifeCycleStageRepository,
+  UserRepository,
+} from '@shared';
 import { successResponse } from '@shared/constants';
 import {
   AssignContactOwnerDto,
   ContactDeleteDto,
   ContactFilterDto,
+  ContactNoteFilterDto,
+  CreateContactCallDto,
   CreateContactDto,
+  CreateContactNoteDto,
   EditContactDto,
+  EditContactNoteDto,
 } from '@shared/dto';
 import dayjs from 'dayjs';
 
@@ -15,7 +26,11 @@ import dayjs from 'dayjs';
 export class ContactService {
   constructor(
     private contactRepository: ContactRepository,
-    private userRepository: UserRepository
+    private userRepository: UserRepository,
+    private statusRepository: ContactStateRepository,
+    private lifecycleRepository: LifeCycleStageRepository,
+    private contactNoteRepository: ContactNoteRepository,
+    private contactCallRepository: ContactCallRepository
   ) {}
 
   notDeletedFilter = {
@@ -31,6 +46,12 @@ export class ContactService {
         });
       else payload.contactOwnerId = payload.createdBy;
 
+      if (payload.lifeCycleStageId)
+        this.lifecycleRepository.findOne({ _id: payload.lifeCycleStageId });
+
+      if (payload.statusId)
+        this.statusRepository.findOne({ _id: payload.statusId });
+
       const res = await this.contactRepository.create(payload);
       return successResponse(
         HttpStatus.CREATED,
@@ -42,7 +63,7 @@ export class ContactService {
     }
   }
 
-  async getContact(contactId: any) {
+  async getContact(contactId: string) {
     try {
       const res = await this.contactRepository.findOne({
         _id: contactId,
@@ -127,7 +148,7 @@ export class ContactService {
       const paginateRes = await this.contactRepository.paginate({
         filterQuery,
         offset: skip,
-        limit: payload.limit,
+        limit: take,
       });
 
       return successResponse(
@@ -153,6 +174,12 @@ export class ContactService {
           _id: payload.contactOwnerId,
           status: 'ACTIVE',
         });
+
+      if (payload.lifeCycleStageId)
+        this.lifecycleRepository.findOne({ _id: payload.lifeCycleStageId });
+
+      if (payload.statusId)
+        this.statusRepository.findOne({ _id: payload.statusId });
 
       delete payload.contactId;
       const payloadPlan = {
@@ -221,6 +248,129 @@ export class ContactService {
         HttpStatus.CREATED,
         'Contact Deleted Successfully',
         {}
+      );
+    } catch (error) {
+      throw new RpcException(error);
+    }
+  }
+
+  async createContactNote(payload: CreateContactNoteDto) {
+    try {
+      await this.contactRepository.findOne({
+        _id: payload.contactId,
+        ...this.notDeletedFilter,
+      });
+
+      const res = await this.contactNoteRepository.create(payload);
+
+      return successResponse(
+        HttpStatus.CREATED,
+        'Contact Note created successfully',
+        res
+      );
+    } catch (error) {
+      throw new RpcException(error);
+    }
+  }
+
+  async getContactNote(contactNoteId: string) {
+    try {
+      const res = await this.contactNoteRepository.findOne({
+        _id: contactNoteId,
+        ...this.notDeletedFilter,
+      });
+      return successResponse(
+        HttpStatus.OK,
+        'Contact Note Get Successfully',
+        res
+      );
+    } catch (error) {
+      throw new RpcException(error);
+    }
+  }
+
+  async getContactNotes(payload: ContactNoteFilterDto) {
+    try {
+      const take = payload.limit || 10;
+      const page = payload.page || 1;
+      const skip = (page - 1) * take;
+
+      delete payload.page;
+      delete payload.limit;
+
+      const filterQuery = {
+        ...payload,
+        ...this.notDeletedFilter,
+      };
+
+      const paginateRes = await this.contactRepository.paginate({
+        filterQuery,
+        offset: skip,
+        limit: take,
+      });
+
+      return successResponse(
+        HttpStatus.OK,
+        'Contact Notes Get Successfully',
+        paginateRes
+      );
+    } catch (error) {
+      throw new RpcException(error);
+    }
+  }
+
+  async editContactNote(payload: EditContactNoteDto) {
+    try {
+      const { contactNoteId } = payload;
+      await this.contactNoteRepository.findOne({
+        _id: contactNoteId,
+        ...this.notDeletedFilter,
+      });
+
+      if (payload.contactId)
+        this.contactRepository.findOne({
+          _id: payload.contactId,
+        });
+
+      delete payload.contactNoteId;
+      const payloadPlan = {
+        ...payload,
+        updatedAt: Date.now(),
+      };
+
+      const res = await this.contactRepository.findOneAndUpdate(
+        { _id: contactNoteId },
+        payloadPlan
+      );
+      return successResponse(
+        HttpStatus.CREATED,
+        'Contact Note Updated Successfully',
+        res
+      );
+    } catch (error) {
+      throw new RpcException(error);
+    }
+  }
+
+  async createContactCall(payload: CreateContactCallDto) {
+    try {
+      await this.contactRepository.findOne({
+        _id: payload.contactId,
+        ...this.notDeletedFilter,
+      });
+
+      if (payload.contactOwnerId)
+        this.userRepository.findOne({
+          _id: payload.contactOwnerId,
+          status: 'ACTIVE',
+        });
+
+      const res = await this.contactCallRepository.create(payload);
+
+      return successResponse(
+        HttpStatus.CREATED,
+        'Contact Call created successfully',
+        res
       );
     } catch (error) {
       throw new RpcException(error);

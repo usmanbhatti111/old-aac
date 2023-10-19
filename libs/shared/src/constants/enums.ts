@@ -137,6 +137,14 @@ export enum AssetsSoftwareTypeEnum {
   SAAS = 'Saas',
   MOBILE = 'Mobile',
 }
+
+export enum OutcomeEnum {
+  INTERESTED = 'Interested',
+  LEFT_MESSAGE = 'Left message',
+  NO_RESPONSE = 'No response',
+  NOT_INTERESTED = 'Not interested',
+  NOT_ABLE_TO_REACH = 'Not able to reach',
+}
 export enum AssetSoftwareCreatedAtEnum {
   NONE = 'None',
   ALL_TIME = 'AllTime',

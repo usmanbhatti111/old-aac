@@ -7,6 +7,7 @@ import {
   ContactDeleteDto,
   ContactFilterDto,
   CreateContactDto,
+  CreateContactNoteDto,
   EditContactDto,
 } from '@shared/dto';
 
@@ -42,5 +43,10 @@ export class ContactController {
   @MessagePattern(RMQ_MESSAGES.CONTACT.ASSIGN_CONTACT_OWNER)
   async assignContactOwner(@Payload() payload: AssignContactOwnerDto) {
     return await this.contactService.assignContactOwner(payload);
+  }
+
+  @MessagePattern(RMQ_MESSAGES.CONTACT.CREATE_CONTACT_NOTE)
+  async addContactNote(@Payload() payload: CreateContactNoteDto) {
+    return await this.contactService.createContactNote(payload);
   }
 }

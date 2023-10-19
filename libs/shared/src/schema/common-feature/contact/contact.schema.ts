@@ -1,12 +1,13 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument, SchemaTypes } from 'mongoose';
 import { AbstractSchema } from '../../abstract-repo/abstract.schema';
+import { MODEL } from '@shared/constants';
 
 export type ContactDocument = HydratedDocument<Contact>;
 
 @Schema({ versionKey: false, timestamps: true })
 export class Contact extends AbstractSchema {
-  @Prop({ required: true })
+  @Prop({ required: true, unique: true })
   email?: string;
 
   @Prop({ type: SchemaTypes.ObjectId, ref: 'attachments' })
@@ -30,16 +31,16 @@ export class Contact extends AbstractSchema {
   @Prop()
   whatsAppNumber?: string;
 
-  @Prop({ required: true, type: SchemaTypes.ObjectId })
+  @Prop({ required: true, type: SchemaTypes.ObjectId, ref: MODEL.USER })
   contactOwnerId?: string;
 
   @Prop({ required: true })
   jobTitle: string;
 
-  @Prop({ required: false, type: SchemaTypes.ObjectId })
+  @Prop({ required: false, type: SchemaTypes.ObjectId, ref: MODEL.USER })
   createdBy?: string;
 
-  @Prop({ required: false, type: SchemaTypes.ObjectId })
+  @Prop({ required: false, type: SchemaTypes.ObjectId, ref: MODEL.USER })
   updatedBy?: string;
 
   @Prop({ default: Date.now })
@@ -51,16 +52,16 @@ export class Contact extends AbstractSchema {
   @Prop({ required: false })
   deletedAt?: Date;
 
-  @Prop({ required: false, type: SchemaTypes.ObjectId })
+  @Prop({ required: false, type: SchemaTypes.ObjectId, ref: MODEL.USER })
   deletedBy?: string;
 
   @Prop({ default: false })
   isDeleted?: boolean;
 
-  @Prop({ default: true })
+  @Prop({ default: true, type: SchemaTypes.ObjectId, ref: 'lifecyclestages' })
   lifeCycleStageId?: string;
 
-  @Prop({ required: false, type: SchemaTypes.ObjectId })
+  @Prop({ required: false, type: SchemaTypes.ObjectId, ref: 'statuses' })
   statusId?: string;
 
   @Prop()

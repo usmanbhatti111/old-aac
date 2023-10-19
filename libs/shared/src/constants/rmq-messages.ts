@@ -88,6 +88,7 @@ export const RMQ_MESSAGES = {
     CONTACT: 'contact',
     DELETE_CONTACT: 'delete-contact',
     ASSIGN_CONTACT_OWNER: 'assign-contact-owner',
+    CREATE_CONTACT_NOTE: 'create-contact-note',
   },
 
   FAQS: {
