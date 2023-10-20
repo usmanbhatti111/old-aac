@@ -38,7 +38,20 @@ export const API_ENDPOINTS = {
     EDIT_CONTACT: '/:contactId',
     DELETE_CONTACT: '/:contactId',
     ASSIGN_CONTACT_OWNER: 'assign-contact-owner/:contactId',
-    CREATE_CONTACT_NOTE: 'create-contact-note',
+    CONTACT_NOTE: {
+      CREATE_CONTACT_NOTE: 'note/',
+      CONTACT_NOTE_LIST: 'note/',
+      CONTACT_NOTE: 'note/:contactNoteId',
+      EDIT_CONTACT_NOTE: 'note/:contactNoteId',
+      DELETE_CONTACT_NOTE: 'note/:contactNoteId',
+    },
+    CONTACT_CALL: {
+      CREATE_CONTACT_CALL: 'call/',
+      CONTACT_CALL_LIST: 'call/',
+      CONTACT_CALL: 'call/:contactCallId',
+      EDIT_CONTACT_CALL: 'call/:contactCallId',
+      DELETE_CONTACT_CALL: 'call/:contactCallId',
+    },
   },
   ORGANIZATION: {
     CREATE_ORGANIZATION: '/',

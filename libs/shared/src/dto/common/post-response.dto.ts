@@ -23,11 +23,11 @@ export class PostResponseDto<T> {
   @Expose()
   @ApiProperty({
     required: true,
-    example: 'Success',
+    example: 'Deleted Successfully',
   })
   @IsNotEmpty()
   @IsString()
-  message: string = 'Success';
+  message: string;
 
   @Expose()
   @ApiProperty({

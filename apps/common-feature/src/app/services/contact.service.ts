@@ -5,7 +5,7 @@ import {
   ContactNoteRepository,
   ContactRepository,
   ContactStateRepository,
-  LifeCycleStageRepository,
+  LifecycleStagesRepository,
   UserRepository,
 } from '@shared';
 import { successResponse } from '@shared/constants';
@@ -13,6 +13,7 @@ import {
   AssignContactOwnerDto,
   ContactDeleteDto,
   ContactFilterDto,
+  ContactNoteDeleteDto,
   ContactNoteFilterDto,
   CreateContactCallDto,
   CreateContactDto,
@@ -28,7 +29,7 @@ export class ContactService {
     private contactRepository: ContactRepository,
     private userRepository: UserRepository,
     private statusRepository: ContactStateRepository,
-    private lifecycleRepository: LifeCycleStageRepository,
+    private lifecycleRepository: LifecycleStagesRepository,
     private contactNoteRepository: ContactNoteRepository,
     private contactCallRepository: ContactCallRepository
   ) {}
@@ -303,7 +304,7 @@ export class ContactService {
         ...this.notDeletedFilter,
       };
 
-      const paginateRes = await this.contactRepository.paginate({
+      const paginateRes = await this.contactNoteRepository.paginate({
         filterQuery,
         offset: skip,
         limit: take,
@@ -338,7 +339,7 @@ export class ContactService {
         updatedAt: Date.now(),
       };
 
-      const res = await this.contactRepository.findOneAndUpdate(
+      const res = await this.contactNoteRepository.findOneAndUpdate(
         { _id: contactNoteId },
         payloadPlan
       );
@@ -346,6 +347,25 @@ export class ContactService {
         HttpStatus.CREATED,
         'Contact Note Updated Successfully',
         res
+      );
+    } catch (error) {
+      throw new RpcException(error);
+    }
+  }
+
+  async deleteContactNote(payload: ContactNoteDeleteDto) {
+    try {
+      const { deletedBy, contactNoteId } = payload;
+
+      await this.contactNoteRepository.findOneAndUpdate(
+        { _id: contactNoteId, ...this.notDeletedFilter },
+        { isDeleted: true, deletedAt: Date.now(), deletedBy }
+      );
+
+      return successResponse(
+        HttpStatus.CREATED,
+        'Contact Note Deleted Successfully',
+        {}
       );
     } catch (error) {
       throw new RpcException(error);

@@ -17,3 +17,5 @@ export * from './contact-note-filter.dto';
 export * from './get-contact-notes-response.dto';
 export * from './edit-contact-note.dto';
 export * from './edit-contact-note-response.dto';
+export * from './contact-note-delete.dto';
+export * from './contact-note-id-param.dto';

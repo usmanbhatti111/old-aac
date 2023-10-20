@@ -88,7 +88,20 @@ export const RMQ_MESSAGES = {
     CONTACT: 'contact',
     DELETE_CONTACT: 'delete-contact',
     ASSIGN_CONTACT_OWNER: 'assign-contact-owner',
-    CREATE_CONTACT_NOTE: 'create-contact-note',
+    CONTACT_NOTE: {
+      CREATE_CONTACT_NOTE: 'create-contact-note',
+      CONTACT_NOTE_LIST: 'contact-note-list',
+      CONTACT_NOTE: 'contact-note',
+      EDIT_CONTACT_NOTE: 'edit-contact-note',
+      DELETE_CONTACT_NOTE: 'delete-contact-note',
+    },
+    CONTACT_CALL: {
+      CREATE_CONTACT_CALL: 'create-contact-call',
+      CONTACT_CALL_LIST: 'contact-call-list',
+      CONTACT_CALL: 'contact-call',
+      EDIT_CONTACT_CALL: 'edit-contact-call',
+      DELETE_CONTACT_CALL: 'delete-contact-call',
+    },
   },
 
   FAQS: {

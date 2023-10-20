@@ -59,8 +59,6 @@ import {
   RequestLogSchema,
   Status,
   StatusSchema,
-  LifeCycleStage,
-  LifeCycleStageSchema,
   PurchaseSchema,
   QuickLinks,
   QuickLinksSchema,
@@ -247,10 +245,6 @@ export const DbModels = [
   {
     name: Status.name,
     schema: StatusSchema,
-  },
-  {
-    name: LifeCycleStage.name,
-    schema: LifeCycleStageSchema,
   },
   {
     name: ContactNote.name,

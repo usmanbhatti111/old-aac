@@ -6,9 +6,12 @@ import {
   AssignContactOwnerDto,
   ContactDeleteDto,
   ContactFilterDto,
+  ContactNoteDeleteDto,
+  ContactNoteFilterDto,
   CreateContactDto,
   CreateContactNoteDto,
   EditContactDto,
+  EditContactNoteDto,
 } from '@shared/dto';
 
 @Controller()
@@ -45,8 +48,28 @@ export class ContactController {
     return await this.contactService.assignContactOwner(payload);
   }
 
-  @MessagePattern(RMQ_MESSAGES.CONTACT.CREATE_CONTACT_NOTE)
+  @MessagePattern(RMQ_MESSAGES.CONTACT.CONTACT_NOTE.CREATE_CONTACT_NOTE)
   async addContactNote(@Payload() payload: CreateContactNoteDto) {
     return await this.contactService.createContactNote(payload);
+  }
+
+  @MessagePattern(RMQ_MESSAGES.CONTACT.CONTACT_NOTE.CONTACT_NOTE_LIST)
+  async getContactNotes(@Payload() payload: ContactNoteFilterDto) {
+    return await this.contactService.getContactNotes(payload);
+  }
+
+  @MessagePattern(RMQ_MESSAGES.CONTACT.CONTACT_NOTE.CONTACT_NOTE)
+  async getContactNote(@Payload() payload: string) {
+    return await this.contactService.getContactNote(payload);
+  }
+
+  @MessagePattern(RMQ_MESSAGES.CONTACT.CONTACT_NOTE.EDIT_CONTACT_NOTE)
+  async editContactNote(@Payload() payload: EditContactNoteDto) {
+    return await this.contactService.editContactNote(payload);
+  }
+
+  @MessagePattern(RMQ_MESSAGES.CONTACT.CONTACT_NOTE.DELETE_CONTACT_NOTE)
+  async deleteContactNote(@Payload() payload: ContactNoteDeleteDto) {
+    return await this.contactService.deleteContactNote(payload);
   }
 }
