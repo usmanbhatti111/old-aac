@@ -1,5 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsMongoId, IsNotEmpty, IsOptional } from 'class-validator';
+import { IsMongoId, IsNotEmpty, IsOptional, IsString } from 'class-validator';
+import { EStatusToggle } from '../../constants/enums';
 
 export class EditProductFeatureDto {
   @ApiProperty({ required: false, example: '56cb91bdc3464f14678934ca' })
@@ -27,13 +28,16 @@ export class EditProductFeatureDto {
   description: string;
 
   @ApiProperty({
-    type: Boolean,
+    type: String,
     required: false,
+    example: EStatusToggle.ACTIVE,
+    enum: EStatusToggle,
   })
-  @IsNotEmpty()
+  @IsString()
   @IsOptional()
-  isActive: boolean;
+  @IsNotEmpty()
+  status: string;
 
-  modifiedBy: string;
+  updatedBy: string;
   id: string;
 }

@@ -1,14 +1,14 @@
 import { Controller } from '@nestjs/common';
+import { MessagePattern, Payload } from '@nestjs/microservices';
 import { RMQ_MESSAGES } from '@shared/constants';
-import { ProductFeaturesService } from '../services/product-features.service';
 import {
   AddProductFeatureDto,
+  DeleteProductFeaturesDto,
   EditProductFeatureDto,
   GetProductsFeaturesDto,
   IdDto,
-  IdsDto,
 } from '@shared/dto';
-import { MessagePattern, Payload } from '@nestjs/microservices';
+import { ProductFeaturesService } from '../services/product-features.service';
 
 @Controller()
 export class ProductFeaturesController {
@@ -37,7 +37,7 @@ export class ProductFeaturesController {
   }
 
   @MessagePattern(RMQ_MESSAGES.PRODUCT_FEATURES.DELETE_PRODUCTS_FEATURES)
-  deleteProductFeature(@Payload() payload: IdsDto) {
+  deleteProductFeature(@Payload() payload: DeleteProductFeaturesDto) {
     return this.productFeaturesService.deleteProductFeature(payload);
   }
 }

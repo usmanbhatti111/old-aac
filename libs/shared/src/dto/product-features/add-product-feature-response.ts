@@ -9,15 +9,15 @@ export class AddProductFeatureResponseDto {
 
   @ApiProperty({
     example: {
-      _id: '652686ec848b41f28761764e',
-      productId: '651fd9863066c8a22a9526c4',
-      name: 'View Quote',
-      description: 'Description',
-      isActive: false,
+      _id: '6531f2b367cff9f7975ee5d5',
+      productId: '6531f2a267cff9f7975ee5d3',
+      name: 'Create Deals 2',
+      description: 'Create Deals Description',
+      status: 'inactive',
       createdBy: '56cb91bdc3464f14678934ca',
       isDeleted: false,
-      createdAt: '2023-10-11T11:28:44.539Z',
-      updatedAt: '2023-10-11T11:28:44.539Z',
+      createdAt: '2023-10-20T03:23:31.249Z',
+      updatedAt: '2023-10-20T03:23:31.249Z',
     },
   })
   data: {};

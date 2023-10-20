@@ -3,6 +3,7 @@ import mongoose, { HydratedDocument } from 'mongoose';
 
 import { AbstractSchema } from '../abstract-repo/abstract.schema';
 import { Products } from './products.schema';
+import { EStatusToggle } from '../../constants/enums';
 
 export type ProductFeaturesDocument = HydratedDocument<ProductFeatures>;
 
@@ -17,8 +18,8 @@ export class ProductFeatures extends AbstractSchema {
   @Prop({ type: String })
   description: string;
 
-  @Prop({ type: Boolean, default: false })
-  isActive?: boolean;
+  @Prop({ type: String, enum: EStatusToggle, default: EStatusToggle.INACTIVE })
+  status?: string;
 
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'users' })
   createdBy?: string;

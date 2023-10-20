@@ -9,15 +9,15 @@ export class GetProductFeatureResponseDto {
 
   @ApiProperty({
     example: {
-      _id: '651e6c111d3b9d4452aad1c0',
-      name: 'Edit Goal',
-      description: 'Edit Goal Description',
-      isActive: true,
+      _id: '6531f27e67cff9f7975ee5d1',
+      productId: '6531f2a267cff9f7975ee5d3',
+      name: 'Create Deals',
+      description: 'Create Deals Description',
+      status: 'inactive',
+      createdBy: '56cb91bdc3464f14678934ca',
       isDeleted: false,
-      createdAt: '2023-10-05T07:56:01.217Z',
-      updatedAt: '2023-10-09T10:06:46.097Z',
-      modifiedBy: '56cb91bdc3464f14678934ca',
-      productId: '651fd90c37afc24d56a3c7ea',
+      createdAt: '2023-10-20T03:22:38.317Z',
+      updatedAt: '2023-10-20T03:22:38.317Z',
     },
   })
   data: {};

@@ -4,11 +4,12 @@ import { ProductFeaturesRepository } from '@shared';
 import { ResponseMessage, successResponse } from '@shared/constants';
 import {
   AddProductFeatureDto,
+  DeleteProductFeaturesDto,
   EditProductFeatureDto,
   GetProductsFeaturesDto,
   IdDto,
-  IdsDto,
 } from '@shared/dto';
+import mongoose from 'mongoose';
 
 @Injectable()
 export class ProductFeaturesService {
@@ -36,7 +37,7 @@ export class ProductFeaturesService {
 
       const { productId, search } = payload;
       if (productId) {
-        filterQuery['product'] = productId;
+        filterQuery['productId'] = new mongoose.Types.ObjectId(productId);
       }
 
       if (search) {
@@ -146,13 +147,13 @@ export class ProductFeaturesService {
     }
   }
 
-  async deleteProductFeature(payload: IdsDto) {
+  async deleteProductFeature(payload: DeleteProductFeaturesDto) {
     try {
       const ids = payload.ids.split(',');
 
       const res = await this.productFeaturesRepository.updateMany(
         { _id: { $in: ids } },
-        { isDeleted: true }
+        { isDeleted: true, deletedBy: payload?.deletedBy }
       );
 
       let message: string;

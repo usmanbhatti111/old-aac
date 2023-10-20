@@ -8,6 +8,7 @@ import {
   Patch,
   Post,
   Query,
+  Req,
 } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
 import {
@@ -27,6 +28,7 @@ import {
   AddProductFeatureDto,
   AddProductFeatureResponseDto,
   AddProductResponseDto,
+  DeleteProductFeaturesDto,
   DeleteProductFeaturesResponseDto,
   EditProductFeatureDto,
   EditProductFeatureResponseDto,
@@ -34,9 +36,10 @@ import {
   GetProductsFeaturesDto,
   GetProductsFeaturesResponseDto,
   IdDto,
-  IdsDto,
 } from '@shared/dto';
 import { firstValueFrom } from 'rxjs';
+import { Auth } from '../decorators/auth.decorator';
+import { AppRequest } from '../shared/interface/request.interface';
 
 @ApiBearerAuth()
 @ApiTags(API_TAGS.PRODUCT_FEATURES)
@@ -47,12 +50,14 @@ export class ProductFeaturesController {
     private superAdminService: ClientProxy
   ) {}
 
+  @Auth(true)
   @Post(API_ENDPOINTS.PRODUCT_FEATURES.ADD_PRODUCT_FEATURE)
   @ApiCreatedResponse({ type: AddProductFeatureResponseDto })
   public async addProduct(
+    @Req() request: AppRequest,
     @Body() payload: AddProductFeatureDto
   ): Promise<AddProductResponseDto> {
-    payload.createdBy = '56cb91bdc3464f14678934ca'; // TODO get user id from token data
+    payload.createdBy = request?.user?._id;
     const response = await firstValueFrom(
       this.superAdminService.send(
         RMQ_MESSAGES.PRODUCT_FEATURES.ADD_PRODUCT_FEATURE,
@@ -63,6 +68,7 @@ export class ProductFeaturesController {
     return response;
   }
 
+  @Auth(true)
   @Get(API_ENDPOINTS.PRODUCT_FEATURES.GET_PRODUCTS_FEATURES)
   @ApiOkResponse({ type: GetProductsFeaturesResponseDto })
   public async getProductsFeatures(
@@ -78,6 +84,7 @@ export class ProductFeaturesController {
     return response;
   }
 
+  @Auth(true)
   @Get(API_ENDPOINTS.PRODUCT_FEATURES.GET_PRODUCT_FEATURE)
   @ApiOkResponse({ type: GetProductFeatureResponseDto })
   public async getProductFeature(
@@ -93,13 +100,15 @@ export class ProductFeaturesController {
     return response;
   }
 
+  @Auth(true)
   @Patch(API_ENDPOINTS.PRODUCT_FEATURES.EDIT_PRODUCT_FEATURE)
   @ApiOkResponse({ type: EditProductFeatureResponseDto })
   public async editProductFeature(
+    @Req() request: AppRequest,
     @Param() params: IdDto,
     @Body() payload: EditProductFeatureDto
   ): Promise<EditProductFeatureResponseDto> {
-    payload.modifiedBy = '56cb91bdc3464f14678934ca'; // TODO get user id from token data
+    payload.updatedBy = request?.user?._id;
     payload.id = params.id;
     const response = await firstValueFrom(
       this.superAdminService.send(
@@ -111,11 +120,15 @@ export class ProductFeaturesController {
     return response;
   }
 
+  @Auth(true)
   @Delete(API_ENDPOINTS.PRODUCT_FEATURES.DELETE_PRODUCTS_FEATURES)
   @ApiOkResponse({ type: DeleteProductFeaturesResponseDto })
   public async deleteProductFeature(
-    @Param() payload: IdsDto
+    @Req() request: AppRequest,
+    @Param() payload: DeleteProductFeaturesDto
   ): Promise<DeleteProductFeaturesResponseDto> {
+    payload.deletedBy = request?.user?._id;
+
     const response = await firstValueFrom(
       this.superAdminService.send(
         RMQ_MESSAGES.PRODUCT_FEATURES.DELETE_PRODUCTS_FEATURES,
