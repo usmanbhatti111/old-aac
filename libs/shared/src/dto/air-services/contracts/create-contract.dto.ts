@@ -10,7 +10,9 @@ import {
   IsOptional,
   IsNumber,
   ArrayNotEmpty,
+  IsArray,
 } from 'class-validator';
+import mongoose from 'mongoose';
 export class DeleteContractDto {
   @ApiProperty({
     example: '651e6368a3a6baf2f193efb0',
@@ -38,11 +40,11 @@ export class CreateContractDTO {
 
   @ApiProperty({
     type: [String],
-
-    example: ['651d72b06c9932a97b031a34'],
+    example: ['652ee528da86b788fd6ca7ea'],
   })
-  @ArrayNotEmpty()
-  associateAssets: string;
+  @IsArray()
+  @IsOptional()
+  attachments: mongoose.Types.ObjectId[];
 
   @ApiProperty({ type: Number, example: 200 })
   @IsNumber()
@@ -83,7 +85,7 @@ export class CreateContractDTO {
   @IsOptional()
   approver: string;
 
-  @ApiProperty({ example: '651d72b06c9932a97b031a34' })
+  @ApiProperty({ example: '652ee528da86b788fd6ca7ea' })
   @IsMongoId()
   @IsOptional()
   assetId: string;
@@ -102,11 +104,10 @@ export class UpdateContractDTO {
 
   @ApiProperty({
     type: [String],
-
-    example: ['651d72b06c9932a97b031a34'],
+    example: ['652ee528da86b788fd6ca7ea'],
   })
   @ArrayNotEmpty()
-  associateAssets: string;
+  attachments: string;
 
   @ApiProperty({ example: 'CNTW-6', required: false })
   @IsString()
@@ -118,10 +119,10 @@ export class UpdateContractDTO {
   @IsNotEmpty()
   type: string;
 
-  @ApiProperty({ example: '200', required: false })
-  @IsString()
-  @IsNotEmpty()
-  cost: string;
+  @ApiProperty({ type: Number, example: 200 })
+  @IsNumber()
+  @IsOptional()
+  cost: number;
 
   @ApiProperty({ example: '20', required: false })
   @IsString()

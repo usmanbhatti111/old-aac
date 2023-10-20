@@ -7,13 +7,14 @@ import {
   UpdateContractDTO,
   ExtendRenewContractDTO,
   GetContactsDto,
+  CreateContractDTO,
 } from '@shared/dto';
 @Controller()
 export class ContractController {
   constructor(private contractService: ContractService) {}
 
   @MessagePattern(RMQ_MESSAGES.AIR_SERVICES.CONTRACT.ADD_CONTRACT)
-  addContract(@Payload() payload: any) {
+  addContract(@Payload() payload: CreateContractDTO) {
     return this.contractService.addContract(payload);
   }
   @MessagePattern(RMQ_MESSAGES.AIR_SERVICES.CONTRACT.DELETE_CONTRACT)

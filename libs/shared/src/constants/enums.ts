@@ -47,6 +47,7 @@ export enum EPurchaseOrderStatus {
 export enum EExtendRenewStatus {
   EXTEND = 'EXTEND',
   RENEW = 'RENEW',
+  NULL = null,
 }
 export enum EFaqCategories {
   SALES = 'SALES',

@@ -20,7 +20,7 @@ export class GetContactsDto extends PaginationDto {
 
   @ApiProperty({
     enum: EContractStatus,
-    example: EContractStatus.ACTIVE,
+    example: '',
     required: false,
   })
   @IsEnum(EContractStatus)
@@ -34,12 +34,17 @@ export class GetContactsDto extends PaginationDto {
 
   @ApiProperty({
     enum: EContractExpiry,
-    example: EContractExpiry.NONE,
+    example: '',
     required: false,
   })
   @IsEnum(EContractExpiry)
   @IsOptional()
   expiry: string;
+
+  @ApiProperty({ example: '652ee528da86b788fd6ca7ea', required: false })
+  @IsMongoId()
+  @IsOptional()
+  assetId: string;
 
   @ApiProperty({
     type: String,

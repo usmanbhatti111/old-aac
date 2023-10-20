@@ -8,6 +8,7 @@ import {
   UpdateContractDTO,
   GetContactsDto,
 } from '@shared/dto';
+import mongoose from 'mongoose';
 
 @Injectable()
 export class ContractService {
@@ -47,11 +48,26 @@ export class ContractService {
 
   async getContracts(payload: GetContactsDto) {
     try {
-      const { page, limit, status, search, expiry } = payload;
+      const { page, limit, status, search, expiry, assetId } = payload;
       const filterQuery = {};
       const searchFilter = {};
       let expiryFilter = {};
-      const pipeline = [];
+      let pipeline: any = [
+        {
+          $lookup: {
+            from: 'attachments',
+            localField: 'attachments',
+            foreignField: '_id',
+            as: 'attachmentDetails',
+          },
+        },
+        {
+          $unwind: {
+            path: '$attachmentDetails',
+            preserveNullAndEmptyArrays: true,
+          },
+        },
+      ];
 
       if (status) {
         filterQuery['status'] = status;
@@ -64,6 +80,26 @@ export class ContractService {
           { cost: { $regex: search, $options: 'i' } },
         ];
         pipeline.push({ $match: searchFilter });
+      }
+      if (assetId) {
+        filterQuery['assetId'] = new mongoose.Types.ObjectId(assetId);
+        pipeline = [
+          ...pipeline,
+          {
+            $lookup: {
+              from: 'assetssoftwares',
+              localField: 'assetId',
+              foreignField: '_id',
+              as: 'assetDetails',
+            },
+          },
+          {
+            $unwind: {
+              path: '$assetDetails',
+              preserveNullAndEmptyArrays: true,
+            },
+          },
+        ];
       }
       if (expiry) {
         expiryFilter = mongooseDateFilter(expiry, 'endDate');

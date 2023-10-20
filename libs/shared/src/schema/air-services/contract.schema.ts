@@ -30,10 +30,10 @@ export class Contract extends AbstractSchema {
   contractNumber: string;
 
   @Prop({
-    type: [{ type: SchemaTypes.ObjectId, ref: Inventory.name }],
+    type: [{ type: SchemaTypes.ObjectId }],
     required: false,
   })
-  associateAssets: string[];
+  attachments: string[];
 
   @Prop({
     type: String,
@@ -41,7 +41,7 @@ export class Contract extends AbstractSchema {
     default: EContractStatus.DRAFT,
     enum: EContractStatus,
   })
-  status: string;
+  status?: string;
 
   @Prop({ type: SchemaTypes.ObjectId, required: false })
   vendor: string;
@@ -65,8 +65,9 @@ export class Contract extends AbstractSchema {
     type: String,
     required: false,
     enum: EExtendRenewStatus,
+    default: EExtendRenewStatus.NULL,
   })
-  statusRenewExtend: string;
+  statusRenewExtend?: string;
 
   @Prop({ type: SchemaTypes.ObjectId, required: false })
   assetId: string;
@@ -75,7 +76,7 @@ export class Contract extends AbstractSchema {
     type: Boolean,
     default: false,
   })
-  isDeleted: boolean;
+  isDeleted?: boolean;
 }
 
 export const ContractSchema = SchemaFactory.createForClass(Contract);
