@@ -3,7 +3,6 @@ import { successResponse } from '@shared/constants';
 import { ContractRepository, mongooseDateFilter } from '@shared';
 import { RpcException } from '@nestjs/microservices';
 import {
-  DeleteContractDto,
   ExtendRenewContractDTO,
   UpdateContractDTO,
   GetContactsDto,
@@ -22,10 +21,9 @@ export class ContractService {
       throw new RpcException(error);
     }
   }
-  async deleteContract(payload: DeleteContractDto) {
+  async deleteContract(payload: { ids: string[] }) {
     try {
-      const { id } = payload;
-      const res = await this.contractRepository.delete({ _id: id });
+      const res = await this.contractRepository.deleteMany({}, payload.ids);
 
       return successResponse(HttpStatus.OK, 'Success', res);
     } catch (error) {

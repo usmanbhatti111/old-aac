@@ -3,7 +3,6 @@ import {
   Inject,
   Post,
   Body,
-  Param,
   Delete,
   Patch,
   Query,
@@ -21,7 +20,6 @@ import {
 } from '@shared/constants';
 import {
   CreateContractDTO,
-  DeleteContractDto,
   UpdateContractDTO,
   ExtendRenewContractDTO,
   GetContactsDto,
@@ -53,12 +51,12 @@ export class ContractController {
     }
   }
   @Delete(API_ENDPOINTS.AIR_SERVICES.CONTRACT.DELETE_CONTRACT)
-  public async deleteContract(@Param() payload: DeleteContractDto) {
+  public async deleteContract(@Query('ids') ids: string[]) {
     try {
       const response = await firstValueFrom(
         this.airServiceClient.send(
           RMQ_MESSAGES.AIR_SERVICES.CONTRACT.DELETE_CONTRACT,
-          { ...payload }
+          { ids }
         )
       );
 

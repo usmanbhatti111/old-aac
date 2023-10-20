@@ -3,7 +3,6 @@ import { MessagePattern, Payload } from '@nestjs/microservices';
 import { RMQ_MESSAGES } from '@shared/constants';
 import { ContractService } from '../../services/assets/contract.service';
 import {
-  DeleteContractDto,
   UpdateContractDTO,
   ExtendRenewContractDTO,
   GetContactsDto,
@@ -18,7 +17,7 @@ export class ContractController {
     return this.contractService.addContract(payload);
   }
   @MessagePattern(RMQ_MESSAGES.AIR_SERVICES.CONTRACT.DELETE_CONTRACT)
-  deleteContract(@Payload() payload: DeleteContractDto) {
+  deleteContract(@Payload() payload: { ids: string[] }) {
     return this.contractService.deleteContract(payload);
   }
   @MessagePattern({
