@@ -38,6 +38,8 @@ const PurchaseDetailSchema = SchemaFactory.createForClass(PurchaseDetail);
 })
 export class Purchase extends AbstractSchema {
   @Prop({ required: true })
+  orderName: string;
+  @Prop({ required: true })
   orderNumber: string;
   @Prop({
     type: SchemaTypes.ObjectId,

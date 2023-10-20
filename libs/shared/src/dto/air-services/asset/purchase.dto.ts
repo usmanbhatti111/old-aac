@@ -12,6 +12,7 @@ import {
 } from 'class-validator';
 import { EPurchaseOrderStatus } from '../../../constants/enums';
 import { paginationDTO } from '../../pagination/pagination.dto';
+import { EExportFile } from '@shared/constants';
 export class PurchaseDetailDto {
   @IsNotEmpty()
   @IsNumber()
@@ -77,7 +78,6 @@ export class addPurchaseOrderDto {
   @IsNotEmpty()
   @IsString()
   @ApiProperty({
-    type: String,
     example: 'new Order',
     required: true,
   })
@@ -380,6 +380,14 @@ export class FilterPurchaseOrderDto extends paginationDTO {
   })
   @IsOptional()
   search: string;
+  @ApiProperty({
+    type: String,
+    required: false,
+    enum: EExportFile,
+  })
+  @IsEnum(EExportFile)
+  @IsOptional()
+  exportType: string;
 }
 export class AssociatePurchaseOrderDto {
   @IsArray()

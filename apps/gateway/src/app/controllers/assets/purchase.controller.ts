@@ -8,6 +8,7 @@ import {
   Patch,
   Get,
   Query,
+  Res,
 } from '@nestjs/common';
 import { ClientProxy, RpcException } from '@nestjs/microservices';
 import { ApiCreatedResponse, ApiTags } from '@nestjs/swagger';
@@ -29,6 +30,7 @@ import {
   DeleteAssociatePurchaseOrderDto,
   AssociatePurchaseOrderDto,
 } from '@shared/dto';
+import { DownloadService } from '@shared/services';
 
 import { firstValueFrom } from 'rxjs';
 
@@ -36,7 +38,8 @@ import { firstValueFrom } from 'rxjs';
 @Controller(CONTROLLERS.ASSETS)
 export class PurchaseOrderController {
   constructor(
-    @Inject(SERVICES.AIR_SERVICES) private airServiceClient: ClientProxy
+    @Inject(SERVICES.AIR_SERVICES) private airServiceClient: ClientProxy,
+    private readonly downloadService: DownloadService
   ) {}
 
   @Post(API_ENDPOINTS.AIR_SERVICES.ASSETS.PURCHASEORDER)
@@ -145,15 +148,23 @@ export class PurchaseOrderController {
   }
   @Get(API_ENDPOINTS.AIR_SERVICES.ASSETS.GET_PURCHASEORDERLIST)
   @ApiCreatedResponse({ type: GetPurchasesResponseOrderDto })
-  public async getPurchaseOrderList(@Query() filter: FilterPurchaseOrderDto) {
+  public async getPurchaseOrderList(
+    @Query() filter: FilterPurchaseOrderDto,
+    @Res() res: Response | any
+  ) {
     try {
+      const { exportType } = filter;
       const response = await firstValueFrom(
         this.airServiceClient.send(
           { cmd: RMQ_MESSAGES.AIR_SERVICES.ASSETS.GET_PURCHASEORDERLIST },
           filter
         )
       );
-      return response;
+      if (exportType) {
+        const data = response?.data?.purchases || [];
+       return this.downloadService.downloadFile(exportType, data, res);
+      }
+      return res.status(response.statusCode).json(response);
     } catch (error) {
       throw new RpcException(error);
     }

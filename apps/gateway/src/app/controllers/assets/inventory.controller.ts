@@ -28,12 +28,13 @@ import {
 } from '@shared/dto';
 import { Response } from 'express';
 import { firstValueFrom } from 'rxjs';
-
+import { DownloadService } from '@shared/services';
 @ApiTags(API_TAGS.ASSETS)
 @Controller(CONTROLLERS.ASSETS)
 export class InventoryController {
   constructor(
-    @Inject(SERVICES.AIR_SERVICES) private airServiceClient: ClientProxy
+    @Inject(SERVICES.AIR_SERVICES) private airServiceClient: ClientProxy,
+    private readonly downloadService: DownloadService
   ) {}
 
   @Post(API_ENDPOINTS.AIR_SERVICES.ASSETS.INVENTORY)
@@ -102,6 +103,7 @@ export class InventoryController {
     @Res() res: Response | any
   ) {
     try {
+      const { exportType } = payload;
       const response = await firstValueFrom(
         this.airServiceClient.send(
           RMQ_MESSAGES.AIR_SERVICES.ASSETS.GET_Inventory,
@@ -109,6 +111,11 @@ export class InventoryController {
         )
       );
 
+      if (exportType) {
+        const data = response?.data?.inventories || [];
+
+        return this.downloadService.downloadFile(exportType, data, res);
+      }
       return res.status(response.statusCode).json(response);
     } catch (err) {
       return res.status(err.statusCode).json(err);

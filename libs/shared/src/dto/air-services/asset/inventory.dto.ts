@@ -8,7 +8,7 @@ import {
   IsString,
 } from 'class-validator';
 import { paginationDTO } from '../../pagination/pagination.dto';
-
+import { EExportFile } from '@shared/constants';
 export class AddInventoryDto {
   @IsNotEmpty()
   @IsString()
@@ -186,6 +186,15 @@ export class GetInventoryDto extends paginationDTO {
     required: false,
   })
   search: string;
+
+  @ApiProperty({
+    type: String,
+    required: false,
+    enum: EExportFile,
+  })
+  @IsEnum(EExportFile)
+  @IsOptional()
+  exportType: string;
 }
 
 export class SearchInventoryDto extends paginationDTO {
