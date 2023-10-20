@@ -6,8 +6,10 @@ import {
   AssignOrgPlanDto,
   BillingDetailsDto,
   CreateInvoiceDto,
+  ListInvoicesDTO,
   ListOrgPlan,
   UpdateAssignOrgPlanSuperAdminDto,
+  UpdateInvoiceDto,
 } from '@shared/dto';
 import { InvoiceService } from '../services/invoice.service';
 
@@ -37,10 +39,24 @@ export class InvoiceController {
   }
 
   @MessagePattern({
+    cmd: RMQ_MESSAGES.SUPER_ADMIN.BILLING_INVOICES.LIST_ALL_INVOICES,
+  })
+  async getAllInvoices(@Payload() payload: ListInvoicesDTO) {
+    return this.billingService.getAllInvoices(payload);
+  }
+
+  @MessagePattern({
     cmd: RMQ_MESSAGES.SUPER_ADMIN.BILLING_INVOICES.GENERATE_INVOICE,
   })
   async generateInvoice(@Payload() payload: CreateInvoiceDto) {
     return this.billingService.generateInvoice(payload);
+  }
+
+  @MessagePattern({
+    cmd: RMQ_MESSAGES.SUPER_ADMIN.BILLING_INVOICES.UPDATE_INVOICE,
+  })
+  async updateInvoice(@Payload() payload: UpdateInvoiceDto) {
+    return this.billingService.updateInvoice(payload);
   }
 
   @MessagePattern({

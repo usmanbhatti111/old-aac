@@ -31,11 +31,14 @@ import {
   BillingDetailsResponseDto,
   CreateInvoiceDto,
   GetOrgPlanResponseDto,
+  ListInvoicesDTO,
   ListOrgPlan,
   ListOrgPlanResponseDto,
   OrganizationPlanId,
   UpdateAssignOrgPlanResponseSuperAdminDto,
   UpdateAssignOrgPlanSuperAdminDto,
+  UpdateInvoiceDto,
+  UpdateInvoiceIdDto,
 } from '@shared/dto';
 import { firstValueFrom } from 'rxjs';
 import { Auth } from '../../decorators/auth.decorator';
@@ -121,20 +124,57 @@ export class InvoiceController {
     return response;
   }
 
+  @Auth(true)
+  @Get(API_ENDPOINTS.SUPER_ADMIN.BILLING_INVOICES.LIST_ALL_INVOICE)
+  @ApiCreatedResponse({})
+  public async getAllInvoices(@Query() payload: ListInvoicesDTO) {
+    const response = await firstValueFrom(
+      this.superAdminServiceClient.send(
+        { cmd: RMQ_MESSAGES.SUPER_ADMIN.BILLING_INVOICES.LIST_ALL_INVOICES },
+        { ...payload }
+      )
+    );
+    return response;
+  }
+
   @Post(API_ENDPOINTS.SUPER_ADMIN.BILLING_INVOICES.GENERATE_INVOICE)
   @Auth(true)
   @ApiCreatedResponse({})
   public async generateInvoice(
-    @Body() payload: CreateInvoiceDto,
+    @Query() payload: CreateInvoiceDto,
     @Req() request: AppRequest
   ) {
     try {
       const { user } = request;
-      const createdBy = user?._id; // TODO: get Id from token
+      const createdBy = user?._id;
       const response = await firstValueFrom(
         this.superAdminServiceClient.send(
           { cmd: RMQ_MESSAGES.SUPER_ADMIN.BILLING_INVOICES.GENERATE_INVOICE },
           { ...payload, createdBy }
+        )
+      );
+      return response;
+    } catch (error) {
+      throw new RpcException(error);
+    }
+  }
+
+  @Patch(API_ENDPOINTS.SUPER_ADMIN.BILLING_INVOICES.UPDATE_INVOICE)
+  @Auth(true)
+  @ApiCreatedResponse({})
+  public async updateInvoice(
+    @Query() invoice: UpdateInvoiceIdDto,
+    @Body() payload: UpdateInvoiceDto,
+    @Req() request: AppRequest
+  ) {
+    try {
+      const { user } = request;
+      const updatedBy = user?._id;
+      const invoiceId = invoice.invoiceId;
+      const response = await firstValueFrom(
+        this.superAdminServiceClient.send(
+          { cmd: RMQ_MESSAGES.SUPER_ADMIN.BILLING_INVOICES.UPDATE_INVOICE },
+          { ...payload, updatedBy, invoiceId }
         )
       );
       return response;

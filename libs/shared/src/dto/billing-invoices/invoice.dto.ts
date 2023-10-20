@@ -1,143 +1,33 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Type } from 'class-transformer';
 import {
-  IsISO8601,
   IsMongoId,
   IsNotEmpty,
+  IsISO8601,
   IsNumber,
   IsOptional,
   IsString,
 } from 'class-validator';
+import { Type } from 'class-transformer';
+import { InvoiceStatusEnum } from '../../constants/enums';
+import { PaginationDto } from '../common';
 
 export class CreateInvoiceDto {
   @ApiProperty({
-    example: '',
+    example: '652dff82d73b5bebfb0ab482',
   })
   @IsMongoId()
   @IsNotEmpty()
   organizationPlanId: string;
+  createdBy?: string;
+}
 
+export class UpdateInvoiceDto {
   @ApiProperty({
-    example: '',
+    example: '2023-10-20',
   })
   @IsISO8601()
   @IsNotEmpty()
-  dueDate;
-
-  @ApiProperty({
-    example: '',
-  })
-  @IsString()
-  @IsNotEmpty()
-  billingCycle;
-
-  @ApiProperty({
-    example: '',
-  })
-  @IsMongoId()
-  @IsNotEmpty()
-  planId;
-
-  @ApiProperty({
-    example: '',
-  })
-  @IsMongoId()
-  @IsNotEmpty()
-  productId;
-
-  @ApiProperty({
-    example: '',
-  })
-  @IsString()
-  @IsNotEmpty()
-  productName;
-
-  @ApiProperty({
-    example: '',
-  })
-  @IsString()
-  @IsNotEmpty()
-  planType;
-
-  @ApiProperty({
-    example: 10,
-  })
-  @IsNumber()
-  @Type(() => Number)
-  @IsNotEmpty()
-  planPrice;
-
-  @ApiProperty({
-    example: 10,
-  })
-  @IsNumber()
-  @Type(() => Number)
-  @IsNotEmpty()
-  defaultUsers;
-
-  @ApiProperty({
-    example: 10,
-  })
-  @IsNumber()
-  @Type(() => Number)
-  @IsNotEmpty()
-  defaultStorage;
-
-  @ApiProperty({
-    example: 10,
-  })
-  @IsNumber()
-  @Type(() => Number)
-  @IsNotEmpty()
-  unitUserCost;
-
-  @ApiProperty({
-    example: 10,
-  })
-  @IsNumber()
-  @Type(() => Number)
-  @IsNotEmpty()
-  unitStorageCost;
-
-  @ApiProperty({
-    example: 10,
-  })
-  @IsNumber()
-  @Type(() => Number)
-  @IsOptional()
-  additionalUsers;
-
-  @ApiProperty({
-    example: 10,
-  })
-  @IsNumber()
-  @Type(() => Number)
-  @IsOptional()
-  additionalStorage;
-
-  @ApiProperty({
-    example: 10,
-  })
-  @IsNumber()
-  @Type(() => Number)
-  @IsOptional()
-  subTotal;
-
-  @ApiProperty({
-    example: 10,
-  })
-  @IsNumber()
-  @Type(() => Number)
-  @IsOptional()
-  planDiscount;
-
-  @ApiProperty({
-    example: 10,
-  })
-  @IsNumber()
-  @Type(() => Number)
-  @IsOptional()
-  tax;
+  dueDate: Date;
 
   @ApiProperty({
     example: 10,
@@ -147,5 +37,64 @@ export class CreateInvoiceDto {
   @IsOptional()
   invoiceDiscount?: number;
 
-  createdBy?: string;
+  @ApiProperty({
+    type: String,
+    required: false,
+    enum: InvoiceStatusEnum,
+    example: InvoiceStatusEnum.OVERDUE,
+  })
+  status: InvoiceStatusEnum;
+
+  invoiceId?: string;
+  updatedBy?: string;
+}
+
+export class UpdateInvoiceIdDto {
+  @ApiProperty({
+    example: '652dff82d73b5bebfb0ab482',
+  })
+  @IsMongoId()
+  @IsNotEmpty()
+  invoiceId: string;
+}
+
+export class ListInvoicesDTO extends PaginationDto {
+  @ApiProperty({
+    example: '',
+    required: false,
+  })
+  @IsString()
+  @IsOptional()
+  search: string;
+
+  @ApiProperty({
+    example: '',
+    required: false,
+  })
+  @IsMongoId()
+  @IsOptional()
+  organizationId: string;
+
+  @ApiProperty({
+    type: String,
+    required: false,
+    enum: InvoiceStatusEnum,
+  })
+  status: InvoiceStatusEnum;
+
+  @ApiProperty({
+    required: false,
+    example: '',
+  })
+  @IsISO8601()
+  @IsOptional()
+  billingDate: Date;
+
+  @ApiProperty({
+    required: false,
+    example: '',
+  })
+  @IsISO8601()
+  @IsOptional()
+  dueDate: Date;
 }

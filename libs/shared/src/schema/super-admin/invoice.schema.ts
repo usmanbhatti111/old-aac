@@ -1,44 +1,41 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument, SchemaTypes } from 'mongoose';
-import { OrganizationPlan } from './organization-plan.schema';
 import { BillingCycleEnum, InvoiceStatusEnum } from '../../constants/enums';
 import { AbstractSchema } from '../abstract-repo/abstract.schema';
-import { Organization } from '../organization';
 
 @Schema({
   versionKey: false,
   timestamps: true,
 })
-export class ProductDetail {
+export class OrgPlanDetail {
   @Prop({
-    type: SchemaTypes.ObjectId,
-    required: true,
-    // ref: Product.name,
+    type: [SchemaTypes.ObjectId],
+    required: false,
   })
-  productId: string;
+  productId: string[];
 
   @Prop({
     type: String,
-    required: true,
+    required: false,
   })
   productName: string;
 
-  @Prop({ type: String, required: true })
+  @Prop({ type: String, required: false })
   planType: string;
 
-  @Prop({ type: Number, required: true })
+  @Prop({ type: Number, required: false })
   planPrice: Number;
 
-  @Prop({ type: Number, required: true })
+  @Prop({ type: Number, required: false })
   defaultUsers;
 
-  @Prop({ type: Number, required: true })
+  @Prop({ type: Number, required: false })
   defaultStorage;
 
-  @Prop({ type: Number, required: true })
+  @Prop({ type: Number, required: false, default: 0 })
   unitUserCost: Number;
 
-  @Prop({ type: Number, required: true })
+  @Prop({ type: Number, required: false, default: 0 })
   unitStorageCost: Number;
 
   @Prop({ type: Number, required: false, default: 0 })
@@ -50,14 +47,11 @@ export class ProductDetail {
   @Prop({ type: Number, required: false, default: 0 })
   planDiscount: number;
 
-  @Prop({ type: Number, required: false, default: 0 })
-  invoiceDiscount: number;
-
-  @Prop({ type: Number, required: true })
+  @Prop({ type: Number, required: false })
   subTotal: Number;
 }
 
-export const ProductDetailSchema = SchemaFactory.createForClass(ProductDetail);
+export const OrgPlanDetailSchema = SchemaFactory.createForClass(OrgPlanDetail);
 
 export type InvoiceDocument = HydratedDocument<Invoice>;
 
@@ -69,22 +63,38 @@ export class Invoice extends AbstractSchema {
   @Prop({
     type: SchemaTypes.ObjectId,
     required: true,
-    ref: Organization.name,
+    ref: 'organizationplans',
+  })
+  organizationPlanId: string;
+
+  @Prop({
+    type: SchemaTypes.ObjectId,
+    required: true,
+    ref: 'organizations',
   })
   organizationId: string;
 
   @Prop({
     type: SchemaTypes.ObjectId,
     required: true,
-    ref: OrganizationPlan.name,
+    ref: 'plans',
   })
-  organizationPlanId: string;
+  planId: string;
+
+  @Prop({
+    type: Object,
+    required: false,
+  })
+  details: object;
 
   @Prop({ type: String, required: false })
   invoiceNo: string;
 
-  @Prop({ type: Date, required: true })
+  @Prop({ type: Date, required: false })
   billingDate: Date;
+
+  @Prop({ type: Date, required: false })
+  dueDate: Date;
 
   @Prop({
     type: String,
@@ -93,37 +103,34 @@ export class Invoice extends AbstractSchema {
   })
   billingCycle: BillingCycleEnum;
 
-  @Prop({
-    type: SchemaTypes.ObjectId,
-    required: true,
-    // ref: Plan.name
-  })
-  planId: string;
-
-  @Prop({
-    type: [ProductDetailSchema],
-    required: false,
-  })
-  productDetails: ProductDetail[];
-
   @Prop({ type: Number, required: true })
-  total: Number;
-
-  @Prop({ type: Number, required: false, default: 0 })
-  planDiscount: number;
+  subTotal: Number;
 
   @Prop({ type: Number, required: false, default: 0 })
   invoiceDiscount: number;
 
   @Prop({ type: Number, required: false, default: 0 })
-  tax: number;
+  afterDiscountAmout: number;
+
+  @Prop({ type: Number, required: false, default: 0 })
+  vat: number;
+
+  @Prop({ type: Number, required: true })
+  total: Number;
 
   @Prop({
     type: SchemaTypes.ObjectId,
-    required: true,
-    // ref: Admin.name
+    required: false,
+    ref: 'users',
   })
   createdBy: string;
+
+  @Prop({
+    type: SchemaTypes.ObjectId,
+    required: false,
+    ref: 'users',
+  })
+  updatedBy: string;
 
   @Prop({
     type: String,
@@ -132,6 +139,9 @@ export class Invoice extends AbstractSchema {
     default: InvoiceStatusEnum.PENDING,
   })
   status: InvoiceStatusEnum;
+
+  @Prop({ type: Boolean, required: false, default: false })
+  isDeleted: boolean;
 }
 
 export const InvoiceSchema = SchemaFactory.createForClass(Invoice);

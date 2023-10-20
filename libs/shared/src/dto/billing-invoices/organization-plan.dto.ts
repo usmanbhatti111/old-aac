@@ -8,6 +8,7 @@ import {
   IsOptional,
   IsString,
 } from 'class-validator';
+import { PaginationDto } from '../common';
 
 export class AssignOrgPlanDto {
   @ApiProperty({
@@ -65,19 +66,7 @@ export class AssignOrgPlanDto {
   assignedBy?: string;
 }
 
-export class ListOrgPlan {
-  @ApiProperty({ example: 1, required: false })
-  @IsNumber()
-  @IsOptional()
-  @Type(() => Number)
-  page: number;
-
-  @ApiProperty({ example: 10, required: false })
-  @IsNumber()
-  @IsOptional()
-  @Type(() => Number)
-  limit: number;
-
+export class ListOrgPlan extends PaginationDto {
   @ApiProperty({
     example: '',
     required: false,
