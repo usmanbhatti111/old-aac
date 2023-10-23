@@ -109,17 +109,12 @@ export abstract class AbstractRepository<TDocument extends AbstractSchema> {
       );
     }
   }
-  async deleteByQuery(
-    filterQuery?: FilterQuery<TDocument>
-  ): Promise<TDocument[]> {
+  async deleteByQuery(filterQuery?: FilterQuery<TDocument>): Promise<any> {
     try {
       const deletedDocument = await this.model.findByIdAndDelete(
         filterQuery || {}
       );
-      if (deletedDocument.deletedCount === 0) {
-        throw new NotFoundException(`${this.singleName} not found.`);
-      }
-      return deletedDocument as any;
+      return deletedDocument;
     } catch (err) {
       if (err instanceof NotFoundException) {
         throw err;

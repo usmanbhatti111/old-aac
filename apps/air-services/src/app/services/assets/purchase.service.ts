@@ -8,7 +8,6 @@ import { PurchaseRepository } from '@shared';
 import {
   DeletePurchaseOrderDto,
   UpdatePurchaseOrderDto,
-  addPurchaseOrderDto,
   IdDTO,
   FilterPurchaseOrderDto,
 } from '@shared/dto';
@@ -18,7 +17,7 @@ import { RpcException } from '@nestjs/microservices';
 @Injectable()
 export class PurchaseOrderService {
   constructor(private purchaseRepository: PurchaseRepository) {}
-  async addPurchaseOrder(payload: addPurchaseOrderDto) {
+  async addPurchaseOrder(payload: any) {
     try {
       if (Array.isArray(payload.purchaseDetails)) {
         let subTotal = 0;
