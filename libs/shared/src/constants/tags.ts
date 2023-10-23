@@ -29,6 +29,6 @@ export const API_TAGS = {
   CONTACT: 'contact',
   CONTACT_STATUS: 'contact-status',
   PRODUCT_CATEGORIES: 'Product Categories',
-  AIR_SERVICE_ATTACHMENT: 'Air Service Attachment',
+  ATTACHMENT: 'Attachment',
   LIFECYCLE_STAGES: 'Lifecycle Stages',
 };

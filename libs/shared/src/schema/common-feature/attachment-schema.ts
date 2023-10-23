@@ -1,6 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import mongoose, { HydratedDocument } from 'mongoose';
-import { AbstractSchema } from './../abstract-repo/abstract.schema';
+import { AbstractSchema } from '../abstract-repo/abstract.schema';
 
 export type AttachmentDocument = HydratedDocument<Attachment>;
 
@@ -14,15 +14,19 @@ export class Attachment extends AbstractSchema {
 
   @Prop({ type: mongoose.Types.ObjectId, required: false })
   companyAdminId: string;
+
   @Prop({ type: String, required: true })
   type: string;
 
   @Prop({ type: String, required: true })
   fileUrl: string;
+
   @Prop({ type: Object, required: true })
   s3UploadObject: object;
+
   @Prop({ type: String, required: true })
-  airServiceFeatureType: string;
+  serviceFeatureType: string;
+
   @Prop({ type: mongoose.Types.ObjectId, required: true })
   recordId: string;
 }

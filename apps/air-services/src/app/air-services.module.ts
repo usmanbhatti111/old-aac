@@ -18,8 +18,6 @@ import { TaskManagementController } from './controllers/task-management.controll
 import { TaskManagementService } from './services/task-management.service';
 import { ContractController } from './controllers/assets/contract.controller';
 import { ContractService } from './services/assets/contract.service';
-import { AirServiceAttachmentController } from './controllers/air-service-attachment.controller';
-import { AirServiceAttachmentService } from './services/air-service-attachment.service';
 
 @Module({
   imports: [SharedModule],
@@ -33,7 +31,6 @@ import { AirServiceAttachmentService } from './services/air-service-attachment.s
     SoftwareDeviceController,
     TaskManagementController,
     ContractController,
-    AirServiceAttachmentController,
   ],
   providers: [
     TicketService,
@@ -45,7 +42,6 @@ import { AirServiceAttachmentService } from './services/air-service-attachment.s
     SoftwareDeviceService,
     TaskManagementService,
     ContractService,
-    AirServiceAttachmentService,
   ],
 })
 export class AirServicesModule {}

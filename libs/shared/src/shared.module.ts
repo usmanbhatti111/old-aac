@@ -43,7 +43,7 @@ import {
   UserORepository,
   ContactNoteRepository,
   UserRepository,
-  AttachmentAirRepository,
+  AttachmentRepository,
   ContactCallRepository,
 } from '../src/repositories/index';
 import { MongooseConfig } from './config/mongo.config';
@@ -103,7 +103,7 @@ import { DownloadService, S3Service } from './services';
     // OrganizationCompanyAccountRepository,
     ContactStateRepository,
     ContractRepository,
-    AttachmentAirRepository,
+    AttachmentRepository,
     ContactCallRepository,
     LifecycleStagesRepository,
     {
@@ -169,7 +169,7 @@ import { DownloadService, S3Service } from './services';
     ContractRepository,
     S3Service,
     ContractRepository,
-    AttachmentAirRepository,
+    AttachmentRepository,
     DownloadService,
     ContactStateRepository,
     ContactCallRepository,

@@ -9,7 +9,3 @@ export * from './edit-assets-software-response.dto';
 export * from './delete-assets-software-response.dto';
 export * from './get-assets-software-details.dto';
 export * from './inventory-software-response.dto';
-export * from './air-attachment.dto';
-export * from './air-attachment-response.dto';
-export * from './air-attachment-get-response';
-export * from './air-attachment-delete-response.dto';

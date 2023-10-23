@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 
-export class AttachmentAirResponse {
+export class AttachmentResponse {
   @ApiProperty({ example: 201 })
   statusCode: number;
   @ApiProperty({

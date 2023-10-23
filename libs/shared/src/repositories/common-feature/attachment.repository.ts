@@ -5,8 +5,8 @@ import { Attachment } from '../../schema';
 import { AbstractRepository } from '../../schema/abstract-repo/abstract.repository';
 
 @Injectable()
-export class AttachmentAirRepository extends AbstractRepository<Attachment> {
-  protected readonly logger = new Logger(AttachmentAirRepository.name);
+export class AttachmentRepository extends AbstractRepository<Attachment> {
+  protected readonly logger = new Logger(AttachmentRepository.name);
 
   constructor(
     @InjectModel(Attachment.name)

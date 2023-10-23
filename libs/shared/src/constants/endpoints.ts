@@ -93,7 +93,12 @@ export const API_ENDPOINTS = {
     COMPANY_LIST: 'company-list',
     PRODUCT_LIST: 'product-list',
   },
-
+  ATTACHMENT: {
+    ADD_ATTACHMENT: 'add-attachment',
+    GET_ATTACHMENT: 'get-attachment',
+    DELETE_ATTACHMENT: 'delete-attachment',
+    DELETE_ALL_ATTACHMENT: 'delete-all-attachment',
+  },
   JOBS: {
     GET_JOB: '/:id',
     UPDATE_JOB: '/:id',
@@ -120,12 +125,6 @@ export const API_ENDPOINTS = {
       ASSOCIATE_ASSETS: 'associate-assets',
       DETACH_ASSETS: 'detach-assets',
       CHANGE_STATUS: 'status/:id',
-    },
-    ATTACHMENT: {
-      ADD_ATTACHMENT: 'add-attachment',
-      GET_ATTACHMENT: 'get-attachment',
-      DELETE_ATTACHMENT: 'delete-attachment',
-      DELETE_ALL_ATTACHMENT: 'delete-all-attachment',
     },
     ASSETS: {
       INVENTORY: 'inventory',

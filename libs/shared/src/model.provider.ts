@@ -30,7 +30,6 @@ import {
   NewsAndEvent,
   NewsAndEventSchema,
   Organization,
-  OrganizationCompanyAccount,
   OrganizationPlan,
   OrganizationPlanSchema,
   OrganizationSchema,
@@ -76,7 +75,6 @@ import {
   UserO,
   UserOSchema,
   UserSchema,
-  OrganizationCompanyAccountSchema,
   Contract,
   Attachment,
   AttachmentSchema,
@@ -191,10 +189,6 @@ export const DbModels = [
     name: Organization.name,
     schema: OrganizationSchema,
   },
-  // {
-  //   name: OrganizationCompanyAccount.name,
-  //   schema: OrganizationCompanyAccountSchema,
-  // },
   {
     name: QuickLinks.name,
     schema: QuickLinksSchema,

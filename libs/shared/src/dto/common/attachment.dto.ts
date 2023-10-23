@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsNotEmpty, IsString } from 'class-validator';
-import { ApiSingleFile } from '../../../custom/api-single-file.decorator';
-export class AirAttachmentDTO {
+import { ApiSingleFile } from '../../custom/api-single-file.decorator';
+export class AttachmentDTO {
   @IsString()
   @IsNotEmpty()
   @ApiProperty({
@@ -33,7 +33,7 @@ export class AirAttachmentDTO {
     example: 'pdf',
     required: false,
   })
-  airServiceFeatureType: string;
+  serviceFeatureType: string;
   @ApiSingleFile()
   fileUrl: string;
   @IsString()

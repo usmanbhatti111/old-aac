@@ -20,23 +20,23 @@ import {
   SERVICES,
 } from '@shared/constants';
 import {
-  AirAttachmentDTO,
-  AttachmentAirGetResponse,
-  AttachmentAirResponse,
-  DeleteAirAttachmentResponse,
+  AttachmentDTO,
+  AttachmentGetResponse,
+  AttachmentResponse,
+  DeleteAttachmentResponse,
   IdDto,
 } from '@shared/dto';
 import { firstValueFrom } from 'rxjs';
 
-@ApiTags(API_TAGS.AIR_SERVICE_ATTACHMENT)
-@Controller(CONTROLLERS.AIR_SERVICE_ATTACHMENT)
-export class AirServiceAttachmentController {
+@ApiTags(API_TAGS.ATTACHMENT)
+@Controller(CONTROLLERS.ATTACHMENT)
+export class AttachmentController {
   constructor(
-    @Inject(SERVICES.AIR_SERVICES) private ariServiceClient: ClientProxy
+    @Inject(SERVICES.COMMON_FEATURE) private ariServiceClient: ClientProxy
   ) {}
 
-  @Post(API_ENDPOINTS.AIR_SERVICES.ATTACHMENT.ADD_ATTACHMENT)
-  @ApiOkResponse({ type: AttachmentAirResponse })
+  @Post(API_ENDPOINTS.ATTACHMENT.ADD_ATTACHMENT)
+  @ApiOkResponse({ type: AttachmentResponse })
   @ApiFormData({
     single: true,
     fieldName: 'fileUrl',
@@ -44,55 +44,52 @@ export class AirServiceAttachmentController {
     errorMessage: 'Invalid document file entered.',
   })
   public async addAttachment(
-    @Body() dto: AirAttachmentDTO,
+    @Body() dto: AttachmentDTO,
     @UploadedFile() fileUrl: any,
     @Res() res: Response | any
-  ): Promise<AttachmentAirResponse> {
+  ): Promise<AttachmentResponse> {
     try {
       const response = await firstValueFrom(
-        this.ariServiceClient.send(
-          RMQ_MESSAGES.AIR_SERVICES.ATTACHMENT.ADD_ATTACHMENT,
-          { dto, fileUrl }
-        )
+        this.ariServiceClient.send(RMQ_MESSAGES.ATTACHMENT.ADD_ATTACHMENT, {
+          dto,
+          fileUrl,
+        })
       );
       return res.status(response.statusCode).json(response);
     } catch (err) {
       throw new RpcException(err);
     }
   }
-  @Get(API_ENDPOINTS.AIR_SERVICES.ATTACHMENT.GET_ATTACHMENT)
+  @Get(API_ENDPOINTS.ATTACHMENT.GET_ATTACHMENT)
   @ApiQuery({
     name: 'id',
     description: 'id should recordId',
     type: String,
   })
-  @ApiOkResponse({ type: AttachmentAirGetResponse })
+  @ApiOkResponse({ type: AttachmentGetResponse })
   public async getAttachment(
     @Query() id: IdDto,
     @Res() res: Response | any
-  ): Promise<AttachmentAirResponse> {
+  ): Promise<AttachmentGetResponse> {
     try {
       const response = await firstValueFrom(
-        this.ariServiceClient.send(
-          RMQ_MESSAGES.AIR_SERVICES.ATTACHMENT.GET_ATTACHMENT,
-          id
-        )
+        this.ariServiceClient.send(RMQ_MESSAGES.ATTACHMENT.GET_ATTACHMENT, id)
       );
       return res.status(response.statusCode).json(response);
     } catch (err) {
       throw new RpcException(err);
     }
   }
-  @Delete(API_ENDPOINTS.AIR_SERVICES.ATTACHMENT.DELETE_ATTACHMENT)
-  @ApiOkResponse({ type: DeleteAirAttachmentResponse })
+  @Delete(API_ENDPOINTS.ATTACHMENT.DELETE_ATTACHMENT)
+  @ApiOkResponse({ type: DeleteAttachmentResponse })
   public async deleteAttachment(
     @Query() id: IdDto,
     @Res() res: Response | any
-  ): Promise<DeleteAirAttachmentResponse> {
+  ): Promise<DeleteAttachmentResponse> {
     try {
       const response = await firstValueFrom(
         this.ariServiceClient.send(
-          RMQ_MESSAGES.AIR_SERVICES.ATTACHMENT.DELETE_ATTACHMENT,
+          RMQ_MESSAGES.ATTACHMENT.DELETE_ATTACHMENT,
           id
         )
       );
@@ -101,21 +98,21 @@ export class AirServiceAttachmentController {
       throw new RpcException(err);
     }
   }
-  @Delete(API_ENDPOINTS.AIR_SERVICES.ATTACHMENT.DELETE_ALL_ATTACHMENT)
+  @Delete(API_ENDPOINTS.ATTACHMENT.DELETE_ALL_ATTACHMENT)
   @ApiQuery({
     name: 'id',
     description: 'id should recordId',
     type: String,
   })
-  @ApiOkResponse({ type: DeleteAirAttachmentResponse })
+  @ApiOkResponse({ type: DeleteAttachmentResponse })
   public async deleteAllAttachment(
     @Query() id: IdDto,
     @Res() res: Response | any
-  ): Promise<DeleteAirAttachmentResponse> {
+  ): Promise<DeleteAttachmentResponse> {
     try {
       const response = await firstValueFrom(
         this.ariServiceClient.send(
-          RMQ_MESSAGES.AIR_SERVICES.ATTACHMENT.DELETE_ALL_ATTACHMENT,
+          RMQ_MESSAGES.ATTACHMENT.DELETE_ALL_ATTACHMENT,
           id
         )
       );

@@ -1,18 +1,18 @@
 import { HttpStatus, Injectable } from '@nestjs/common';
 import { RpcException } from '@nestjs/microservices';
-import { AttachmentAirRepository } from '@shared';
+import { AttachmentRepository } from '@shared';
 import { successResponse } from '@shared/constants';
-import { AirAttachmentDTO, IdDto } from '@shared/dto';
+import { AttachmentDTO, IdDto } from '@shared/dto';
 import { S3Service } from '@shared/services';
 
 @Injectable()
-export class AirServiceAttachmentService {
+export class AttachmentService {
   constructor(
-    private airServiceAttachment: AttachmentAirRepository,
+    private attachment: AttachmentRepository,
     private s3: S3Service
   ) {}
 
-  async addAttachment(payload: { fileUrl: any; dto: AirAttachmentDTO }) {
+  async addAttachment(payload: { fileUrl: any; dto: AttachmentDTO }) {
     try {
       const { fileUrl, ...dto } = payload;
       const details: any = dto.dto;
@@ -23,7 +23,7 @@ export class AirServiceAttachmentService {
         fileUrl: file.url,
         s3UploadObject: file,
       };
-      const attachment = await this.airServiceAttachment.create(param);
+      const attachment = await this.attachment.create(param);
       const response = successResponse(
         HttpStatus.CREATED,
         `Attachment Added`,
@@ -34,10 +34,11 @@ export class AirServiceAttachmentService {
       throw new RpcException(error);
     }
   }
+
   async getAttachment(payload: IdDto) {
     try {
       const { id } = payload;
-      const getAttachment = await this.airServiceAttachment.find({
+      const getAttachment = await this.attachment.find({
         recordId: id,
       });
       const response = successResponse(
@@ -50,10 +51,11 @@ export class AirServiceAttachmentService {
       throw new RpcException(error);
     }
   }
+
   async deleteAttachment(payload: IdDto) {
     try {
       const { id } = payload;
-      const deleteAttachment = await this.airServiceAttachment.delete({
+      const deleteAttachment = await this.attachment.delete({
         _id: id,
       });
       const response = successResponse(
@@ -66,11 +68,12 @@ export class AirServiceAttachmentService {
       throw new RpcException(error);
     }
   }
+
   async deleteAllAttachment(payload: IdDto) {
     try {
       const { id }: any = payload;
 
-      const deleteAttachment = await this.airServiceAttachment.delete({
+      const deleteAttachment = await this.attachment.delete({
         recordId: id,
       });
       const response = successResponse(

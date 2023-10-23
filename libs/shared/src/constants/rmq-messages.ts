@@ -118,6 +118,12 @@ export const RMQ_MESSAGES = {
     GET_PRODUCTS: 'get-products',
     EDIT_PRODUCT: 'edit-product',
   },
+  ATTACHMENT: {
+    ADD_ATTACHMENT: 'add-attachment',
+    GET_ATTACHMENT: 'get-attachment',
+    DELETE_ATTACHMENT: 'delete-attachment',
+    DELETE_ALL_ATTACHMENT: 'delete-all-attachment',
+  },
   AIR_SERVICES: {
     TICKETS: {
       CREATE_TICKET: 'create-ticket',
@@ -132,12 +138,6 @@ export const RMQ_MESSAGES = {
       EDIT_TICKETS: 'edit-tickets',
       CHANGE_STATUS: 'change_status',
       GET_TICKET_LIST: 'get_ticket_list',
-    },
-    ATTACHMENT: {
-      ADD_ATTACHMENT: 'add-attachment',
-      GET_ATTACHMENT: 'get-attachment',
-      DELETE_ATTACHMENT: 'delete-attachment',
-      DELETE_ALL_ATTACHMENT: 'delete-all-attachment',
     },
     ASSETS: {
       ADD_Inventory: 'add-inventory',
