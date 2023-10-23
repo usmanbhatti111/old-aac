@@ -207,7 +207,7 @@ export class TicketController {
   public async deleteChildTicket(
     @Res() res: Response | any,
     @Param() id: IdDto
-  ) {
+  ): Promise<DeleteTicketResponse> {
     try {
       const response = await firstValueFrom(
         this.ariServiceClient.send(

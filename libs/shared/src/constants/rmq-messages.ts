@@ -133,6 +133,12 @@ export const RMQ_MESSAGES = {
       CHANGE_STATUS: 'change_status',
       GET_TICKET_LIST: 'get_ticket_list',
     },
+    ATTACHMENT: {
+      ADD_ATTACHMENT: 'add-attachment',
+      GET_ATTACHMENT: 'get-attachment',
+      DELETE_ATTACHMENT: 'delete-attachment',
+      DELETE_ALL_ATTACHMENT: 'delete-all-attachment',
+    },
     ASSETS: {
       ADD_Inventory: 'add-inventory',
       ADD_PURCHASEORDER: 'add-purchaseorder',
@@ -154,6 +160,7 @@ export const RMQ_MESSAGES = {
       ASSIGN_CATEGORY: 'assign-category',
       SEARCH_INVENTORY: 'search-inventory',
       DELETE_SOFTWARE_DEVICE: 'delete-software-device',
+      GET_INVENTORY_SOFTWARE_DETAILS: 'get-inventory-software-details',
       DELETE_ASSOCIATE_ORDER: 'delete-associate-order',
     },
     TASK: {

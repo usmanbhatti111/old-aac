@@ -10,8 +10,8 @@ import {
   Patch,
   Param,
 } from '@nestjs/common';
+import { ApiOkResponse, ApiParam, ApiTags } from '@nestjs/swagger';
 import { ClientProxy, RpcException } from '@nestjs/microservices';
-import { ApiTags } from '@nestjs/swagger';
 import {
   API_ENDPOINTS,
   API_TAGS,
@@ -25,6 +25,8 @@ import {
   EditInventoryDto,
   GetInventoryDto,
   IdDto,
+  PaginationDto,
+  InventorySoftwareResponse,
   GetInventoryAssociateDto,
 } from '@shared/dto';
 import { Response } from 'express';
@@ -153,6 +155,31 @@ export class InventoryController {
         )
       );
 
+      return res.status(response.statusCode).json(response);
+    } catch (err) {
+      return res.status(err.statusCode).json(err);
+    }
+  }
+
+  @Get(API_ENDPOINTS.AIR_SERVICES.ASSETS.GET_INVENTORY_SOFTWARE_DETAILS)
+  @ApiOkResponse({ type: InventorySoftwareResponse })
+  @ApiParam({
+    type: String,
+    name: 'id',
+    description: 'id should be InventoryId',
+  })
+  public async getInventorySoftwareDetails(
+    @Param() id: IdDto,
+    @Query() pagination: PaginationDto,
+    @Res() res: Response | any
+  ): Promise<InventorySoftwareResponse> {
+    try {
+      const response = await firstValueFrom(
+        this.airServiceClient.send(
+          RMQ_MESSAGES.AIR_SERVICES.ASSETS.GET_INVENTORY_SOFTWARE_DETAILS,
+          { id, pagination }
+        )
+      );
       return res.status(response.statusCode).json(response);
     } catch (err) {
       return res.status(err.statusCode).json(err);

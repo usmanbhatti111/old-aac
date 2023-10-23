@@ -109,7 +109,26 @@ export abstract class AbstractRepository<TDocument extends AbstractSchema> {
       );
     }
   }
-
+  async deleteByQuery(
+    filterQuery?: FilterQuery<TDocument>
+  ): Promise<TDocument[]> {
+    try {
+      const deletedDocument = await this.model.findByIdAndDelete(
+        filterQuery || {}
+      );
+      if (deletedDocument.deletedCount === 0) {
+        throw new NotFoundException(`${this.singleName} not found.`);
+      }
+      return deletedDocument as any;
+    } catch (err) {
+      if (err instanceof NotFoundException) {
+        throw err;
+      }
+      throw new BadRequestException(
+        `Invalid ${this.singleName.toLowerCase()} data entered.`
+      );
+    }
+  }
   async deleteMany(
     filterQuery: FilterQuery<TDocument>,
     ids: Array<string>,
@@ -253,7 +272,7 @@ export abstract class AbstractRepository<TDocument extends AbstractSchema> {
 
   async paginate({
     filterQuery,
-    offset = 0,
+    offset = 1,
     limit = 10,
     returnKey,
     sort,
@@ -272,7 +291,6 @@ export abstract class AbstractRepository<TDocument extends AbstractSchema> {
     if (typeof limit !== 'number') {
       limit = Number(limit);
     }
-
     const query = [
       {
         $match: {
@@ -365,7 +383,7 @@ export abstract class AbstractRepository<TDocument extends AbstractSchema> {
           collections: {
             $slice: [
               '$data',
-              offset,
+              (offset - 1) * limit,
               {
                 $ifNull: [limit, '$total.count'],
               },
@@ -373,7 +391,7 @@ export abstract class AbstractRepository<TDocument extends AbstractSchema> {
           },
           total: '$total.count',
           page: {
-            $ceil: { $literal: offset / limit + 1 },
+            $ceil: { $literal: offset - 1 / limit },
           },
           pages: {
             $ceil: {

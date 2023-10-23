@@ -54,7 +54,7 @@ export class ContactController {
   constructor(
     @Inject(SERVICES.COMMON_FEATURE) private commonFeatureClient: ClientProxy
   ) {}
-
+  @Post()
   @Auth(true)
   @Post(API_ENDPOINTS.CONTACT.CREATE_CONTACT)
   @ApiCreatedResponse({ type: CreateContactResponseDto })

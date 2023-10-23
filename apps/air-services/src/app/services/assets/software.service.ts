@@ -69,6 +69,7 @@ export class SoftwareService {
       const { search, type, status, createdDate, updatedDate } = payload.dto;
       const { limit } = payload.pagination;
       const offset = payload.pagination.page;
+      const today = new Date();
       let searchFilter: any;
       if (search) {
         searchFilter = {
@@ -93,11 +94,115 @@ export class SoftwareService {
         filterQuery.status = status;
       }
       if (createdDate) {
-        pipelines.push(this.getTimeLogicForPipeLine(createdDate, 'createdAt'));
+        switch (createdDate) {
+          case 'Today':
+            {
+              const Today = {
+                $match: {
+                  createdAt: {
+                    $lte: new Date(),
+                    $gte: new Date(today.getTime() - 1 * 12 * 60 * 60 * 1000),
+                  },
+                },
+              };
+              pipelines.push(Today);
+            }
+            break;
+          case 'Yesterday':
+            {
+              const yesterday = {
+                $match: {
+                  createdAt: {
+                    $lte: new Date(today.getTime() - 1 * 12 * 60 * 60 * 1000),
+                    $gte: new Date(today.getTime() - 2 * 24 * 60 * 60 * 1000),
+                  },
+                },
+              };
+              pipelines.push(yesterday);
+            }
+            break;
+          case 'PreviousWeek':
+            {
+              const previousWeek = {
+                $match: {
+                  createdAt: {
+                    $lte: new Date(today.getTime() - 7 * 24 * 60 * 60 * 1000),
+                    $gte: new Date(today.getTime() - 14 * 24 * 60 * 60 * 1000),
+                  },
+                },
+              };
+              pipelines.push(previousWeek);
+            }
+            break;
+          case 'PreviousMonth': {
+            const PreviousMonth = {
+              $match: {
+                createdAt: {
+                  $lte: new Date(today.getTime() - 30 * 24 * 60 * 60 * 1000),
+                  $gte: new Date(today.getTime() - 60 * 24 * 60 * 60 * 1000),
+                },
+              },
+            };
+            pipelines.push(PreviousMonth);
+          }
+        }
       }
       if (updatedDate) {
-        pipelines.push(this.getTimeLogicForPipeLine(updatedDate, 'updatedAt'));
+        switch (updatedDate) {
+          case 'Today':
+            {
+              const Today = {
+                $match: {
+                  updatedAt: {
+                    $lte: new Date(),
+                    $gte: new Date(today.getTime() - 1 * 24 * 60 * 60 * 1000),
+                  },
+                },
+              };
+
+              pipelines.push(Today);
+            }
+            break;
+          case 'Yesterday':
+            {
+              const yesterday = {
+                $match: {
+                  updatedAt: {
+                    $lte: new Date(today.getTime() - 1 * 12 * 60 * 60 * 1000),
+                    $gte: new Date(today.getTime() - 2 * 24 * 60 * 60 * 1000),
+                  },
+                },
+              };
+              pipelines.push(yesterday);
+            }
+            break;
+          case 'PreviousWeek':
+            {
+              const previousWeek = {
+                $match: {
+                  updatedAt: {
+                    $lte: new Date(today.getTime() - 7 * 24 * 60 * 60 * 1000),
+                    $gte: new Date(today.getTime() - 14 * 24 * 60 * 60 * 1000),
+                  },
+                },
+              };
+              pipelines.push(previousWeek);
+            }
+            break;
+          case 'PreviousMonth': {
+            const PreviousMonth = {
+              $match: {
+                updatedAt: {
+                  $lte: new Date(today.getTime() - 30 * 24 * 60 * 60 * 1000),
+                  $gte: new Date(today.getTime() - 60 * 24 * 60 * 60 * 1000),
+                },
+              },
+            };
+            pipelines.push(PreviousMonth);
+          }
+        }
       }
+
       const softwareDetails = await this.softwareRepository.paginate({
         filterQuery,
         limit,

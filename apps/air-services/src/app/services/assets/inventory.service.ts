@@ -2,11 +2,14 @@ import { HttpStatus, Injectable } from '@nestjs/common';
 import { errorResponse, successResponse } from '@shared/constants';
 import { InventoryRepository } from '@shared';
 import {
-  GetInventoryAssociateDto,
   GetInventoryDto,
+  IdDto,
+  PaginationDto,
+  GetInventoryAssociateDto,
   SearchInventoryDto,
 } from '@shared/dto';
 import { Types } from 'mongoose';
+import { RpcException } from '@nestjs/microservices';
 
 @Injectable()
 export class InventoryService {
@@ -151,6 +154,52 @@ export class InventoryService {
       return successResponse(HttpStatus.OK, 'Success', res);
     } catch (error) {
       return errorResponse(HttpStatus.BAD_REQUEST, 'Bad Request', error?.name);
+    }
+  }
+  async getInventorySoftwareDetails(payload: {
+    id: IdDto;
+    pagination: PaginationDto;
+  }) {
+    try {
+      const { id } = payload.id;
+      const { limit } = payload.pagination;
+      const offset = payload.pagination.page;
+      const filterQuery = { _id: new Types.ObjectId(id) };
+      const pipelines = [
+        {
+          $lookup: {
+            from: 'assetssoftwares',
+            localField: 'deviceIds',
+            foreignField: '_id',
+            as: 'inventorySoftwares',
+          },
+        },
+        {
+          $project: {
+            inventorySoftwares: 1,
+            _id: 0,
+          },
+        },
+        {
+          $unwind: {
+            path: '$inventorySoftwares',
+          },
+        },
+      ];
+      const inventorySoftware = await this.inventoryRepository.paginate({
+        filterQuery,
+        pipelines,
+        limit,
+        offset,
+      });
+      const response = successResponse(
+        HttpStatus.OK,
+        `inventory Software Details Successfully`,
+        inventorySoftware
+      );
+      return response;
+    } catch (error) {
+      throw new RpcException(error);
     }
   }
 }

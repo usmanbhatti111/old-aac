@@ -121,6 +121,12 @@ export const API_ENDPOINTS = {
       DETACH_ASSETS: 'detach-assets',
       CHANGE_STATUS: 'status/:id',
     },
+    ATTACHMENT: {
+      ADD_ATTACHMENT: 'add-attachment',
+      GET_ATTACHMENT: 'get-attachment',
+      DELETE_ATTACHMENT: 'delete-attachment',
+      DELETE_ALL_ATTACHMENT: 'delete-all-attachment',
+    },
     ASSETS: {
       INVENTORY: 'inventory',
       EDIT_INVENTORY: 'inventory/:id',
@@ -141,6 +147,7 @@ export const API_ENDPOINTS = {
       ASSIGN_CATEGORY: 'assign-category/:id',
       SEARCH_INVENTORY: 'search-inventory',
       DELETE_SOFTWARE_DEVICE: 'software-device/:id',
+      GET_INVENTORY_SOFTWARE_DETAILS: 'get-inventory-software/:id',
     },
     TASK: {
       ADD_TASK: '/',

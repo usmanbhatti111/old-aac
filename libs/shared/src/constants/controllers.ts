@@ -36,5 +36,6 @@ export const CONTROLLERS = {
   CONTACT: 'contact',
   CONTACT_STATUS: 'contact-status',
   PRODUCT_CATEGORIES: 'product-categories',
+  AIR_SERVICE_ATTACHMENT: 'air-service-attachment',
   LIFECYCLE_STAGES: 'lifecycle-stages',
 };

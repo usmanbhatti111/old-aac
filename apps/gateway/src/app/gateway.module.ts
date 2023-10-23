@@ -41,6 +41,7 @@ import { DocumentsController } from './controllers/common-features/documents.con
 import { ContractController } from './controllers/assets/contract.controller';
 import { ProductCategoriesController } from './controllers/org-admin/product-category.controller';
 import { ColumnPipe } from './pipes/column.pipe';
+import { AirServiceAttachmentController } from './controllers/air-service-attachment.controller';
 import { SharedModule } from '@shared';
 import { ContactStatusController } from './controllers/org-admin/contact-status.controller';
 import { LifecycleStagesController } from './controllers/org-admin/lifecycle-stages.controller';
@@ -87,6 +88,7 @@ import { LifecycleStagesController } from './controllers/org-admin/lifecycle-sta
     DocumentsController,
     ContractController,
     ProductCategoriesController,
+    AirServiceAttachmentController,
     LifecycleStagesController,
   ],
   providers: [

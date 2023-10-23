@@ -6,6 +6,8 @@ import {
   SearchInventoryDto,
   EditInventoryDto,
   GetInventoryDto,
+  IdDto,
+  PaginationDto,
   GetInventoryAssociateDto,
 } from '@shared/dto';
 import { InventoryService } from '../../services/assets/inventory.service';
@@ -41,5 +43,13 @@ export class InventoryController {
   @MessagePattern(RMQ_MESSAGES.AIR_SERVICES.ASSETS.Delete_Inventory)
   deleteInventory(@Payload() payload: { ids: string[] }) {
     return this.inventoryService.deleteInventory(payload);
+  }
+  @MessagePattern(
+    RMQ_MESSAGES.AIR_SERVICES.ASSETS.GET_INVENTORY_SOFTWARE_DETAILS
+  )
+  getInventorySoftwareDetails(
+    @Payload() payload: { id: IdDto; pagination: PaginationDto }
+  ) {
+    return this.inventoryService.getInventorySoftwareDetails(payload);
   }
 }

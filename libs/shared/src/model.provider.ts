@@ -5,7 +5,6 @@ import {
   AssetsSoftwareSchema,
   ContactStatus,
   ContactStatusSchema,
-  Contract,
   Example,
   ExampleSchema,
   Expense,
@@ -32,7 +31,6 @@ import {
   NewsAndEventSchema,
   Organization,
   OrganizationCompanyAccount,
-  OrganizationCompanyAccountSchema,
   OrganizationPlan,
   OrganizationPlanSchema,
   OrganizationSchema,
@@ -77,9 +75,14 @@ import {
   UserAccountsSchema,
   UserO,
   UserOSchema,
-  ContractSchema,
   UserSchema,
+  OrganizationCompanyAccountSchema,
+  Contract,
+  Attachment,
+  AttachmentSchema,
+  ContractSchema,
 } from './schema';
+
 import {
   Contact,
   ContactCall,
@@ -188,10 +191,10 @@ export const DbModels = [
     name: Organization.name,
     schema: OrganizationSchema,
   },
-  {
-    name: OrganizationCompanyAccount.name,
-    schema: OrganizationCompanyAccountSchema,
-  },
+  // {
+  //   name: OrganizationCompanyAccount.name,
+  //   schema: OrganizationCompanyAccountSchema,
+  // },
   {
     name: QuickLinks.name,
     schema: QuickLinksSchema,
@@ -268,6 +271,10 @@ export const DbModels = [
   {
     name: Contract.name,
     schema: ContractSchema,
+  },
+  {
+    name: Attachment.name,
+    schema: AttachmentSchema,
   },
   {
     name: ContactCall.name,
