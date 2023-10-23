@@ -10,7 +10,7 @@ import {
   Patch,
   Param,
 } from '@nestjs/common';
-import { ClientProxy } from '@nestjs/microservices';
+import { ClientProxy, RpcException } from '@nestjs/microservices';
 import { ApiTags } from '@nestjs/swagger';
 import {
   API_ENDPOINTS,
@@ -25,6 +25,7 @@ import {
   EditInventoryDto,
   GetInventoryDto,
   IdDto,
+  GetInventoryAssociateDto,
 } from '@shared/dto';
 import { Response } from 'express';
 import { firstValueFrom } from 'rxjs';
@@ -121,6 +122,24 @@ export class InventoryController {
       return res.status(err.statusCode).json(err);
     }
   }
+
+  @Get(API_ENDPOINTS.AIR_SERVICES.ASSETS.ASSOCIATE_INVENTORY_LIST)
+  public async getAssociateInventoryList(
+    @Query() payload: GetInventoryAssociateDto
+  ) {
+    try {
+      const response = await firstValueFrom(
+        this.airServiceClient.send(
+          RMQ_MESSAGES.AIR_SERVICES.ASSETS.ASSOCIATE_INVENTORY_LIST,
+          { ...payload }
+        )
+      );
+      return response;
+    } catch (error) {
+      throw new RpcException(error);
+    }
+  }
+
   @Delete(API_ENDPOINTS.AIR_SERVICES.ASSETS.DELETE_INVENTORY)
   public async deleteInventory(
     @Query('ids') ids: string[],

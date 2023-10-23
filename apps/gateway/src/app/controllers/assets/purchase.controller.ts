@@ -162,7 +162,7 @@ export class PurchaseOrderController {
       );
       if (exportType) {
         const data = response?.data?.purchases || [];
-       return this.downloadService.downloadFile(exportType, data, res);
+        return this.downloadService.downloadFile(exportType, data, res);
       }
       return res.status(response.statusCode).json(response);
     } catch (error) {

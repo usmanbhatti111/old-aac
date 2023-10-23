@@ -133,6 +133,7 @@ export const API_ENDPOINTS = {
       ADD_ASSOCIATE_ORDER: 'add-associate-order/:id',
       DELETE_ASSOCIATE_ORDER: 'delete-associate-order/:id',
       ADD_SOFTWARE: 'add_software',
+      ASSOCIATE_INVENTORY_LIST: 'associate-inventory-list',
       ADD_SOFTWARE_DEVICE: 'add-software-device/:id',
       EDIT_SOFTWARE: 'edit-software/:id',
       DELETE_SOFTWARE: 'delete-software/:id',

@@ -1,7 +1,11 @@
 import { HttpStatus, Injectable } from '@nestjs/common';
 import { errorResponse, successResponse } from '@shared/constants';
 import { InventoryRepository } from '@shared';
-import { GetInventoryDto, SearchInventoryDto } from '@shared/dto';
+import {
+  GetInventoryAssociateDto,
+  GetInventoryDto,
+  SearchInventoryDto,
+} from '@shared/dto';
 import { Types } from 'mongoose';
 
 @Injectable()
@@ -98,6 +102,37 @@ export class InventoryService {
         };
       }
 
+      const res = await this.inventoryRepository.paginate({
+        filterQuery,
+        offset,
+        limit,
+      });
+
+      return successResponse(HttpStatus.CREATED, 'Success', res);
+    } catch (error) {
+      return errorResponse(HttpStatus.BAD_REQUEST, 'Bad Request', error?.name);
+    }
+  }
+  async getAssociateInventoryList(payload?: GetInventoryAssociateDto) {
+    try {
+      const { deviceId, limit, page, search } = payload;
+      let filterQuery = {};
+      const offset = limit * (page - 1);
+      if (deviceId) {
+        filterQuery = {
+          deviceIds: {
+            $in: [new Types.ObjectId(deviceId)],
+          },
+        };
+      }
+      if (search) {
+        filterQuery = {
+          displayName: {
+            $regex: search,
+            $options: 'i', // Optional: Case-insensitive search
+          },
+        };
+      }
       const res = await this.inventoryRepository.paginate({
         filterQuery,
         offset,

@@ -196,6 +196,38 @@ export class GetInventoryDto extends paginationDTO {
   @IsOptional()
   exportType: string;
 }
+export class GetInventoryAssociateDto extends paginationDTO {
+  @ApiProperty({
+    type: String,
+    example: 'Name',
+    required: false,
+  })
+  displayName: string;
+  attachmentId: string;
+
+  @IsOptional()
+  @ApiProperty({
+    example: '',
+    required: false,
+  })
+  search: string;
+
+  @IsMongoId()
+  @ApiProperty({
+    required: false,
+    example: '651bdf53beeb02bc627d6804',
+  })
+  deviceId: string;
+
+  @ApiProperty({
+    type: String,
+    required: false,
+    enum: EExportFile,
+  })
+  @IsEnum(EExportFile)
+  @IsOptional()
+  exportType: string;
+}
 
 export class SearchInventoryDto extends paginationDTO {
   @ApiProperty({

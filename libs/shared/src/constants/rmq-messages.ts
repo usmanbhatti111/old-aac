@@ -146,6 +146,7 @@ export const RMQ_MESSAGES = {
       ADD_SOFTWARE: 'add-software',
       ADD_SOFTWARE_DEVICE: 'add-software-device',
       GET_PURCHASEORDERLIST: 'get-purchaseorderlist',
+      ASSOCIATE_INVENTORY_LIST: 'associate-inventory-list',
       GET_PURCHASEORDER: 'get-purchaseorder',
       EDIT_SOFTWARE: 'edit-software',
       DELETE_SOFTWARE: 'delete-software',

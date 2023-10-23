@@ -6,6 +6,7 @@ import {
   SearchInventoryDto,
   EditInventoryDto,
   GetInventoryDto,
+  GetInventoryAssociateDto,
 } from '@shared/dto';
 import { InventoryService } from '../../services/assets/inventory.service';
 
@@ -31,6 +32,12 @@ export class InventoryController {
   getInventory(@Payload() payload: GetInventoryDto) {
     return this.inventoryService.getInventory(payload);
   }
+
+  @MessagePattern(RMQ_MESSAGES.AIR_SERVICES.ASSETS.ASSOCIATE_INVENTORY_LIST)
+  getAssociateInventoryList(@Payload() payload: GetInventoryAssociateDto) {
+    return this.inventoryService.getAssociateInventoryList(payload);
+  }
+
   @MessagePattern(RMQ_MESSAGES.AIR_SERVICES.ASSETS.Delete_Inventory)
   deleteInventory(@Payload() payload: { ids: string[] }) {
     return this.inventoryService.deleteInventory(payload);
