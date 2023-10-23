@@ -18,6 +18,12 @@ export class PurchaseDetail {
   @Prop({ type: Number, required: true })
   quantity: number;
 
+  @Prop({ type: Number, required: false })
+  received: number;
+
+  @Prop({ type: Number, required: false })
+  pending: number;
+
   @Prop({ type: Number, required: true })
   taxRatio: number;
 
