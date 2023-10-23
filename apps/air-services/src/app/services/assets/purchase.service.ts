@@ -4,14 +4,14 @@ import {
   successResponse,
   ResponseMessage,
 } from '@shared/constants';
-import { PurchaseRepository } from '@shared';
+import { PurchaseRepository, mongooseDateFilter } from '@shared';
 import {
   DeletePurchaseOrderDto,
   UpdatePurchaseOrderDto,
   IdDTO,
   FilterPurchaseOrderDto,
 } from '@shared/dto';
-import dayjs from 'dayjs';
+
 import { Types } from 'mongoose';
 import { RpcException } from '@nestjs/microservices';
 @Injectable()
@@ -77,74 +77,76 @@ export class PurchaseOrderService {
   }
   async getPurchaseOrderList(payload: FilterPurchaseOrderDto) {
     try {
-      const { page, limit, search, departmentId, vendorId, status } = payload;
+      const {
+        page,
+        limit,
+        search,
+        departmentId,
+        vendorId,
+        status,
+        expectedDeliveryDate,
+        createdAt,
+      } = payload;
 
-      const offset = limit * (page - 1);
-      delete payload.page;
-      delete payload.limit;
-      delete payload.search;
-      const createdAtFilter = {};
-      const queryId = {};
-
-      const purchaseStatus = {};
-      if (departmentId) {
-        queryId['departmentId'] = new Types.ObjectId(departmentId);
-      }
+      const filterQuery = {};
+      const searchFilter = {};
+      let expiryFilter = {};
+      const pipeline: any = [
+        {
+          $lookup: {
+            from: 'attachments',
+            localField: 'attachments',
+            foreignField: '_id',
+            as: 'attachmentDetails',
+          },
+        },
+        {
+          $unwind: {
+            path: '$attachmentDetails',
+            preserveNullAndEmptyArrays: true,
+          },
+        },
+      ];
 
       if (status) {
-        purchaseStatus['status'] = status;
+        filterQuery['status'] = status;
       }
       if (vendorId) {
-        queryId['vendorId'] = new Types.ObjectId(vendorId);
+        filterQuery['vendorId'] = new Types.ObjectId(vendorId);
       }
-      if (payload.createdAt) {
-        const startDate = dayjs(payload.createdAt).startOf('day');
-        const endDate = dayjs(payload.createdAt).endOf('day');
-
-        createdAtFilter['createdAt'] = {
-          gte: startDate.toDate(),
-          lte: endDate.toDate(),
-        };
-        delete payload.createdAt;
+      if (departmentId) {
+        filterQuery['departmentId'] = new Types.ObjectId(departmentId);
       }
-
-      let searchFilter;
       if (search) {
-        searchFilter = {
-          $or: [
-            {
-              title: {
-                $regex: search,
-                $options: 'i',
-              },
-            },
-            {
-              description: {
-                $regex: search,
-                $options: 'i',
-              },
-            },
-          ],
-        };
+        searchFilter['$or'] = [
+          { orderName: { $regex: search, $options: 'i' } },
+          { orderNumber: { $regex: search, $options: 'i' } },
+          { status: { $regex: search, $options: 'i' } },
+          { currency: { $regex: search, $options: 'i' } },
+        ];
+        pipeline.push({ $match: searchFilter });
       }
 
-      const filterQuery = {
-        ...createdAtFilter,
-        ...queryId,
-        ...purchaseStatus,
-        ...searchFilter,
-      };
-      const paginateRes = await this.purchaseRepository.paginate({
+      if (createdAt) {
+        expiryFilter = mongooseDateFilter(createdAt, 'createdAt');
+        pipeline.push({ $match: expiryFilter });
+      }
+      if (expectedDeliveryDate) {
+        expiryFilter = mongooseDateFilter(
+          expectedDeliveryDate,
+          'expectedDeliveryDate'
+        );
+        pipeline.push({ $match: expiryFilter });
+      }
+      const response = await this.purchaseRepository.newPaginate(
         filterQuery,
-        offset,
-        limit,
-      });
-
-      return successResponse(
-        HttpStatus.OK,
-        ResponseMessage.SUCCESS,
-        paginateRes
+        pipeline,
+        {
+          page,
+          limit,
+        }
       );
+      return successResponse(HttpStatus.OK, ResponseMessage.SUCCESS, response);
     } catch (error) {
       throw new RpcException(error);
     }

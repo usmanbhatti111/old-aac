@@ -56,10 +56,10 @@ export class Inventory extends AbstractSchema {
   usedBy: string;
 
   @Prop({
-    type: SchemaTypes.ObjectId,
+    type: [{ type: SchemaTypes.ObjectId }],
     required: false,
   })
-  attachmentId: string;
+  attachments: string[];
 }
 
 export const InventorySchema = SchemaFactory.createForClass(Inventory);

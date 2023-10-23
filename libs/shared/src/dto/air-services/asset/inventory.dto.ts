@@ -6,9 +6,10 @@ import {
   IsNotEmpty,
   IsOptional,
   IsString,
+  ArrayNotEmpty,
 } from 'class-validator';
 import { paginationDTO } from '../../pagination/pagination.dto';
-import { EExportFile } from '@shared/constants';
+import { EContractExpiry, EExportFile } from '@shared/constants';
 export class AddInventoryDto {
   @IsNotEmpty()
   @IsString()
@@ -78,41 +79,30 @@ export class AddInventoryDto {
     example: new Date().toISOString(),
   })
   assignedOn: string;
-
-  @IsOptional()
-  @IsMongoId()
   @ApiProperty({
-    example: '651bdf53beeb02bc627d6804',
+    type: [String],
+    example: ['652ee528da86b788fd6ca7ea'],
   })
-  usedBy: string;
-
-  @IsOptional()
-  @IsMongoId()
-  @ApiProperty({
-    example: '651bdf53beeb02bc627d6804',
-  })
-  attachmentId: string;
+  @ArrayNotEmpty()
+  attachments: string;
 }
 export class GetInventoryDto extends paginationDTO {
   @ApiProperty({
-    type: String,
-    example: 'Name',
+    enum: EContractExpiry,
+    example: '',
     required: false,
   })
-  displayName: string;
+  @IsEnum(EContractExpiry)
   @IsOptional()
-  @IsMongoId()
-  @ApiProperty({
-    example: '651bdf53beeb02bc627d6804',
-    required: false,
-  })
-  assetId: string;
-  @IsOptional()
-  @ApiProperty({
-    example: new Date().toISOString(),
-    required: false,
-  })
   createdAt: string;
+  @ApiProperty({
+    enum: EContractExpiry,
+    example: '',
+    required: false,
+  })
+  @IsEnum(EContractExpiry)
+  @IsOptional()
+  updatedAt: string;
   @IsEnum(['services', 'hardware', 'software'])
   @ApiProperty({
     example: 'services',
@@ -128,21 +118,6 @@ export class GetInventoryDto extends paginationDTO {
     required: false,
   })
   impact: string;
-
-  @IsOptional()
-  @ApiProperty({
-    example: 'description...',
-    required: false,
-  })
-  description: string;
-
-  @IsOptional()
-  @IsISO8601()
-  @ApiProperty({
-    example: new Date().toISOString(),
-    required: false,
-  })
-  assetLifeExpiry: string;
 
   @IsOptional()
   @IsMongoId()
@@ -161,25 +136,10 @@ export class GetInventoryDto extends paginationDTO {
   departmentId: string;
 
   @IsOptional()
-  @IsISO8601()
-  @ApiProperty({
-    example: new Date().toISOString(),
-    required: false,
-  })
-  assignedOn: string;
-
-  @IsOptional()
   @IsMongoId()
   @ApiProperty({ example: '56cb91bdc3464f14678934ca', required: false })
   usedBy: string;
 
-  @IsOptional()
-  @IsMongoId()
-  @ApiProperty({
-    example: '651bdf53beeb02bc627d6804',
-    required: false,
-  })
-  attachmentId: string;
   @IsOptional()
   @ApiProperty({
     example: '',
@@ -198,12 +158,11 @@ export class GetInventoryDto extends paginationDTO {
 }
 export class GetInventoryAssociateDto extends paginationDTO {
   @ApiProperty({
-    type: String,
-    example: 'Name',
-    required: false,
+    type: [String],
+    example: ['652ee528da86b788fd6ca7ea'],
   })
-  displayName: string;
-  attachmentId: string;
+  @ArrayNotEmpty()
+  attachments: string;
 
   @IsOptional()
   @ApiProperty({
@@ -328,11 +287,10 @@ export class EditInventoryDto {
   })
   usedBy: string;
 
-  @IsOptional()
-  @IsMongoId()
   @ApiProperty({
-    required: false,
-    example: '651bdf53beeb02bc627d6804',
+    type: [String],
+    example: ['652ee528da86b788fd6ca7ea'],
   })
-  attachmentId: string;
+  @ArrayNotEmpty()
+  attachments: string;
 }

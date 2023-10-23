@@ -16,9 +16,9 @@ services:
     ports:
       - 5673:5672
       - 15673:15672
-    # volumes:
-    #   - ~/.docker-conf/rabbitmq/data/:/var/lib/rabbitmq/mnesia
-    #   - ~/.docker-conf/rabbitmq/log/:/var/log/rabbitmq/mnesia
+    volumes:
+      - ~/.docker-conf/rabbitmq/data/:/var/lib/rabbitmq/mnesia
+      - ~/.docker-conf/rabbitmq/log/:/var/log/rabbitmq/mnesia
     networks:
       - backend
 networks:

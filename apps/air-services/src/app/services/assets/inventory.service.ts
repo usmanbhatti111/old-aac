@@ -1,6 +1,6 @@
 import { HttpStatus, Injectable } from '@nestjs/common';
 import { errorResponse, successResponse } from '@shared/constants';
-import { InventoryRepository } from '@shared';
+import { InventoryRepository, mongooseDateFilter } from '@shared';
 import {
   GetInventoryDto,
   IdDto,
@@ -67,21 +67,18 @@ export class InventoryService {
       const {
         impact,
         locationId,
-        displayName,
         limit,
         page,
         usedBy,
         departmentId,
         search,
         assetType,
+        createdAt,
+        updatedAt,
       } = payload;
       let filterQuery = {};
-      const offset = limit * (page - 1);
       if (impact) {
         filterQuery['impact'] = impact;
-      }
-      if (displayName) {
-        filterQuery['displayName'] = displayName;
       }
       if (departmentId) {
         filterQuery['departmentId'] = new Types.ObjectId(departmentId);
@@ -100,16 +97,45 @@ export class InventoryService {
         filterQuery = {
           displayName: {
             $regex: search,
-            $options: 'i', // Optional: Case-insensitive search
+            $options: 'i',
           },
         };
       }
 
-      const res = await this.inventoryRepository.paginate({
+      let expiryFilter = {};
+      const pipeline: any = [
+        {
+          $lookup: {
+            from: 'attachments',
+            localField: 'attachments',
+            foreignField: '_id',
+            as: 'attachmentDetails',
+          },
+        },
+        {
+          $unwind: {
+            path: '$attachmentDetails',
+            preserveNullAndEmptyArrays: true,
+          },
+        },
+      ];
+
+      if (updatedAt) {
+        expiryFilter = mongooseDateFilter(updatedAt, 'updatedAt');
+        pipeline.push({ $match: expiryFilter });
+      }
+      if (createdAt) {
+        expiryFilter = mongooseDateFilter(createdAt, 'createdAt');
+        pipeline.push({ $match: expiryFilter });
+      }
+      const res = await this.inventoryRepository.newPaginate(
         filterQuery,
-        offset,
-        limit,
-      });
+        pipeline,
+        {
+          page,
+          limit,
+        }
+      );
 
       return successResponse(HttpStatus.CREATED, 'Success', res);
     } catch (error) {
@@ -132,7 +158,7 @@ export class InventoryService {
         filterQuery = {
           displayName: {
             $regex: search,
-            $options: 'i', // Optional: Case-insensitive search
+            $options: 'i',
           },
         };
       }

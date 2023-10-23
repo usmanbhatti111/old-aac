@@ -54,7 +54,8 @@ export class Purchase extends AbstractSchema {
   vendorId: string;
   @Prop({ type: String, required: true })
   currency: string;
-  @Prop({ type: Date })
+
+  @Prop()
   expectedDeliveryDate: Date;
   @Prop({
     type: SchemaTypes.ObjectId,
