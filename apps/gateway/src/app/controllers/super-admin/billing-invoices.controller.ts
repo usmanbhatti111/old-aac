@@ -23,15 +23,15 @@ import {
   SERVICES,
 } from '@shared/constants';
 import {
-  AddDiscountDto,
-  AddDiscountResponseDto,
   AssignOrgPlanDto,
   AssignOrgPlanResponseDto,
   BillingDetailsDto,
   BillingDetailsResponseDto,
   CreateInvoiceDto,
+  GenerateInvoicesResponseDto,
   GetOrgPlanResponseDto,
   ListInvoicesDTO,
+  ListInvoicesResponseDto,
   ListOrgPlan,
   ListOrgPlanResponseDto,
   OrganizationPlanId,
@@ -126,7 +126,7 @@ export class InvoiceController {
 
   @Auth(true)
   @Get(API_ENDPOINTS.SUPER_ADMIN.BILLING_INVOICES.LIST_ALL_INVOICE)
-  @ApiCreatedResponse({})
+  @ApiCreatedResponse({ type: ListInvoicesResponseDto })
   public async getAllInvoices(@Query() payload: ListInvoicesDTO) {
     const response = await firstValueFrom(
       this.superAdminServiceClient.send(
@@ -139,7 +139,7 @@ export class InvoiceController {
 
   @Post(API_ENDPOINTS.SUPER_ADMIN.BILLING_INVOICES.GENERATE_INVOICE)
   @Auth(true)
-  @ApiCreatedResponse({})
+  @ApiCreatedResponse({ type: GenerateInvoicesResponseDto })
   public async generateInvoice(
     @Query() payload: CreateInvoiceDto,
     @Req() request: AppRequest
@@ -161,7 +161,7 @@ export class InvoiceController {
 
   @Patch(API_ENDPOINTS.SUPER_ADMIN.BILLING_INVOICES.UPDATE_INVOICE)
   @Auth(true)
-  @ApiCreatedResponse({})
+  @ApiCreatedResponse({ type: GenerateInvoicesResponseDto })
   public async updateInvoice(
     @Query() invoice: UpdateInvoiceIdDto,
     @Body() payload: UpdateInvoiceDto,
@@ -190,19 +190,6 @@ export class InvoiceController {
     const response = await firstValueFrom(
       this.superAdminServiceClient.send(
         { cmd: RMQ_MESSAGES.SUPER_ADMIN.BILLING_INVOICES.BILLING_DETAILS },
-        { ...payload }
-      )
-    );
-    return response;
-  }
-
-  @Patch(API_ENDPOINTS.SUPER_ADMIN.BILLING_INVOICES.ADD_DISCOUNT)
-  @Auth(true)
-  @ApiCreatedResponse({ type: AddDiscountResponseDto })
-  public async addDiscount(@Query() payload: AddDiscountDto) {
-    const response = await firstValueFrom(
-      this.superAdminServiceClient.send(
-        { cmd: RMQ_MESSAGES.SUPER_ADMIN.BILLING_INVOICES.ADD_DISCOUNT },
         { ...payload }
       )
     );

@@ -141,19 +141,63 @@ export class ListOrgPlanResponseDto {
     example: {
       organizationplans: [
         {
-          _id: '65237f4a972203079f83918c',
-          organizationId: '651e6b916318ccd41e81e7a4',
-          planId: '651e6b916318ccd41e81e7a4',
-          additionalUsers: 2,
-          additionalStorage: 5,
-          planDiscount: 10,
+          _id: '652f675569b8092d9954d30b',
+          organizationId: '652e0304169f73fd01fd4956',
+          planId: '652677e726623bafa178e6a1',
+          additionalUsers: 1,
+          additionalStorage: 1,
+          planDiscount: 5,
           billingCycle: 'MONTHLY',
-          billingDate: '2023-12-11T00:00:00.000Z',
+          billingDate: '2023-10-20T00:00:00.000Z',
           status: 'ACTIVE',
-          assignedBy: [],
-          createdAt: '2023-10-09T04:19:22.308Z',
-          updatedAt: '2023-10-09T04:19:22.308Z',
-          __v: 0,
+          assignedBy: '652e29b8d4495132e5d8f6d0',
+          organizations: {
+            _id: '652e0304169f73fd01fd4956',
+            registrationNumber: '8C68902',
+            name: 'Orcalo Holdings',
+            email: 'oh@gmail.com',
+            phoneNo: '++13432121',
+            address: 'Street#234 ',
+            postCode: 'CN789',
+            isDeleted: false,
+            createdAt: '2023-10-17T03:44:04.207Z',
+            updatedAt: '2023-10-17T03:44:04.207Z',
+          },
+          plans: {
+            _id: '652677e726623bafa178e6a1',
+            description: 'Plan A',
+            defaultUsers: 1,
+            defaultStorage: 1,
+            planPrice: 10,
+            additionalPerUserPrice: 10,
+            planProducts: [
+              '652e0073d73b5bebfb0ab48c',
+              '652e007ad73b5bebfb0ab48e',
+            ],
+            additionalStoragePrice: 10,
+            planTypeId: '651bee19040d3384e81b81ff',
+            createdBy: '65262d9c3686b5e9a4fc4222',
+            isDeleted: false,
+            isActive: true,
+          },
+          plantypes: {
+            _id: '651bee19040d3384e81b81ff',
+            name: 'Growth',
+          },
+          planProducts: [
+            {
+              _id: '652e0073d73b5bebfb0ab48c',
+              name: 'Air Services',
+              createdBy: '652d19a5b5f5fc0c40275467',
+            },
+            {
+              _id: '652e007ad73b5bebfb0ab48e',
+              name: 'Air Operation',
+              createdBy: '652d19a5b5f5fc0c40275467',
+            },
+          ],
+          subtotal: 30,
+          total: 28.5,
         },
       ],
       meta: {
@@ -179,19 +223,60 @@ export class GetOrgPlanResponseDto {
 
   @ApiProperty({
     example: {
-      _id: '65237f4a972203079f83918c',
-      organizationId: '651e6b916318ccd41e81e7a4',
-      planId: '651e6b916318ccd41e81e7a4',
-      additionalUsers: 2,
-      additionalStorage: 5,
-      planDiscount: 10,
+      _id: '652f675569b8092d9954d30b',
+      organizationId: '652e0304169f73fd01fd4956',
+      planId: '652677e726623bafa178e6a1',
+      additionalUsers: 1,
+      additionalStorage: 1,
+      planDiscount: 5,
       billingCycle: 'MONTHLY',
-      billingDate: '2023-12-11T00:00:00.000Z',
+      billingDate: '2023-10-20T00:00:00.000Z',
       status: 'ACTIVE',
-      assignedBy: [],
-      createdAt: '2023-10-09T04:19:22.308Z',
-      updatedAt: '2023-10-09T04:19:22.308Z',
-      __v: 0,
+      assignedBy: '652e29b8d4495132e5d8f6d0',
+      organizations: {
+        _id: '652e0304169f73fd01fd4956',
+        registrationNumber: '8C68902',
+        name: 'Orcalo Holdings',
+        email: 'oh@gmail.com',
+        phoneNo: '++13432121',
+        address: 'Street#234 ',
+        postCode: 'CN789',
+        isDeleted: false,
+        createdAt: '2023-10-17T03:44:04.207Z',
+        updatedAt: '2023-10-17T03:44:04.207Z',
+      },
+      plans: {
+        _id: '652677e726623bafa178e6a1',
+        description: 'Plan A',
+        defaultUsers: 1,
+        defaultStorage: 1,
+        planPrice: 10,
+        additionalPerUserPrice: 10,
+        planProducts: ['652e0073d73b5bebfb0ab48c', '652e007ad73b5bebfb0ab48e'],
+        additionalStoragePrice: 10,
+        planTypeId: '651bee19040d3384e81b81ff',
+        createdBy: '65262d9c3686b5e9a4fc4222',
+        isDeleted: false,
+        isActive: true,
+      },
+      plantypes: {
+        _id: '651bee19040d3384e81b81ff',
+        name: 'Growth',
+      },
+      planProducts: [
+        {
+          _id: '652e0073d73b5bebfb0ab48c',
+          name: 'Air Services',
+          createdBy: '652d19a5b5f5fc0c40275467',
+        },
+        {
+          _id: '652e007ad73b5bebfb0ab48e',
+          name: 'Air Operation',
+          createdBy: '652d19a5b5f5fc0c40275467',
+        },
+      ],
+      subtotal: 30,
+      total: 28.5,
     },
   })
   data: object;
@@ -217,107 +302,95 @@ export class BillingDetailsResponseDto {
   message: string;
 
   @ApiProperty({
-    example: [
-      {
-        _id: '652e59d289e8854e1d24c00b',
-        organizationPlanId: '652dff82d73b5bebfb0ab482',
+    example: {
+      _id: '6535f8900b9e8c511c46fb2d',
+      organizationPlanId: '652f675569b8092d9954d30b',
+      organizationId: '652e0304169f73fd01fd4956',
+      planId: '652677e726623bafa178e6a1',
+      details: {
+        _id: '652f675569b8092d9954d30b',
+        organizationId: '652e0304169f73fd01fd4956',
         planId: '652677e726623bafa178e6a1',
-        organizationplans: {
-          _id: '652dff82d73b5bebfb0ab482',
-          organizationId: '652e0304169f73fd01fd4956',
-          planId: '652677e726623bafa178e6a1',
-          additionalUsers: 0,
-          additionalStorage: 0,
-          planDiscount: 0,
-          billingCycle: 'MONTHLY',
-          billingDate: '2023-09-30T00:00:00.000Z',
-          status: 'ACTIVE',
-          assignedBy: '65152930f50394f42cee2db3',
-          isDeleted: false,
-          createdAt: '2023-10-17T03:29:06.199Z',
-          updatedAt: '2023-10-17T03:29:06.199Z',
-          __v: 0,
+        additionalUsers: 1,
+        additionalStorage: 1,
+        planDiscount: 5,
+        billingCycle: 'MONTHLY',
+        billingDate: '2023-10-20T00:00:00.000Z',
+        status: 'ACTIVE',
+        organizations: {
+          name: 'Orcalo Holdings',
+          email: 'oh@gmail.com',
+          phoneNo: '++13432121',
+          address: 'Street#234 ',
+          postCode: 'CN789',
         },
         plans: {
-          _id: '652677e726623bafa178e6a1',
           description: 'Plan A',
-          defaultUsers: 12,
-          defaultStorage: 12,
-          planPrice: 12,
-          additionalPerUserPrice: 12,
-          planProducts: [
-            '652e0073d73b5bebfb0ab48c',
-            '652e007ad73b5bebfb0ab48e',
-          ],
-          planProductFeatures: [
-            '652650601a6e84f64e08ca4f',
-            '652650601a6e84f64e08ca58',
-          ],
-          planProductModulePermissions: [
-            '652650601a6e84f64e08ca50',
-            '652650601a6e84f64e08ca59',
-          ],
-          additionalStoragePrice: 12,
+          defaultUsers: 1,
+          defaultStorage: 1,
+          planPrice: 10,
+          additionalPerUserPrice: 10,
+          additionalStoragePrice: 10,
           planTypeId: '651bee19040d3384e81b81ff',
-          createdBy: '65262d9c3686b5e9a4fc4222',
-          isDeleted: false,
-          isActive: true,
-          createdAt: '2023-10-11T10:24:39.025Z',
-          updatedAt: '2023-10-11T10:24:39.057Z',
         },
+        plantypes: 'Growth',
       },
-    ],
-  })
-  data: object[];
-
-  @ApiProperty({ example: null })
-  error: string;
-}
-
-export class AddDiscountDto {
-  @ApiProperty({
-    example: '65152930f50394f42cee2db3',
-  })
-  @IsMongoId()
-  @IsNotEmpty()
-  id: string;
-
-  @ApiProperty({
-    type: Number,
-    required: false,
-    example: 1,
-  })
-  @Type(() => Number)
-  @IsNumber()
-  @IsOptional()
-  invoiceDiscount?: number;
-}
-
-export class AddDiscountResponseDto {
-  @ApiProperty({ example: 200 })
-  statusCode: string;
-
-  @ApiProperty({ example: 'Success' })
-  message: string;
-
-  @ApiProperty({
-    example: {
-      id: '651e6657364160a7fca7921e',
-      organizationId: '57152930f50394f71cxz2cd7',
-      planId: '31172930f50394f42cee4da5',
-      additionalUsers: 2,
-      additionalStorage: 5,
-      planDiscount: 10,
-      billingCycle: 'MONTHLY',
-      billingDate: '2023-12-12T00:00:00.000+00:00',
-      status: 'ACTIVE',
-      assignedBy: '65152930f50394f42cee2db3',
-      created_at: '2023-10-05T07:31:35.099+00:00',
-      updated_at: '2023-10-05T07:31:35.099+00:00',
-      deleted_at: '2023-10-05T07:31:35.099+00:00',
+      invoiceNo: 'DOC-432',
+      billingDate: '2023-10-20T00:00:00.000Z',
+      dueDate: '2023-10-20T00:00:00.000Z',
+      subTotal: 30,
+      invoiceDiscount: 0,
+      afterDiscountAmout: 30,
+      vat: 10,
+      total: 27,
+      createdBy: '652e29b8d4495132e5d8f6d0',
+      status: 'PENDING',
+      isDeleted: false,
+      createdAt: '2023-10-23T04:37:36.931Z',
+      updatedAt: '2023-10-23T04:37:36.931Z',
+      organizationplans: {
+        _id: '652f675569b8092d9954d30b',
+        organizationId: '652e0304169f73fd01fd4956',
+        planId: '652677e726623bafa178e6a1',
+        additionalUsers: 1,
+        additionalStorage: 1,
+        planDiscount: 5,
+        billingCycle: 'MONTHLY',
+        billingDate: '2023-10-20T00:00:00.000Z',
+        status: 'ACTIVE',
+        assignedBy: '652e29b8d4495132e5d8f6d0',
+        isDeleted: false,
+        createdAt: '2023-10-18T05:04:21.346Z',
+        updatedAt: '2023-10-18T05:04:35.489Z',
+        __v: 0,
+      },
+      plans: {
+        _id: '652677e726623bafa178e6a1',
+        description: 'Plan A',
+        defaultUsers: 1,
+        defaultStorage: 1,
+        planPrice: 10,
+        additionalPerUserPrice: 10,
+        planProducts: ['652e0073d73b5bebfb0ab48c', '652e007ad73b5bebfb0ab48e'],
+        planProductFeatures: [
+          '652650601a6e84f64e08ca4f',
+          '652650601a6e84f64e08ca58',
+        ],
+        planProductModulePermissions: [
+          '652650601a6e84f64e08ca50',
+          '652650601a6e84f64e08ca59',
+        ],
+        additionalStoragePrice: 10,
+        planTypeId: '651bee19040d3384e81b81ff',
+        createdBy: '65262d9c3686b5e9a4fc4222',
+        isDeleted: false,
+        isActive: true,
+        createdAt: '2023-10-11T10:24:39.025Z',
+        updatedAt: '2023-10-11T10:24:39.057Z',
+      },
     },
   })
-  data: object;
+  data: object[];
 
   @ApiProperty({ example: null })
   error: string;

@@ -2,7 +2,6 @@ import { Controller } from '@nestjs/common';
 import { MessagePattern, Payload } from '@nestjs/microservices';
 import { RMQ_MESSAGES } from '@shared/constants';
 import {
-  AddDiscountDto,
   AssignOrgPlanDto,
   BillingDetailsDto,
   CreateInvoiceDto,
@@ -71,12 +70,5 @@ export class InvoiceController {
   })
   async billingDetails(@Payload() payload: BillingDetailsDto) {
     return this.billingService.billingDetails(payload);
-  }
-
-  @MessagePattern({
-    cmd: RMQ_MESSAGES.SUPER_ADMIN.BILLING_INVOICES.ADD_DISCOUNT,
-  })
-  async addDiscount(@Payload() payload: AddDiscountDto) {
-    return this.billingService.addDiscount(payload);
   }
 }

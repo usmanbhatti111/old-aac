@@ -1,9 +1,12 @@
 import { HttpStatus, Injectable, NotFoundException } from '@nestjs/common';
 import { RpcException } from '@nestjs/microservices';
 import { InvoiceRepository, OrganizationPlanRepository } from '@shared';
-import { ResponseMessage, successResponse } from '@shared/constants';
 import {
-  AddDiscountDto,
+  InvoiceStatusEnum,
+  ResponseMessage,
+  successResponse,
+} from '@shared/constants';
+import {
   AssignOrgPlanDto,
   BillingDetailsDto,
   CreateInvoiceDto,
@@ -32,6 +35,7 @@ export class InvoiceService {
         productId,
       } = payload;
       let filterQuery = {};
+      const offset = (page - 1) * limit;
 
       if (search) {
         filterQuery = {
@@ -142,15 +146,15 @@ export class InvoiceService {
           $match: filterQuery,
         },
       ];
-      const offset = (page - 1) * limit;
 
       const params = {
         pipelines,
         offset,
         limit,
       };
-      const result = await this.orgPlanRepository.paginate(params);
 
+      let result = await this.orgPlanRepository.paginate(params);
+      result = this.calulationsOrgPlans(result.organizationplans);
       return successResponse(HttpStatus.OK, ResponseMessage.SUCCESS, result);
     } catch (error) {
       throw new RpcException(error);
@@ -159,30 +163,97 @@ export class InvoiceService {
 
   async getOrgPlan(organizationPlanId) {
     try {
-      const aggregatePipeline: any = [
+      const pipelines = [
         {
           $match: {
             _id: new mongoose.Types.ObjectId(organizationPlanId),
+            isDeleted: false,
           },
         },
         {
           $lookup: {
-            from: 'users',
-            localField: 'assignedBy',
+            from: 'organizations',
+            localField: 'organizationId',
             foreignField: '_id',
-            as: 'assignedBy',
+            as: 'organizations',
+          },
+        },
+        {
+          $addFields: {
+            organizations: {
+              $arrayElemAt: ['$organizations', 0],
+            },
+          },
+        },
+        {
+          $lookup: {
+            from: 'plans',
+            localField: 'planId',
+            foreignField: '_id',
+            as: 'plans',
+          },
+        },
+        {
+          $unwind: {
+            path: '$plans',
+            preserveNullAndEmptyArrays: true,
+          },
+        },
+        {
+          $lookup: {
+            from: 'plantypes',
+            localField: 'plans.planTypeId',
+            foreignField: '_id',
+            as: 'plantypes',
+          },
+        },
+        {
+          $unwind: {
+            path: '$plantypes',
+            preserveNullAndEmptyArrays: true,
+          },
+        },
+        {
+          $addFields: {
+            planProducts: '$plans.planProducts',
+          },
+        },
+        {
+          $lookup: {
+            from: 'products',
+            localField: 'planProducts',
+            foreignField: '_id',
+            as: 'planProducts',
+          },
+        },
+        {
+          $project: {
+            'plans.planProductFeatures': 0,
+            'plans.planProductModulePermissions': 0,
+            'plans.createdAt': 0,
+            'plans.updatedAt': 0,
+            'planProducts.description': 0,
+            'planProducts.isActive': 0,
+            'planProducts.isDeleted': 0,
+            'planProducts.logo': 0,
+            'planProducts.modifiedBy': 0,
+            'planProducts.createdAt': 0,
+            'planProducts.updatedAt': 0,
+            createdAt: 0,
+            updatedAt: 0,
+            isDeleted: 0,
+            __v: 0,
           },
         },
       ];
-      const response = await this.orgPlanRepository.aggregate(
-        aggregatePipeline
-      );
-      if (!response?.length) throw new NotFoundException();
-      return successResponse(
-        HttpStatus.OK,
-        ResponseMessage.SUCCESS,
-        response[0]
-      );
+
+      let result = await this.orgPlanRepository.aggregate(pipelines);
+
+      result = this.calulationsOrgPlans(result);
+
+      if (!result?.length) throw new NotFoundException();
+
+      return successResponse(HttpStatus.OK, ResponseMessage.SUCCESS, result[0]);
     } catch (error) {
       throw new RpcException(error);
     }
@@ -309,7 +380,32 @@ export class InvoiceService {
       };
       const result = await this.invoiceRepository.paginate(params);
 
-      return successResponse(HttpStatus.OK, ResponseMessage.SUCCESS, result);
+      const pipeline = [
+        {
+          $match: {
+            isDeleted: false,
+            status: InvoiceStatusEnum.OVERDUE,
+          },
+        },
+        {
+          $group: {
+            _id: null,
+            countInvoiceDue: {
+              $sum: 1,
+            },
+            totalAmountDue: {
+              $sum: '$total',
+            },
+          },
+        },
+      ];
+      const widgets = await this.invoiceRepository.aggregate(pipeline);
+      const response = {
+        ...result,
+        widget: widgets[0],
+      };
+
+      return successResponse(HttpStatus.OK, ResponseMessage.SUCCESS, response);
     } catch (error) {
       throw new RpcException(error);
     }
@@ -337,6 +433,13 @@ export class InvoiceService {
   async generateInvoice(payload: CreateInvoiceDto) {
     try {
       const { organizationPlanId, createdBy } = payload;
+      const findOne = await this.orgPlanRepository.findOne({
+        _id: organizationPlanId,
+      });
+      if (!findOne) {
+        throw new NotFoundException();
+      }
+
       const pipeline = [
         {
           $match: {
@@ -576,22 +679,24 @@ export class InvoiceService {
       throw new RpcException(error);
     }
   }
-  async addDiscount(payload: AddDiscountDto) {
-    try {
-      const { id, invoiceDiscount } = payload;
-      const filterQuery = {
-        organizationPlanId: id,
-      };
-      const update = {
-        invoiceDiscount: invoiceDiscount,
-      };
-      const response = await this.invoiceRepository.findOneAndUpdate(
-        filterQuery,
-        update
-      );
-      return successResponse(HttpStatus.OK, ResponseMessage.SUCCESS, response);
-    } catch (error) {
-      throw new RpcException(error);
-    }
+
+  calulationsOrgPlans(organizationplans) {
+    const organizationplansNew = organizationplans.map((row) => {
+      const planDiscount = row?.planDiscount;
+      const additionalUsers = row?.additionalUsers;
+      const additionalStorage = row?.additionalStorage;
+
+      const planPrice = row?.plans?.planPrice;
+      const additionalPerUserPrice = row?.plans?.additionalPerUserPrice;
+      const additionalStoragePrice = row?.plans?.additionalStoragePrice;
+
+      const subtotal =
+        planPrice +
+        additionalUsers * additionalPerUserPrice +
+        additionalStorage * additionalStoragePrice;
+      const total = subtotal - (planDiscount / 100) * subtotal;
+      return { ...row, subtotal, total };
+    });
+    return organizationplansNew;
   }
 }
