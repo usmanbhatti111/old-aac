@@ -32,4 +32,11 @@ export class GetAssociateAssetsDto extends PaginationDto {
   ticketId: string;
 }
 
-export class ListTicketDTO extends PaginationDto {}
+export class ListTicketDTO extends PaginationDto {
+  @ApiProperty({
+    example: '',
+    required: false,
+  })
+  @IsOptional()
+  search: string;
+}

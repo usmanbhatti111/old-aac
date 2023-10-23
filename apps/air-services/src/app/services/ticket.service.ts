@@ -307,10 +307,18 @@ export class TicketService {
     columnNames: string[];
   }) {
     try {
-      const { limit, page } = payload.listTicketDTO;
+      const { limit, page, search } = payload.listTicketDTO;
       const offset = limit * (page - 1);
+      const pipeline: any = [{ $project: payload.columnNames }];
+
+      if (search) {
+        pipeline.push({
+          $match: {
+            'details.name': { $regex: search, $options: 'i' },
+          },
+        });
+      }
       const filterQuery = {};
-      const pipeline = [{ $project: payload.columnNames }];
       //TODO attachment code
       const res = await this.ticketRepository.paginate({
         filterQuery,
