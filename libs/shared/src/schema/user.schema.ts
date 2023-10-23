@@ -86,13 +86,13 @@ export class UserO extends AbstractSchema {
   @Prop({ type: Date, default: Date.now })
   deletedAt?: Date;
 
-  @Prop({ type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Job' }] })
+  @Prop([{ type: mongoose.Schema.Types.ObjectId, ref: 'Job' }])
   jobs?: mongoose.Schema.Types.ObjectId[];
 
-  @Prop({ type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Product' }] })
+  @Prop([{ type: mongoose.Schema.Types.ObjectId, ref: 'Product' }])
   products?: mongoose.Schema.Types.ObjectId[];
 
-  @Prop({ type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Company' }] })
+  @Prop([{ type: mongoose.Schema.Types.ObjectId, ref: 'Company' }])
   company?: mongoose.Schema.Types.ObjectId[];
 }
 

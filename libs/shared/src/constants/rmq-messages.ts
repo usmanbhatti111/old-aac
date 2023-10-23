@@ -167,6 +167,7 @@ export const RMQ_MESSAGES = {
       TASK_DETAIL: 'task-detail',
       EDIT_TASK: 'edit-task',
       DELETE_TASK: 'delete-task',
+      TASK_ACTIVITY_LIST: 'task-activity',
     },
     EXPENSE: {
       ADD_EXPENSE: 'add-expense',

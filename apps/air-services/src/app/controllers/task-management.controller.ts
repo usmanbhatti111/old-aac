@@ -35,4 +35,9 @@ export class TaskManagementController {
   deleteTask(@Payload() payload: { ids: string[] }) {
     return this.taskManagementService.deleteTask(payload);
   }
+
+  @MessagePattern(RMQ_MESSAGES.AIR_SERVICES.TASK_MANAGEMENT.TASK_ACTIVITY_LIST)
+  getTasksActivities({ query }) {
+    return this.taskManagementService.getTasksActivities(query);
+  }
 }

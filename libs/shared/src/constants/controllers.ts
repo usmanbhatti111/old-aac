@@ -8,7 +8,7 @@ export const CONTROLLERS = {
   ORGANIZATION: 'organization',
   ORGANIZATION_COMPANY_ACCOUNT: 'org-company-account',
   TASK: 'task',
-  TASK_MANAGEMENT: 'task-management',
+  TASK_MANAGEMENT: 'task',
   SUPER_ADMIN: 'super-admin',
   SETTINGS: {
     JOBS: 'jobs',

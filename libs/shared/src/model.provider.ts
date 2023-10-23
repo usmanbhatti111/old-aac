@@ -57,6 +57,8 @@ import {
   Purchase,
   RequestLog,
   RequestLogSchema,
+  TaskActivity,
+  TaskActivitySchema,
   Status,
   StatusSchema,
   PurchaseSchema,
@@ -241,6 +243,10 @@ export const DbModels = [
   {
     name: Module.name,
     schema: ModuleSchema,
+  },
+  {
+    name: TaskActivity.name,
+    schema: TaskActivitySchema,
   },
   {
     name: Status.name,

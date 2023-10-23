@@ -21,6 +21,7 @@ import {
 import {
   AddTaskManagementDto,
   EditTaskManagementDto,
+  GetTaskActivitytDto,
   GetTaskManagementDto,
 } from '@shared/dto';
 import { firstValueFrom } from 'rxjs';
@@ -89,6 +90,16 @@ export class TaskManagementController {
         {
           ids,
         }
+      )
+    );
+  }
+
+  @Get(API_ENDPOINTS.AIR_SERVICES.TASK_MANAGEMENT.TASK_ACTIVITY_LIST)
+  getTasksActivities(@Query() query: GetTaskActivitytDto) {
+    return firstValueFrom(
+      this.airServiceClient.send(
+        RMQ_MESSAGES.AIR_SERVICES.TASK_MANAGEMENT.TASK_ACTIVITY_LIST,
+        { query }
       )
     );
   }

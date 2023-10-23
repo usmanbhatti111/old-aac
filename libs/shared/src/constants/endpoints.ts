@@ -148,11 +148,12 @@ export const API_ENDPOINTS = {
       DELETE_TASK: '/:id',
     },
     TASK_MANAGEMENT: {
-      CREATE_TASK: '/',
-      TASK_LIST: '/',
-      TASK_DETAIL: '/:id',
-      UPDATE_TASK: '/:id',
-      DELETE_TASK: '/:id',
+      CREATE_TASK: 'management',
+      TASK_LIST: 'management',
+      TASK_DETAIL: 'management/:id',
+      UPDATE_TASK: 'management/:id',
+      DELETE_TASK: 'management/:id',
+      TASK_ACTIVITY_LIST: 'activity',
     },
     EXPENSE: {
       ADD_EXPENSE: 'add-expense',
