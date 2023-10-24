@@ -9,7 +9,7 @@ import {
   ArrayNotEmpty,
 } from 'class-validator';
 import { paginationDTO } from '../../pagination/pagination.dto';
-import { EContractExpiry, EExportFile } from '@shared/constants';
+import { EMongooseDateFilter, EExportFile } from '@shared/constants';
 export class AddInventoryDto {
   @IsNotEmpty()
   @IsString()
@@ -88,19 +88,19 @@ export class AddInventoryDto {
 }
 export class GetInventoryDto extends paginationDTO {
   @ApiProperty({
-    enum: EContractExpiry,
+    enum: EMongooseDateFilter,
     example: '',
     required: false,
   })
-  @IsEnum(EContractExpiry)
+  @IsEnum(EMongooseDateFilter)
   @IsOptional()
   createdAt: string;
   @ApiProperty({
-    enum: EContractExpiry,
+    enum: EMongooseDateFilter,
     example: '',
     required: false,
   })
-  @IsEnum(EContractExpiry)
+  @IsEnum(EMongooseDateFilter)
   @IsOptional()
   updatedAt: string;
   @IsEnum(['services', 'hardware', 'software'])

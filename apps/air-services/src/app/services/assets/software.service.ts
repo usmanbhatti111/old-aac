@@ -1,6 +1,6 @@
 import { HttpStatus, Injectable } from '@nestjs/common';
 import { RpcException } from '@nestjs/microservices';
-import { AssetsSoftwareRepository } from '@shared';
+import { AssetsSoftwareRepository, mongooseDateFilter } from '@shared';
 import {
   AssetsSoftwareDto,
   GetAssetsSoftwareDetails,
@@ -8,7 +8,7 @@ import {
   PaginationDto,
 } from '@shared/dto';
 
-import { successResponse } from '@shared/constants';
+import { AssetSoftwareCreatedAtEnum, successResponse } from '@shared/constants';
 
 @Injectable()
 export class SoftwareService {
@@ -94,113 +94,12 @@ export class SoftwareService {
         filterQuery.status = status;
       }
       if (createdDate) {
-        switch (createdDate) {
-          case 'Today':
-            {
-              const Today = {
-                $match: {
-                  createdAt: {
-                    $lte: new Date(),
-                    $gte: new Date(today.getTime() - 1 * 12 * 60 * 60 * 1000),
-                  },
-                },
-              };
-              pipelines.push(Today);
-            }
-            break;
-          case 'Yesterday':
-            {
-              const yesterday = {
-                $match: {
-                  createdAt: {
-                    $lte: new Date(today.getTime() - 1 * 12 * 60 * 60 * 1000),
-                    $gte: new Date(today.getTime() - 2 * 24 * 60 * 60 * 1000),
-                  },
-                },
-              };
-              pipelines.push(yesterday);
-            }
-            break;
-          case 'PreviousWeek':
-            {
-              const previousWeek = {
-                $match: {
-                  createdAt: {
-                    $lte: new Date(today.getTime() - 7 * 24 * 60 * 60 * 1000),
-                    $gte: new Date(today.getTime() - 14 * 24 * 60 * 60 * 1000),
-                  },
-                },
-              };
-              pipelines.push(previousWeek);
-            }
-            break;
-          case 'PreviousMonth': {
-            const PreviousMonth = {
-              $match: {
-                createdAt: {
-                  $lte: new Date(today.getTime() - 30 * 24 * 60 * 60 * 1000),
-                  $gte: new Date(today.getTime() - 60 * 24 * 60 * 60 * 1000),
-                },
-              },
-            };
-            pipelines.push(PreviousMonth);
-          }
-        }
+        const filter = mongooseDateFilter(createdDate, 'createdAt');
+        pipelines.push({ $match: filter });
       }
       if (updatedDate) {
-        switch (updatedDate) {
-          case 'Today':
-            {
-              const Today = {
-                $match: {
-                  updatedAt: {
-                    $lte: new Date(),
-                    $gte: new Date(today.getTime() - 1 * 24 * 60 * 60 * 1000),
-                  },
-                },
-              };
-
-              pipelines.push(Today);
-            }
-            break;
-          case 'Yesterday':
-            {
-              const yesterday = {
-                $match: {
-                  updatedAt: {
-                    $lte: new Date(today.getTime() - 1 * 12 * 60 * 60 * 1000),
-                    $gte: new Date(today.getTime() - 2 * 24 * 60 * 60 * 1000),
-                  },
-                },
-              };
-              pipelines.push(yesterday);
-            }
-            break;
-          case 'PreviousWeek':
-            {
-              const previousWeek = {
-                $match: {
-                  updatedAt: {
-                    $lte: new Date(today.getTime() - 7 * 24 * 60 * 60 * 1000),
-                    $gte: new Date(today.getTime() - 14 * 24 * 60 * 60 * 1000),
-                  },
-                },
-              };
-              pipelines.push(previousWeek);
-            }
-            break;
-          case 'PreviousMonth': {
-            const PreviousMonth = {
-              $match: {
-                updatedAt: {
-                  $lte: new Date(today.getTime() - 30 * 24 * 60 * 60 * 1000),
-                  $gte: new Date(today.getTime() - 60 * 24 * 60 * 60 * 1000),
-                },
-              },
-            };
-            pipelines.push(PreviousMonth);
-          }
-        }
+        const filter = mongooseDateFilter(updatedDate, 'updatedAt');
+        pipelines.push({ $match: filter });
       }
 
       const softwareDetails = await this.softwareRepository.paginate({
@@ -230,42 +129,6 @@ export class SoftwareService {
       return successResponse(HttpStatus.OK, 'Success', response);
     } catch (error) {
       throw new RpcException(error);
-    }
-  }
-  getTimeLogicForPipeLine(dateFilter, dateKey) {
-    const today = new Date();
-    const dateMatchFilter = {
-      $match: {},
-    };
-    switch (dateFilter) {
-      case 'Today': {
-        dateMatchFilter.$match[dateKey] = {
-          $lte: new Date(),
-          $gte: new Date(today.getTime() - 1 * 24 * 60 * 60 * 1000),
-        };
-        return dateMatchFilter;
-      }
-      case 'Yesterday': {
-        dateMatchFilter.$match[dateKey] = {
-          $lte: new Date(today.getTime() - 1 * 12 * 60 * 60 * 1000),
-          $gte: new Date(today.getTime() - 2 * 24 * 60 * 60 * 1000),
-        };
-        return dateMatchFilter;
-      }
-      case 'PreviousWeek': {
-        dateMatchFilter.$match[dateKey] = {
-          $lte: new Date(today.getTime() - 7 * 24 * 60 * 60 * 1000),
-          $gte: new Date(today.getTime() - 14 * 24 * 60 * 60 * 1000),
-        };
-        return dateMatchFilter;
-      }
-      case 'PreviousMonth': {
-        dateMatchFilter.$match[dateKey] = {
-          $lte: new Date(today.getTime() - 30 * 24 * 60 * 60 * 1000),
-          $gte: new Date(today.getTime() - 60 * 24 * 60 * 60 * 1000),
-        };
-        return dateMatchFilter;
-      }
     }
   }
 }

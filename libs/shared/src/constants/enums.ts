@@ -151,12 +151,12 @@ export enum OutcomeEnum {
   NOT_ABLE_TO_REACH = 'Not able to reach',
 }
 export enum AssetSoftwareCreatedAtEnum {
-  NONE = 'None',
-  ALL_TIME = 'AllTime',
-  TODAY = 'Today',
-  YESTERDAY = 'Yesterday',
-  PREVIOUS_WEEK = 'PreviousWeek',
-  PREVIOUS_MONTH = 'PreviousMonth',
+  NONE = 'NONE',
+  ALL_TIME = 'ALL_TIME',
+  TODAY = 'TODAY',
+  YESTERDAY = 'YESTERDAY',
+  PREVIOUS_WEEK = 'PREVIOUS_WEEK',
+  PREVIOUS_MONTH = 'PREVIOUS_MONTH',
 }
 export enum ETaskType {
   CALL = 'Call',
@@ -199,7 +199,7 @@ export enum EContractStatus {
   TERMINATED = 'TERMINATED',
 }
 
-export enum EContractExpiry {
+export enum EMongooseDateFilter {
   NONE = 'NONE',
   ALL_TIME = 'ALL_TIME',
   TODAY = 'TODAY',

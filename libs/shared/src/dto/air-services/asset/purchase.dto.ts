@@ -12,7 +12,7 @@ import {
 } from 'class-validator';
 import { EPurchaseOrderStatus } from '../../../constants/enums';
 import { paginationDTO } from '../../pagination/pagination.dto';
-import { EContractExpiry, EExportFile } from '@shared/constants';
+import { EMongooseDateFilter, EExportFile } from '@shared/constants';
 export class PurchaseDetailDto {
   @IsNotEmpty()
   @IsNumber()
@@ -352,20 +352,20 @@ export class FilterPurchaseOrderDto extends paginationDTO {
   vendorId: string;
 
   @ApiProperty({
-    enum: EContractExpiry,
+    enum: EMongooseDateFilter,
     example: '',
     required: false,
   })
-  @IsEnum(EContractExpiry)
+  @IsEnum(EMongooseDateFilter)
   @IsOptional()
   expectedDeliveryDate: string;
 
   @ApiProperty({
-    enum: EContractExpiry,
+    enum: EMongooseDateFilter,
     example: '',
     required: false,
   })
-  @IsEnum(EContractExpiry)
+  @IsEnum(EMongooseDateFilter)
   @IsOptional()
   createdAt: string;
 

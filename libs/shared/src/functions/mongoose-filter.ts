@@ -1,26 +1,26 @@
 import dayjs from 'dayjs';
-import { EContractExpiry } from '../constants';
+import { EMongooseDateFilter } from '../constants';
 
 export const mongooseDateFilter = (filter: string, key: string) => {
   const today = dayjs();
   switch (filter) {
-    case EContractExpiry.ALL_TIME:
+    case EMongooseDateFilter.ALL_TIME:
       return {};
-    case EContractExpiry.TODAY:
+    case EMongooseDateFilter.TODAY:
       return {
         [key]: {
           $lte: today.endOf('day').toDate(),
           $gte: today.startOf('day').toDate(),
         },
       };
-    case EContractExpiry.YESTERDAY:
+    case EMongooseDateFilter.YESTERDAY:
       return {
         [key]: {
           $lte: today.startOf('day').subtract(1, 'day').endOf('day').toDate(),
           $gte: today.startOf('day').subtract(1, 'day').startOf('day').toDate(),
         },
       };
-    case EContractExpiry.PREVIOUS_WEEK:
+    case EMongooseDateFilter.PREVIOUS_WEEK:
       return {
         [key]: {
           $lte: today.startOf('day').subtract(1, 'week').endOf('week').toDate(),
@@ -31,7 +31,7 @@ export const mongooseDateFilter = (filter: string, key: string) => {
             .toDate(),
         },
       };
-    case EContractExpiry.PREVIOUS_MONTH:
+    case EMongooseDateFilter.PREVIOUS_MONTH:
       return {
         [key]: {
           $lte: today
@@ -46,21 +46,21 @@ export const mongooseDateFilter = (filter: string, key: string) => {
             .toDate(),
         },
       };
-    case EContractExpiry.NEXT_WEEK:
+    case EMongooseDateFilter.NEXT_WEEK:
       return {
         [key]: {
           $lte: today.endOf('week').add(1, 'week').endOf('week').toDate(),
           $gte: today.endOf('week').add(1, 'week').startOf('week').toDate(),
         },
       };
-    case EContractExpiry.NEXT_MONTH:
+    case EMongooseDateFilter.NEXT_MONTH:
       return {
         [key]: {
           $lte: today.endOf('month').add(1, 'month').endOf('month').toDate(),
           $gte: today.endOf('month').add(1, 'month').startOf('month').toDate(),
         },
       };
-    case EContractExpiry.NONE:
+    case EMongooseDateFilter.NONE:
       return {
         [key]: {
           $exists: false,
