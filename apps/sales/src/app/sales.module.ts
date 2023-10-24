@@ -8,7 +8,7 @@ import { SharedModule } from '@shared';
 
 @Module({
   imports: [SharedModule],
-  controllers: [DealPipelineController,SalesProductController],
-  providers: [DealPipelineService,SalesProductService],
+  controllers: [DealPipelineController, SalesProductController],
+  providers: [DealPipelineService, SalesProductService],
 })
 export class SalesModule {}

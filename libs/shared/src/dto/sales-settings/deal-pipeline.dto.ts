@@ -5,7 +5,7 @@ import { IdDto, PaginationDto } from '../common';
 export interface IDealPipeline {
   name: string;
   isDefault?: boolean;
-  stages?:[StageDto]
+  stages?: [StageDto];
   createdAt?: Date;
   updatedAt?: Date;
   deletedAt?: Date;
@@ -15,7 +15,7 @@ export interface IDealPipeline {
   isDeleted?: boolean;
 }
 
-export class StageDto{
+export class StageDto {
   @ApiProperty({
     example: 'Follow-up',
   })
@@ -24,9 +24,9 @@ export class StageDto{
   @ApiProperty({
     example: 60,
   })
-  probability:Number
+  probability: Number;
 }
-export class CreateDealPipelineDto implements IDealPipeline{
+export class CreateDealPipelineDto implements IDealPipeline {
   @ApiProperty({
     example: 'deal name',
   })
@@ -40,7 +40,7 @@ export class CreateDealPipelineDto implements IDealPipeline{
   @ApiProperty({
     type: [StageDto],
   })
-  stages?:[StageDto]
+  stages?: [StageDto];
 
   createdBy?: string;
 }
@@ -61,7 +61,7 @@ export class DealPipelineDto {
   })
   id: string;
 
-    @ApiProperty({
+  @ApiProperty({
     example: 'deal name',
   })
   name: string;
@@ -69,8 +69,8 @@ export class DealPipelineDto {
   @ApiProperty({
     type: [StageDto],
   })
-  stages?:[StageDto]
-  
+  stages?: [StageDto];
+
   @ApiProperty({
     example: true,
   })
@@ -97,7 +97,6 @@ export class DealPipelineResponseDto {
     example: '',
   })
   error: string;
-
 }
 
 export class DealPipelinesResponseDto {
@@ -149,5 +148,4 @@ export class GetDealPipelinesDto extends PaginationDto {
   @IsNotEmpty()
   @IsOptional()
   search: string;
-
 }

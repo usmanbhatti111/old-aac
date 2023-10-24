@@ -20,4 +20,3 @@ export * from './lifecycle-stage.schema';
 export * from './status.schema';
 export * from './common-feature';
 export * from './sales-settings';
-

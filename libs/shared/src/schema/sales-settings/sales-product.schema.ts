@@ -9,7 +9,6 @@ export type SalesProductDocument = HydratedDocument<SalesProduct>;
   timestamps: true,
 })
 export class SalesProduct extends AbstractSchema implements ISalesProduct {
-
   @Prop({ type: String, required: false })
   sku?: string;
 
