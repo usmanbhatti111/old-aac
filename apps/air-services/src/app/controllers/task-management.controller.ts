@@ -7,6 +7,7 @@ import {
   EditTaskManagementDto,
   GetTaskManagementDto,
 } from '@shared/dto';
+
 @Controller()
 export class TaskManagementController {
   constructor(private taskManagementService: TaskManagementService) {}
@@ -32,7 +33,7 @@ export class TaskManagementController {
   }
 
   @MessagePattern(RMQ_MESSAGES.AIR_SERVICES.TASK_MANAGEMENT.DELETE_TASK)
-  deleteTask(@Payload() payload: { ids: string[] }) {
+  deleteTask(@Payload() payload: { ids: string[]; deletedById: string }) {
     return this.taskManagementService.deleteTask(payload);
   }
 

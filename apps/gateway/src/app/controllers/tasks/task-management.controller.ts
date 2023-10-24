@@ -8,6 +8,7 @@ import {
   Patch,
   Post,
   Query,
+  Req,
 } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
@@ -25,6 +26,8 @@ import {
   GetTaskManagementDto,
 } from '@shared/dto';
 import { firstValueFrom } from 'rxjs';
+import { Auth } from '../../decorators/auth.decorator';
+import { AppRequest } from '../../shared/interface/request.interface';
 
 @ApiTags(API_TAGS.TASK_MANAGEMENT)
 @Controller(CONTROLLERS.TASK_MANAGEMENT)
@@ -34,8 +37,10 @@ export class TaskManagementController {
     @Inject(SERVICES.AIR_SERVICES) private airServiceClient: ClientProxy
   ) {}
 
+  @Auth(true)
   @Post(API_ENDPOINTS.AIR_SERVICES.TASK_MANAGEMENT.CREATE_TASK)
-  addTask(@Body() dto: AddTaskManagementDto) {
+  addTask(@Req() req: AppRequest, @Body() dto: AddTaskManagementDto) {
+    dto.createdById = req?.user?._id;
     return firstValueFrom(
       this.airServiceClient.send(
         RMQ_MESSAGES.AIR_SERVICES.TASK_MANAGEMENT.CREATE_TASK,
@@ -44,6 +49,7 @@ export class TaskManagementController {
     );
   }
 
+  @Auth(true)
   @Get(API_ENDPOINTS.AIR_SERVICES.TASK_MANAGEMENT.TASK_LIST)
   getTasks(@Query() query: GetTaskManagementDto) {
     return firstValueFrom(
@@ -66,11 +72,14 @@ export class TaskManagementController {
     );
   }
 
+  @Auth(true)
   @Patch(API_ENDPOINTS.AIR_SERVICES.TASK_MANAGEMENT.UPDATE_TASK)
   updateTask(
+    @Req() req: AppRequest,
     @Param('id') id: string,
     @Body() updateTaskDto: EditTaskManagementDto
   ) {
+    updateTaskDto.updatedById = req?.user?._id;
     return firstValueFrom(
       this.airServiceClient.send(
         RMQ_MESSAGES.AIR_SERVICES.TASK_MANAGEMENT.EDIT_TASK,
@@ -82,13 +91,15 @@ export class TaskManagementController {
     );
   }
 
+  @Auth(true)
   @Delete(API_ENDPOINTS.AIR_SERVICES.TASK_MANAGEMENT.DELETE_TASK)
-  deleteTask(@Query('ids') ids: string[]) {
+  deleteTask(@Req() req: AppRequest, @Query('ids') ids: string[]) {
     return firstValueFrom(
       this.airServiceClient.send(
         RMQ_MESSAGES.AIR_SERVICES.TASK_MANAGEMENT.DELETE_TASK,
         {
           ids,
+          deletedById: req?.user?._id,
         }
       )
     );

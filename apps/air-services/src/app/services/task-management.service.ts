@@ -41,6 +41,7 @@ export class TaskManagementService {
 
       const filterQuery = {
         ...payload.query,
+        isDeleted: false,
       };
 
       const res = await this.taskManagementRepository.paginate({
@@ -88,12 +89,15 @@ export class TaskManagementService {
     }
   }
 
-  async deleteTask(payload: { ids: string[] }) {
+  async deleteTask(payload: { ids: string[]; deletedById: string }) {
     try {
-      const res = await this.taskManagementRepository.deleteMany(
-        {},
-        payload.ids
+      const res = await this.taskManagementRepository.updateMany(
+        {
+          _id: payload.ids,
+        },
+        { deletedById: payload.deletedById, isDeleted: true }
       );
+
       return successResponse(HttpStatus.OK, ResponseMessage.SUCCESS, res);
     } catch (error) {
       return new RpcException(error);

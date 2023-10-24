@@ -110,4 +110,6 @@ export class EditTaskManagementDto {
   @IsString()
   @IsOptional()
   note?: string;
+
+  updatedById: string;
 }

@@ -56,6 +56,9 @@ export class TaskManagement extends AbstractSchema {
 
   @Prop({ type: Date, default: Date.now })
   deletedAt?: Date;
+
+  @Prop({ default: false })
+  isDeleted?: boolean;
 }
 
 export const TaskManagementSchema =

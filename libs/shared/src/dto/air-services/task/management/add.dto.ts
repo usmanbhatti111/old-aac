@@ -116,4 +116,6 @@ export class AddTaskManagementDto {
   @IsString()
   @IsOptional()
   note?: string;
+
+  createdById: string;
 }
