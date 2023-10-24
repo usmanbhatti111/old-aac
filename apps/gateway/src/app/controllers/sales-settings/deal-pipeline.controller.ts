@@ -72,6 +72,7 @@ export class DealPipelineController {
     @Req() request: AppRequest,
     @Query() payload: GetDealPipelinesDto
   ): Promise<DealPipelinesResponseDto> {
+   
     const response = await firstValueFrom(
       this.salesServiceClient.send(
         RMQ_MESSAGES.DEAL_PIPELINE.GET_DEAL_PIPELINES,
@@ -99,7 +100,7 @@ export class DealPipelineController {
 
   @Auth(true)
   @Patch(API_ENDPOINTS.DEAL_PIPELINE.UPDATE_DEAL_PIPELINE)
-  @ApiOkResponse({ type: DealPipelineResponseDto })
+  @ApiOkResponse({ type: DealPipelineResponseDto, })
   public async editContactStatus(
     @Req() request: AppRequest,
     @Param() params: IdDto,

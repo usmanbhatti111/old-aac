@@ -72,6 +72,7 @@ export class SalesProductController {
     @Req() request: AppRequest,
     @Query() payload: GetSalesProductsDto
   ): Promise<SalesProductsResponseDto> {
+   
     const response = await firstValueFrom(
       this.salesServiceClient.send(
         RMQ_MESSAGES.SALES_PRODUCT.GET_SALES_PRODUCTS,
@@ -99,7 +100,7 @@ export class SalesProductController {
 
   @Auth(true)
   @Patch(API_ENDPOINTS.SALES_PRODUCT.UPDATE_SALES_PRODUCT)
-  @ApiOkResponse({ type: SalesProductResponseDto })
+  @ApiOkResponse({ type: SalesProductResponseDto, })
   public async editContactStatus(
     @Req() request: AppRequest,
     @Param() params: IdDto,

@@ -12,7 +12,9 @@ import { DealPipelineService } from '../services/deal-pipeline.service';
 
 @Controller()
 export class DealPipelineController {
-  constructor(private readonly dealPipelineService: DealPipelineService) {}
+  constructor(
+    private readonly dealPipelineService: DealPipelineService
+  ) {}
 
   @MessagePattern(RMQ_MESSAGES.DEAL_PIPELINE.CREATE_DEAL_PIPELINE)
   async addDealPipeline(@Payload() payload: CreateDealPipelineDto) {
@@ -34,7 +36,9 @@ export class DealPipelineController {
     return this.dealPipelineService.updateDealPipeline(payload);
   }
 
-  @MessagePattern(RMQ_MESSAGES.DEAL_PIPELINE.DELETE_DEAL_PIPELINE)
+  @MessagePattern(
+    RMQ_MESSAGES.DEAL_PIPELINE.DELETE_DEAL_PIPELINE
+  )
   async deleteDealPipeline(@Payload() payload: DeleteDealPipelineDto) {
     return this.dealPipelineService.deleteDealPipeline(payload);
   }
