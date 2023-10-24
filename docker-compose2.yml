@@ -1,0 +1,25 @@
+version: '3'
+services:
+  gateway:
+    container_name: gateway
+    build:
+      context: ./
+      dockerfile: Dockerfile-gateway
+    env_file:
+      - .env
+    ports:
+      - '8081:8081'
+    networks:
+      - backend
+  user-account:
+    container_name: user-account
+    build:
+      context: ./
+      dockerfile: Dockerfile-useraccount
+    env_file:
+      - .env
+    networks:
+      - backend
+networks:
+  backend:
+    driver: bridge
