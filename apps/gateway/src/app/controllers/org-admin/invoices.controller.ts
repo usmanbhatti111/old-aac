@@ -47,24 +47,6 @@ export class InvoicesController {
   }
 
   @Auth(true)
-  @Get(API_ENDPOINTS.ORG_ADMIN.INVOICES.GET_ONE)
-  @ApiCreatedResponse({ type: GetInvoiceResponseDto })
-  public async getOneInvoice(
-    @Query() payload: GetInvoiceDto,
-    @Req() request: AppRequest
-  ) {
-    const { user } = request;
-    const organizationId = user?.organization;
-    const response = await firstValueFrom(
-      this.orgAdminServiceClient.send(
-        { cmd: RMQ_MESSAGES.ORG_ADMIN.INVOICES.GET_ONE_INVOICE },
-        { ...payload, organizationId }
-      )
-    );
-    return response;
-  }
-
-  @Auth(true)
   @Get(API_ENDPOINTS.ORG_ADMIN.INVOICES.PAY_NOW_INVOICE)
   @ApiCreatedResponse({ type: GetInvoiceResponseDto })
   public async payNowInvoice(
@@ -79,7 +61,24 @@ export class InvoicesController {
         { ...payload, organizationId, userId: user._id }
       )
     );
+    return response;
+  }
 
+  @Auth(true)
+  @Get(API_ENDPOINTS.ORG_ADMIN.INVOICES.GET_ONE)
+  @ApiCreatedResponse({ type: GetInvoiceResponseDto })
+  public async getOneInvoice(
+    @Query() payload: GetInvoiceDto,
+    @Req() request: AppRequest
+  ) {
+    const { user } = request;
+    const organizationId = user?.organization;
+    const response = await firstValueFrom(
+      this.orgAdminServiceClient.send(
+        { cmd: RMQ_MESSAGES.ORG_ADMIN.INVOICES.GET_ONE_INVOICE },
+        { ...payload, organizationId }
+      )
+    );
     return response;
   }
 }

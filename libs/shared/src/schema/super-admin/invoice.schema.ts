@@ -96,6 +96,23 @@ export class Invoice extends AbstractSchema {
   @Prop({ type: Date, required: false })
   dueDate: Date;
 
+  @Prop({ type: Date, required: false })
+  invoicePayDate: Date;
+
+  @Prop({
+    type: SchemaTypes.ObjectId,
+    required: true,
+    ref: 'payments',
+  })
+  paymentId: string;
+
+  @Prop({
+    type: SchemaTypes.ObjectId,
+    required: false,
+    ref: 'users',
+  })
+  paidBy: string;
+
   @Prop({
     type: String,
     required: false,

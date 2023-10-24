@@ -44,6 +44,9 @@ export class OrganizationPlan extends AbstractSchema {
   @Prop({ type: Date, required: true })
   billingDate: Date;
 
+  @Prop({ type: Date, required: false })
+  lastInvoicePaidDate: Date;
+
   @Prop({
     type: String,
     required: false,

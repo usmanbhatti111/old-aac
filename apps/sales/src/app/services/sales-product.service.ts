@@ -16,10 +16,9 @@ export class SalesProductService {
 
   async createSalesProduct(payload: CreateSalesProductDto) {
     try {
-      const existingProduct =
-        await this.salesProductRepository.find({
-          name: payload?.name,
-        });
+      const existingProduct = await this.salesProductRepository.find({
+        name: payload?.name,
+      });
       if (existingProduct.length > 0) {
         return new ConflictException(
           'Product with the same name already exist.'
@@ -42,14 +41,14 @@ export class SalesProductService {
         const keyword = { $regex: search, $options: 'i' };
         filterQuery['$or'] = [
           {
-            name: keyword
+            name: keyword,
           },
           {
-            description: keyword
+            description: keyword,
           },
           {
-            sku: keyword
-          }
+            sku: keyword,
+          },
         ];
       }
 

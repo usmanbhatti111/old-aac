@@ -1,6 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsMongoId, IsNotEmpty, IsOptional, IsString } from 'class-validator';
 import { paginationDTO } from '../pagination/pagination.dto';
+import { InvoiceStatusEnum } from '../../constants/enums';
 
 export class GetAllInvoicesDto extends paginationDTO {
   @ApiProperty({
@@ -10,30 +11,95 @@ export class GetAllInvoicesDto extends paginationDTO {
   @IsOptional()
   search?: string;
 
+  @ApiProperty({
+    type: String,
+    required: false,
+    enum: InvoiceStatusEnum,
+  })
+  status: InvoiceStatusEnum;
+
   organizationId: string;
 }
 
 export class GetAllInvoicesResponseDto {
-  @ApiProperty()
-  orgId: string;
+  @ApiProperty({ example: 200 })
+  statusCode: string;
 
-  @ApiProperty()
-  products: string;
+  @ApiProperty({ example: 'Success' })
+  message: string;
 
-  @ApiProperty()
-  dateIssued: string;
+  @ApiProperty({
+    example: {
+      organizationplans: [
+        {
+          _id: '653217a10c7f211c2c33b0d4',
+          organizationPlanId: '652f675569b8092d9954d30b',
+          organizationId: '652e0304169f73fd01fd4956',
+          planId: '652677e726623bafa178e6a1',
+          details: {
+            _id: '652f675569b8092d9954d30b',
+            organizationId: '652e0304169f73fd01fd4956',
+            planId: '652677e726623bafa178e6a1',
+            additionalUsers: 1,
+            additionalStorage: 1,
+            planDiscount: 0,
+            billingCycle: 'MONTHLY',
+            billingDate: '2023-10-20T00:00:00.000Z',
+            status: 'ACTIVE',
+            plans: {
+              description: 'Plan A',
+              defaultUsers: 1,
+              defaultStorage: 1,
+              planPrice: 10,
+              additionalPerUserPrice: 10,
+              additionalStoragePrice: 10,
+              planTypeId: '651bee19040d3384e81b81ff',
+            },
+            plantypes: 'Growth',
+          },
+          invoiceNo: 'DOC-7874',
+          billingDate: '2023-10-20T00:00:00.000Z',
+          dueDate: '2023-10-20T00:00:00.000Z',
+          subTotal: 30,
+          invoiceDiscount: 0,
+          afterDiscountAmout: 30,
+          vat: 10,
+          total: 27,
+          createdBy: '652e29b8d4495132e5d8f6d0',
+          status: 'PENDING',
+          isDeleted: false,
+          createdAt: '2023-10-20T06:01:05.203Z',
+          updatedAt: '2023-10-20T06:01:05.203Z',
+          organizations: {
+            _id: '652e0304169f73fd01fd4956',
+            registrationNumber: '8C68902',
+            name: 'Orcalo Holdings',
+            email: 'oh@gmail.com',
+            phoneNo: '++13432121',
+            address: 'Street#234 ',
+            postCode: 'CN789',
+            isDeleted: false,
+            createdAt: '2023-10-17T03:44:04.207Z',
+            updatedAt: '2023-10-17T03:44:04.207Z',
+          },
+          plans: {
+            _id: '652677e726623bafa178e6a1',
+            description: 'Plan A',
+          },
+        },
+      ],
+      meta: {
+        page: 1,
+        pages: 1,
+        limit: 10,
+        total: 1,
+      },
+    },
+  })
+  data: object;
 
-  @ApiProperty()
-  Details: number;
-
-  @ApiProperty()
-  invoiceAmount: number;
-
-  @ApiProperty()
-  invoiceBalance: number;
-
-  @ApiProperty()
-  status: Date;
+  @ApiProperty({ example: null })
+  error: string;
 }
 
 export class GetInvoiceDto {
@@ -48,29 +114,76 @@ export class GetInvoiceDto {
 }
 
 export class GetInvoiceResponseDto {
-  @ApiProperty()
-  orgId: string;
+  @ApiProperty({ example: 200 })
+  statusCode: string;
 
-  @ApiProperty()
-  products: string;
+  @ApiProperty({ example: 'Success' })
+  message: string;
 
-  @ApiProperty()
-  dateIssued: string;
+  @ApiProperty({
+    example: {
+      organizationplans: {
+        _id: '653217a10c7f211c2c33b0d4',
+        organizationPlanId: '652f675569b8092d9954d30b',
+        organizationId: '652e0304169f73fd01fd4956',
+        planId: '652677e726623bafa178e6a1',
+        details: {
+          _id: '652f675569b8092d9954d30b',
+          organizationId: '652e0304169f73fd01fd4956',
+          planId: '652677e726623bafa178e6a1',
+          additionalUsers: 1,
+          additionalStorage: 1,
+          planDiscount: 0,
+          billingCycle: 'MONTHLY',
+          billingDate: '2023-10-20T00:00:00.000Z',
+          status: 'ACTIVE',
+          plans: {
+            description: 'Plan A',
+            defaultUsers: 1,
+            defaultStorage: 1,
+            planPrice: 10,
+            additionalPerUserPrice: 10,
+            additionalStoragePrice: 10,
+            planTypeId: '651bee19040d3384e81b81ff',
+          },
+          plantypes: 'Growth',
+        },
+        invoiceNo: 'DOC-7874',
+        billingDate: '2023-10-20T00:00:00.000Z',
+        dueDate: '2023-10-20T00:00:00.000Z',
+        subTotal: 30,
+        invoiceDiscount: 0,
+        afterDiscountAmout: 30,
+        vat: 10,
+        total: 27,
+        createdBy: '652e29b8d4495132e5d8f6d0',
+        status: 'PENDING',
+        isDeleted: false,
+        createdAt: '2023-10-20T06:01:05.203Z',
+        updatedAt: '2023-10-20T06:01:05.203Z',
+        organizations: {
+          _id: '652e0304169f73fd01fd4956',
+          registrationNumber: '8C68902',
+          name: 'Orcalo Holdings',
+          email: 'oh@gmail.com',
+          phoneNo: '++13432121',
+          address: 'Street#234 ',
+          postCode: 'CN789',
+          isDeleted: false,
+          createdAt: '2023-10-17T03:44:04.207Z',
+          updatedAt: '2023-10-17T03:44:04.207Z',
+        },
+        plans: {
+          _id: '652677e726623bafa178e6a1',
+          description: 'Plan A',
+        },
+      },
+    },
+  })
+  data: object;
 
-  @ApiProperty()
-  Details: number;
-
-  @ApiProperty()
-  invoiceAmount: number;
-
-  @ApiProperty()
-  invoiceBalance: number;
-
-  @ApiProperty()
-  status: Date;
-  billingDate: Date;
-
-  assignedBy?: string;
+  @ApiProperty({ example: null })
+  error: string;
 }
 export class PayNowDto {
   @ApiProperty({

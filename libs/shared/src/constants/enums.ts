@@ -214,3 +214,8 @@ export enum EExportFile {
   CSV = 'CSV',
   XLS = 'XLS',
 }
+
+export enum ECardTypes {
+  MASTER = 'MASTER',
+  VISA = 'VISA',
+}

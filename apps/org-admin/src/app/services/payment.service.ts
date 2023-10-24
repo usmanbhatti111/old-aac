@@ -1,16 +1,15 @@
-import { HttpStatus, Injectable } from '@nestjs/common';
+import { HttpStatus, Injectable, NotFoundException } from '@nestjs/common';
+import { RpcException } from '@nestjs/microservices';
 import { PaymentRepository } from '@shared';
-import {
-  ResponseMessage,
-  errorResponse,
-  successResponse,
-} from '@shared/constants';
+import { ResponseMessage, successResponse } from '@shared/constants';
 import {
   AddPaymentMethodDto,
+  DeletePaymentDto,
   GetOnePaymentDto,
   UpdatePaymentMethodDto,
   getAllPaymentsDTO,
 } from '@shared/dto';
+import mongoose from 'mongoose';
 
 @Injectable()
 export class PaymentService {
@@ -18,103 +17,134 @@ export class PaymentService {
 
   async addPayment(payload: AddPaymentMethodDto) {
     try {
-      const response = await this.paymentRepository.create(payload);
-      return successResponse(
-        HttpStatus.CREATED,
-        ResponseMessage.CREATED,
-        response
-      );
+      const param: any = payload;
+      const response = await this.paymentRepository.create(param);
+      return successResponse(HttpStatus.OK, ResponseMessage.SUCCESS, response);
     } catch (error) {
-      return errorResponse(
-        HttpStatus.BAD_REQUEST,
-        ResponseMessage.BAD_REQUEST,
-        error
-      );
+      throw new RpcException(error);
     }
   }
 
   async updatePayment(payload: UpdatePaymentMethodDto) {
     try {
-      const { id, orgId } = payload;
+      const { id } = payload;
       delete payload.id;
 
       const filterQuery = {
         _id: id,
-        orgId: orgId,
-        isDeleted: false,
       };
 
-      const payment = await this.paymentRepository.findOne(filterQuery);
-      if (!payment) {
-        return successResponse(
-          HttpStatus.OK,
-          ResponseMessage.NOT_FOUND,
-          payment
-        );
-      }
-
+      const params: any = payload;
       const response = await this.paymentRepository.findOneAndUpdate(
         filterQuery,
-        payload
+        params
       );
       return successResponse(HttpStatus.OK, ResponseMessage.SUCCESS, response);
     } catch (error) {
-      return errorResponse(
-        HttpStatus.BAD_REQUEST,
-        ResponseMessage.BAD_REQUEST,
-        error
-      );
+      throw new RpcException(error);
     }
   }
 
   async getAllPayments(payload: getAllPaymentsDTO) {
     try {
-      const { orgId, limit, page } = payload;
+      const { organizationId, page = 1, limit = 10, search } = payload;
       const offset = limit * (page - 1);
+      let filterQuery = {};
 
-      const filterQuery = {
-        orgId: orgId,
-        isDeleted: false,
-      };
+      if (search) {
+        filterQuery = {
+          $or: [{ 'organizations.name': { $regex: search, $options: 'i' } }],
+        };
+      }
 
-      const response = await this.paymentRepository.paginate({
-        filterQuery,
+      const pipelines = [
+        {
+          $match: {
+            organizationId: new mongoose.Types.ObjectId(organizationId),
+            isDeleted: false,
+          },
+        },
+        {
+          $lookup: {
+            from: 'organizations',
+            localField: 'organizationId',
+            foreignField: '_id',
+            as: 'organizations',
+          },
+        },
+        {
+          $addFields: {
+            organizations: {
+              $arrayElemAt: ['$organizations', 0],
+            },
+          },
+        },
+        {
+          $lookup: {
+            from: 'products',
+            localField: 'manageSubscriptionFor',
+            foreignField: '_id',
+            as: 'products',
+          },
+        },
+        {
+          $match: filterQuery,
+        },
+      ];
+
+      const params = {
+        pipelines,
         offset,
         limit,
-      });
+      };
+      const response = await this.paymentRepository.paginate(params);
       return successResponse(HttpStatus.OK, ResponseMessage.SUCCESS, response);
     } catch (error) {
-      return errorResponse(
-        HttpStatus.BAD_REQUEST,
-        ResponseMessage.BAD_REQUEST,
-        error
-      );
+      throw new RpcException(error);
     }
   }
 
   async getOnePayment(payload: GetOnePaymentDto) {
     try {
-      const { orgId, id } = payload;
-      const filterQuery = {
-        _id: id,
-        orgId: orgId,
-        isDeleted: false,
-      };
+      const { organizationId, id } = payload;
 
-      const response = await this.paymentRepository.findOne(filterQuery);
+      const pipeline = [
+        {
+          $match: {
+            _id: new mongoose.Types.ObjectId(id),
+            organizationId: new mongoose.Types.ObjectId(organizationId),
+            isDeleted: false,
+          },
+        },
+        {
+          $lookup: {
+            from: 'organizations',
+            localField: 'organizationId',
+            foreignField: '_id',
+            as: 'organizations',
+          },
+        },
+        {
+          $addFields: {
+            organizations: {
+              $arrayElemAt: ['$organizations', 0],
+            },
+          },
+        },
+      ];
+
+      const response = await this.paymentRepository.aggregate(pipeline);
+      if (!response) throw new NotFoundException('Payment Not Found');
+
       return successResponse(HttpStatus.OK, ResponseMessage.SUCCESS, response);
     } catch (error) {
-      return errorResponse(
-        HttpStatus.BAD_REQUEST,
-        ResponseMessage.BAD_REQUEST,
-        error
-      );
+      throw new RpcException(error);
     }
   }
 
-  async deleteOnePayment(payload: GetOnePaymentDto) {
+  async deleteOnePayment(payload: DeletePaymentDto) {
     try {
-      const { id } = payload;
+      const { id, deletedBy } = payload;
 
       const filterQuery = {
         _id: id,
@@ -123,6 +153,7 @@ export class PaymentService {
 
       const params = {
         isDeleted: true,
+        deletedBy,
       };
 
       const response = await this.paymentRepository.findOneAndUpdate(
@@ -131,11 +162,7 @@ export class PaymentService {
       );
       return successResponse(HttpStatus.OK, ResponseMessage.SUCCESS, response);
     } catch (error) {
-      return errorResponse(
-        HttpStatus.BAD_REQUEST,
-        ResponseMessage.BAD_REQUEST,
-        error
-      );
+      throw new RpcException(error);
     }
   }
 }

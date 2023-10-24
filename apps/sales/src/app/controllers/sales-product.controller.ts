@@ -12,9 +12,7 @@ import { SalesProductService } from '../services/sales-product.service';
 
 @Controller()
 export class SalesProductController {
-  constructor(
-    private readonly salesProductService: SalesProductService
-  ) {}
+  constructor(private readonly salesProductService: SalesProductService) {}
 
   @MessagePattern(RMQ_MESSAGES.SALES_PRODUCT.CREATE_SALES_PRODUCT)
   async addSalesProduct(@Payload() payload: CreateSalesProductDto) {
@@ -36,9 +34,7 @@ export class SalesProductController {
     return this.salesProductService.updateSalesProduct(payload);
   }
 
-  @MessagePattern(
-    RMQ_MESSAGES.SALES_PRODUCT.DELETE_SALES_PRODUCT
-  )
+  @MessagePattern(RMQ_MESSAGES.SALES_PRODUCT.DELETE_SALES_PRODUCT)
   async deleteSalesProduct(@Payload() payload: DeleteSalesProductDto) {
     return this.salesProductService.deleteSalesProduct(payload);
   }

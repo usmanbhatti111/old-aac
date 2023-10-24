@@ -76,7 +76,6 @@ import {
   UserAccountsSchema,
   UserO,
   UserOSchema,
-  ContractSchema,
   UserSchema,
   SalesProduct,
   SalesProductSchema,
@@ -85,6 +84,9 @@ import {
   Contract,
   Attachment,
   AttachmentSchema,
+  ContractSchema,
+  OrganizationCompanyAccount,
+  OrganizationCompanyAccountSchema,
 } from './schema';
 
 import {
@@ -288,6 +290,10 @@ export const DbModels = [
     name: LifecycleStages.name,
     schema: LifecycleStagesSchema,
     collection: 'lifecycleStages',
+  },
+  {
+    name: OrganizationCompanyAccount.name,
+    schema: OrganizationCompanyAccountSchema,
   },
   {
     name: DealPipeline.name,

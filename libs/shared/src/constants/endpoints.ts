@@ -193,8 +193,8 @@ export const API_ENDPOINTS = {
   },
 
   PAYMENTS: {
-    FIND_ONE: '/:id',
-    DELETE_ONE: '/:id',
+    FIND_ONE: 'find/:id',
+    DELETE_ONE: 'delete/:id',
     UPDATE_ONE: '/:id',
   },
   DOCUMENTS: {
@@ -213,7 +213,7 @@ export const API_ENDPOINTS = {
   },
   ORG_ADMIN: {
     INVOICES: {
-      GET_ONE: '/:id',
+      GET_ONE: 'get-one/:id',
       PAY_NOW_INVOICE: 'pay-now-invoice',
     },
     CONTACT_STATUS: {

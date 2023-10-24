@@ -3,6 +3,7 @@ import { MessagePattern, Payload } from '@nestjs/microservices';
 import { RMQ_MESSAGES } from '@shared/constants';
 import {
   AddPaymentMethodDto,
+  DeletePaymentDto,
   GetOnePaymentDto,
   UpdatePaymentMethodDto,
   getAllPaymentsDTO,
@@ -34,7 +35,7 @@ export class PaymentController {
   }
 
   @MessagePattern({ cmd: RMQ_MESSAGES.ORG_ADMIN.PAYMENTS.DELETE_ONE_PAYMENTS })
-  async deleteOnePayment(@Payload() payload: GetOnePaymentDto) {
+  async deleteOnePayment(@Payload() payload: DeletePaymentDto) {
     return this.paymentService.deleteOnePayment(payload);
   }
 }

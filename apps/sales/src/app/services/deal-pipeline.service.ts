@@ -32,7 +32,7 @@ export class DealPipelineService {
       if (search) {
         filterQuery['$or'] = [
           {
-            name: { $regex: search, $options: 'i' }
+            name: { $regex: search, $options: 'i' },
           },
         ];
       }

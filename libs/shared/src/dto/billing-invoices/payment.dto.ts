@@ -62,14 +62,7 @@ export class AddPaymentMethodDto {
   @IsArray()
   manageSubscriptionFor: string[];
 
-  @ApiProperty({
-    example: false,
-    default: false,
-  })
-  @IsBoolean()
-  isDeleted: boolean;
-
-  orgId: string;
+  organizationId: string;
 }
 
 export class AddPaymentMethodResponseDto {
@@ -106,7 +99,7 @@ export class GetOnePaymentDto {
   @IsNotEmpty()
   id: string;
 
-  orgId: string;
+  organizationId: string;
 }
 
 export class DeletePaymentDto {
@@ -116,6 +109,9 @@ export class DeletePaymentDto {
   @IsMongoId()
   @IsNotEmpty()
   id: string;
+
+  organizationId: string;
+  deletedBy: string;
 }
 
 export class UpdatePaymentMethodDto {
@@ -175,11 +171,28 @@ export class UpdatePaymentMethodDto {
   @IsBoolean()
   isDeleted: boolean;
 
-  orgId: string;
+  organizationId: string;
+  updatedBy: string;
 
   id?: string;
 }
 
 export class getAllPaymentsDTO extends paginationDTO {
-  orgId: string;
+  @ApiProperty({
+    required: false,
+  })
+  @IsString()
+  @IsOptional()
+  search?: string;
+
+  organizationId: string;
+}
+
+export class PaymentIdDto {
+  @ApiProperty({
+    example: '651e6368a3a6baf2f193efb0',
+  })
+  @IsMongoId()
+  @IsNotEmpty()
+  id: string;
 }

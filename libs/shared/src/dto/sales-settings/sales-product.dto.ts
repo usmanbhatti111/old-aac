@@ -140,7 +140,6 @@ export class SalesProductResponseDto {
     example: '',
   })
   error: string;
-
 }
 
 export class SalesProductsResponseDto {
@@ -192,5 +191,4 @@ export class GetSalesProductsDto extends PaginationDto {
   @IsNotEmpty()
   @IsOptional()
   search: string;
-
 }
