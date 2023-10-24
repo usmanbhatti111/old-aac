@@ -1,10 +1,14 @@
 import { Module } from '@nestjs/common';
 
-import { AppController } from './app.controller';
+import { DealPipelineController } from './controllers/deal-pipeline.controller';
+import { SalesProductController } from './controllers/sales-product.controller';
+import { DealPipelineService } from './services/deal-pipeline.service';
+import { SalesProductService } from './services/sales-product.service';
+import { SharedModule } from '@shared';
 
 @Module({
-  imports: [],
-  controllers: [AppController],
-  providers: [],
+  imports: [SharedModule],
+  controllers: [DealPipelineController,SalesProductController],
+  providers: [DealPipelineService,SalesProductService],
 })
 export class SalesModule {}

@@ -27,4 +27,6 @@ export const MODEL = {
   PERMISSION: 'Permission',
   CONTACT: 'contacts',
   USER: 'users',
+  DEAL_PIPELINE: 'DealPipeline',
+  SALES_PRODUCT: 'SalesProduct',
 };

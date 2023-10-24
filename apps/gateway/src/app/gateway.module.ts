@@ -41,10 +41,12 @@ import { DocumentsController } from './controllers/common-features/documents.con
 import { ContractController } from './controllers/assets/contract.controller';
 import { ProductCategoriesController } from './controllers/org-admin/product-category.controller';
 import { ColumnPipe } from './pipes/column.pipe';
-import { AttachmentController } from './controllers/common-features/attachment.controller';
 import { SharedModule } from '@shared';
 import { ContactStatusController } from './controllers/org-admin/contact-status.controller';
 import { LifecycleStagesController } from './controllers/org-admin/lifecycle-stages.controller';
+import { DealPipelineController } from './controllers/sales-settings/deal-pipeline.controller';
+import { SalesProductController } from './controllers/sales-settings/sales-product.controller';
+import { AttachmentController } from './controllers/common-features/attachment.controller';
 
 @Module({
   imports: [
@@ -88,8 +90,10 @@ import { LifecycleStagesController } from './controllers/org-admin/lifecycle-sta
     DocumentsController,
     ContractController,
     ProductCategoriesController,
-    AttachmentController,
     LifecycleStagesController,
+    DealPipelineController,
+    SalesProductController,
+    AttachmentController,
   ],
   providers: [
     // Exceptions Filter

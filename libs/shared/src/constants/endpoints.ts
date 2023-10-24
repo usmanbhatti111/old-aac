@@ -237,4 +237,20 @@ export const API_ENDPOINTS = {
     GET_PRODUCT_CATEGORIES: '/',
     EDIT_PRODUCT_CATEGORY: '/:id',
   },
+
+  DEAL_PIPELINE: {
+    CREATE_DEAL_PIPELINE: '/',
+    GET_DEAL_PIPELINES: '/',
+    GET_DEAL_PIPELINE: '/:id',
+    UPDATE_DEAL_PIPELINE: '/:id',
+    DELETE_DEAL_PIPELINE: '/:id',
+  },
+
+  SALES_PRODUCT: {
+    CREATE_SALES_PRODUCT: '/',
+    GET_SALES_PRODUCTS: '/',
+    GET_SALES_PRODUCT: '/:id',
+    UPDATE_SALES_PRODUCT: '/:id',
+    DELETE_SALES_PRODUCT: '/:id',
+  },
 };

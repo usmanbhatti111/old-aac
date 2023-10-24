@@ -31,3 +31,4 @@ export * from './common-feature/documents/folder.repository';
 
 export * from './logs';
 export * from './common-feature';
+export * from './sales-settings';

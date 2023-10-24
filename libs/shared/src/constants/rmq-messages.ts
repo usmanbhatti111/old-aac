@@ -256,4 +256,19 @@ export const RMQ_MESSAGES = {
     GET_LOGS: 'get-request-logs',
     GET_LOGS_BY_USER: 'get-user-request-logs',
   },
+  DEAL_PIPELINE: {
+    CREATE_DEAL_PIPELINE: 'create-deal-pipeline',
+    GET_DEAL_PIPELINES: 'get-deal-pipelines',
+    GET_DEAL_PIPELINE: 'get-deal-pipeline',
+    UPDATE_DEAL_PIPELINE: 'update-deal-pipeline',
+    DELETE_DEAL_PIPELINE: 'delete-deal-pipeline',
+  },
+
+  SALES_PRODUCT: {
+    CREATE_SALES_PRODUCT: 'create-sales-product',
+    GET_SALES_PRODUCTS: 'get-sales-products',
+    GET_SALES_PRODUCT: 'get-sales-product',
+    UPDATE_SALES_PRODUCT: 'update-sales-product',
+    DELETE_SALES_PRODUCT: 'delete-sales-product',
+  },
 };

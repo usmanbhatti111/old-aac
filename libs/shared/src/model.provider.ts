@@ -54,6 +54,8 @@ import {
   Purchase,
   RequestLog,
   RequestLogSchema,
+  LifeCycleStage,
+  LifeCycleStageSchema,
   TaskActivity,
   TaskActivitySchema,
   Status,
@@ -74,11 +76,15 @@ import {
   UserAccountsSchema,
   UserO,
   UserOSchema,
+  ContractSchema,
   UserSchema,
+  SalesProduct,
+  SalesProductSchema,
+  DealPipeline,
+  DealPipelineSchema,
   Contract,
   Attachment,
   AttachmentSchema,
-  ContractSchema,
 } from './schema';
 
 import {
@@ -242,6 +248,10 @@ export const DbModels = [
     schema: ModuleSchema,
   },
   {
+    name: LifeCycleStage.name,
+    schema: LifeCycleStageSchema,
+  },
+  {
     name: TaskActivity.name,
     schema: TaskActivitySchema,
   },
@@ -278,5 +288,13 @@ export const DbModels = [
     name: LifecycleStages.name,
     schema: LifecycleStagesSchema,
     collection: 'lifecycleStages',
+  },
+  {
+    name: DealPipeline.name,
+    schema: DealPipelineSchema,
+  },
+  {
+    name: SalesProduct.name,
+    schema: SalesProductSchema,
   },
 ];
