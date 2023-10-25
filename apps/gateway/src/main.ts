@@ -2,6 +2,7 @@ import { Logger, ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { ConfigService } from '@nestjs/config';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
+import basicAuth from 'express-basic-auth';
 
 import { GatewayModule } from './app/gateway.module';
 
@@ -19,6 +20,19 @@ async function bootstrap() {
       transform: true,
     })
   );
+
+  if (config.get<string>('NODE_ENV') === 'production') {
+    app.use(
+      ['/api'],
+      basicAuth({
+        challenge: true,
+        users: {
+          [config.get<string>('SWAGGER_USER_NAME')]:
+            config.get<string>('SWAGGER_PASSWORD'),
+        },
+      })
+    );
+  }
 
   const options = new DocumentBuilder()
     .setTitle('Air Apple Cart')
