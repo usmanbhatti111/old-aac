@@ -52,6 +52,7 @@ import {
 import { MongooseConfig } from './config/mongo.config';
 import { SharedService } from './shared.service';
 import { DownloadService, S3Service } from './services';
+import { DealsRepository } from './repositories/org-admin/deals.repository';
 @Module({
   imports: [
     ConfigModule.forRoot(),
@@ -112,6 +113,7 @@ import { DownloadService, S3Service } from './services';
     AttachmentRepository,
     ContactCallRepository,
     LifecycleStagesRepository,
+    DealsRepository,
     {
       provide: 'S3',
       useFactory: (config: ConfigService) =>
@@ -180,6 +182,7 @@ import { DownloadService, S3Service } from './services';
     ContactStateRepository,
     ContactCallRepository,
     LifecycleStagesRepository,
+    DealsRepository,
   ],
 })
 export class SharedModule {}

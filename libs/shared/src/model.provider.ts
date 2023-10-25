@@ -1,3 +1,4 @@
+import { MODEL } from './constants/models';
 import {
   AdminRole,
   AdminRoleSchema,
@@ -97,6 +98,7 @@ import {
   ContactNoteSchema,
   ContactSchema,
 } from './schema/common-feature';
+import { Deals, DealsSchema } from './schema/org-admin';
 
 export const DbModels = [
   {
@@ -302,5 +304,10 @@ export const DbModels = [
   {
     name: SalesProduct.name,
     schema: SalesProductSchema,
+  },
+  {
+    name: Deals.name,
+    schema: DealsSchema,
+    collection: MODEL.DEAL,
   },
 ];

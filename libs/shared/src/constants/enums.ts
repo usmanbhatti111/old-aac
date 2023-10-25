@@ -219,3 +219,22 @@ export enum ECardTypes {
   MASTER = 'MASTER',
   VISA = 'VISA',
 }
+
+export enum EBillingFrequency {
+  MONTHLY = 'quarterly',
+  QUARTERLY = 'quarterly',
+  SEMI_ANNUALLY = 'semi annually',
+  ANNUALLY = 'annually',
+  TWO_YEARS = 'two years',
+}
+
+export enum EDealType {
+  NEW = 'new business',
+  EXISITING = 'existing business',
+}
+
+export enum EContactMode {
+  EMAIL = 'email',
+  CALL = 'call',
+  MEETING = 'meeting',
+}
