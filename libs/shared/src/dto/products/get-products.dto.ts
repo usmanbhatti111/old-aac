@@ -4,16 +4,21 @@ import {
   IsDateString,
   IsNotEmpty,
   IsOptional,
+  IsString,
 } from 'class-validator';
+import { EStatusToggle } from '../../constants/enums';
 
 export class GetProductsDto {
   @ApiProperty({
-    type: Boolean,
+    type: String,
     required: false,
-    example: false,
+    example: EStatusToggle.ACTIVE,
+    enum: EStatusToggle,
   })
+  @IsString()
   @IsOptional()
-  isActive: boolean;
+  @IsNotEmpty()
+  status: string;
 
   @ApiProperty({
     required: false,

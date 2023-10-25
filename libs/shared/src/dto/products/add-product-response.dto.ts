@@ -9,15 +9,20 @@ export class AddProductResponseDto {
 
   @ApiProperty({
     example: {
-      _id: '651e3edb9ef944b21fc2cb8a',
+      _id: '6538ef8cb3658ab4641fb188',
       name: 'Sales',
       description: 'Manage your sales with Air Apple Cart',
-      logo: '6513b01ed274bd98dfacaf06',
-      isActive: false,
-      modifiedBy: '56cb91bdc3464f14678934ca',
+      logo: {
+        id: 'bdee1611-d66a-476a-9a8c-c2ceec82dfca',
+        url: 'products/bdee1611-d66a-476a-9a8c-c2ceec82dfca.jpg',
+        size: 53591,
+        mimetype: 'image/jpeg',
+      },
+      status: 'inactive',
+      createdBy: '6538bb480b3f9e9d83d4a2ce',
       isDeleted: false,
-      createdAt: '2023-10-05T04:43:07.908Z',
-      updatedAt: '2023-10-05T04:43:07.908Z',
+      createdAt: '2023-10-25T10:35:56.529Z',
+      updatedAt: '2023-10-25T10:35:56.529Z',
     },
   })
   data: {};
