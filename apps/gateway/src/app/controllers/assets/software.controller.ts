@@ -11,7 +11,12 @@ import {
   Patch,
 } from '@nestjs/common';
 import { ClientProxy, RpcException } from '@nestjs/microservices';
-import { ApiOkResponse, ApiParam, ApiTags } from '@nestjs/swagger';
+import {
+  ApiOkResponse,
+  ApiParam,
+  ApiTags,
+  ApiBearerAuth,
+} from '@nestjs/swagger';
 import {
   API_ENDPOINTS,
   API_TAGS,
@@ -31,13 +36,16 @@ import {
   PaginationDto,
 } from '@shared/dto';
 import { firstValueFrom } from 'rxjs';
+import { Auth } from '../../decorators/auth.decorator';
 @ApiTags(API_TAGS.ASSETS)
 @Controller(CONTROLLERS.ASSETS)
+@ApiBearerAuth()
 export class SoftwareController {
   constructor(
     @Inject(SERVICES.AIR_SERVICES) private airServiceClient: ClientProxy
   ) {}
 
+  @Auth(true)
   @Post(API_ENDPOINTS.AIR_SERVICES.ASSETS.ADD_SOFTWARE)
   @ApiOkResponse({ type: CreateAssetsSoftwareResponse })
   async addSoftware(
@@ -56,6 +64,8 @@ export class SoftwareController {
       throw new RpcException(err);
     }
   }
+
+  @Auth(true)
   @Put(API_ENDPOINTS.AIR_SERVICES.ASSETS.EDIT_SOFTWARE)
   @ApiOkResponse({ type: EditAssetsSoftwareResponse })
   @ApiParam({
@@ -83,6 +93,8 @@ export class SoftwareController {
       throw new RpcException(err);
     }
   }
+
+  @Auth(true)
   @Delete(API_ENDPOINTS.AIR_SERVICES.ASSETS.DELETE_SOFTWARE)
   @ApiOkResponse({ type: DeleteAssetsSoftwareResponse })
   @ApiParam({
@@ -107,6 +119,8 @@ export class SoftwareController {
       throw new RpcException(err);
     }
   }
+
+  @Auth(true)
   @Get(API_ENDPOINTS.AIR_SERVICES.ASSETS.GET_SOFTWARE)
   @ApiOkResponse({ type: DeleteAssetsSoftwareResponse })
   async getSoftware(
@@ -128,6 +142,8 @@ export class SoftwareController {
       throw new RpcException(err);
     }
   }
+
+  @Auth(true)
   @Patch(API_ENDPOINTS.AIR_SERVICES.ASSETS.ASSIGN_CATEGORY)
   @ApiOkResponse({ type: AssetsSoftwareAssignDto })
   async assignCatToSoftware(
@@ -151,6 +167,7 @@ export class SoftwareController {
     }
   }
 
+  @Auth(true)
   @Patch(API_ENDPOINTS.AIR_SERVICES.ASSETS.ADD_SOFTWARE_DEVICE)
   async addSoftwareDevice(
     @Param() { id }: IdDto,
@@ -169,6 +186,7 @@ export class SoftwareController {
     }
   }
 
+  @Auth(true)
   @Patch(API_ENDPOINTS.AIR_SERVICES.ASSETS.DELETE_SOFTWARE_DEVICE)
   async removeSoftwareDevice(
     @Param() { id }: IdDto,

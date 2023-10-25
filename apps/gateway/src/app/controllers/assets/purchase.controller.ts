@@ -9,9 +9,10 @@ import {
   Get,
   Query,
   Res,
+  Req,
 } from '@nestjs/common';
 import { ClientProxy, RpcException } from '@nestjs/microservices';
-import { ApiCreatedResponse, ApiTags } from '@nestjs/swagger';
+import { ApiCreatedResponse, ApiTags, ApiBearerAuth } from '@nestjs/swagger';
 import {
   API_ENDPOINTS,
   API_TAGS,
@@ -27,28 +28,39 @@ import {
   UpdatePurchaseOrderDto,
   GetPurchasesResponseOrderDto,
   IdDto,
+  GetPurchasesAssociationResponseOrderDto,
   DeleteAssociatePurchaseOrderDto,
   AssociatePurchaseOrderDto,
 } from '@shared/dto';
 import { DownloadService } from '@shared/services';
-
+import { Auth } from '../../decorators/auth.decorator';
 import { firstValueFrom } from 'rxjs';
-
+import { AppRequest } from '../../shared/interface/request.interface';
 @ApiTags(API_TAGS.ASSETS)
 @Controller(CONTROLLERS.ASSETS)
+@ApiBearerAuth()
 export class PurchaseOrderController {
   constructor(
     @Inject(SERVICES.AIR_SERVICES) private airServiceClient: ClientProxy,
     private readonly downloadService: DownloadService
   ) {}
 
+  @Auth(true)
   @Post(API_ENDPOINTS.AIR_SERVICES.ASSETS.PURCHASEORDER)
-  public async addPurchaseOrder(@Body() payload: addPurchaseOrderDto) {
+  public async addPurchaseOrder(
+    @Body() payload: addPurchaseOrderDto,
+    @Req() request: AppRequest
+  ) {
     try {
+      const { user } = request;
+
+      const organizationId = user?.organization;
+
+      const createdBy = user._id;
       const response = await firstValueFrom(
         this.airServiceClient.send(
           RMQ_MESSAGES.AIR_SERVICES.ASSETS.ADD_PURCHASEORDER,
-          payload
+          { ...payload, organizationId, createdBy }
         )
       );
       return response;
@@ -56,6 +68,8 @@ export class PurchaseOrderController {
       throw new RpcException(error);
     }
   }
+
+  @Auth(true)
   @Delete(API_ENDPOINTS.AIR_SERVICES.ASSETS.DELETE_PURCHASEORDER)
   public async deletePurchaseOrder(@Param() payload: DeletePurchaseOrderDto) {
     try {
@@ -71,6 +85,8 @@ export class PurchaseOrderController {
       throw new RpcException(error);
     }
   }
+
+  @Auth(true)
   @Patch(API_ENDPOINTS.AIR_SERVICES.ASSETS.UPDATE_PURCHASEORDER)
   public async updatePurchaseOrder(@Body() payload: UpdatePurchaseOrderDto) {
     try {
@@ -109,6 +125,7 @@ export class PurchaseOrderController {
     }
   }
 
+  @Auth(true)
   @Patch(API_ENDPOINTS.AIR_SERVICES.ASSETS.DELETE_ASSOCIATE_ORDER)
   public async dissociatePurchaseOrder(
     @Param() { id }: IdDto,
@@ -131,6 +148,7 @@ export class PurchaseOrderController {
     }
   }
 
+  @Auth(true)
   @Get(API_ENDPOINTS.AIR_SERVICES.ASSETS.GET_PURCHASEORDER)
   @ApiCreatedResponse({ type: GetPurchaseResponseOrderDto })
   public async getPurchaseOrder(@Param('id') id: string) {
@@ -146,6 +164,8 @@ export class PurchaseOrderController {
       throw new RpcException(error);
     }
   }
+
+  @Auth(true)
   @Get(API_ENDPOINTS.AIR_SERVICES.ASSETS.GET_PURCHASEORDERLIST)
   @ApiCreatedResponse({ type: GetPurchasesResponseOrderDto })
   public async getPurchaseOrderList(
@@ -165,6 +185,30 @@ export class PurchaseOrderController {
         return this.downloadService.downloadFile(exportType, data, res);
       }
       return res.status(response.statusCode).json(response);
+    } catch (error) {
+      throw new RpcException(error);
+    }
+  }
+
+  @Get(API_ENDPOINTS.AIR_SERVICES.ASSETS.GET_PURCHASEORDERASSOCIATE)
+  @ApiCreatedResponse({ type: GetPurchasesAssociationResponseOrderDto })
+  public async getPurchaseOrderAssociate(
+    @Param('id') id: string,
+    @Req() request: AppRequest
+  ) {
+    try {
+      const { user } = request;
+
+      const organizationId = user?.organization;
+
+      const createdBy = user?._id;
+      const response = await firstValueFrom(
+        this.airServiceClient.send(
+          { cmd: RMQ_MESSAGES.AIR_SERVICES.ASSETS.GET_PURCHASEORDERASSOCIATE },
+          { id, organizationId, createdBy }
+        )
+      );
+      return response;
     } catch (error) {
       throw new RpcException(error);
     }

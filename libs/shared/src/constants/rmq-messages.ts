@@ -162,6 +162,7 @@ export const RMQ_MESSAGES = {
       DELETE_SOFTWARE_DEVICE: 'delete-software-device',
       GET_INVENTORY_SOFTWARE_DETAILS: 'get-inventory-software-details',
       DELETE_ASSOCIATE_ORDER: 'delete-associate-order',
+      GET_PURCHASEORDERASSOCIATE: 'get-purchaseorder-associate',
     },
     TASK: {
       ADD_TASK: 'add_task',

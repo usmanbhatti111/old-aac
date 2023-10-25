@@ -85,7 +85,14 @@ export class TicketController {
   ) {
     return await this.ticketService.addAssociatePurchaseOrder(payload);
   }
+  @MessagePattern({
+    cmd: RMQ_MESSAGES.AIR_SERVICES.ASSETS.GET_PURCHASEORDERASSOCIATE,
+  })
+  async getPurchaseOrderAssociate(@Payload() payload: { id: IdDto }) {
+    const { id } = payload;
 
+    return await this.ticketService.getPurchaseOrderAssociate(id);
+  }
   @MessagePattern(RMQ_MESSAGES.AIR_SERVICES.ASSETS.DELETE_ASSOCIATE_ORDER)
   async dissociatePurchaseOrder(
     @Payload()

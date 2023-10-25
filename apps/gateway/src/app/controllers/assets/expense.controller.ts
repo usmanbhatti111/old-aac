@@ -1,6 +1,6 @@
 import { Controller, Inject, Post, Res, Body, Get } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiTags, ApiBearerAuth } from '@nestjs/swagger';
 import {
   API_ENDPOINTS,
   API_TAGS,
@@ -11,14 +11,16 @@ import {
 import { CreateExpenseDTO } from '@shared/dto';
 import { Response } from 'express';
 import { firstValueFrom } from 'rxjs';
-
+import { Auth } from '../../decorators/auth.decorator';
 @ApiTags(API_TAGS.EXPENSE)
 @Controller(CONTROLLERS.EXPENSE)
+@ApiBearerAuth()
 export class ExpenseController {
   constructor(
     @Inject(SERVICES.AIR_SERVICES) private airServiceClient: ClientProxy
   ) {}
 
+  @Auth(true)
   @Post(API_ENDPOINTS.AIR_SERVICES.EXPENSE.ADD_EXPENSE)
   public async addExpense(
     @Body() payload: CreateExpenseDTO,
@@ -38,6 +40,7 @@ export class ExpenseController {
     }
   }
 
+  @Auth(true)
   @Get(API_ENDPOINTS.AIR_SERVICES.EXPENSE.GET_EXPENSE)
   public async getAssets(@Res() res: Response | any) {
     try {

@@ -10,7 +10,12 @@ import {
   Patch,
   Param,
 } from '@nestjs/common';
-import { ApiOkResponse, ApiParam, ApiTags } from '@nestjs/swagger';
+import {
+  ApiOkResponse,
+  ApiParam,
+  ApiTags,
+  ApiBearerAuth,
+} from '@nestjs/swagger';
 import { ClientProxy, RpcException } from '@nestjs/microservices';
 import {
   API_ENDPOINTS,
@@ -32,14 +37,17 @@ import {
 import { Response } from 'express';
 import { firstValueFrom } from 'rxjs';
 import { DownloadService } from '@shared/services';
+import { Auth } from '../../decorators/auth.decorator';
 @ApiTags(API_TAGS.ASSETS)
 @Controller(CONTROLLERS.ASSETS)
+@ApiBearerAuth()
 export class InventoryController {
   constructor(
     @Inject(SERVICES.AIR_SERVICES) private airServiceClient: ClientProxy,
     private readonly downloadService: DownloadService
   ) {}
 
+  @Auth(true)
   @Post(API_ENDPOINTS.AIR_SERVICES.ASSETS.INVENTORY)
   public async addInventory(
     @Body() payload: AddInventoryDto,
@@ -59,6 +67,7 @@ export class InventoryController {
     }
   }
 
+  @Auth(true)
   @Get(API_ENDPOINTS.AIR_SERVICES.ASSETS.SEARCH_INVENTORY)
   public async searchInventory(
     @Query() payload: SearchInventoryDto,
@@ -78,6 +87,7 @@ export class InventoryController {
     }
   }
 
+  @Auth(true)
   @Patch(API_ENDPOINTS.AIR_SERVICES.ASSETS.EDIT_INVENTORY)
   async editInventory(
     @Param() { id }: IdDto,
@@ -100,6 +110,7 @@ export class InventoryController {
     }
   }
 
+  @Auth(true)
   @Get(API_ENDPOINTS.AIR_SERVICES.ASSETS.INVENTORY)
   public async getInventory(
     @Query() payload: GetInventoryDto,
@@ -125,6 +136,7 @@ export class InventoryController {
     }
   }
 
+  @Auth(true)
   @Get(API_ENDPOINTS.AIR_SERVICES.ASSETS.ASSOCIATE_INVENTORY_LIST)
   public async getAssociateInventoryList(
     @Query() payload: GetInventoryAssociateDto
@@ -142,6 +154,7 @@ export class InventoryController {
     }
   }
 
+  @Auth(true)
   @Delete(API_ENDPOINTS.AIR_SERVICES.ASSETS.DELETE_INVENTORY)
   public async deleteInventory(
     @Query('ids') ids: string[],
@@ -161,6 +174,7 @@ export class InventoryController {
     }
   }
 
+  @Auth(true)
   @Get(API_ENDPOINTS.AIR_SERVICES.ASSETS.GET_INVENTORY_SOFTWARE_DETAILS)
   @ApiOkResponse({ type: InventorySoftwareResponse })
   @ApiParam({

@@ -132,6 +132,7 @@ export const API_ENDPOINTS = {
       DELETE_INVENTORY: '/:id',
       PURCHASEORDER: 'purchaseorder',
       GET_PURCHASEORDER: 'purchaseorder/:id',
+      GET_PURCHASEORDERASSOCIATE: 'purchaseorderassociate/:id',
       GET_PURCHASEORDERLIST: 'purchaseorderlist',
       DELETE_PURCHASEORDER: 'purchaseorder/:id',
       UPDATE_PURCHASEORDER: 'purchaseorder/:id',

@@ -10,7 +10,7 @@ import {
   Res,
 } from '@nestjs/common';
 import { ClientProxy, RpcException } from '@nestjs/microservices';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiTags, ApiBearerAuth } from '@nestjs/swagger';
 import {
   API_ENDPOINTS,
   API_TAGS,
@@ -26,7 +26,8 @@ import {
 } from '@shared/dto';
 import { DownloadService } from '@shared/services';
 import { firstValueFrom } from 'rxjs';
-
+import { Auth } from '../../decorators/auth.decorator';
+@ApiBearerAuth()
 @ApiTags(API_TAGS.CONTRACT)
 @Controller(CONTROLLERS.CONTRACT)
 export class ContractController {
@@ -35,6 +36,7 @@ export class ContractController {
     private readonly downloadService: DownloadService
   ) {}
 
+  @Auth(true)
   @Post(API_ENDPOINTS.AIR_SERVICES.CONTRACT.ADD_CONTRACT)
   public async addContract(@Body() payload: CreateContractDTO) {
     try {
@@ -50,6 +52,8 @@ export class ContractController {
       throw new RpcException(err);
     }
   }
+
+  @Auth(true)
   @Delete(API_ENDPOINTS.AIR_SERVICES.CONTRACT.DELETE_CONTRACT)
   public async deleteContract(@Query('ids') ids: string[]) {
     try {
@@ -65,6 +69,8 @@ export class ContractController {
       throw new RpcException(error);
     }
   }
+
+  @Auth(true)
   @Patch(API_ENDPOINTS.AIR_SERVICES.CONTRACT.UPDATE_CONTRACT)
   public async UpdateContract(@Body() payload: UpdateContractDTO) {
     try {
@@ -80,6 +86,8 @@ export class ContractController {
       throw new RpcException(error);
     }
   }
+
+  @Auth(true)
   @Patch(API_ENDPOINTS.AIR_SERVICES.CONTRACT.RENEW_EXTEND_CONTRACT)
   public async renewContract(@Body() payload: ExtendRenewContractDTO) {
     try {
@@ -95,6 +103,8 @@ export class ContractController {
       throw new RpcException(error);
     }
   }
+
+  @Auth(true)
   @Get(API_ENDPOINTS.AIR_SERVICES.CONTRACT.GET_CONTRACTS)
   public async getContracts(
     @Query() queryParams: GetContactsDto,

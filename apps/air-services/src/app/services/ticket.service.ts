@@ -141,6 +141,29 @@ export class TicketService {
     }
   }
 
+  async getPurchaseOrderAssociate(payload) {
+    try {
+      const pipeline = [
+        {
+          $match: {
+            associatePurchaseOrders: new mongoose.Types.ObjectId(payload),
+          },
+        },
+        {
+          $project: {
+            id: 1,
+            status: 1,
+          },
+        },
+      ];
+      const res = await this.ticketRepository.aggregate(pipeline);
+
+      return successResponse(HttpStatus.OK, `Success`, res);
+    } catch (error) {
+      throw new RpcException(error);
+    }
+  }
+
   async dissociatePurchaseOrder(payload) {
     try {
       const { id, purchaseOrderId } = payload;
