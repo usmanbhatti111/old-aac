@@ -1,5 +1,6 @@
 import { HttpStatus, Injectable, NotFoundException } from '@nestjs/common';
 import { RpcException } from '@nestjs/microservices';
+import { Cron, CronExpression } from '@nestjs/schedule';
 import { InvoiceRepository, OrganizationPlanRepository } from '@shared';
 import {
   InvoiceStatusEnum,
@@ -15,6 +16,7 @@ import {
   UpdateAssignOrgPlanSuperAdminDto,
   UpdateInvoiceDto,
 } from '@shared/dto';
+import dayjs from 'dayjs';
 import mongoose from 'mongoose';
 
 @Injectable()
@@ -516,7 +518,6 @@ export class InvoiceService {
           },
         },
       ];
-
       const organizationPlan = await this.orgPlanRepository.aggregate(pipeline);
       const details = organizationPlan[0];
 
@@ -543,7 +544,8 @@ export class InvoiceService {
       const randomNumber = Math.floor(Math.random() * 10000);
       const invoiceNo = `DOC-${randomNumber}`;
 
-      const dueDate = details.billingDate;
+      const dueDate = new Date(details.billingDate);
+      dueDate.setDate(dueDate.getDate() + 10); // Add 5 days to the billing date
 
       const params: any = {
         organizationPlanId,
@@ -561,6 +563,156 @@ export class InvoiceService {
         createdBy,
       };
       const response = await this.invoiceRepository.create(params);
+      return successResponse(
+        HttpStatus.CREATED,
+        ResponseMessage.CREATED,
+        response
+      );
+    } catch (error) {
+      throw new RpcException(error);
+    }
+  }
+
+  @Cron(CronExpression.EVERY_DAY_AT_1AM)
+  async autoGenerateInvoice() {
+    try {
+      const documents = [];
+      let response = {};
+      const todayStart = dayjs().startOf('day').toDate(); // Start of the current day
+      const todayEnd = dayjs().endOf('day').toDate();
+
+      const pipeline = [
+        {
+          $match: {
+            status: 'ACTIVE',
+            isDeleted: false,
+            billingDate: {
+              $gte: todayStart,
+              $lte: todayEnd,
+            },
+          },
+        },
+        {
+          $lookup: {
+            from: 'organizations',
+            localField: 'organizationId',
+            foreignField: '_id',
+            as: 'organizations',
+          },
+        },
+        {
+          $addFields: {
+            organizations: {
+              $arrayElemAt: ['$organizations', 0],
+            },
+          },
+        },
+        {
+          $lookup: {
+            from: 'plans',
+            localField: 'planId',
+            foreignField: '_id',
+            as: 'plans',
+          },
+        },
+        {
+          $addFields: {
+            plans: {
+              $arrayElemAt: ['$plans', 0],
+            },
+          },
+        },
+        {
+          $project: {
+            organizationId: 1,
+            planId: 1,
+            additionalUsers: 1,
+            additionalStorage: 1,
+            planDiscount: 1,
+            billingCycle: 1,
+            billingDate: 1,
+            status: 1,
+            'organizations.name': 1,
+            'organizations.email': 1,
+            'organizations.phoneNo': 1,
+            'organizations.address': 1,
+            'organizations.postCode': 1,
+            'plans.description': 1,
+            'plans.defaultUsers': 1,
+            'plans.defaultStorage': 1,
+            'plans.planPrice': 1,
+            'plans.additionalPerUserPrice': 1,
+            'plans.additionalStoragePrice': 1,
+            'plans.planTypeId': 1,
+          },
+        },
+        {
+          $lookup: {
+            from: 'plantypes',
+            localField: 'plans.planTypeId',
+            foreignField: '_id',
+            as: 'plantypes',
+          },
+        },
+        {
+          $addFields: {
+            plantypes: {
+              $arrayElemAt: ['$plantypes.name', 0],
+            },
+          },
+        },
+      ];
+
+      const organizationPlans = await this.orgPlanRepository.aggregate(
+        pipeline
+      );
+      // const details = organizationPlans;
+      organizationPlans.forEach(async (details) => {
+        const planPrice = details?.plans?.planPrice;
+
+        const additionalUsersPrices =
+          details?.plans?.additionalPerUserPrice * details.additionalUsers;
+
+        const additionalStoragePrices =
+          details?.plans?.additionalStoragePrice * details.additionalStorage;
+
+        //subtotal = planprice + (additionalUser*perUserCost)+(additionUser*perUserCost)-invoiceDiscountPercentagec
+        const subTotal =
+          planPrice + additionalUsersPrices + additionalStoragePrices;
+
+        //afterDiscountAmout = subTotal - invoiceDiscount
+        const invoiceDiscount = 0; //On auto generate invoice discount is zero
+        const afterDiscountAmout =
+          subTotal - (invoiceDiscount / 100) * subTotal;
+
+        //total = subtotal - VAT
+        const vat = 10;
+        const total = subTotal - (vat / 100) * subTotal;
+
+        const randomNumber = Math.floor(Math.random() * 10000);
+        const invoiceNo = `DOC-${randomNumber}`;
+
+        const dueDate = new Date(details.billingDate);
+        dueDate.setDate(dueDate.getDate() + 10); // Add 5 days to the billing date
+
+        const params: any = {
+          organizationPlanId: details._id,
+          organizationId: details.organizationId,
+          planId: details.planId,
+          details,
+          invoiceNo,
+          billingDate: details.billingDate,
+          dueDate,
+          subTotal,
+          invoiceDiscount,
+          afterDiscountAmout,
+          vat,
+          total,
+        };
+        documents.push(params);
+      });
+      response = await this.invoiceRepository.createMany(documents);
+
       return successResponse(
         HttpStatus.CREATED,
         ResponseMessage.CREATED,
