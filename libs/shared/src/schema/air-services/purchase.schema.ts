@@ -5,6 +5,22 @@ import { AbstractSchema } from './../abstract-repo/abstract.schema';
 export type PurchaseDocument = HydratedDocument<Purchase>;
 
 @Schema()
+export class PurchaseApproval {
+  @Prop({ type: String, required: false })
+  approvalStatus: string;
+  @Prop({
+    type: SchemaTypes.ObjectId,
+    required: false,
+  })
+  requestedApproverId: string;
+  @Prop({
+    type: Object,
+    required: false,
+  })
+  details: object;
+  reminderDetails: object;
+}
+const PurchaseApprovalSchema = SchemaFactory.createForClass(PurchaseApproval);
 export class PurchaseDetail {
   @Prop({ type: String, required: true })
   itemName: string;
@@ -74,6 +90,8 @@ export class Purchase extends AbstractSchema {
   subTotal: number;
   @Prop({ type: [PurchaseDetailSchema], required: false })
   purchaseDetails: PurchaseDetail[];
+  @Prop({ type: [PurchaseApprovalSchema], required: false })
+  PurchaseApprovals: PurchaseApproval[];
   @Prop({ type: String, required: true })
   status: string;
 }
