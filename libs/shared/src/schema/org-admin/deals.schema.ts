@@ -68,7 +68,6 @@ export class Deals extends AbstractSchema {
   @Prop({
     type: String,
     enum: EDealType,
-    default: EDealType.NEW,
     required: false,
   })
   type?: string;
@@ -83,7 +82,6 @@ export class Deals extends AbstractSchema {
   @Prop({
     type: String,
     enum: EContactMode,
-    default: EContactMode.EMAIL,
     required: false,
   })
   contactMode?: string;

@@ -16,6 +16,8 @@ import { ProductCategoriesController } from './controllers/product-categories.co
 import { ProductCategoriesService } from './services/product-categories.service';
 import { LifecycleStagesController } from './controllers/lifecycle-controller';
 import { LifecycleStagesService } from './services/lifecycle-stages.service';
+import { DealsController } from './controllers/deals.controller';
+import { DealsService } from './services/deals.service';
 
 @Module({
   imports: [SharedModule],
@@ -28,6 +30,7 @@ import { LifecycleStagesService } from './services/lifecycle-stages.service';
     ContactStatusController,
     ProductCategoriesController,
     LifecycleStagesController,
+    DealsController,
   ],
   providers: [
     OrganizationService,
@@ -38,6 +41,7 @@ import { LifecycleStagesService } from './services/lifecycle-stages.service';
     ContactStatusService,
     ProductCategoriesService,
     LifecycleStagesService,
+    DealsService,
   ],
 })
 export class OrgAdminModule {}

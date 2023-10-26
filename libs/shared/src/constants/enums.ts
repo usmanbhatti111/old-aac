@@ -221,7 +221,7 @@ export enum ECardTypes {
 }
 
 export enum EBillingFrequency {
-  MONTHLY = 'quarterly',
+  MONTHLY = 'monthly',
   QUARTERLY = 'quarterly',
   SEMI_ANNUALLY = 'semi annually',
   ANNUALLY = 'annually',
