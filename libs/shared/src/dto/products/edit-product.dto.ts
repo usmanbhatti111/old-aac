@@ -1,5 +1,8 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNotEmpty, IsOptional } from 'class-validator';
+import { IsNotEmpty, IsOptional, IsString } from 'class-validator';
+import { EStatusToggle } from '../../constants/enums';
+import { ApiSingleFile } from '../../custom';
+import { MediaObject } from '../common';
 
 export class EditProductDto {
   @ApiProperty({
@@ -23,20 +26,19 @@ export class EditProductDto {
   @ApiProperty({
     type: String,
     required: false,
-    example: '6513b01ed274bd98dfacaf06',
+    example: EStatusToggle.ACTIVE,
+    enum: EStatusToggle,
   })
-  @IsNotEmpty()
+  @IsString()
   @IsOptional()
-  logo: string;
-
-  @ApiProperty({
-    type: Boolean,
-    required: false,
-  })
   @IsNotEmpty()
-  @IsOptional()
-  isActive: boolean;
+  status: string;
 
+  @ApiSingleFile({ required: false })
+  @IsOptional()
+  file: any;
+
+  logo: MediaObject;
   updatedBy: string;
   id: string;
 }

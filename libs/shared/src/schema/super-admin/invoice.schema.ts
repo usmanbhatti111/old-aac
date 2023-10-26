@@ -101,7 +101,7 @@ export class Invoice extends AbstractSchema {
 
   @Prop({
     type: SchemaTypes.ObjectId,
-    required: true,
+    required: false,
     ref: 'payments',
   })
   paymentId: string;
