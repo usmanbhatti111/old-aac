@@ -27,7 +27,7 @@ export class Deals extends AbstractSchema {
     ref: MODEL.LIFECYCLE_STAGE,
     required: true,
   })
-  DealStageId: string;
+  dealStageId: string;
 
   @Prop({ type: Number, required: false })
   amount?: number;

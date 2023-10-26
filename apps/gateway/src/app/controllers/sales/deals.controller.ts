@@ -1,6 +1,19 @@
-import { Body, Controller, Inject, Post, Req } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Inject,
+  Param,
+  Patch,
+  Post,
+  Req,
+} from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
-import { ApiBearerAuth, ApiCreatedResponse, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiCreatedResponse,
+  ApiOkResponse,
+  ApiTags,
+} from '@nestjs/swagger';
 import {
   API_ENDPOINTS,
   API_TAGS,
@@ -8,7 +21,13 @@ import {
   RMQ_MESSAGES,
   SERVICES,
 } from '@shared/constants';
-import { CreateDealDto, CreateDealResponseDto } from '@shared/dto';
+import {
+  CreateDealDto,
+  CreateDealResponseDto,
+  IdDto,
+  UpdateDealDto,
+  UpdateDealResponseDto,
+} from '@shared/dto';
 import { firstValueFrom } from 'rxjs';
 import { Auth } from '../../decorators/auth.decorator';
 import { AppRequest } from '../../shared/interface/request.interface';
@@ -25,7 +44,7 @@ export class DealsController {
   @Auth(true)
   @Post(API_ENDPOINTS.SALES.DEALS.CREATE_DEAL)
   @ApiCreatedResponse({ type: CreateDealResponseDto })
-  public async addProductCategory(
+  public async createDeal(
     @Req() request: AppRequest,
     @Body() payload: CreateDealDto
   ): Promise<CreateDealResponseDto> {
@@ -33,6 +52,24 @@ export class DealsController {
 
     const response = await firstValueFrom(
       this.orgAdminService.send(RMQ_MESSAGES.SALES.DEALS.CREATE_DEAL, payload)
+    );
+
+    return response;
+  }
+
+  @Auth(true)
+  @Patch(API_ENDPOINTS.SALES.DEALS.UPDATE_DEAL)
+  @ApiOkResponse({ type: UpdateDealResponseDto })
+  public async updateDeal(
+    @Req() request: AppRequest,
+    @Param() params: IdDto,
+    @Body() payload: UpdateDealDto
+  ): Promise<UpdateDealResponseDto> {
+    payload.updatedBy = request?.user?._id;
+    payload.id = params.id;
+
+    const response = await firstValueFrom(
+      this.orgAdminService.send(RMQ_MESSAGES.SALES.DEALS.UPDATE_DEAL, payload)
     );
 
     return response;

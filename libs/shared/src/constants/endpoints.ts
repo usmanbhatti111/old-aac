@@ -256,6 +256,7 @@ export const API_ENDPOINTS = {
   SALES: {
     DEALS: {
       CREATE_DEAL: '/',
+      UPDATE_DEAL: '/:id',
     },
   },
 };

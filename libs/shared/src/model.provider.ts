@@ -55,8 +55,6 @@ import {
   Purchase,
   RequestLog,
   RequestLogSchema,
-  LifeCycleStage,
-  LifeCycleStageSchema,
   TaskActivity,
   TaskActivitySchema,
   Status,
@@ -253,10 +251,6 @@ export const DbModels = [
     schema: ModuleSchema,
   },
   {
-    name: LifeCycleStage.name,
-    schema: LifeCycleStageSchema,
-  },
-  {
     name: TaskActivity.name,
     schema: TaskActivitySchema,
   },
@@ -292,7 +286,7 @@ export const DbModels = [
   {
     name: LifecycleStages.name,
     schema: LifecycleStagesSchema,
-    collection: 'lifecycleStages',
+    collection: MODEL.LIFECYCLE_STAGE,
   },
   {
     name: OrganizationCompanyAccount.name,

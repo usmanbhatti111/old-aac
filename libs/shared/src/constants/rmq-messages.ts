@@ -274,6 +274,7 @@ export const RMQ_MESSAGES = {
   SALES: {
     DEALS: {
       CREATE_DEAL: 'create-deal',
+      UPDATE_DEAL: 'update-deal',
     },
   },
 };

@@ -1,8 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { EBillingFrequency, ETaskPriority } from '@shared/constants';
+import { EContactMode, EDealType, ETaskPriority } from '@shared/constants';
 import { Type } from 'class-transformer';
 import {
-  IsDate,
   IsDateString,
   IsMongoId,
   IsNotEmpty,
@@ -11,33 +10,16 @@ import {
   IsString,
 } from 'class-validator';
 
-export class CreateDealDto {
+export class UpdateDealDto {
   @ApiProperty({
     type: String,
-    required: true,
+    required: false,
     example: 'Deal name',
   })
+  @IsOptional()
   @IsNotEmpty()
   @IsString()
   name: string;
-
-  @ApiProperty({
-    type: String,
-    required: true,
-    example: '6538bb480b3f9e9d83d4a2ce',
-  })
-  @IsNotEmpty()
-  @IsMongoId()
-  dealPiplineId: string;
-
-  @ApiProperty({
-    type: String,
-    required: true,
-    example: '6538bb480b3f9e9d83d4a2ce',
-  })
-  @IsNotEmpty()
-  @IsMongoId()
-  dealStageId: string;
 
   @ApiProperty({ type: Number, example: 10000, required: false })
   @IsNotEmpty()
@@ -45,16 +27,6 @@ export class CreateDealDto {
   @Type(() => Number)
   @IsNumber()
   amount: number;
-
-  @ApiProperty({
-    type: Date,
-    required: false,
-    example: new Date(),
-  })
-  @IsNotEmpty()
-  @IsOptional()
-  @IsDateString()
-  closeDate: Date;
 
   @ApiProperty({
     type: String,
@@ -65,6 +37,17 @@ export class CreateDealDto {
   @IsOptional()
   @IsMongoId()
   dealOwnerId: string;
+
+  @ApiProperty({
+    type: String,
+    enum: EDealType,
+    example: EDealType.NEW,
+    required: false,
+  })
+  @IsOptional()
+  @IsNotEmpty()
+  @IsString()
+  type: string;
 
   @ApiProperty({
     type: String,
@@ -85,19 +68,50 @@ export class CreateDealDto {
   @IsOptional()
   @IsNotEmpty()
   @IsMongoId()
-  addLineItemId: string;
+  dealStageId: string;
 
   @ApiProperty({
     type: String,
-    enum: EBillingFrequency,
-    example: EBillingFrequency.MONTHLY,
+    required: false,
+    example: '6538bb480b3f9e9d83d4a2ce',
+  })
+  @IsOptional()
+  @IsNotEmpty()
+  @IsMongoId()
+  dealPiplineId: string;
+
+  @ApiProperty({
+    type: String,
+    required: false,
+    example: '6538bb480b3f9e9d83d4a2ce',
+  })
+  @IsNotEmpty()
+  @IsOptional()
+  @IsMongoId()
+  contactedPersonId: string;
+
+  @ApiProperty({
+    type: String,
+    enum: EContactMode,
+    example: EContactMode.EMAIL,
     required: false,
   })
   @IsOptional()
   @IsNotEmpty()
   @IsString()
-  billingFrequency: string;
+  contactMode: string;
 
-  createdBy: string;
+  @ApiProperty({
+    type: Date,
+    required: false,
+    example: new Date(),
+  })
+  @IsOptional()
+  @IsNotEmpty()
+  @IsDateString()
+  closeDate: Date;
+
+  id: string;
+  updatedBy: string;
   probability: number;
 }

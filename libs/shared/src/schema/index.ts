@@ -16,7 +16,6 @@ export * from './user-account';
 export * from './logs/request-log.schema';
 export * from './org-admin';
 export * from './super-admin';
-export * from './lifecycle-stage.schema';
 export * from './status.schema';
 export * from './common-feature';
 export * from './sales-settings';

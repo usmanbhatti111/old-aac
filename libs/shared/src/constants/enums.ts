@@ -238,3 +238,14 @@ export enum EContactMode {
   CALL = 'call',
   MEETING = 'meeting',
 }
+
+// Deal Won probability map
+export enum EDealProbabilityStage {
+  'NEW' = 0,
+  'FOLLOW UP' = 20,
+  'UNDER REVIEW' = 40,
+  'DEMO' = 60,
+  'NEGOTIATION' = 80,
+  'WON' = 100,
+  'LOW' = 0,
+}
