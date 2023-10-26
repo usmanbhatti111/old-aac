@@ -1,4 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { Transform } from 'class-transformer';
 import {
   IsDateString,
   IsMongoId,
@@ -6,6 +7,7 @@ import {
   IsOptional,
   IsString,
 } from 'class-validator';
+import { toMongoObjectId } from 'libs/shared/src/functions';
 
 export class DealFilterSearchDto {
   @ApiProperty({
@@ -15,7 +17,7 @@ export class DealFilterSearchDto {
   })
   @IsOptional()
   @IsNotEmpty()
-  @IsMongoId()
+  @Transform(toMongoObjectId)
   dealPiplineId: string;
 
   @ApiProperty({
@@ -35,7 +37,7 @@ export class DealFilterSearchDto {
   })
   @IsNotEmpty()
   @IsOptional()
-  @IsMongoId()
+  @Transform(toMongoObjectId)
   dealOwnerId: string;
 
   @ApiProperty({
@@ -63,7 +65,7 @@ export class DealFilterSearchDto {
   })
   @IsOptional()
   @IsNotEmpty()
-  @IsMongoId()
+  @Transform(toMongoObjectId)
   dealStageId: string;
 
   @ApiProperty({

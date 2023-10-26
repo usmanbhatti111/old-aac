@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { EBillingFrequency, ETaskPriority } from '@shared/constants';
-import { Type } from 'class-transformer';
+import { Transform, Type } from 'class-transformer';
 import {
   IsDate,
   IsDateString,
@@ -10,6 +10,7 @@ import {
   IsOptional,
   IsString,
 } from 'class-validator';
+import { toMongoObjectId } from 'libs/shared/src/functions';
 
 export class CreateDealDto {
   @ApiProperty({
@@ -27,7 +28,7 @@ export class CreateDealDto {
     example: '6538bb480b3f9e9d83d4a2ce',
   })
   @IsNotEmpty()
-  @IsMongoId()
+  @Transform(toMongoObjectId)
   dealPiplineId: string;
 
   @ApiProperty({
@@ -36,7 +37,7 @@ export class CreateDealDto {
     example: '6538bb480b3f9e9d83d4a2ce',
   })
   @IsNotEmpty()
-  @IsMongoId()
+  @Transform(toMongoObjectId)
   dealStageId: string;
 
   @ApiProperty({ type: Number, example: 10000, required: false })
@@ -63,7 +64,7 @@ export class CreateDealDto {
   })
   @IsNotEmpty()
   @IsOptional()
-  @IsMongoId()
+  @Transform(toMongoObjectId)
   dealOwnerId: string;
 
   @ApiProperty({
@@ -84,7 +85,7 @@ export class CreateDealDto {
   })
   @IsOptional()
   @IsNotEmpty()
-  @IsMongoId()
+  @Transform(toMongoObjectId)
   addLineItemId: string;
 
   @ApiProperty({

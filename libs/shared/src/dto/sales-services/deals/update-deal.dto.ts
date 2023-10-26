@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { EContactMode, EDealType, ETaskPriority } from '@shared/constants';
-import { Type } from 'class-transformer';
+import { Transform, Type } from 'class-transformer';
 import {
   IsDateString,
   IsMongoId,
@@ -9,6 +9,7 @@ import {
   IsOptional,
   IsString,
 } from 'class-validator';
+import { toMongoObjectId } from 'libs/shared/src/functions';
 
 export class UpdateDealDto {
   @ApiProperty({
@@ -35,7 +36,7 @@ export class UpdateDealDto {
   })
   @IsNotEmpty()
   @IsOptional()
-  @IsMongoId()
+  @Transform(toMongoObjectId)
   dealOwnerId: string;
 
   @ApiProperty({
@@ -67,7 +68,7 @@ export class UpdateDealDto {
   })
   @IsOptional()
   @IsNotEmpty()
-  @IsMongoId()
+  @Transform(toMongoObjectId)
   dealStageId: string;
 
   @ApiProperty({
@@ -77,7 +78,7 @@ export class UpdateDealDto {
   })
   @IsOptional()
   @IsNotEmpty()
-  @IsMongoId()
+  @Transform(toMongoObjectId)
   dealPiplineId: string;
 
   @ApiProperty({
@@ -87,7 +88,7 @@ export class UpdateDealDto {
   })
   @IsNotEmpty()
   @IsOptional()
-  @IsMongoId()
+  @Transform(toMongoObjectId)
   contactedPersonId: string;
 
   @ApiProperty({
