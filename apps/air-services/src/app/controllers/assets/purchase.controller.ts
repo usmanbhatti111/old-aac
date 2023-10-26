@@ -40,4 +40,8 @@ export class PurchaseOrderController {
   async getPurchases(@Payload() payload: FilterPurchaseOrderDto) {
     return await this.purchaseService.getPurchaseOrderList(payload);
   }
+  @MessagePattern(RMQ_MESSAGES.AIR_SERVICES.ASSETS.CHANGE_PURCHASEORDER_STATUS)
+  public async updatePurchaseOrderStatus(@Payload() payload: IdDTO) {
+    return this.purchaseService.updatePurchaseOrderStatus(payload);
+  }
 }

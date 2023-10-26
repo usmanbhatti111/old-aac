@@ -151,4 +151,21 @@ export class PurchaseOrderService {
       throw new RpcException(error);
     }
   }
+  async updatePurchaseOrderStatus(payload: any) {
+    try {
+      const { id, status } = payload;
+      const data = await this.purchaseRepository.findOneAndUpdate(
+        { _id: id.id },
+        { status }
+      );
+      const response = successResponse(
+        HttpStatus.OK,
+        `PurchaseOrder Edit Successfully`,
+        data
+      );
+      return response;
+    } catch (error) {
+      throw new RpcException(error);
+    }
+  }
 }

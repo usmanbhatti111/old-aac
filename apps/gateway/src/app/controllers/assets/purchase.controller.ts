@@ -9,16 +9,25 @@ import {
   Get,
   Query,
   Res,
+  Put,
   Req,
 } from '@nestjs/common';
 import { ClientProxy, RpcException } from '@nestjs/microservices';
-import { ApiCreatedResponse, ApiTags, ApiBearerAuth } from '@nestjs/swagger';
+import {
+  ApiCreatedResponse,
+  ApiTags,
+  ApiBearerAuth,
+  ApiOkResponse,
+  ApiParam,
+  ApiQuery,
+} from '@nestjs/swagger';
 import {
   API_ENDPOINTS,
   API_TAGS,
   CONTROLLERS,
   RMQ_MESSAGES,
   SERVICES,
+  EPurchaseOrderStatus,
 } from '@shared/constants';
 import {
   addPurchaseOrderDto,
@@ -211,6 +220,38 @@ export class PurchaseOrderController {
       return response;
     } catch (error) {
       throw new RpcException(error);
+    }
+  }
+  @Put(API_ENDPOINTS.AIR_SERVICES.ASSETS.CHANGE_PURCHASEORDER_STATUS)
+  @ApiOkResponse({ type: UpdatePurchaseOrderDto })
+  @ApiParam({
+    type: String,
+    name: 'id',
+    description: 'id should be PurchaseOrder Id',
+  })
+  @ApiQuery({
+    name: 'status',
+    enum: EPurchaseOrderStatus,
+    required: true,
+  })
+  public async updateStatusForPurchaseOrder(
+    @Res() res: Response | any,
+    @Param() id: IdDto,
+    @Query('status') status: string
+  ): Promise<UpdatePurchaseOrderDto> {
+    try {
+      const response = await firstValueFrom(
+        this.airServiceClient.send(
+          RMQ_MESSAGES.AIR_SERVICES.ASSETS.CHANGE_PURCHASEORDER_STATUS,
+          {
+            id,
+            status,
+          }
+        )
+      );
+      return res.status(response.statusCode).json(response);
+    } catch (err) {
+      throw new RpcException(err);
     }
   }
 }

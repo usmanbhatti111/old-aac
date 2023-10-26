@@ -159,6 +159,11 @@ export class addPurchaseOrderDto {
   status: string;
 }
 export class UpdatePurchaseOrderDto {
+  @ApiProperty({ example: 200 })
+  statusCode: number;
+  @ApiProperty({
+    example: 'Purchase Edit Successfully',
+  })
   @ApiProperty({
     required: true,
     example: '65152939f50394f42cee2db4',

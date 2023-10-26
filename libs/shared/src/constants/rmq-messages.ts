@@ -165,6 +165,7 @@ export const RMQ_MESSAGES = {
       DELETE_SOFTWARE: 'delete-software',
       GET_SOFTWARE: 'get-software',
       ASSIGN_CATEGORY: 'assign-category',
+      CHANGE_PURCHASEORDER_STATUS: 'change_purchaseorder_status',
       SEARCH_INVENTORY: 'search-inventory',
       DELETE_SOFTWARE_DEVICE: 'delete-software-device',
       GET_INVENTORY_SOFTWARE_DETAILS: 'get-inventory-software-details',

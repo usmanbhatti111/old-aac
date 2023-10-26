@@ -69,6 +69,7 @@ export class SoftwareService {
       const { search, type, status, createdDate, updatedDate } = payload.dto;
       const { limit } = payload.pagination;
       const offset = payload.pagination.page;
+
       let searchFilter: any;
       if (search) {
         searchFilter = {
