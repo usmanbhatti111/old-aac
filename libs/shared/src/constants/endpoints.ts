@@ -155,6 +155,13 @@ export const API_ENDPOINTS = {
       UPDATE_TASK: '/:id',
       DELETE_TASK: '/:id',
     },
+    DASHBOARD: {
+      ADD_DASHBOARD: '/',
+      GET_DASHBOARDS: '/',
+      GET_DASHBOARD: '/:id',
+      UPDATE_DASHBOARD: '/:id',
+      DELETE_DASHBOARD: '/:id',
+    },
     TASK_MANAGEMENT: {
       CREATE_TASK: 'management',
       TASK_LIST: 'management',

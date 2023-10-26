@@ -110,7 +110,7 @@ export class TicketController {
   @Auth(true)
   @Delete()
   @ApiOkResponse({ type: DeleteTicketResponse })
-  public async deleteTicket(
+  public async deleteTickets(
     @Res() res: Response | any,
     @Query('ids') ids: string[]
   ) {

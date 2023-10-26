@@ -48,6 +48,7 @@ import {
   UserRepository,
   AttachmentRepository,
   ContactCallRepository,
+  DashboardRepository,
 } from '../src/repositories/index';
 import { MongooseConfig } from './config/mongo.config';
 import { SharedService } from './shared.service';
@@ -112,6 +113,7 @@ import { DownloadService, S3Service } from './services';
     AttachmentRepository,
     ContactCallRepository,
     LifecycleStagesRepository,
+    DashboardRepository,
     {
       provide: 'S3',
       useFactory: (config: ConfigService) =>
@@ -161,6 +163,7 @@ import { DownloadService, S3Service } from './services';
     PermissionRepository,
     UserORepository,
     TaskManagementRepository,
+    DashboardRepository,
     UserORepository,
     ContactRepository,
     PlanTypeRepository,

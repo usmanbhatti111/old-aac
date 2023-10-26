@@ -44,6 +44,7 @@ import { ColumnPipe } from './pipes/column.pipe';
 import { SharedModule } from '@shared';
 import { ContactStatusController } from './controllers/org-admin/contact-status.controller';
 import { LifecycleStagesController } from './controllers/org-admin/lifecycle-stages.controller';
+import { AirServicesDashboardController } from './controllers/airservices-dashboard.controller';
 import { DealPipelineController } from './controllers/sales-settings/deal-pipeline.controller';
 import { SalesProductController } from './controllers/sales-settings/sales-product.controller';
 import { AttachmentController } from './controllers/common-features/attachment.controller';
@@ -91,6 +92,7 @@ import { AttachmentController } from './controllers/common-features/attachment.c
     ContractController,
     ProductCategoriesController,
     LifecycleStagesController,
+    AirServicesDashboardController,
     DealPipelineController,
     SalesProductController,
     AttachmentController,

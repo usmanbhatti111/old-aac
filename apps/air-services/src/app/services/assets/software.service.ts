@@ -8,7 +8,7 @@ import {
   PaginationDto,
 } from '@shared/dto';
 
-import { AssetSoftwareCreatedAtEnum, successResponse } from '@shared/constants';
+import { successResponse } from '@shared/constants';
 
 @Injectable()
 export class SoftwareService {
@@ -69,7 +69,6 @@ export class SoftwareService {
       const { search, type, status, createdDate, updatedDate } = payload.dto;
       const { limit } = payload.pagination;
       const offset = payload.pagination.page;
-      const today = new Date();
       let searchFilter: any;
       if (search) {
         searchFilter = {

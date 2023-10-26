@@ -125,6 +125,13 @@ export const RMQ_MESSAGES = {
     DELETE_ALL_ATTACHMENT: 'delete-all-attachment',
   },
   AIR_SERVICES: {
+    DASHBOARD: {
+      CREATE_DASHBOARD: 'create-dashboard',
+      GET_DASHBOARD_LIST: 'get-dashboard-list',
+      GET_DASHBOARD: 'get-dashboard',
+      UPDATE_DASHBOARD: 'update-dashboard',
+      DELETE_DASHBOARD: 'delete-dashboard',
+    },
     TICKETS: {
       CREATE_TICKET: 'create-ticket',
       GET_TICKET_DETAILS: 'get-ticket-details',

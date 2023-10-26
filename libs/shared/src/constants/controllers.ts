@@ -22,7 +22,7 @@ export const CONTROLLERS = {
   CONTRACT: 'contract',
   ORGANIZATION_PLAN: 'organization-plan',
   AIR_SERVICES: 'air-services',
-
+  AIR_SERVICES_DASHBOARD: 'air-services-dashboard',
   NEWS_AND_EVENTS: 'news-and-events',
   PAYMENTS: 'payments',
   DOCUMENTS: 'documents',

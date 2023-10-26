@@ -85,6 +85,8 @@ import {
   Attachment,
   AttachmentSchema,
   ContractSchema,
+  Dashboard,
+  DashboardSchema,
   OrganizationCompanyAccount,
   OrganizationCompanyAccountSchema,
 } from './schema';
@@ -290,6 +292,10 @@ export const DbModels = [
     name: LifecycleStages.name,
     schema: LifecycleStagesSchema,
     collection: 'lifecycleStages',
+  },
+  {
+    name: Dashboard.name,
+    schema: DashboardSchema,
   },
   {
     name: OrganizationCompanyAccount.name,
