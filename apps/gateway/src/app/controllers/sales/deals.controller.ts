@@ -1,10 +1,12 @@
 import {
   Body,
   Controller,
+  Get,
   Inject,
   Param,
   Patch,
   Post,
+  Query,
   Req,
 } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
@@ -24,6 +26,8 @@ import {
 import {
   CreateDealDto,
   CreateDealResponseDto,
+  GetDealsListViewDto,
+  GetDealsListViewResponseDto,
   IdDto,
   UpdateDealDto,
   UpdateDealResponseDto,
@@ -70,6 +74,25 @@ export class DealsController {
 
     const response = await firstValueFrom(
       this.orgAdminService.send(RMQ_MESSAGES.SALES.DEALS.UPDATE_DEAL, payload)
+    );
+
+    return response;
+  }
+
+  @Auth(true)
+  @Get(API_ENDPOINTS.SALES.DEALS.GET_DEALS_LIST_VIEW)
+  @ApiOkResponse({ type: GetDealsListViewResponseDto })
+  public async getDealsListVew(
+    @Req() request: AppRequest,
+    @Query() payload: GetDealsListViewDto
+  ): Promise<GetDealsListViewResponseDto> {
+    payload.userId = request?.user?._id;
+
+    const response = await firstValueFrom(
+      this.orgAdminService.send(
+        RMQ_MESSAGES.SALES.DEALS.GET_DEALS_LIST_VIEW,
+        payload
+      )
     );
 
     return response;

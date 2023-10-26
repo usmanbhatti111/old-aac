@@ -6,7 +6,7 @@ import {
   ResponseMessage,
   successResponse,
 } from '@shared/constants';
-import { CreateDealDto, UpdateDealDto } from '@shared/dto';
+import { CreateDealDto, GetDealsListViewDto, UpdateDealDto } from '@shared/dto';
 
 @Injectable()
 export class DealsService {
@@ -68,6 +68,33 @@ export class DealsService {
       const res = await this.dealsRepository.findOneAndUpdate(filter, payload);
 
       return successResponse(HttpStatus.OK, ResponseMessage.SUCCESS, res);
+    } catch (error) {
+      throw new RpcException(error);
+    }
+  }
+
+  async getDealsListVew(payload: GetDealsListViewDto) {
+    try {
+      const { userId } = payload;
+
+      const filterQuery = { isDeleted: false, createdBy: userId };
+
+      const limit = payload?.limit ? payload.limit : 10;
+      const offset = payload?.page ? payload.page : 1;
+
+      const res = await this.dealsRepository.paginate({
+        filterQuery,
+        offset,
+        limit,
+      });
+
+      const response = successResponse(
+        HttpStatus.OK,
+        ResponseMessage.SUCCESS,
+        res
+      );
+
+      return response;
     } catch (error) {
       throw new RpcException(error);
     }
