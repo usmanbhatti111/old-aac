@@ -91,6 +91,8 @@ import {
   OrganizationCompanyAccountSchema,
   ActivityLog,
   ActivityLogSchema,
+  Articles,
+  ArticlesSchema,
 } from './schema';
 
 import {
@@ -314,5 +316,9 @@ export const DbModels = [
   {
     name: ActivityLog.name,
     schema: ActivityLogSchema,
+  },
+  {
+    name: Articles.name,
+    schema: ArticlesSchema,
   },
 ];

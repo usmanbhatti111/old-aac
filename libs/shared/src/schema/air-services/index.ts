@@ -9,3 +9,5 @@ export * from './task-management.schema';
 export * from './task-activity.schema';
 export * from './contract.schema';
 export * from './dashboard.schema';
+export * from './articles.schema';
+

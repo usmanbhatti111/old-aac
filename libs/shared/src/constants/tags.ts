@@ -34,4 +34,5 @@ export const API_TAGS = {
   SALES_PRODUCT: 'Sales product',
   ATTACHMENT: 'Attachment',
   ACTIVITY_LOGS: 'Activity Logs',
+  KNOWLEDGE_BASE: 'Knowledge Base',
 };
