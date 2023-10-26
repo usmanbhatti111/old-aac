@@ -261,4 +261,8 @@ export const API_ENDPOINTS = {
     UPDATE_SALES_PRODUCT: '/:id',
     DELETE_SALES_PRODUCT: '/:id',
   },
+
+  ACTIVITY_LOGS: {
+    GET_ACTIVITY_LOG: '/',
+  },
 };

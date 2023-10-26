@@ -40,4 +40,5 @@ export const CONTROLLERS = {
   DEAL_PIPELINE: 'deal-pipeline',
   SALES_PRODUCT: 'sales-product',
   ATTACHMENT: 'attachment',
+  ACTIVITY_LOGS: 'activity-logs',
 };

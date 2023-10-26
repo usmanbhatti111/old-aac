@@ -48,6 +48,7 @@ import { AirServicesDashboardController } from './controllers/airservices-dashbo
 import { DealPipelineController } from './controllers/sales-settings/deal-pipeline.controller';
 import { SalesProductController } from './controllers/sales-settings/sales-product.controller';
 import { AttachmentController } from './controllers/common-features/attachment.controller';
+import { ActivityLogController } from './controllers/common-features/activity-log.controller';
 
 @Module({
   imports: [
@@ -96,6 +97,7 @@ import { AttachmentController } from './controllers/common-features/attachment.c
     DealPipelineController,
     SalesProductController,
     AttachmentController,
+    ActivityLogController,
   ],
   providers: [
     // Exceptions Filter

@@ -48,6 +48,7 @@ import {
   UserRepository,
   AttachmentRepository,
   ContactCallRepository,
+  ActivityLogRepository,
   DashboardRepository,
 } from '../src/repositories/index';
 import { MongooseConfig } from './config/mongo.config';
@@ -128,6 +129,7 @@ import { DownloadService, S3Service } from './services';
     },
     S3Service,
     DownloadService,
+    ActivityLogRepository,
   ],
   exports: [
     SharedService,
@@ -183,6 +185,7 @@ import { DownloadService, S3Service } from './services';
     ContactStateRepository,
     ContactCallRepository,
     LifecycleStagesRepository,
+    ActivityLogRepository,
   ],
 })
 export class SharedModule {}

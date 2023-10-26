@@ -33,6 +33,7 @@ import { Auth } from '../../decorators/auth.decorator';
 export class ContractController {
   constructor(
     @Inject(SERVICES.AIR_SERVICES) private airServiceClient: ClientProxy,
+    // @Inject(SERVICES.COMMON_FEATURE) private commonFeatureClient: ClientProxy,
     private readonly downloadService: DownloadService
   ) {}
 
@@ -46,6 +47,16 @@ export class ContractController {
           payload
         )
       );
+
+      // const logsPayload: ICreateActivityLog = {
+      //   entityId: "65152939f50394f42cee2db4",
+      //   activity: 'test updated',
+      //   performedBy: '65152939f50394f42cee2db4'
+      // }
+      // this.commonFeatureClient.emit(
+      //   RMQ_MESSAGES.ACTIVITY_LOGS.CREATE_ACTIVITY_LOG,
+      //   logsPayload
+      // )
 
       return response;
     } catch (err) {

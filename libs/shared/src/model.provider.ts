@@ -89,6 +89,8 @@ import {
   DashboardSchema,
   OrganizationCompanyAccount,
   OrganizationCompanyAccountSchema,
+  ActivityLog,
+  ActivityLogSchema,
 } from './schema';
 
 import {
@@ -308,5 +310,9 @@ export const DbModels = [
   {
     name: SalesProduct.name,
     schema: SalesProductSchema,
+  },
+  {
+    name: ActivityLog.name,
+    schema: ActivityLogSchema,
   },
 ];

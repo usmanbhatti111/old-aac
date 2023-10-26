@@ -34,10 +34,12 @@ export class ContractService {
     try {
       const { id } = payload;
       delete payload.id;
+
       const res = await this.contractRepository.findOneAndUpdate(
         { _id: id },
         payload
       );
+
       return successResponse(HttpStatus.OK, 'Success', res);
     } catch (error) {
       throw new RpcException(error);

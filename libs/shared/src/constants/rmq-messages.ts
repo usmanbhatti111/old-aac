@@ -279,4 +279,9 @@ export const RMQ_MESSAGES = {
     UPDATE_SALES_PRODUCT: 'update-sales-product',
     DELETE_SALES_PRODUCT: 'delete-sales-product',
   },
+
+  ACTIVITY_LOGS: {
+    CREATE_ACTIVITY_LOG: 'create-activity-log',
+    GET_ACTIVITY_LOG: 'activity-logs',
+  },
 };
