@@ -8,7 +8,7 @@ import { DealsService } from '../services/deals.service';
 export class DealsController {
   constructor(private readonly dealsService: DealsService) {}
 
-  @MessagePattern(RMQ_MESSAGES.ORG_ADMIN.DEALS.CREATE_DEAL)
+  @MessagePattern(RMQ_MESSAGES.SALES.DEALS.CREATE_DEAL)
   async addLifecycleStage(@Payload() payload: CreateDealDto) {
     return this.dealsService.createDeal(payload);
   }

@@ -233,9 +233,6 @@ export const RMQ_MESSAGES = {
       EDIT_LIFECYCLE_STAGE: 'edit-lifecycle-stage',
       DELETE_LIFECYCLE_STAGE: 'delete-lifecycle-stage',
     },
-    DEALS: {
-      CREATE_DEAL: 'create-deal',
-    },
   },
   DOCUMENTS: {
     ADD_FOLDER: 'add_folder',
@@ -273,5 +270,10 @@ export const RMQ_MESSAGES = {
     GET_SALES_PRODUCT: 'get-sales-product',
     UPDATE_SALES_PRODUCT: 'update-sales-product',
     DELETE_SALES_PRODUCT: 'delete-sales-product',
+  },
+  SALES: {
+    DEALS: {
+      CREATE_DEAL: 'create-deal',
+    },
   },
 };

@@ -18,12 +18,12 @@ import { AppRequest } from '../../shared/interface/request.interface';
 @Controller(CONTROLLERS.DEALS)
 export class DealsController {
   constructor(
-    @Inject(SERVICES.ORG_ADMIN)
+    @Inject(SERVICES.SALES)
     private orgAdminService: ClientProxy
   ) {}
 
   @Auth(true)
-  @Post(API_ENDPOINTS.ORG_ADMIN.DEALS.CREATE_DEAL)
+  @Post(API_ENDPOINTS.SALES.DEALS.CREATE_DEAL)
   @ApiCreatedResponse({ type: CreateDealResponseDto })
   public async addProductCategory(
     @Req() request: AppRequest,
@@ -32,10 +32,7 @@ export class DealsController {
     payload.createdBy = request?.user?._id;
 
     const response = await firstValueFrom(
-      this.orgAdminService.send(
-        RMQ_MESSAGES.ORG_ADMIN.DEALS.CREATE_DEAL,
-        payload
-      )
+      this.orgAdminService.send(RMQ_MESSAGES.SALES.DEALS.CREATE_DEAL, payload)
     );
 
     return response;

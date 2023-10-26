@@ -47,7 +47,7 @@ import { LifecycleStagesController } from './controllers/org-admin/lifecycle-sta
 import { DealPipelineController } from './controllers/sales-settings/deal-pipeline.controller';
 import { SalesProductController } from './controllers/sales-settings/sales-product.controller';
 import { AttachmentController } from './controllers/common-features/attachment.controller';
-import { DealsController } from './controllers/org-admin/deals.controller';
+import { DealsController } from './controllers/sales/deals.controller';
 
 @Module({
   imports: [

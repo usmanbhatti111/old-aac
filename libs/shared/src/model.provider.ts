@@ -88,6 +88,8 @@ import {
   ContractSchema,
   OrganizationCompanyAccount,
   OrganizationCompanyAccountSchema,
+  Deals,
+  DealsSchema,
 } from './schema';
 
 import {
@@ -98,7 +100,6 @@ import {
   ContactNoteSchema,
   ContactSchema,
 } from './schema/common-feature';
-import { Deals, DealsSchema } from './schema/org-admin';
 
 export const DbModels = [
   {

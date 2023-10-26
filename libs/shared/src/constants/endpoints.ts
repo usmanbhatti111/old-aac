@@ -230,9 +230,6 @@ export const API_ENDPOINTS = {
       EDIT_LIFECYCLE_STAGE: '/:id',
       DELETE_LIFECYCLE_STAGE: '/:id',
     },
-    DEALS: {
-      CREATE_DEAL: '/',
-    },
   },
 
   PRODUCT_CATEGORIES: {
@@ -255,5 +252,10 @@ export const API_ENDPOINTS = {
     GET_SALES_PRODUCT: '/:id',
     UPDATE_SALES_PRODUCT: '/:id',
     DELETE_SALES_PRODUCT: '/:id',
+  },
+  SALES: {
+    DEALS: {
+      CREATE_DEAL: '/',
+    },
   },
 };

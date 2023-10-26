@@ -48,11 +48,12 @@ import {
   UserRepository,
   AttachmentRepository,
   ContactCallRepository,
+  DealsRepository,
 } from '../src/repositories/index';
 import { MongooseConfig } from './config/mongo.config';
 import { SharedService } from './shared.service';
 import { DownloadService, S3Service } from './services';
-import { DealsRepository } from './repositories/org-admin/deals.repository';
+
 @Module({
   imports: [
     ConfigModule.forRoot(),
@@ -182,6 +183,8 @@ import { DealsRepository } from './repositories/org-admin/deals.repository';
     ContactStateRepository,
     ContactCallRepository,
     LifecycleStagesRepository,
+    DealPipelineRepository,
+    SalesProductRepository,
     DealsRepository,
   ],
 })
