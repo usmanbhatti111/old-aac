@@ -8,6 +8,7 @@ export const API_ENDPOINTS = {
     SIGNUP: 'signup',
     SIGNIN: 'signin',
     VERIFY_TOKEN: 'verify-token',
+    SEARCH_ORG: 'search-company',
   },
   USER: {
     GET: '/',

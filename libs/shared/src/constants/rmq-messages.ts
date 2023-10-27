@@ -8,6 +8,8 @@ export const RMQ_MESSAGES = {
     SIGNUP: 'auth-signup',
     SIGNIN: 'auth-signin',
     VERIFY_TOKEN: 'verify-token',
+    SEARCH_ORG_BY_NAME: 'search-org-by-name',
+    SEARCH_ORG_BY_CRN: 'search-org-by-crn',
   },
   USER: {
     CREATE: 'create-user',
