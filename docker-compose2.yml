@@ -1,23 +1,115 @@
 version: '3'
 services:
-  gateway:
-    container_name: gateway
+  air-services:
+    container_name: air-services
     build:
       context: ./
-      dockerfile: Dockerfile-gateway
+      dockerfile: Dockerfile.air-services
+    restart: always
     env_file:
       - .env
-    ports:
-      - '8081:8081'
+    networks:
+      - backend
+  common-feature:
+    container_name: common-feature
+    build:
+      context: ./
+      dockerfile: Dockerfile.common-feature
+    restart: always
+    env_file:
+      - .env
+    networks:
+      - backend
+  cron:
+    container_name: cron
+    build:
+      context: ./
+      dockerfile: Dockerfile.cron
+    restart: always
+    env_file:
+      - .env
+    networks:
+      - backend
+  loyalty-program:
+    container_name: loyalty-program
+    build:
+      context: ./
+      dockerfile: Dockerfile.loyalty-program
+    restart: always
+    env_file:
+      - .env
+    networks:
+      - backend
+  marketing:
+    container_name: marketing
+    build:
+      context: ./
+      dockerfile: Dockerfile.marketing
+    restart: always
+    env_file:
+      - .env
+    networks:
+      - backend
+  operations:
+    container_name: operations
+    build:
+      context: ./
+      dockerfile: Dockerfile.operations
+    restart: always
+    env_file:
+      - .env
+    networks:
+      - backend
+  org-admin:
+    container_name: org-admin
+    build:
+      context: ./
+      dockerfile: Dockerfile.org-admin
+    restart: always
+    env_file:
+      - .env
+    networks:
+      - backend
+  sales:
+    container_name: sales
+    build:
+      context: ./
+      dockerfile: Dockerfile.sales
+    restart: always
+    env_file:
+      - .env
+    networks:
+      - backend
+  super-admin:
+    container_name: super-admin
+    build:
+      context: ./
+      dockerfile: Dockerfile.super-admin
+    restart: always
+    env_file:
+      - .env
     networks:
       - backend
   user-account:
     container_name: user-account
     build:
       context: ./
-      dockerfile: Dockerfile-useraccount
+      dockerfile: Dockerfile.user-account
+    restart: always
     env_file:
       - .env
+    networks:
+      - backend
+  gateway:
+    container_name: gateway
+    build:
+      context: ./
+      dockerfile: Dockerfile.gateway
+    restart: always
+    env_file:
+      - .env
+    ports:
+      - '8081:8081'
     networks:
       - backend
 networks:
