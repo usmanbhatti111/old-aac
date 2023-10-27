@@ -89,7 +89,7 @@ import {
   Deals,
   DealsSchema,
   Note,
-  NoteSchema
+  NoteSchema,
 } from './schema';
 
 import {

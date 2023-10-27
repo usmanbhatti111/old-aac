@@ -12,24 +12,26 @@ import {
 
 @Injectable()
 export class DealPipelineService {
-  constructor(private dealPipelineRepository: DealPipelineRepository,
-    private stagesRepository: LifecycleStagesRepository) {}
+  constructor(
+    private dealPipelineRepository: DealPipelineRepository,
+    private stagesRepository: LifecycleStagesRepository
+  ) {}
 
   async createDealPipeline(payload: CreateDealPipelineDto) {
     try {
-       //add stages and saves their ids in deal pipeline
-       const stages = payload.dealStages;
-       delete payload.dealStages;
- 
-       const stageIds: string[] = [];
-       for (const stage of stages) {
-         const createdStage = await this.stagesRepository.create(stage);
-         stageIds.push(createdStage._id.toString());
-       }
-       payload.stages = stageIds;
- 
-       const res = await this.dealPipelineRepository.create(payload);
-       return successResponse(HttpStatus.CREATED, ResponseMessage.CREATED, res);
+      //add stages and saves their ids in deal pipeline
+      const stages = payload.dealStages;
+      delete payload.dealStages;
+
+      const stageIds: string[] = [];
+      for (const stage of stages) {
+        const createdStage = await this.stagesRepository.create(stage);
+        stageIds.push(createdStage._id.toString());
+      }
+      payload.stages = stageIds;
+
+      const res = await this.dealPipelineRepository.create(payload);
+      return successResponse(HttpStatus.CREATED, ResponseMessage.CREATED, res);
     } catch (error) {
       throw new RpcException(error);
     }
@@ -126,10 +128,10 @@ export class DealPipelineService {
       }
       //delete the stages
       const pipelineRes = await this.dealPipelineRepository.findOne(filter);
-      if(pipelineRes && pipelineRes?.stages ){
-        for(const stage of pipelineRes.stages){
-          if(stage in stageIds){
-            await this.stagesRepository.delete({_id:stage})
+      if (pipelineRes && pipelineRes?.stages) {
+        for (const stage of pipelineRes.stages) {
+          if (stage in stageIds) {
+            await this.stagesRepository.delete({ _id: stage });
           }
         }
       }

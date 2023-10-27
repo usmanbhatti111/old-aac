@@ -50,7 +50,6 @@ import { AttachmentController } from './controllers/common-features/attachment.c
 import { DealsController } from './controllers/sales/deals.controller';
 import { NoteController } from './controllers/sales-settings/note.controller';
 
-
 @Module({
   imports: [
     ConfigModule.forRoot(),
@@ -98,7 +97,7 @@ import { NoteController } from './controllers/sales-settings/note.controller';
     SalesProductController,
     AttachmentController,
     DealsController,
-    NoteController
+    NoteController,
   ],
   providers: [
     // Exceptions Filter

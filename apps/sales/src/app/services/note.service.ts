@@ -20,9 +20,7 @@ export class NoteService {
         title: payload?.title,
       });
       if (existingNote.length > 0) {
-        return new ConflictException(
-          'Note with the same title already exist.'
-        );
+        return new ConflictException('Note with the same title already exist.');
       }
       const res = await this.noteRepository.create(payload);
       return successResponse(HttpStatus.CREATED, ResponseMessage.CREATED, res);
@@ -45,7 +43,7 @@ export class NoteService {
           },
           {
             description: keyword,
-          }
+          },
         ];
       }
 
@@ -98,10 +96,7 @@ export class NoteService {
 
       const filter = { _id: id };
 
-      const res = await this.noteRepository.findOneAndUpdate(
-        filter,
-        payload
-      );
+      const res = await this.noteRepository.findOneAndUpdate(filter, payload);
 
       return successResponse(HttpStatus.OK, ResponseMessage.SUCCESS, res);
     } catch (error) {

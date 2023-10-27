@@ -84,9 +84,7 @@ export class NoteController {
 
   @Get(API_ENDPOINTS.DEAL_NOTE.GET_DEAL_NOTE)
   @ApiOkResponse({ type: NoteResponseDto })
-  public async getNote(
-    @Param() payload: IdDto
-  ): Promise<NoteResponseDto> {
+  public async getNote(@Param() payload: IdDto): Promise<NoteResponseDto> {
     const response = await firstValueFrom(
       this.salesServiceClient.send(
         RMQ_MESSAGES.DEAL_NOTE.GET_DEAL_NOTE,

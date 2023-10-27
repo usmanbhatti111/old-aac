@@ -15,7 +15,11 @@ export class DealPipeline extends AbstractSchema implements IDealPipeline {
   @Prop({ type: Boolean, default: false })
   isDefault?: boolean;
 
-  @Prop({ required: false, type: [SchemaTypes.ObjectId], ref: 'lifecyclestages' })
+  @Prop({
+    required: false,
+    type: [SchemaTypes.ObjectId],
+    ref: 'lifecyclestages',
+  })
   stages?: string[];
 
   @Prop({ type: Date, required: false })
