@@ -1,22 +1,22 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument, SchemaTypes } from 'mongoose';
-import { IDealPipeline, StageDto } from '../../dto';
 import { AbstractSchema } from '../abstract-repo/abstract.schema';
-export type DealPipelineDocument = HydratedDocument<DealPipeline>;
+import { INote } from '../../dto/deals';
+export type NoteDocument = HydratedDocument<Note>;
 
 @Schema({
   versionKey: false,
   timestamps: true,
 })
-export class DealPipeline extends AbstractSchema implements IDealPipeline {
+export class Note extends AbstractSchema implements INote {
   @Prop({ type: String, required: true })
-  name: string;
+  title: string;
 
-  @Prop({ type: Boolean, default: false })
-  isDefault?: boolean;
+  @Prop({ type: String, required: false })
+  description?: string;
 
-  @Prop({ required: false, type: [SchemaTypes.ObjectId], ref: 'lifecyclestages' })
-  stages?: string[];
+  @Prop({ type: String, required: false })
+  fileUrl?: string;
 
   @Prop({ type: Date, required: false })
   deletedAt?: Date;
@@ -34,4 +34,4 @@ export class DealPipeline extends AbstractSchema implements IDealPipeline {
   isDeleted?: boolean;
 }
 
-export const DealPipelineSchema = SchemaFactory.createForClass(DealPipeline);
+export const NoteSchema = SchemaFactory.createForClass(Note);

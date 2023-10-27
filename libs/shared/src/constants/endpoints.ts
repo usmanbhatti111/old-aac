@@ -261,4 +261,12 @@ export const API_ENDPOINTS = {
       GET_DEALS_LIST_VIEW: 'get-deals-list-view',
     },
   },
+
+  DEAL_NOTE: {
+    CREATE_DEAL_NOTE: '/',
+    GET_DEAL_NOTES: '/',
+    GET_DEAL_NOTE: '/:id',
+    UPDATE_DEAL_NOTE: '/:id',
+    DELETE_DEAL_NOTE: '/:id',
+  },
 };

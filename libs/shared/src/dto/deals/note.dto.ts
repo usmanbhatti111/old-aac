@@ -2,52 +2,36 @@ import { ApiProperty } from '@nestjs/swagger';
 import { IsMongoId, IsNotEmpty, IsOptional } from 'class-validator';
 import { IdDto, PaginationDto } from '../common';
 
-export interface IDealPipeline {
-  name: string;
-  isDefault?: boolean;
-  stages?: string[];
-  createdAt?: Date;
-  updatedAt?: Date;
+export interface INote {
+  title: string;
+  description?: string;
+  fileUrl?: string;
   deletedAt?: Date;
   createdBy?: string;
   updatedBy?: string;
   deletedBy?: string;
   isDeleted?: boolean;
 }
-
-export class StageDto {
-  id?: string;
+export class CreateNoteDto {
   @ApiProperty({
-    example: 'Follow-up',
+    example: 'Note title',
   })
-  name: string;
+  title: string;
 
   @ApiProperty({
-    example: 60,
+    example: 'description of Note',
   })
-  probability: number;
-}
-export class CreateDealPipelineDto implements IDealPipeline {
-  @ApiProperty({
-    example: 'deal name',
-  })
-  name: string;
+  description?: string;
 
   @ApiProperty({
-    example: true,
+    example: 'www.s3/Notetitle.pdf',
   })
-  isDefault?: boolean;
-
-  stages?: string[];
-  @ApiProperty({
-    type: [StageDto],
-  })
-  dealStages?: StageDto[];
+  fileUrl?: string;
 
   createdBy?: string;
 }
 
-export class UpdateDealPipelineDto extends CreateDealPipelineDto {
+export class UpdateNoteDto extends CreateNoteDto {
   @ApiProperty({
     required: true,
     example: '65152939f50394f42cee2db4',
@@ -56,7 +40,7 @@ export class UpdateDealPipelineDto extends CreateDealPipelineDto {
 
   updatedBy?: string;
 }
-export class DealPipelineDto {
+export class NoteDto {
   @ApiProperty({
     example: '168927646',
     description: 'The unique identifier for the organization.',
@@ -64,22 +48,22 @@ export class DealPipelineDto {
   id: string;
 
   @ApiProperty({
-    example: 'deal name',
+    example: 'Note title',
   })
-  name: string;
+  title: string;
 
   @ApiProperty({
-    type: [StageDto],
+    example: 'description of Note',
   })
-  stages?: [StageDto];
+  description?: string;
 
   @ApiProperty({
-    example: true,
+    example: 'www.s3/Notetitle.pdf',
   })
-  isDefault?: boolean;
+  fileUrl?: string;
 }
 
-export class DealPipelineResponseDto {
+export class NoteResponseDto {
   @ApiProperty({
     example: 200,
   })
@@ -91,9 +75,9 @@ export class DealPipelineResponseDto {
   message: string;
 
   @ApiProperty({
-    type: DealPipelineDto,
+    type: NoteDto,
   })
-  data: DealPipelineDto;
+  data: NoteDto;
 
   @ApiProperty({
     example: '',
@@ -101,7 +85,7 @@ export class DealPipelineResponseDto {
   error: string;
 }
 
-export class DealPipelinesResponseDto {
+export class NotesResponseDto {
   @ApiProperty({
     example: 200,
   })
@@ -113,9 +97,9 @@ export class DealPipelinesResponseDto {
   message: string;
 
   @ApiProperty({
-    type: [DealPipelineDto],
+    type: [NoteDto],
   })
-  data: DealPipelineDto[];
+  data: NoteDto[];
 
   @ApiProperty({
     example: '',
@@ -123,7 +107,7 @@ export class DealPipelinesResponseDto {
   error: string;
 }
 
-export class DeleteDealPipelineResponseDto {
+export class DeleteNoteResponseDto {
   @ApiProperty({ example: 200 })
   statusCode: number;
 
@@ -137,15 +121,15 @@ export class DeleteDealPipelineResponseDto {
   errors: [];
 }
 
-export class DeleteDealPipelineDto extends IdDto {
+export class DeleteNoteDto extends IdDto {
   deletedBy: string;
 }
 
-export class GetDealPipelinesDto extends PaginationDto {
+export class GetNotesDto extends PaginationDto {
   @ApiProperty({
     type: String,
     required: false,
-    description: 'Search By name',
+    description: 'Search By title or description',
   })
   @IsNotEmpty()
   @IsOptional()

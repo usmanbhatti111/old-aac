@@ -41,4 +41,5 @@ export const CONTROLLERS = {
   SALES_PRODUCT: 'sales-product',
   ATTACHMENT: 'attachment',
   DEALS: 'deals',
+  DEAL_NOTE: 'deal-note',
 };

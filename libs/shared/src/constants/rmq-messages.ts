@@ -280,4 +280,12 @@ export const RMQ_MESSAGES = {
       GET_DEALS_LIST_VIEW: 'get-deals-list-view',
     },
   },
+
+  DEAL_NOTE: {
+    CREATE_DEAL_NOTE: 'create-deal-note',
+    GET_DEAL_NOTES: 'get-deal-notes',
+    GET_DEAL_NOTE: 'get-deal-note',
+    UPDATE_DEAL_NOTE: 'update-deal-note',
+    DELETE_DEAL_NOTE: 'delete-deal-note',
+  },
 };

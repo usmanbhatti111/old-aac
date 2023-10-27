@@ -8,7 +8,7 @@ export class LifecycleStages extends AbstractSchema {
   name: string;
 
   @Prop({ type: String })
-  description: string;
+  description?: string;
 
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'users' })
   createdBy?: string;
@@ -21,6 +21,9 @@ export class LifecycleStages extends AbstractSchema {
 
   @Prop({ type: Boolean, default: false })
   isDeleted?: boolean;
+
+  @Prop({ required: false })
+  probability?: number;
 }
 
 export const LifecycleStagesSchema =

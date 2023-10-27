@@ -88,6 +88,8 @@ import {
   OrganizationCompanyAccountSchema,
   Deals,
   DealsSchema,
+  Note,
+  NoteSchema
 } from './schema';
 
 import {
@@ -304,5 +306,9 @@ export const DbModels = [
     name: Deals.name,
     schema: DealsSchema,
     collection: MODEL.DEAL,
+  },
+  {
+    name: Note.name,
+    schema: NoteSchema,
   },
 ];

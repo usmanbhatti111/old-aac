@@ -48,6 +48,8 @@ import { DealPipelineController } from './controllers/sales-settings/deal-pipeli
 import { SalesProductController } from './controllers/sales-settings/sales-product.controller';
 import { AttachmentController } from './controllers/common-features/attachment.controller';
 import { DealsController } from './controllers/sales/deals.controller';
+import { NoteController } from './controllers/sales-settings/note.controller';
+
 
 @Module({
   imports: [
@@ -96,6 +98,7 @@ import { DealsController } from './controllers/sales/deals.controller';
     SalesProductController,
     AttachmentController,
     DealsController,
+    NoteController
   ],
   providers: [
     // Exceptions Filter

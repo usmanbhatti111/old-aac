@@ -48,6 +48,7 @@ import {
   AttachmentRepository,
   ContactCallRepository,
   DealsRepository,
+  NoteRepository,
 } from '../src/repositories/index';
 import { MongooseConfig } from './config/mongo.config';
 import { SharedService } from './shared.service';
@@ -113,6 +114,7 @@ import { DownloadService, S3Service } from './services';
     ContactCallRepository,
     LifecycleStagesRepository,
     DealsRepository,
+    NoteRepository,
     {
       provide: 'S3',
       useFactory: (config: ConfigService) =>
@@ -184,6 +186,7 @@ import { DownloadService, S3Service } from './services';
     DealPipelineRepository,
     SalesProductRepository,
     DealsRepository,
+    NoteRepository,
   ],
 })
 export class SharedModule {}
