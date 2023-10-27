@@ -185,7 +185,9 @@ export const API_ENDPOINTS = {
       GET_CONTRACTS: 'get-contracts',
     },
     KNOWLEDGE_BASE: {
-      WRITE: 'write-article',
+      ARTICLES: {
+        WRITE: 'write-article',
+      },
     },
   },
   PRODUCT_FEATURES: {

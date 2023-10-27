@@ -49,7 +49,7 @@ import { DealPipelineController } from './controllers/sales-settings/deal-pipeli
 import { SalesProductController } from './controllers/sales-settings/sales-product.controller';
 import { AttachmentController } from './controllers/common-features/attachment.controller';
 import { ActivityLogController } from './controllers/common-features/activity-log.controller';
-import { KnowledgeBaseController } from './controllers/knowledge-base/knowledge-base.controller';
+import { ArticlesController } from './controllers/knowledge-base/articles.controller';
 
 @Module({
   imports: [
@@ -99,7 +99,7 @@ import { KnowledgeBaseController } from './controllers/knowledge-base/knowledge-
     SalesProductController,
     AttachmentController,
     ActivityLogController,
-    KnowledgeBaseController,
+    ArticlesController,
   ],
   providers: [
     // Exceptions Filter

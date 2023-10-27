@@ -41,5 +41,5 @@ export const CONTROLLERS = {
   SALES_PRODUCT: 'sales-product',
   ATTACHMENT: 'attachment',
   ACTIVITY_LOGS: 'activity-logs',
-  KNOWLEDGE_BASE: 'knowledge-base',
+  ARTICLES: 'articles',
 };

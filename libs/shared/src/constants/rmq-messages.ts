@@ -198,7 +198,9 @@ export const RMQ_MESSAGES = {
       GET_CONTRACTS: 'get-contracts',
     },
     KNOWLEDGE_BASE: {
-      WRITE: 'write-article',
+      ARTICLES: {
+        WRITE: 'write-article',
+      },
     },
   },
 

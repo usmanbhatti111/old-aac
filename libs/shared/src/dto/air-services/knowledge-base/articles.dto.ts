@@ -46,4 +46,6 @@ export class WriteArticleDTO {
   @ValidateIf((value) => value.isApprovel === true)
   @IsISO8601()
   reviewDate: Date;
+
+  author?: string;
 }

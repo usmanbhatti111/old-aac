@@ -2,6 +2,7 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { AbstractSchema } from '../abstract-repo/abstract.schema';
 
 import { HydratedDocument, SchemaTypes } from 'mongoose';
+import { EArticlesStatus } from '../../constants/enums';
 
 export type ArticlesDocument = HydratedDocument<Articles>;
 @Schema({
@@ -29,6 +30,20 @@ export class Articles extends AbstractSchema {
 
   @Prop({ type: Date, required: false })
   reviewDate: Date;
+
+  @Prop({
+    type: String,
+    enum: EArticlesStatus,
+    required: false,
+    default: EArticlesStatus.DRAFT,
+  })
+  status: string;
+
+  @Prop({ type: SchemaTypes.ObjectId, required: false })
+  insertedTicket: string;
+
+  @Prop({ type: SchemaTypes.ObjectId, required: false })
+  author: string;
 }
 
 export const ArticlesSchema = SchemaFactory.createForClass(Articles);

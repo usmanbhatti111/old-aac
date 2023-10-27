@@ -2,6 +2,7 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument, SchemaTypes } from 'mongoose';
 import { AbstractSchema } from '../../abstract-repo/abstract.schema';
 import { Organization } from '../../organization';
+import { EFolderType } from '@shared/constants';
 
 export type FolderDocument = HydratedDocument<Folder>;
 
@@ -33,6 +34,13 @@ export class Folder extends AbstractSchema {
     ref: Organization.name,
   })
   organizationId: string;
+
+  @Prop({
+    type: String,
+    required: false,
+    enum: EFolderType,
+  })
+  type: string;
 }
 
 export const FolderSchema = SchemaFactory.createForClass(Folder);

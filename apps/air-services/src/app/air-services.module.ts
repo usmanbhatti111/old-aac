@@ -20,6 +20,8 @@ import { ContractController } from './controllers/assets/contract.controller';
 import { ContractService } from './services/assets/contract.service';
 import { DashboardController } from './controllers/dashboard.controller';
 import { DashboardService } from './services/dashboard.service';
+import { ArticlesService } from './services/knowledge-base/articles.service';
+import { ArticlesController } from './controllers/knowledge-base/articles.controller';
 
 @Module({
   imports: [SharedModule],
@@ -34,6 +36,7 @@ import { DashboardService } from './services/dashboard.service';
     TaskManagementController,
     ContractController,
     DashboardController,
+    ArticlesController,
   ],
   providers: [
     TicketService,
@@ -46,6 +49,7 @@ import { DashboardService } from './services/dashboard.service';
     TaskManagementService,
     ContractService,
     DashboardService,
+    ArticlesService,
   ],
 })
 export class AirServicesModule {}
