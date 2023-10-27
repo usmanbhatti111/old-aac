@@ -253,4 +253,11 @@ export const API_ENDPOINTS = {
     UPDATE_SALES_PRODUCT: '/:id',
     DELETE_SALES_PRODUCT: '/:id',
   },
+  SALES: {
+    DEALS: {
+      CREATE_DEAL: '/',
+      UPDATE_DEAL: '/:id',
+      GET_DEALS_LIST_VIEW: 'get-deals-list-view',
+    },
+  },
 };

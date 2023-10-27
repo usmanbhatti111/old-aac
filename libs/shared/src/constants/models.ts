@@ -29,4 +29,7 @@ export const MODEL = {
   USER: 'users',
   DEAL_PIPELINE: 'DealPipeline',
   SALES_PRODUCT: 'SalesProduct',
+  LIFECYCLE_STAGE: 'lifecycleStages',
+  CONTACT_STATUS: 'conatactStatus',
+  DEAL: 'deals',
 };

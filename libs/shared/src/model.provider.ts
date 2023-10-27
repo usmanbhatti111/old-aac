@@ -1,3 +1,4 @@
+import { MODEL } from './constants/models';
 import {
   AdminRole,
   AdminRoleSchema,
@@ -54,8 +55,6 @@ import {
   Purchase,
   RequestLog,
   RequestLogSchema,
-  LifeCycleStage,
-  LifeCycleStageSchema,
   TaskActivity,
   TaskActivitySchema,
   Status,
@@ -87,6 +86,8 @@ import {
   ContractSchema,
   OrganizationCompanyAccount,
   OrganizationCompanyAccountSchema,
+  Deals,
+  DealsSchema,
 } from './schema';
 
 import {
@@ -250,10 +251,6 @@ export const DbModels = [
     schema: ModuleSchema,
   },
   {
-    name: LifeCycleStage.name,
-    schema: LifeCycleStageSchema,
-  },
-  {
     name: TaskActivity.name,
     schema: TaskActivitySchema,
   },
@@ -289,7 +286,7 @@ export const DbModels = [
   {
     name: LifecycleStages.name,
     schema: LifecycleStagesSchema,
-    collection: 'lifecycleStages',
+    collection: MODEL.LIFECYCLE_STAGE,
   },
   {
     name: OrganizationCompanyAccount.name,
@@ -302,5 +299,10 @@ export const DbModels = [
   {
     name: SalesProduct.name,
     schema: SalesProductSchema,
+  },
+  {
+    name: Deals.name,
+    schema: DealsSchema,
+    collection: MODEL.DEAL,
   },
 ];

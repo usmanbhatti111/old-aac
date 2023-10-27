@@ -271,4 +271,11 @@ export const RMQ_MESSAGES = {
     UPDATE_SALES_PRODUCT: 'update-sales-product',
     DELETE_SALES_PRODUCT: 'delete-sales-product',
   },
+  SALES: {
+    DEALS: {
+      CREATE_DEAL: 'create-deal',
+      UPDATE_DEAL: 'update-deal',
+      GET_DEALS_LIST_VIEW: 'get-deals-list-view',
+    },
+  },
 };
