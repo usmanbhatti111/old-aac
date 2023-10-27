@@ -71,6 +71,7 @@ export class DealFilterSearchDto {
   @ApiProperty({
     type: String,
     required: false,
+    description: 'search by deal name, owner name, deal stage, deal pipeline',
   })
   @IsNotEmpty()
   @IsOptional()
