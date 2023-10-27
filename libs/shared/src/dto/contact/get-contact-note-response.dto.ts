@@ -9,23 +9,14 @@ export class GetContactNoteResponseDto {
 
   @ApiProperty({
     example: {
-      _id: '652922553b1d5dc961080ec7',
-      email: 'maarij.bhatti@ceative.co.uk',
-      profilePictureId: '651bdf53beeb02bc627d6804',
-      firstName: 'Maarij',
-      lastName: 'Bhatti',
-      address: 'Bhatti',
-      dateOfBirth: '2023-10-13T10:53:42.648Z',
-      phoneNumber: '00923165372970',
-      whatsAppNumber: '00923165372970',
-      contactOwnerId: '651bdf53beeb02bc627d6804',
-      jobTitle: 'developer',
+      _id: '653763110e4940eeed096451',
+      title: 'asd',
+      description: 'sdasd',
+      contactId: '6536182ab140f075d03b3c4f',
+      updatedBy: '652d0c8612be46f5da445de8',
       isDeleted: false,
-      lifeCycleStageId: '651bdf53beeb02bc627d6804',
-      statusId: '651bdf53beeb02bc627d6804',
-      dataOfJoinig: '2023-10-13T10:53:42.649Z',
-      createdAt: '2023-10-13T10:56:21.428Z',
-      updatedAt: '2023-10-13T10:56:21.428Z',
+      createdAt: '2023-10-24T06:24:17.007Z',
+      updatedAt: '2023-10-24T06:24:17.007Z',
     },
   })
   data: {};

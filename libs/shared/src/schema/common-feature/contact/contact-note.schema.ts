@@ -10,8 +10,8 @@ export class ContactNote extends AbstractSchema {
   @Prop({ required: true })
   title?: string;
 
-  @Prop({ type: SchemaTypes.ObjectId, ref: 'attachments' })
-  attachmentId: string;
+  @Prop({ required: false, type: SchemaTypes.ObjectId, ref: 'attachments' })
+  attachmentId?: string;
 
   @Prop({ required: true })
   description: string;

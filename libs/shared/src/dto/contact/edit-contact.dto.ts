@@ -1,15 +1,14 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Type } from 'class-transformer';
 import {
   IsEmail,
   IsISO8601,
   IsMobilePhone,
   IsMongoId,
-  IsNumber,
   IsOptional,
   IsString,
 } from 'class-validator';
-
+import { Transform } from 'class-transformer';
+import { toMongoObjectId } from '../../functions';
 export class EditContactDto {
   @ApiProperty({
     required: false,
@@ -22,9 +21,10 @@ export class EditContactDto {
   email: string;
 
   @IsOptional()
-  @IsMongoId()
+  @Transform(toMongoObjectId, { toClassOnly: true })
   @ApiProperty({
     example: '651bdf53beeb02bc627d6804',
+    required: false,
   })
   profilePictureId: string;
 
@@ -32,6 +32,7 @@ export class EditContactDto {
     example: 'Maarij',
     type: String,
     maxLength: 50,
+    required: false,
   })
   @IsString()
   @IsOptional()
@@ -41,6 +42,7 @@ export class EditContactDto {
     example: 'Bhatti',
     type: String,
     maxLength: 50,
+    required: false,
   })
   @IsString()
   @IsOptional()
@@ -60,12 +62,14 @@ export class EditContactDto {
   @IsISO8601()
   @ApiProperty({
     example: new Date().toISOString(),
+    required: false,
   })
   dateOfBirth: Date;
 
   @ApiProperty({
     example: '00923165372970',
     maxLength: 50,
+    required: false,
   })
   @IsOptional()
   @IsMobilePhone()
@@ -74,6 +78,7 @@ export class EditContactDto {
   @ApiProperty({
     example: '00923165372970',
     maxLength: 50,
+    required: false,
   })
   @IsMobilePhone()
   @IsOptional()
@@ -84,21 +89,24 @@ export class EditContactDto {
     example: 'developer',
     type: String,
     maxLength: 50,
+    required: false,
   })
   @IsString()
   jobTitle: string;
 
   @IsOptional()
-  @IsMongoId()
+  @Transform(toMongoObjectId, { toClassOnly: true })
   @ApiProperty({
     example: '651bdf53beeb02bc627d6804',
+    required: false,
   })
   contactOwnerId: string;
 
   @IsOptional()
-  @IsMongoId()
+  @Transform(toMongoObjectId, { toClassOnly: true })
   @ApiProperty({
     example: '651bdf53beeb02bc627d6804',
+    required: false,
   })
   lifeCycleStageId: string;
 
@@ -106,13 +114,15 @@ export class EditContactDto {
   @IsISO8601()
   @ApiProperty({
     example: new Date().toISOString(),
+    required: false,
   })
   dataOfJoinig: Date;
 
   @IsOptional()
-  @IsMongoId()
+  @Transform(toMongoObjectId, { toClassOnly: true })
   @ApiProperty({
     example: '651bdf53beeb02bc627d6804',
+    required: false,
   })
   statusId: string;
 

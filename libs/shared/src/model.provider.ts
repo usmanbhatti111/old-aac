@@ -96,6 +96,8 @@ import {
   Contact,
   ContactCall,
   ContactCallSchema,
+  ContactMeeting,
+  ContactMeetingSchema,
   ContactNote,
   ContactNoteSchema,
   ContactSchema,
@@ -289,6 +291,10 @@ export const DbModels = [
     name: LifecycleStages.name,
     schema: LifecycleStagesSchema,
     collection: MODEL.LIFECYCLE_STAGE,
+  },
+  {
+    name: ContactMeeting.name,
+    schema: ContactMeetingSchema,
   },
   {
     name: OrganizationCompanyAccount.name,

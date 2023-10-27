@@ -150,6 +150,15 @@ export enum OutcomeEnum {
   NOT_INTERESTED = 'Not interested',
   NOT_ABLE_TO_REACH = 'Not able to reach',
 }
+
+export enum ContactAssociationEnum {
+  ATTACHMENTS = 'attachments',
+  DEALS = 'deals',
+  TICKETS = 'tickets',
+  COMPANIES = 'companies',
+  PLAYBOOKS = 'playbooks',
+}
+
 export enum AssetSoftwareCreatedAtEnum {
   NONE = 'None',
   ALL_TIME = 'AllTime',

@@ -47,6 +47,7 @@ import {
   UserRepository,
   AttachmentRepository,
   ContactCallRepository,
+  ContactMeetingRepository,
   DealsRepository,
   NoteRepository,
 } from '../src/repositories/index';
@@ -113,6 +114,7 @@ import { DownloadService, S3Service } from './services';
     AttachmentRepository,
     ContactCallRepository,
     LifecycleStagesRepository,
+    ContactMeetingRepository,
     DealsRepository,
     NoteRepository,
     {
@@ -183,6 +185,7 @@ import { DownloadService, S3Service } from './services';
     ContactStateRepository,
     ContactCallRepository,
     LifecycleStagesRepository,
+    ContactMeetingRepository,
     DealPipelineRepository,
     SalesProductRepository,
     DealsRepository,
