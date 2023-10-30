@@ -14,6 +14,7 @@ import {
   GetDealsListViewDto,
   UpdateDealDto,
 } from '@shared/dto';
+
 import dayjs from 'dayjs';
 
 @Injectable()
@@ -93,6 +94,29 @@ export class DealsService {
         isDeleted: EIsDeletedStatus.ACTIVE,
         createdBy: userId,
       };
+
+      if (payload?.dealPiplineId) {
+        filterQuery['dealPiplineId'] = payload.dealPiplineId;
+      }
+
+      if (payload?.name) {
+        filterQuery['name'] = { $regex: payload.name, $options: 'i' };
+      }
+
+      if (payload?.dealOwnerId) {
+        filterQuery['dealOwnerId'] = payload.dealStageId;
+      }
+
+      if (payload?.dateStart && payload?.dateEnd) {
+        const startOfDate = dayjs(payload.dateStart).startOf('day').toDate();
+        const endOfDate = dayjs(payload.dateEnd).endOf('day').toDate();
+
+        filterQuery['closeDate'] = { $gte: startOfDate, $lte: endOfDate };
+      }
+
+      if (payload?.dealStageId) {
+        filterQuery['dealStageId'] = payload.dealStageId;
+      }
 
       if (payload?.dealPiplineId) {
         filterQuery['dealPiplineId'] = payload.dealPiplineId;

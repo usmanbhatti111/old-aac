@@ -35,9 +35,13 @@ export const API_ENDPOINTS = {
   CONTACT: {
     CREATE_CONTACT: '/',
     CONTACT_LIST: '/',
+    CONTACT_DELETED_LIST: 'contact-deleted-list/',
+    CONTACT_ASSOCIATIONS: 'contact-associations/',
     CONTACT: '/:contactId',
     EDIT_CONTACT: '/:contactId',
     DELETE_CONTACT: '/:contactId',
+    RESTORE_CONTACT: 'restore/:contactId',
+    CONTACT_TASKS: 'contact-tasks/',
     ASSIGN_CONTACT_OWNER: 'assign-contact-owner/:contactId',
     CONTACT_NOTE: {
       CREATE_CONTACT_NOTE: 'note/',
@@ -52,6 +56,19 @@ export const API_ENDPOINTS = {
       CONTACT_CALL: 'call/:contactCallId',
       EDIT_CONTACT_CALL: 'call/:contactCallId',
       DELETE_CONTACT_CALL: 'call/:contactCallId',
+      RESCHEDULE_CONTACT_CALL: 'call/rechedule/:contactCallId',
+      RESET_OUTCOME_CONTACT_CALL: 'call/reset-outcome/:contactCallId',
+      CONTACT_CALL_STATUS: 'call/status/:contactCallId',
+    },
+    CONTACT_MEETING: {
+      CREATE_CONTACT_MEETING: 'meeting/',
+      CONTACT_MEETING_LIST: 'meeting/',
+      CONTACT_MEETING: 'meeting/:contactMeetingId',
+      EDIT_CONTACT_MEETING: 'meeting/:contactMeetingId',
+      DELETE_CONTACT_MEETING: 'meeting/:contactMeetingId',
+      RESCHEDULE_CONTACT_MEETING: 'meeting/rechedule/:contactMeetingId',
+      RESET_OUTCOME_CONTACT_MEETING: 'meeting/reset-outcome/:contactMeetingId',
+      CONTACT_MEETING_STATUS: 'meeting/status/:contactMeetingId',
     },
   },
   ORGANIZATION: {
@@ -261,5 +278,13 @@ export const API_ENDPOINTS = {
       GET_DEALS_LIST_VIEW: 'get-deals-list-view',
       DELTE_DEALS: '/:ids',
     },
+  },
+
+  DEAL_NOTE: {
+    CREATE_DEAL_NOTE: '/',
+    GET_DEAL_NOTES: '/',
+    GET_DEAL_NOTE: '/:id',
+    UPDATE_DEAL_NOTE: '/:id',
+    DELETE_DEAL_NOTE: '/:id',
   },
 };

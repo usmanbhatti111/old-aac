@@ -1,12 +1,13 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsMongoId, IsNotEmpty } from 'class-validator';
-
+import { Transform } from 'class-transformer';
+import { toMongoObjectId } from '../../functions';
 export class ContactNoteDeleteDto {
   @ApiProperty({
     required: true,
     type: String,
   })
-  @IsMongoId()
+  @Transform(toMongoObjectId, { toClassOnly: true })
   @IsNotEmpty()
   contactNoteId: string;
 
@@ -14,7 +15,7 @@ export class ContactNoteDeleteDto {
     required: true,
     type: String,
   })
-  @IsMongoId()
+  @Transform(toMongoObjectId, { toClassOnly: true })
   @IsNotEmpty()
   deletedBy: string;
 }

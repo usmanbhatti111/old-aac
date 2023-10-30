@@ -9,15 +9,19 @@ export class CreateContactCallResponseDto {
 
   @ApiProperty({
     example: {
-      _id: '652e131d1c10d7d373d23b09',
+      _id: '65389a91e069566942785b91',
       title: 'title',
       attachmentId: '651bdf53beeb02bc627d6804',
-      description: 'description',
-      contactId: '651bdf53beeb02bc627d6804',
-      createdBy: '652d0c8612be46f5da445de8',
+      note: 'note',
+      contactId: '652e11c51c10d7d373d23b05',
+      contactOwnerId: '652d0c8612be46f5da445de8',
+      attendees: [],
+      outcome: 'Interested',
+      startDate: '2023-10-25T04:09:47.998Z',
+      endDate: '2023-10-25T04:09:47.998Z',
       isDeleted: false,
-      createdAt: '2023-10-17T04:52:45.640Z',
-      updatedAt: '2023-10-17T04:52:45.640Z',
+      createdAt: '2023-10-25T04:33:21.689Z',
+      updatedAt: '2023-10-25T04:33:21.689Z',
     },
   })
   data: object;

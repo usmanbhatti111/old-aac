@@ -9,6 +9,7 @@ import {
   Post,
   Query,
   Req,
+  UploadedFile,
 } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
 import {
@@ -25,27 +26,27 @@ import {
   SERVICES,
 } from '@shared/constants';
 import {
+  ContactAssociationResponse,
+  ContactDeletedFilterDto,
   ContactFilterDto,
   ContactIdParamDto,
-  ContactNoteFilterDto,
-  ContactNoteIdParamDto,
   CreateContactDto,
-  CreateContactNoteDto,
   CreateContactResponseDto,
   EditContactDto,
-  EditContactNoteDto,
-  EditContactNoteResponseDto,
   EditContactResponseDto,
-  GetContactNoteResponseDto,
-  GetContactNotesResponseDto,
+  GetContactAssociatinsDto,
   GetContactResponseDto,
   GetContactsResponseDto,
   PostResponseDto,
+  GetDeletedContactsResponseDto,
+  ContactNoteFilterDto,
+  GetContactTasksResponseDto,
 } from '@shared/dto';
 import { firstValueFrom } from 'rxjs';
-import { Auth } from '../../decorators/auth.decorator';
-import { AppRequest } from '../../shared/interface/request.interface';
-import { AssignContactOwnerDto } from '../../../../../../libs/shared/src/dto';
+import { Auth } from '../../../decorators/auth.decorator';
+import { AppRequest } from '../../../shared/interface/request.interface';
+import { AssignContactOwnerDto } from '../../../../../../../libs/shared/src/dto';
+import { ApiFormData } from '@shared';
 
 @ApiTags(API_TAGS.CONTACT)
 @Controller(CONTROLLERS.CONTACT)
@@ -57,15 +58,82 @@ export class ContactController {
   @Post()
   @Auth(true)
   @Post(API_ENDPOINTS.CONTACT.CREATE_CONTACT)
+  @ApiFormData({
+    required: false,
+    single: true,
+    fieldName: 'file',
+    fileTypes: ['jpg', 'png'],
+    errorMessage: 'Invalid document file entered.',
+  })
   @ApiCreatedResponse({ type: CreateContactResponseDto })
   public async createContact(
     @Body() payload: CreateContactDto,
-    @Req() req: AppRequest
+    @Req() req: AppRequest,
+    @UploadedFile() profilePicture: any
   ) {
     payload.createdBy = req.user._id;
     const response = await firstValueFrom(
+      this.commonFeatureClient.send(RMQ_MESSAGES.CONTACT.CREATE_CONTACT, {
+        ...payload,
+        profilePicture,
+      })
+    );
+    return response;
+  }
+
+  @Auth(true)
+  @Get(API_ENDPOINTS.CONTACT.CONTACT_TASKS)
+  @ApiOkResponse({ type: GetContactTasksResponseDto })
+  public async getContactNotes(
+    @Query() payload: ContactNoteFilterDto
+  ): Promise<GetContactTasksResponseDto> {
+    const response = await firstValueFrom(
+      this.commonFeatureClient.send(RMQ_MESSAGES.CONTACT.CONTACT_TASKS, payload)
+    );
+    return response;
+  }
+
+  @Auth(true)
+  @Delete(API_ENDPOINTS.CONTACT.RESTORE_CONTACT)
+  @ApiOkResponse({ type: PostResponseDto })
+  public async restoreContact(
+    @Param() { contactId }: ContactIdParamDto,
+    @Req() req: AppRequest
+  ): Promise<PostResponseDto<any>> {
+    const deletedBy = req.user._id;
+    const response = await firstValueFrom(
+      this.commonFeatureClient.send(RMQ_MESSAGES.CONTACT.RESTORE_CONTACT, {
+        contactId,
+        deletedBy,
+      })
+    );
+    return response;
+  }
+
+  @Auth(true)
+  @Get(API_ENDPOINTS.CONTACT.CONTACT_DELETED_LIST)
+  @ApiOkResponse({ type: GetDeletedContactsResponseDto })
+  public async getDeletedContacts(
+    @Query() payload: ContactDeletedFilterDto
+  ): Promise<GetDeletedContactsResponseDto> {
+    const response = await firstValueFrom(
       this.commonFeatureClient.send(
-        RMQ_MESSAGES.CONTACT.CREATE_CONTACT,
+        RMQ_MESSAGES.CONTACT.CONTACT_DELETED_LIST,
+        payload
+      )
+    );
+    return response;
+  }
+
+  @Auth(true)
+  @Get(API_ENDPOINTS.CONTACT.CONTACT_ASSOCIATIONS)
+  @ApiOkResponse({ type: ContactAssociationResponse })
+  public async getContactAssociations(
+    @Query() payload: GetContactAssociatinsDto
+  ): Promise<ContactAssociationResponse> {
+    const response = await firstValueFrom(
+      this.commonFeatureClient.send(
+        RMQ_MESSAGES.CONTACT.CONTACT_ASSOCIATIONS,
         payload
       )
     );
@@ -88,10 +156,10 @@ export class ContactController {
   @Get(API_ENDPOINTS.CONTACT.CONTACT)
   @ApiOkResponse({ type: GetContactResponseDto })
   public async getContact(
-    @Param() { contactId }: ContactIdParamDto
+    @Param() parma: ContactIdParamDto
   ): Promise<GetContactResponseDto> {
     const response = await firstValueFrom(
-      this.commonFeatureClient.send(RMQ_MESSAGES.CONTACT.CONTACT, contactId)
+      this.commonFeatureClient.send(RMQ_MESSAGES.CONTACT.CONTACT, parma)
     );
     return response;
   }
@@ -142,92 +210,6 @@ export class ContactController {
     const response = await firstValueFrom(
       this.commonFeatureClient.send(
         RMQ_MESSAGES.CONTACT.ASSIGN_CONTACT_OWNER,
-        payload
-      )
-    );
-    return response;
-  }
-
-  @Auth(true)
-  @Post(API_ENDPOINTS.CONTACT.CONTACT_NOTE.CREATE_CONTACT_NOTE)
-  @ApiCreatedResponse({ type: CreateContactResponseDto })
-  public async createContactNote(
-    @Body() payload: CreateContactNoteDto,
-    @Req() req: AppRequest
-  ): Promise<CreateContactResponseDto> {
-    payload.updatedBy = req.user._id;
-    const response = await firstValueFrom(
-      this.commonFeatureClient.send(
-        RMQ_MESSAGES.CONTACT.CONTACT_NOTE.CREATE_CONTACT_NOTE,
-        payload
-      )
-    );
-    return response;
-  }
-
-  @Auth(true)
-  @Get(API_ENDPOINTS.CONTACT.CONTACT_NOTE.CONTACT_NOTE_LIST)
-  @ApiOkResponse({ type: GetContactNotesResponseDto })
-  public async getContactNotes(
-    @Query() payload: ContactNoteFilterDto
-  ): Promise<GetContactNotesResponseDto> {
-    const response = await firstValueFrom(
-      this.commonFeatureClient.send(
-        RMQ_MESSAGES.CONTACT.CONTACT_NOTE.CONTACT_NOTE_LIST,
-        payload
-      )
-    );
-    return response;
-  }
-
-  @Auth(true)
-  @Get(API_ENDPOINTS.CONTACT.CONTACT_NOTE.CONTACT_NOTE)
-  @ApiOkResponse({ type: GetContactNoteResponseDto })
-  public async getContactNote(
-    @Param() { contactNoteId }: ContactNoteIdParamDto
-  ): Promise<GetContactNoteResponseDto> {
-    const response = await firstValueFrom(
-      this.commonFeatureClient.send(
-        RMQ_MESSAGES.CONTACT.CONTACT_NOTE.CONTACT_NOTE,
-        contactNoteId
-      )
-    );
-    return response;
-  }
-
-  @Auth(true)
-  @Delete(API_ENDPOINTS.CONTACT.CONTACT_NOTE.DELETE_CONTACT_NOTE)
-  @ApiOkResponse({ type: PostResponseDto })
-  public async deleteContactNote(
-    @Param() { contactNoteId }: ContactNoteIdParamDto,
-    @Req() req: AppRequest
-  ): Promise<PostResponseDto<any>> {
-    const deletedBy = req.user._id;
-    const response = await firstValueFrom(
-      this.commonFeatureClient.send(
-        RMQ_MESSAGES.CONTACT.CONTACT_NOTE.DELETE_CONTACT_NOTE,
-        {
-          contactNoteId,
-          deletedBy,
-        }
-      )
-    );
-    return response;
-  }
-
-  @Auth(true)
-  @Patch(API_ENDPOINTS.CONTACT.CONTACT_NOTE.EDIT_CONTACT_NOTE)
-  @ApiCreatedResponse({ type: EditContactNoteResponseDto })
-  public async updateContactNote(
-    @Param() { contactNoteId }: ContactNoteIdParamDto,
-    @Body() payload: EditContactNoteDto,
-    @Req() req: AppRequest
-  ): Promise<EditContactNoteResponseDto> {
-    payload.contactId = contactNoteId;
-    payload.updatedBy = req.user._id;
-    const response = await firstValueFrom(
-      this.commonFeatureClient.send(
-        RMQ_MESSAGES.CONTACT.CONTACT_NOTE.EDIT_CONTACT_NOTE,
         payload
       )
     );

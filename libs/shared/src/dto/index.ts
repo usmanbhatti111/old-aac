@@ -28,3 +28,4 @@ export * from './contact';
 export * from './org-admin';
 export * from './sales-settings';
 export * from './sales-services';
+export * from './deals';

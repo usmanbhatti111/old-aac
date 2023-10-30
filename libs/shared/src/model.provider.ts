@@ -88,12 +88,16 @@ import {
   OrganizationCompanyAccountSchema,
   Deals,
   DealsSchema,
+  Note,
+  NoteSchema,
 } from './schema';
 
 import {
   Contact,
   ContactCall,
   ContactCallSchema,
+  ContactMeeting,
+  ContactMeetingSchema,
   ContactNote,
   ContactNoteSchema,
   ContactSchema,
@@ -289,6 +293,10 @@ export const DbModels = [
     collection: MODEL.LIFECYCLE_STAGE,
   },
   {
+    name: ContactMeeting.name,
+    schema: ContactMeetingSchema,
+  },
+  {
     name: OrganizationCompanyAccount.name,
     schema: OrganizationCompanyAccountSchema,
   },
@@ -304,5 +312,9 @@ export const DbModels = [
     name: Deals.name,
     schema: DealsSchema,
     collection: MODEL.DEAL,
+  },
+  {
+    name: Note.name,
+    schema: NoteSchema,
   },
 ];
