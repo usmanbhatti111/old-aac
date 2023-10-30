@@ -1,4 +1,4 @@
-import { HttpStatus, Injectable } from '@nestjs/common';
+import { BadRequestException, HttpStatus, Injectable } from '@nestjs/common';
 import { RpcException } from '@nestjs/microservices';
 import { DealsRepository, LifecycleStagesRepository } from '@shared';
 import {
@@ -12,6 +12,8 @@ import {
   CreateDealDto,
   DeleteDealsDto,
   GetDealsListViewDto,
+  GetSoftDeletedDealsDto,
+  RestoreDealActionDto,
   UpdateDealDto,
 } from '@shared/dto';
 
@@ -94,29 +96,6 @@ export class DealsService {
         isDeleted: EIsDeletedStatus.ACTIVE,
         createdBy: userId,
       };
-
-      if (payload?.dealPiplineId) {
-        filterQuery['dealPiplineId'] = payload.dealPiplineId;
-      }
-
-      if (payload?.name) {
-        filterQuery['name'] = { $regex: payload.name, $options: 'i' };
-      }
-
-      if (payload?.dealOwnerId) {
-        filterQuery['dealOwnerId'] = payload.dealStageId;
-      }
-
-      if (payload?.dateStart && payload?.dateEnd) {
-        const startOfDate = dayjs(payload.dateStart).startOf('day').toDate();
-        const endOfDate = dayjs(payload.dateEnd).endOf('day').toDate();
-
-        filterQuery['closeDate'] = { $gte: startOfDate, $lte: endOfDate };
-      }
-
-      if (payload?.dealStageId) {
-        filterQuery['dealStageId'] = payload.dealStageId;
-      }
 
       if (payload?.dealPiplineId) {
         filterQuery['dealPiplineId'] = payload.dealPiplineId;
@@ -290,6 +269,137 @@ export class DealsService {
       const response = successResponse(HttpStatus.OK, message);
 
       return response;
+    } catch (error) {
+      throw new RpcException(error);
+    }
+  }
+
+  async getSoftDeletedDeals(payload: GetSoftDeletedDealsDto) {
+    try {
+      const { deletedBy } = payload;
+
+      const filterQuery = {
+        isDeleted: EIsDeletedStatus.SOFT_DELETED,
+        deletedBy: deletedBy,
+      };
+
+      if (payload?.dateStart && payload?.dateEnd) {
+        const startOfDate = dayjs(payload.dateStart).startOf('day').toDate();
+        const endOfDate = dayjs(payload.dateEnd).endOf('day').toDate();
+
+        filterQuery['deletedAt'] = { $gte: startOfDate, $lte: endOfDate };
+      }
+
+      const limit = payload?.limit ? payload.limit : 10;
+      const offset = payload?.page ? payload.page : 1;
+
+      const dealsPipline = [
+        {
+          $project: {
+            name: 1,
+            deletedBy: 1,
+            deletedAt: 1,
+          },
+        },
+      ];
+
+      const deletedByPipeline = [
+        {
+          $lookup: {
+            from: MODEL.USER,
+            localField: 'deletedBy',
+            foreignField: '_id',
+            as: 'deletedBy',
+            pipeline: [
+              {
+                $project: {
+                  _id: 1,
+                  name: {
+                    $concat: [
+                      { $ifNull: ['$firstName', ''] },
+                      ' ',
+                      { $ifNull: ['$lastName', ''] },
+                    ],
+                  },
+                  // add user profile image
+                },
+              },
+            ],
+          },
+        },
+        {
+          $unwind: {
+            path: '$deletedBy',
+            preserveNullAndEmptyArrays: true,
+          },
+        },
+      ];
+
+      let searchPipeline = [];
+
+      if (payload?.search) {
+        const search = { $regex: payload.search, $options: 'i' };
+        searchPipeline = [
+          {
+            $match: {
+              $or: [{ name: search }, { 'deletedBy.name': search }],
+            },
+          },
+        ];
+      }
+
+      const pipelines = [
+        ...dealsPipline,
+        ...deletedByPipeline,
+        ...searchPipeline,
+      ];
+
+      const res = await this.dealsRepository.paginate({
+        filterQuery,
+        offset,
+        limit,
+        pipelines,
+        sort: { deletedAt: -1 },
+      });
+
+      const response = successResponse(
+        HttpStatus.OK,
+        ResponseMessage.SUCCESS,
+        res
+      );
+
+      return response;
+    } catch (error) {
+      throw new RpcException(error);
+    }
+  }
+
+  async restoreDealAction(payload: RestoreDealActionDto) {
+    try {
+      const { id, deletedBy, action } = payload;
+
+      const filterQuery = { _id: id, deletedBy };
+
+      let data = {};
+      if (action === EIsDeletedStatus.HARD_DELETED) {
+        data = {
+          isDeleted: EIsDeletedStatus.HARD_DELETED,
+          deletedAt: new Date(),
+          deletedBy,
+        };
+      } else if (action === EIsDeletedStatus.ACTIVE) {
+        data = {
+          isDeleted: EIsDeletedStatus.ACTIVE,
+          deletedAt: null,
+          deletedBy: null,
+        };
+      } else {
+        throw new BadRequestException('Invalid action type');
+      }
+
+      await this.dealsRepository.findOneAndUpdate(filterQuery, data);
+
+      return successResponse(HttpStatus.OK, ResponseMessage.SUCCESS, {});
     } catch (error) {
       throw new RpcException(error);
     }

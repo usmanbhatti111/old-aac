@@ -5,6 +5,8 @@ import {
   CreateDealDto,
   DeleteDealsDto,
   GetDealsListViewDto,
+  GetSoftDeletedDealsDto,
+  RestoreDealActionDto,
   UpdateDealDto,
 } from '@shared/dto';
 import { DealsService } from '../services/deals.service';
@@ -31,5 +33,15 @@ export class DealsController {
   @MessagePattern(RMQ_MESSAGES.SALES.DEALS.DELTE_DEALS)
   async deleteDeals(@Payload() payload: DeleteDealsDto) {
     return this.dealsService.deleteDeals(payload);
+  }
+
+  @MessagePattern(RMQ_MESSAGES.SALES.DEALS.GET_SOFT_DELETED_DEALS)
+  async getSoftDeletedDeals(@Payload() payload: GetSoftDeletedDealsDto) {
+    return this.dealsService.getSoftDeletedDeals(payload);
+  }
+
+  @MessagePattern(RMQ_MESSAGES.SALES.DEALS.RESTORE_DEAL_ACTION)
+  async restoreDealActionRestore(@Payload() payload: RestoreDealActionDto) {
+    return this.dealsService.restoreDealAction(payload);
   }
 }
