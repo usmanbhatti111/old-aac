@@ -5,7 +5,10 @@ import { Organization } from '../../organization';
 
 export type FolderDocument = HydratedDocument<Folder>;
 
-@Schema({})
+@Schema({
+  versionKey: false,
+  timestamps: true,
+})
 export class Folder extends AbstractSchema {
   @Prop()
   name: string;
