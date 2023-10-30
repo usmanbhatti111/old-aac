@@ -1,6 +1,9 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import mongoose, { HydratedDocument } from 'mongoose';
+import mongoose, { HydratedDocument, SchemaTypes } from 'mongoose';
 import { AbstractSchema } from '../abstract-repo/abstract.schema';
+import { EStatusToggle } from '../../constants/enums';
+import { MODEL } from '../../constants/models';
+import { MediaObject } from '../../dto/common';
 
 export type ProductsDocument = HydratedDocument<Products>;
 
@@ -10,21 +13,21 @@ export class Products extends AbstractSchema {
   name: string;
 
   @Prop({ type: String })
-  description: string;
+  description?: string;
 
-  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'attachments' })
-  logo: string;
+  @Prop({ type: SchemaTypes.Mixed })
+  logo?: MediaObject;
 
-  @Prop({ type: Boolean, default: false })
-  isActive?: boolean;
+  @Prop({ type: String, enum: EStatusToggle, default: EStatusToggle.INACTIVE })
+  status?: string;
 
-  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'users' })
+  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: MODEL.USER })
   createdBy?: string;
 
-  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'users' })
+  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: MODEL.USER })
   updatedBy?: string;
 
-  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'users' })
+  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: MODEL.USER })
   deletedBy?: string;
 
   @Prop({ type: Boolean, default: false })

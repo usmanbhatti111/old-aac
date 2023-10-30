@@ -1,5 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsNotEmpty, IsOptional } from 'class-validator';
+import { ApiSingleFile } from '../../custom';
+import { MediaObject } from '../common';
 
 export class AddProductDto {
   @ApiProperty({
@@ -19,14 +21,10 @@ export class AddProductDto {
   @IsOptional()
   description: string;
 
-  @ApiProperty({
-    type: String,
-    required: false,
-    example: '6513b01ed274bd98dfacaf06',
-  })
-  @IsNotEmpty()
+  @ApiSingleFile({ required: false })
   @IsOptional()
-  logo: string;
+  file: any;
 
+  logo: MediaObject;
   createdBy: string;
 }

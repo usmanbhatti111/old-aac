@@ -4,12 +4,11 @@ import {
   IsISO8601,
   IsMobilePhone,
   IsMongoId,
-  IsNotEmpty,
   IsOptional,
-  IsPhoneNumber,
   IsString,
 } from 'class-validator';
-
+import { Transform } from 'class-transformer';
+import { toMongoObjectId } from '../../functions';
 export class CreateContactDto {
   @ApiProperty({
     required: true,
@@ -20,12 +19,13 @@ export class CreateContactDto {
   @IsEmail()
   email: string;
 
-  @IsOptional()
-  @IsMongoId()
   @ApiProperty({
-    example: '651bdf53beeb02bc627d6804',
+    type: String,
+    format: 'binary',
+    example: 'testimg.png',
   })
-  profilePictureId: string;
+  @IsOptional()
+  profilePicture: any;
 
   @ApiProperty({
     example: 'Maarij',
@@ -88,14 +88,14 @@ export class CreateContactDto {
   jobTitle: string;
 
   @IsOptional()
-  @IsMongoId()
+  @Transform(toMongoObjectId, { toClassOnly: true })
   @ApiProperty({
     example: '651bdf53beeb02bc627d6804',
   })
   contactOwnerId: string;
 
   @IsOptional()
-  @IsMongoId()
+  @Transform(toMongoObjectId, { toClassOnly: true })
   @ApiProperty({
     example: '651bdf53beeb02bc627d6804',
   })
@@ -109,11 +109,13 @@ export class CreateContactDto {
   dataOfJoinig: Date;
 
   @IsOptional()
-  @IsMongoId()
+  @Transform(toMongoObjectId, { toClassOnly: true })
   @ApiProperty({
     example: '651bdf53beeb02bc627d6804',
   })
   statusId: string;
+
+  profilePictureId?: string;
 
   createdBy?: string;
 

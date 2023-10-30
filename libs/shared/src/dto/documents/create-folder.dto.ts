@@ -29,7 +29,6 @@ export class CreateFolderDto {
   type: string;
 
   createdBy?: string;
-  updatedBy?: string;
 
   organizationId: string;
 }

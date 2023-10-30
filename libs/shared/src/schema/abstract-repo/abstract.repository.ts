@@ -341,6 +341,7 @@ export abstract class AbstractRepository<TDocument extends AbstractSchema> {
         },
       },
     ];
+
     const [data] = await this.model.aggregate<any>([
       {
         $match: {

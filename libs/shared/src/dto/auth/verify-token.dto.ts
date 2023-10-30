@@ -9,3 +9,17 @@ export class VerifyTokenDto {
   @IsNotEmpty()
   token: string;
 }
+
+export class CompanyHouseSearchQueryDto {
+  @ApiProperty({
+    example: 'crn',
+    enum: ['name', 'crn'],
+    required: true,
+  })
+  @IsNotEmpty()
+  by: string;
+
+  @ApiProperty({ required: true })
+  @IsNotEmpty()
+  q: string;
+}

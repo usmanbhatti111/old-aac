@@ -2,15 +2,36 @@ import { HttpStatus, Injectable } from '@nestjs/common';
 import { RpcException } from '@nestjs/microservices';
 import { ProductsRepository } from '@shared';
 import { ResponseMessage, successResponse } from '@shared/constants';
-import { AddProductDto, EditProductDto, GetProductsDto } from '@shared/dto';
+import {
+  AddProductDto,
+  EditProductDto,
+  GetProductsDto,
+  MediaObject,
+} from '@shared/dto';
+import { S3Service } from '@shared/services';
 import dayjs from 'dayjs';
 
 @Injectable()
 export class ProductsService {
-  constructor(private productsRepository: ProductsRepository) {}
+  constructor(
+    private productsRepository: ProductsRepository,
+    private s3: S3Service
+  ) {}
 
   async addProduct(payload: AddProductDto) {
     try {
+      const { file } = payload;
+
+      const s3Response = await this.s3.uploadFile(file, 'products/{uuid}');
+
+      const logo: MediaObject = {
+        ...s3Response,
+        size: file.size,
+        mimetype: file.mimetype,
+      };
+
+      payload.logo = logo;
+
       const res = await this.productsRepository.create(payload);
 
       const response = successResponse(
@@ -26,12 +47,12 @@ export class ProductsService {
 
   async getProducts(payload: GetProductsDto) {
     try {
-      const { isActive, dateStart, dateEnd } = payload;
+      const { status, dateStart, dateEnd } = payload;
 
       const filterQuery = { isDeleted: false };
 
-      if (isActive) {
-        filterQuery['isActive'] = isActive;
+      if (status) {
+        filterQuery['status'] = status;
       }
 
       if (dateStart && dateEnd) {
@@ -61,14 +82,39 @@ export class ProductsService {
 
   async editProduct(payload: EditProductDto) {
     try {
-      const { id } = payload;
+      const { id, file } = payload;
 
       const filter = { _id: id };
 
-      const res = await this.productsRepository.findOneAndUpdate(
-        filter,
-        payload
-      );
+      let res = await this.productsRepository.findOne(filter);
+
+      if (file) {
+        if (res?.logo) {
+          const { url } = res.logo;
+          await this.s3.deleteFile(url);
+          const s3Response = await this.s3.uploadFile(file, 'products/{uuid}');
+
+          const logo: MediaObject = {
+            ...s3Response,
+            size: file?.size,
+            mimetype: file?.mimetype,
+          };
+
+          payload.logo = logo;
+        } else {
+          const s3Response = await this.s3.uploadFile(file, 'products/{uuid}');
+
+          const logo: MediaObject = {
+            ...s3Response,
+            size: file.size,
+            mimetype: file.mimetype,
+          };
+
+          payload.logo = logo;
+        }
+      }
+
+      res = await this.productsRepository.findOneAndUpdate(filter, payload);
 
       const response = successResponse(
         HttpStatus.OK,

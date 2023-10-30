@@ -1,20 +1,24 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsMongoId, IsNotEmpty, IsOptional, IsString } from 'class-validator';
-
+import { Transform } from 'class-transformer';
+import { toMongoObjectId } from '../../functions';
 export class CreateContactNoteDto {
-  @IsOptional()
-  @IsMongoId()
-  @ApiProperty({
-    example: '651bdf53beeb02bc627d6804',
-  })
-  attachmentId: string;
+  attachmentId?: string;
 
-  @IsMongoId()
+  @Transform(toMongoObjectId, { toClassOnly: true })
   @IsNotEmpty()
   @ApiProperty({
     example: '651bdf53beeb02bc627d6804',
   })
   contactId: string;
+
+  @ApiProperty({
+    type: String,
+    format: 'binary',
+    example: 'testimg.png',
+  })
+  @IsOptional()
+  attachment: any;
 
   @ApiProperty({
     example: 'some note',

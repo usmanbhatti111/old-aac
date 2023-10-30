@@ -34,6 +34,9 @@ export const CONTROLLERS = {
     SUBSCRIPTIONS: 'org-admin/subscriptions',
   },
   CONTACT: 'contact',
+  CONTACT_NOTE: 'contact-note',
+  CONTACT_CALL: 'contact-call',
+  CONTACT_MEETING: 'contact-meeting',
   CONTACT_STATUS: 'contact-status',
   PRODUCT_CATEGORIES: 'product-categories',
   LIFECYCLE_STAGES: 'lifecycle-stages',
@@ -42,4 +45,6 @@ export const CONTROLLERS = {
   ATTACHMENT: 'attachment',
   ACTIVITY_LOGS: 'activity-logs',
   ARTICLES: 'articles',
+  DEALS: 'deals',
+  DEAL_NOTE: 'deal-note',
 };

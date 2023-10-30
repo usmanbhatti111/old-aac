@@ -1,7 +1,8 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsISO8601, IsMongoId, IsOptional, IsString } from 'class-validator';
 import { OutcomeEnum } from '../../constants/enums';
-
+import { Transform } from 'class-transformer';
+import { toMongoObjectId } from '../../functions';
 export class CreateContactCallDto {
   @ApiProperty({
     required: true,
@@ -11,7 +12,7 @@ export class CreateContactCallDto {
   title: string;
 
   @IsOptional()
-  @IsMongoId()
+  @Transform(toMongoObjectId, { toClassOnly: true })
   @ApiProperty({
     example: '651bdf53beeb02bc627d6804',
   })
@@ -26,21 +27,20 @@ export class CreateContactCallDto {
   note: string;
 
   @IsOptional()
-  @IsMongoId()
+  @Transform(toMongoObjectId, { toClassOnly: true })
   @ApiProperty({
     example: '651bdf53beeb02bc627d6804',
   })
   contactOwnerId: string;
 
   @IsOptional()
-  @IsMongoId()
+  @Transform(toMongoObjectId, { toClassOnly: true })
   @ApiProperty({
     example: '651bdf53beeb02bc627d6804',
   })
   contactId: string;
 
   @IsOptional()
-  @IsMongoId()
   @ApiProperty({
     type: String,
     isArray: true,

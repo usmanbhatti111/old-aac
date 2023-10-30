@@ -5,7 +5,7 @@ import { IdDto, PaginationDto } from '../common';
 export interface IDealPipeline {
   name: string;
   isDefault?: boolean;
-  stages?: [StageDto];
+  stages?: string[];
   createdAt?: Date;
   updatedAt?: Date;
   deletedAt?: Date;
@@ -16,6 +16,7 @@ export interface IDealPipeline {
 }
 
 export class StageDto {
+  id?: string;
   @ApiProperty({
     example: 'Follow-up',
   })
@@ -24,7 +25,7 @@ export class StageDto {
   @ApiProperty({
     example: 60,
   })
-  probability: Number;
+  probability: number;
 }
 export class CreateDealPipelineDto implements IDealPipeline {
   @ApiProperty({
@@ -37,10 +38,11 @@ export class CreateDealPipelineDto implements IDealPipeline {
   })
   isDefault?: boolean;
 
+  stages?: string[];
   @ApiProperty({
     type: [StageDto],
   })
-  stages?: [StageDto];
+  dealStages?: StageDto[];
 
   createdBy?: string;
 }

@@ -38,8 +38,8 @@ import {
   PostResponseDto,
 } from '@shared/dto';
 import { firstValueFrom } from 'rxjs';
-import { Auth } from '../decorators/auth.decorator';
-import { AppRequest } from '../shared/interface/request.interface';
+import { Auth } from '../../decorators/auth.decorator';
+import { AppRequest } from '../../shared/interface/request.interface';
 
 @ApiTags(API_TAGS.PLAN)
 @Controller(CONTROLLERS.PLAN)
