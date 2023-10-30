@@ -250,11 +250,11 @@ export enum EContactMode {
 
 // Deal Won probability map
 export enum EDealProbabilityStage {
-  'NEW' = 0,
-  'FOLLOW UP' = 20,
-  'UNDER REVIEW' = 40,
-  'DEMO' = 60,
-  'NEGOTIATION' = 80,
+  'NEW' = 20,
+  'FOLLOW UP' = 40,
+  'UNDER REVIEW' = 60,
+  'DEMO' = 80,
+  'NEGOTIATION' = 90,
   'WON' = 100,
   'LOW' = 0,
 }
