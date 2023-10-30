@@ -3,11 +3,17 @@ import { RpcException } from '@nestjs/microservices';
 import { DealsRepository, LifecycleStagesRepository } from '@shared';
 import {
   EDealProbabilityStage,
+  EIsDeletedStatus,
   MODEL,
   ResponseMessage,
   successResponse,
 } from '@shared/constants';
-import { CreateDealDto, GetDealsListViewDto, UpdateDealDto } from '@shared/dto';
+import {
+  CreateDealDto,
+  DeleteDealsDto,
+  GetDealsListViewDto,
+  UpdateDealDto,
+} from '@shared/dto';
 import dayjs from 'dayjs';
 
 @Injectable()
@@ -65,7 +71,11 @@ export class DealsService {
         }
       }
 
-      const filter = { _id: id, isDeleted: false, createdBy: updatedBy };
+      const filter = {
+        _id: id,
+        isDeleted: EIsDeletedStatus.ACTIVE,
+        createdBy: updatedBy,
+      };
 
       const res = await this.dealsRepository.findOneAndUpdate(filter, payload);
 
@@ -79,7 +89,10 @@ export class DealsService {
     try {
       const { userId } = payload;
 
-      const filterQuery = { isDeleted: false, createdBy: userId };
+      const filterQuery = {
+        isDeleted: EIsDeletedStatus.ACTIVE,
+        createdBy: userId,
+      };
 
       if (payload?.dealPiplineId) {
         filterQuery['dealPiplineId'] = payload.dealPiplineId;
@@ -221,6 +234,36 @@ export class DealsService {
         ResponseMessage.SUCCESS,
         res
       );
+
+      return response;
+    } catch (error) {
+      throw new RpcException(error);
+    }
+  }
+
+  async deleteDeals(payload: DeleteDealsDto) {
+    try {
+      const ids = payload?.ids?.split(',');
+
+      const filterQuery = { _id: { $in: ids }, createdBy: payload.deletedBy };
+      const updates = {
+        isDeleted: EIsDeletedStatus.SOFT_DELETED,
+        deletedBy: payload?.deletedBy,
+        deletedAt: new Date(),
+      };
+
+      const res = await this.dealsRepository.updateMany(filterQuery, updates);
+
+      let message: string;
+      if (ids.length === res.modifiedCount) {
+        message = `${ids.length > 1 ? 'Records' : 'Record'} has been Deleted`;
+      } else {
+        message = `${res.modifiedCount} ${
+          res.modifiedCount > 1 ? 'Records' : 'Record'
+        } has been deleted outoff ${ids.length}`;
+      }
+
+      const response = successResponse(HttpStatus.OK, message);
 
       return response;
     } catch (error) {

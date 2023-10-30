@@ -259,6 +259,7 @@ export const API_ENDPOINTS = {
       CREATE_DEAL: '/',
       UPDATE_DEAL: '/:id',
       GET_DEALS_LIST_VIEW: 'get-deals-list-view',
+      DELTE_DEALS: '/:ids',
     },
   },
 };

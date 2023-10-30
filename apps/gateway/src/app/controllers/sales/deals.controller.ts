@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Inject,
   Param,
@@ -26,6 +27,7 @@ import {
 import {
   CreateDealDto,
   CreateDealResponseDto,
+  DeleteDealsDto,
   GetDealsListViewDto,
   GetDealsListViewResponseDto,
   IdDto,
@@ -93,6 +95,21 @@ export class DealsController {
         RMQ_MESSAGES.SALES.DEALS.GET_DEALS_LIST_VIEW,
         payload
       )
+    );
+
+    return response;
+  }
+
+  @Auth(true)
+  @Delete(API_ENDPOINTS.SALES.DEALS.DELTE_DEALS)
+  public async deleteNewsAndEvents(
+    @Req() request: AppRequest,
+    @Param() payload: DeleteDealsDto
+  ): Promise<any> {
+    payload.deletedBy = request?.user?._id;
+
+    const response = await firstValueFrom(
+      this.orgAdminService.send(RMQ_MESSAGES.SALES.DEALS.DELTE_DEALS, payload)
     );
 
     return response;

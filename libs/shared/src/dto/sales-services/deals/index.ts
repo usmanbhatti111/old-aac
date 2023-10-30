@@ -4,3 +4,4 @@ export * from './update-deal.dto';
 export * from './update-deal-response.dto';
 export * from './get-deals-list-view.dto';
 export * from './get-deals-list-view-response.dto';
+export * from './delete-deals.dto';

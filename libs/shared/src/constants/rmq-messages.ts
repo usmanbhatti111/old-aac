@@ -278,6 +278,7 @@ export const RMQ_MESSAGES = {
       CREATE_DEAL: 'create-deal',
       UPDATE_DEAL: 'update-deal',
       GET_DEALS_LIST_VIEW: 'get-deals-list-view',
+      DELTE_DEALS: 'delete-deals',
     },
   },
 };

@@ -1,7 +1,12 @@
 import { Controller } from '@nestjs/common';
 import { MessagePattern, Payload } from '@nestjs/microservices';
 import { RMQ_MESSAGES } from '@shared/constants';
-import { CreateDealDto, GetDealsListViewDto, UpdateDealDto } from '@shared/dto';
+import {
+  CreateDealDto,
+  DeleteDealsDto,
+  GetDealsListViewDto,
+  UpdateDealDto,
+} from '@shared/dto';
 import { DealsService } from '../services/deals.service';
 
 @Controller()
@@ -21,5 +26,10 @@ export class DealsController {
   @MessagePattern(RMQ_MESSAGES.SALES.DEALS.GET_DEALS_LIST_VIEW)
   async getDealsListVew(@Payload() payload: GetDealsListViewDto) {
     return this.dealsService.getDealsListVew(payload);
+  }
+
+  @MessagePattern(RMQ_MESSAGES.SALES.DEALS.DELTE_DEALS)
+  async deleteDeals(@Payload() payload: DeleteDealsDto) {
+    return this.dealsService.deleteDeals(payload);
   }
 }
