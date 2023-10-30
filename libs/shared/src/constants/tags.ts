@@ -26,7 +26,10 @@ export const API_TAGS = {
   LOGS: 'Requests log',
   QUICK_LINKS: 'Quick Links',
   INVOICES: 'Invoices',
-  CONTACT: 'contact',
+  CONTACT: 'Contact',
+  CONTACT_NOTE: 'Contact Note',
+  CONTACT_CALL: 'Contact Call',
+  CONTACT_MEETING: 'Contact Meeting',
   CONTACT_STATUS: 'contact-status',
   PRODUCT_CATEGORIES: 'Product Categories',
   LIFECYCLE_STAGES: 'Lifecycle Stages',
@@ -34,4 +37,6 @@ export const API_TAGS = {
   SALES_PRODUCT: 'Sales product',
   ATTACHMENT: 'Attachment',
   ACTIVITY_LOGS: 'Activity Logs',
+  DEALS: 'Deals',
+  DEAL_NOTE: 'Deal notes',
 };

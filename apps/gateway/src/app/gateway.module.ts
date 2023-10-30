@@ -9,7 +9,7 @@ import { WinstonConfigService } from './config/winston.config';
 import { AuthController } from './controllers/user-account/auth.controller';
 import { RoleController } from './controllers/user-account/role.controller';
 import { HealthController } from './controllers/healthcheck.controller';
-import { PlanController } from './controllers/plan.controller';
+import { PlanController } from './controllers/super-admin/plan.controller';
 import { OrganizationController } from './controllers/organization/organization.controller';
 import { OrganizationCompanyAccountController } from './controllers/organization/organization-company-account.controller';
 import { TaskController } from './controllers/tasks/task.controller';
@@ -36,7 +36,7 @@ import { TaskManagementController } from './controllers/tasks/task-management.co
 // import { ActivityLogMiddleware } from './middleware/activity-log.middleware';
 import { RequestLogController } from './controllers/log/request-log.controller';
 import { SubscriptionController } from './controllers/org-admin/subscription.controller';
-import { ContactController } from './controllers/common-features/contact.controller';
+import { ContactController } from './controllers/common-features/contact/contact.controller';
 import { DocumentsController } from './controllers/common-features/documents.controller';
 import { ContractController } from './controllers/assets/contract.controller';
 import { ProductCategoriesController } from './controllers/org-admin/product-category.controller';
@@ -49,6 +49,11 @@ import { DealPipelineController } from './controllers/sales-settings/deal-pipeli
 import { SalesProductController } from './controllers/sales-settings/sales-product.controller';
 import { AttachmentController } from './controllers/common-features/attachment.controller';
 import { ActivityLogController } from './controllers/common-features/activity-log.controller';
+import { ContactNoteController } from './controllers/common-features/contact/contact-note.controller';
+import { ContactCallController } from './controllers/common-features/contact/contact-call.controller';
+import { ContactMeetingController } from './controllers/common-features/contact/contact-meeting.controller';
+import { DealsController } from './controllers/sales/deals.controller';
+import { NoteController } from './controllers/sales-settings/note.controller';
 
 @Module({
   imports: [
@@ -88,6 +93,9 @@ import { ActivityLogController } from './controllers/common-features/activity-lo
     RequestLogController,
     SubscriptionController,
     ContactController,
+    ContactNoteController,
+    ContactCallController,
+    ContactMeetingController,
     ContactStatusController,
     DocumentsController,
     ContractController,
@@ -98,6 +106,8 @@ import { ActivityLogController } from './controllers/common-features/activity-lo
     SalesProductController,
     AttachmentController,
     ActivityLogController,
+    DealsController,
+    NoteController,
   ],
   providers: [
     // Exceptions Filter

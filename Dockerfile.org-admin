@@ -1,0 +1,17 @@
+FROM node:18-alpine
+
+RUN mkdir -p /var/www/org-admin
+WORKDIR /var/www/org-admin
+ADD . /var/www/org-admin
+
+RUN npm install -g pnpm
+
+RUN pnpm config set network-timeout 600000 -g
+
+RUN pnpm install 
+
+RUN pnpm nx reset
+
+RUN pnpm exec nx build org-admin
+
+CMD ["node", "./dist/apps/org-admin/main.js"]

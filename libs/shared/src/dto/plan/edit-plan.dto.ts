@@ -1,12 +1,14 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Type } from 'class-transformer';
-import { IsMongoId, IsNumber, IsOptional, IsString } from 'class-validator';
+import { Transform, Type } from 'class-transformer';
+import { IsNumber, IsOptional, IsString } from 'class-validator';
 import { ProductFeatureDto } from './product-feature.dto';
 import { ProductModuleDto } from './product-module.dto';
+import { toMongoObjectId } from '../../functions';
 
 export class EditPlanDto {
   @ApiProperty()
   @IsOptional()
+  @Transform(toMongoObjectId, { toClassOnly: true })
   productId: string;
 
   @ApiProperty({
@@ -19,7 +21,7 @@ export class EditPlanDto {
   @ApiProperty({
     required: true,
   })
-  @IsMongoId()
+  @Transform(toMongoObjectId, { toClassOnly: true })
   @IsOptional()
   planTypeId: string;
 

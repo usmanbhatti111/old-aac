@@ -1,6 +1,6 @@
 import { HttpStatus, Injectable } from '@nestjs/common';
 import { RpcException } from '@nestjs/microservices';
-import { DealPipelineRepository } from '@shared';
+import { DealPipelineRepository, LifecycleStagesRepository } from '@shared';
 import { ResponseMessage, successResponse } from '@shared/constants';
 import {
   CreateDealPipelineDto,
@@ -12,10 +12,24 @@ import {
 
 @Injectable()
 export class DealPipelineService {
-  constructor(private dealPipelineRepository: DealPipelineRepository) {}
+  constructor(
+    private dealPipelineRepository: DealPipelineRepository,
+    private stagesRepository: LifecycleStagesRepository
+  ) {}
 
   async createDealPipeline(payload: CreateDealPipelineDto) {
     try {
+      //add stages and saves their ids in deal pipeline
+      const stages = payload.dealStages;
+      delete payload.dealStages;
+
+      const stageIds: string[] = [];
+      for (const stage of stages) {
+        const createdStage = await this.stagesRepository.create(stage);
+        stageIds.push(createdStage._id.toString());
+      }
+      payload.stages = stageIds;
+
       const res = await this.dealPipelineRepository.create(payload);
       return successResponse(HttpStatus.CREATED, ResponseMessage.CREATED, res);
     } catch (error) {
@@ -41,11 +55,21 @@ export class DealPipelineService {
       limit = limit ? limit : 10;
       page = page ? page : 1;
       const offset = limit * (page - 1);
-
+      const pipelines: any = [
+        {
+          $lookup: {
+            from: 'lifecycleStages',
+            localField: 'stages',
+            foreignField: '_id',
+            as: 'stages',
+          },
+        },
+      ];
       const res = await this.dealPipelineRepository.paginate({
         filterQuery,
         offset,
         limit,
+        pipelines,
       });
 
       const response = successResponse(
@@ -85,7 +109,33 @@ export class DealPipelineService {
       const { id } = payload;
 
       const filter = { _id: id };
+      const stages = payload.dealStages;
+      delete payload.dealStages;
 
+      const stageIds: string[] = [];
+      for (const stage of stages) {
+        if (stage.id) {
+          //if id exists then update
+          const createdStage = await this.stagesRepository.findOneAndUpdate(
+            { _id: stage.id },
+            stage
+          );
+          stageIds.push(createdStage._id.toString());
+        } else {
+          const createdStage = await this.stagesRepository.create(stage);
+          stageIds.push(createdStage._id.toString());
+        }
+      }
+      //delete the stages
+      const pipelineRes = await this.dealPipelineRepository.findOne(filter);
+      if (pipelineRes && pipelineRes?.stages) {
+        for (const stage of pipelineRes.stages) {
+          if (stage in stageIds) {
+            await this.stagesRepository.delete({ _id: stage });
+          }
+        }
+      }
+      payload.stages = stageIds;
       const res = await this.dealPipelineRepository.findOneAndUpdate(
         filter,
         payload

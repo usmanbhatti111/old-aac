@@ -1,0 +1,17 @@
+FROM node:18-alpine
+
+RUN mkdir -p /var/www/cron
+WORKDIR /var/www/cron
+ADD . /var/www/cron
+
+RUN npm install -g pnpm
+
+RUN pnpm config set network-timeout 600000 -g
+
+RUN pnpm install
+
+RUN pnpm nx reset
+
+RUN pnpm exec nx build cron
+
+CMD ["node", "./dist/apps/cron/main.js"]

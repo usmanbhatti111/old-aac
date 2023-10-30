@@ -150,6 +150,15 @@ export enum OutcomeEnum {
   NOT_INTERESTED = 'Not interested',
   NOT_ABLE_TO_REACH = 'Not able to reach',
 }
+
+export enum ContactAssociationEnum {
+  ATTACHMENTS = 'attachments',
+  DEALS = 'deals',
+  TICKETS = 'tickets',
+  COMPANIES = 'companies',
+  PLAYBOOKS = 'playbooks',
+}
+
 export enum AssetSoftwareCreatedAtEnum {
   NONE = 'NONE',
   ALL_TIME = 'ALL_TIME',
@@ -218,4 +227,34 @@ export enum EExportFile {
 export enum ECardTypes {
   MASTER = 'MASTER',
   VISA = 'VISA',
+}
+
+export enum EBillingFrequency {
+  MONTHLY = 'monthly',
+  QUARTERLY = 'quarterly',
+  SEMI_ANNUALLY = 'semi annually',
+  ANNUALLY = 'annually',
+  TWO_YEARS = 'two years',
+}
+
+export enum EDealType {
+  NEW = 'new business',
+  EXISITING = 'existing business',
+}
+
+export enum EContactMode {
+  EMAIL = 'email',
+  CALL = 'call',
+  MEETING = 'meeting',
+}
+
+// Deal Won probability map
+export enum EDealProbabilityStage {
+  'NEW' = 20,
+  'FOLLOW UP' = 40,
+  'UNDER REVIEW' = 60,
+  'DEMO' = 80,
+  'NEGOTIATION' = 90,
+  'WON' = 100,
+  'LOW' = 0,
 }
