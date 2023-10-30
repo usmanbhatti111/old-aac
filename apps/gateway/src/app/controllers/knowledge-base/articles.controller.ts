@@ -13,7 +13,7 @@ import { firstValueFrom } from 'rxjs';
 import { Auth } from '../../decorators/auth.decorator';
 import { AppRequest } from '../../shared/interface/request.interface';
 @ApiBearerAuth()
-@ApiTags(API_TAGS.KNOWLEDGE_BASE)
+@ApiTags(API_TAGS.ARTICLES)
 @Controller(CONTROLLERS.ARTICLES)
 export class ArticlesController {
   constructor(
