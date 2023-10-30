@@ -1,7 +1,7 @@
 import { Controller } from '@nestjs/common';
 import { MessagePattern, Payload } from '@nestjs/microservices';
-import { User } from '@shared';
 import { RMQ_MESSAGES } from '@shared/constants';
+import { CreateUserDto, PaginationDto } from '@shared/dto';
 import { UserService } from '../services/user.service';
 
 @Controller()
@@ -9,8 +9,13 @@ export class UserController {
   constructor(private readonly userService: UserService) {}
 
   @MessagePattern(RMQ_MESSAGES.USER.CREATE)
-  createNewUser(@Payload() payload: User) {
+  createNewUser(@Payload() payload: CreateUserDto) {
     return this.userService.create(payload);
+  }
+
+  @MessagePattern(RMQ_MESSAGES.USER.GET_LIST)
+  listUsers(@Payload() payload: PaginationDto) {
+    return this.userService.listUsers(payload);
   }
 
   @MessagePattern(RMQ_MESSAGES.USER.FIND_BY_EMAIL)

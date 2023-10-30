@@ -8,7 +8,7 @@ import {
   Req,
 } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
-import { ApiBearerAuth, ApiQuery, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import {
   API_ENDPOINTS,
   API_TAGS,
@@ -16,7 +16,7 @@ import {
   RMQ_MESSAGES,
   SERVICES,
 } from '@shared/constants';
-import { CreateUserDto } from '@shared/dto';
+import { CreateUserDto, PaginationDto } from '@shared/dto';
 import { firstValueFrom } from 'rxjs';
 import { Auth } from '../../decorators/auth.decorator';
 import { AppRequest } from '../../shared/interface/request.interface';
@@ -29,7 +29,7 @@ export class UserController {
 
   @Auth(true)
   @Post(API_ENDPOINTS.USER.CREATE)
-  @ApiQuery({ description: 'Create users as Super Admin' })
+  @ApiOperation({ summary: 'Create users as Super Admin' })
   public async createUser(
     @Body() body: CreateUserDto,
     @Req() request: AppRequest
@@ -47,18 +47,11 @@ export class UserController {
   }
 
   @Auth(true)
-  @Get('')
-  @ApiQuery({ name: 'email', type: String })
-  public async createRole(
-    @Query('email') email: string,
-    @Req() request: AppRequest
-  ) {
-    const { user } = request;
-
+  @Get(API_ENDPOINTS.USER.GET)
+  public async createRole(@Query() query: PaginationDto) {
     const response = await firstValueFrom(
-      this.userServiceClient.send(RMQ_MESSAGES.USER.FIND_BY_EMAIL, {
-        email,
-        user,
+      this.userServiceClient.send(RMQ_MESSAGES.USER.GET_LIST, {
+        ...query,
       })
     );
 

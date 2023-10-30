@@ -12,6 +12,7 @@ export const RMQ_MESSAGES = {
     SEARCH_ORG_BY_CRN: 'search-org-by-crn',
   },
   USER: {
+    GET_LIST: 'get-users',
     CREATE: 'create-user',
     FIND_BY_EMAIL: 'find-user-by-email',
     FIND_BY_COGNITO: 'find-user-by-cognito',

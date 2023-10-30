@@ -1,4 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { Transform } from 'class-transformer';
 import { IsNotEmpty, IsOptional } from 'class-validator';
 import { User } from '../../schema/user-account';
 
@@ -59,7 +60,8 @@ export class CreateUserDto extends User {
 
   @ApiProperty({ type: String })
   @IsOptional()
-  crn?: string;
+  @Transform((val) => Number(val))
+  crn?: number;
 
   @ApiProperty({ type: String })
   @IsOptional()
