@@ -202,6 +202,11 @@ export const API_ENDPOINTS = {
       GET_CONTRACT: 'get-contract',
       GET_CONTRACTS: 'get-contracts',
     },
+    KNOWLEDGE_BASE: {
+      ARTICLES: {
+        WRITE: 'write-article',
+      },
+    },
   },
   PRODUCT_FEATURES: {
     ADD_PRODUCT_FEATURE: '/',

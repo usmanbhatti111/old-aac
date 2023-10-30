@@ -49,6 +49,7 @@ import {
   ContactCallRepository,
   ActivityLogRepository,
   DashboardRepository,
+  ArticlesRepository,
   ContactMeetingRepository,
   DealsRepository,
   NoteRepository,
@@ -135,6 +136,7 @@ import { DownloadService, S3Service } from './services';
     S3Service,
     DownloadService,
     ActivityLogRepository,
+    ArticlesRepository
   ],
   exports: [
     SharedService,
@@ -191,6 +193,7 @@ import { DownloadService, S3Service } from './services';
     ContactCallRepository,
     LifecycleStagesRepository,
     ActivityLogRepository,
+    ArticlesRepository,
     ContactMeetingRepository,
     DealPipelineRepository,
     SalesProductRepository,

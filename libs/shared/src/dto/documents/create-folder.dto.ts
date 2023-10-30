@@ -1,5 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsMongoId, IsNotEmpty, IsOptional, IsString } from 'class-validator';
+import { IsEnum, IsMongoId, IsNotEmpty, IsOptional, IsString } from 'class-validator';
+import { EFolderType } from '../../constants/enums';
 
 export class CreateFolderDto {
   @ApiProperty({
@@ -17,6 +18,15 @@ export class CreateFolderDto {
   @IsMongoId()
   @IsOptional()
   parentFolderId: string;
+
+  @ApiProperty({
+    required: false,
+    example: '',
+    enum: EFolderType,
+  })
+  @IsEnum(EFolderType)
+  @IsOptional()
+  type: string;
 
   createdBy?: string;
 

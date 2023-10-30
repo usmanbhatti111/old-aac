@@ -90,6 +90,8 @@ import {
   OrganizationCompanyAccountSchema,
   ActivityLog,
   ActivityLogSchema,
+  Articles,
+  ArticlesSchema,
   Deals,
   DealsSchema,
   Note,
@@ -319,6 +321,10 @@ export const DbModels = [
   {
     name: ActivityLog.name,
     schema: ActivityLogSchema,
+  },
+  {
+    name: Articles.name,
+    schema: ArticlesSchema,
   },
   {
     name: Deals.name,

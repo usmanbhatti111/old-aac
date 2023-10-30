@@ -216,6 +216,11 @@ export const RMQ_MESSAGES = {
       RENEW_EXTEND_CONTRACT: 'renew-extend-contract',
       GET_CONTRACTS: 'get-contracts',
     },
+    KNOWLEDGE_BASE: {
+      ARTICLES: {
+        WRITE: 'write-article',
+      },
+    },
   },
 
   NEWS_AND_EVENTS: {

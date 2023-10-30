@@ -229,6 +229,14 @@ export enum ECardTypes {
   VISA = 'VISA',
 }
 
+export enum EFolderType {
+  KNOWLEDGE_BASE = 'KNOWLEDGE_BASE',
+}
+
+export enum EArticlesStatus {
+  DRAFT = 'DRAFT',
+  PUBLISHED = 'PUBLISHED',
+}
 export enum EBillingFrequency {
   MONTHLY = 'monthly',
   QUARTERLY = 'quarterly',

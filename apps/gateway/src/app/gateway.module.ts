@@ -49,6 +49,7 @@ import { DealPipelineController } from './controllers/sales-settings/deal-pipeli
 import { SalesProductController } from './controllers/sales-settings/sales-product.controller';
 import { AttachmentController } from './controllers/common-features/attachment.controller';
 import { ActivityLogController } from './controllers/common-features/activity-log.controller';
+import { ArticlesController } from './controllers/knowledge-base/articles.controller';
 import { ContactNoteController } from './controllers/common-features/contact/contact-note.controller';
 import { ContactCallController } from './controllers/common-features/contact/contact-call.controller';
 import { ContactMeetingController } from './controllers/common-features/contact/contact-meeting.controller';
@@ -106,6 +107,7 @@ import { NoteController } from './controllers/sales-settings/note.controller';
     SalesProductController,
     AttachmentController,
     ActivityLogController,
+    ArticlesController,
     DealsController,
     NoteController,
   ],
