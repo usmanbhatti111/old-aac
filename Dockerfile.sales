@@ -4,10 +4,6 @@ RUN mkdir -p /var/www/sales
 WORKDIR /var/www/sales
 ADD . /var/www/sales
 
-RUN npm config set fetch-retry-maxtimeout 600000 -g
-
-RUN npm install
-
-RUN npm exec nx build sales
+RUN npx nx build sales
 
 CMD ["node", "./dist/apps/sales/main.js"]

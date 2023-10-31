@@ -4,10 +4,6 @@ RUN mkdir -p /var/www/air-services
 WORKDIR /var/www/air-services
 ADD . /var/www/air-services
 
-RUN npm config set fetch-retry-maxtimeout 600000 -g
-
-RUN npm install
-
-RUN npm exec nx build air-services
+RUN npx nx build air-services
 
 CMD ["node", "./dist/apps/air-services/main.js"]

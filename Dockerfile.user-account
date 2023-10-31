@@ -4,10 +4,6 @@ RUN mkdir -p /var/www/user-account
 WORKDIR /var/www/user-account
 ADD . /var/www/user-account
 
-RUN npm config set fetch-retry-maxtimeout 600000 -g
-
-RUN npm install
-
-RUN npm exec nx build user-account
+RUN npx nx build user-account
 
 CMD ["node", "./dist/apps/user-account/main.js"]

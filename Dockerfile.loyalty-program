@@ -4,10 +4,6 @@ RUN mkdir -p /var/www/loyalty-program
 WORKDIR /var/www/loyalty-program
 ADD . /var/www/loyalty-program
 
-RUN npm config set fetch-retry-maxtimeout 600000 -g
-
-RUN npm install
-
-RUN npm exec nx build loyalty-program
+RUN npx nx build loyalty-program
 
 CMD ["node", "./dist/apps/loyalty-program/main.js"]

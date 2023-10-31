@@ -4,10 +4,6 @@ RUN mkdir -p /var/www/super-admin
 WORKDIR /var/www/super-admin
 ADD . /var/www/super-admin
 
-RUN npm config set fetch-retry-maxtimeout 600000 -g
-
-RUN npm install
-
-RUN npm exec nx build super-admin
+RUN npx nx build super-admin
 
 CMD ["node", "./dist/apps/super-admin/main.js"]
