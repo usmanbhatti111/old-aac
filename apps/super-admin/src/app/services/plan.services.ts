@@ -133,7 +133,9 @@ export class PlanService {
 
       if (payload.productId) {
         planProductFilter = {
-          $elemMatch: { productId: { $eq: payload.productId } },
+          $elemMatch: {
+            productId: { $eq: { $toObjectId: payload.productId } },
+          },
         };
       }
 

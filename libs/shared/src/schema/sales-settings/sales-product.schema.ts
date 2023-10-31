@@ -34,12 +34,6 @@ export class SalesProduct extends AbstractSchema implements ISalesProduct {
   name: string;
 
   @Prop({ type: Date, required: false })
-  createdAt?: Date;
-
-  @Prop({ type: Date, required: false })
-  updatedAt?: Date;
-
-  @Prop({ type: Date, required: false })
   deletedAt?: Date;
 
   @Prop({ type: SchemaTypes.ObjectId, ref: 'users' })

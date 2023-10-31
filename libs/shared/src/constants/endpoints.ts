@@ -8,6 +8,7 @@ export const API_ENDPOINTS = {
     SIGNUP: 'signup',
     SIGNIN: 'signin',
     VERIFY_TOKEN: 'verify-token',
+    SEARCH_ORG: 'search-company',
   },
   USER: {
     GET: '/',
@@ -34,9 +35,13 @@ export const API_ENDPOINTS = {
   CONTACT: {
     CREATE_CONTACT: '/',
     CONTACT_LIST: '/',
+    CONTACT_DELETED_LIST: 'contact-deleted-list/',
+    CONTACT_ASSOCIATIONS: 'contact-associations/',
     CONTACT: '/:contactId',
     EDIT_CONTACT: '/:contactId',
     DELETE_CONTACT: '/:contactId',
+    RESTORE_CONTACT: 'restore/:contactId',
+    CONTACT_TASKS: 'contact-tasks/',
     ASSIGN_CONTACT_OWNER: 'assign-contact-owner/:contactId',
     CONTACT_NOTE: {
       CREATE_CONTACT_NOTE: 'note/',
@@ -51,6 +56,19 @@ export const API_ENDPOINTS = {
       CONTACT_CALL: 'call/:contactCallId',
       EDIT_CONTACT_CALL: 'call/:contactCallId',
       DELETE_CONTACT_CALL: 'call/:contactCallId',
+      RESCHEDULE_CONTACT_CALL: 'call/rechedule/:contactCallId',
+      RESET_OUTCOME_CONTACT_CALL: 'call/reset-outcome/:contactCallId',
+      CONTACT_CALL_STATUS: 'call/status/:contactCallId',
+    },
+    CONTACT_MEETING: {
+      CREATE_CONTACT_MEETING: 'meeting/',
+      CONTACT_MEETING_LIST: 'meeting/',
+      CONTACT_MEETING: 'meeting/:contactMeetingId',
+      EDIT_CONTACT_MEETING: 'meeting/:contactMeetingId',
+      DELETE_CONTACT_MEETING: 'meeting/:contactMeetingId',
+      RESCHEDULE_CONTACT_MEETING: 'meeting/rechedule/:contactMeetingId',
+      RESET_OUTCOME_CONTACT_MEETING: 'meeting/reset-outcome/:contactMeetingId',
+      CONTACT_MEETING_STATUS: 'meeting/status/:contactMeetingId',
     },
   },
   ORGANIZATION: {
@@ -132,11 +150,13 @@ export const API_ENDPOINTS = {
       DELETE_INVENTORY: '/:id',
       PURCHASEORDER: 'purchaseorder',
       GET_PURCHASEORDER: 'purchaseorder/:id',
+      GET_PURCHASEORDER_RECIEVED: 'purchaseorder-recieved',
       GET_PURCHASEORDERASSOCIATE: 'purchaseorderassociate/:id',
       GET_PURCHASEORDERLIST: 'purchaseorderlist',
       DELETE_PURCHASEORDER: 'purchaseorder/:id',
       UPDATE_PURCHASEORDER: 'purchaseorder/:id',
       ADD_ASSOCIATE_ORDER: 'add-associate-order/:id',
+      ADD_APPROVER_ORDER: 'add-approver-order/:id',
       DELETE_ASSOCIATE_ORDER: 'delete-associate-order/:id',
       ADD_SOFTWARE: 'add_software',
       ASSOCIATE_INVENTORY_LIST: 'associate-inventory-list',
@@ -149,6 +169,12 @@ export const API_ENDPOINTS = {
       SEARCH_INVENTORY: 'search-inventory',
       DELETE_SOFTWARE_DEVICE: 'software-device/:id',
       GET_INVENTORY_SOFTWARE_DETAILS: 'get-inventory-software/:id',
+      ADD_SOFTWARE_USERS: 'add-software-users',
+      SOFTWARE_USERS_DETAILS: 'software-users-details/:id',
+      SOFTWARE_USERS_DOWNLOAD_FILE: 'software-users-download-file',
+      SOFTWARE_ALLOCATE_CONTRACT: 'software-allocate-contract',
+      SOFTWARE_DEALLOCATE_CONTRACT: 'software-deallocate-contract',
+      SOFTWARE_USERS_REMOVE: 'software-users-remove/:id',
     },
     TASK: {
       ADD_TASK: '/',
@@ -171,6 +197,9 @@ export const API_ENDPOINTS = {
       DELETE_TASK: 'management/:id',
       TASK_ACTIVITY_LIST: 'activity',
     },
+    WORK_LOAD_MANAGEMENT: {
+      WORK_LOAD_LIST: 'workload-management',
+    },
     EXPENSE: {
       ADD_EXPENSE: 'add-expense',
       GET_EXPENSE: 'get-expense',
@@ -178,11 +207,18 @@ export const API_ENDPOINTS = {
 
     CONTRACT: {
       ADD_CONTRACT: 'add-contract',
+      ADD_CONTRACT_ASSET: 'add-contract-asset/:id',
+      DELETE_CONTRACT_ASSET: 'delete-contract-asset/:id',
       DELETE_CONTRACT: '/:id',
       UPDATE_CONTRACT: 'update/:id',
       RENEW_EXTEND_CONTRACT: 'renew-extend/:id',
       GET_CONTRACT: 'get-contract',
       GET_CONTRACTS: 'get-contracts',
+    },
+    KNOWLEDGE_BASE: {
+      ARTICLES: {
+        WRITE: 'write-article',
+      },
     },
   },
   PRODUCT_FEATURES: {
@@ -265,5 +301,20 @@ export const API_ENDPOINTS = {
 
   ACTIVITY_LOGS: {
     GET_ACTIVITY_LOG: '/',
+  },
+  SALES: {
+    DEALS: {
+      CREATE_DEAL: '/',
+      UPDATE_DEAL: '/:id',
+      GET_DEALS_LIST_VIEW: 'get-deals-list-view',
+    },
+  },
+
+  DEAL_NOTE: {
+    CREATE_DEAL_NOTE: '/',
+    GET_DEAL_NOTES: '/',
+    GET_DEAL_NOTE: '/:id',
+    UPDATE_DEAL_NOTE: '/:id',
+    DELETE_DEAL_NOTE: '/:id',
   },
 };

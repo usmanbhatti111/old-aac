@@ -8,6 +8,8 @@ export const RMQ_MESSAGES = {
     SIGNUP: 'auth-signup',
     SIGNIN: 'auth-signin',
     VERIFY_TOKEN: 'verify-token',
+    SEARCH_ORG_BY_NAME: 'search-org-by-name',
+    SEARCH_ORG_BY_CRN: 'search-org-by-crn',
   },
   USER: {
     CREATE: 'create-user',
@@ -86,9 +88,13 @@ export const RMQ_MESSAGES = {
   CONTACT: {
     CREATE_CONTACT: 'create-contact',
     CONTACT_LIST: 'contact-list',
+    CONTACT_DELETED_LIST: 'contact-deleted-list',
+    CONTACT_ASSOCIATIONS: 'contact-associations',
+    CONTACT_TASKS: 'contact-tasks',
     EDIT_CONTACT: 'edit-contact',
     CONTACT: 'contact',
     DELETE_CONTACT: 'delete-contact',
+    RESTORE_CONTACT: 'restore-contact',
     ASSIGN_CONTACT_OWNER: 'assign-contact-owner',
     CONTACT_NOTE: {
       CREATE_CONTACT_NOTE: 'create-contact-note',
@@ -103,6 +109,19 @@ export const RMQ_MESSAGES = {
       CONTACT_CALL: 'contact-call',
       EDIT_CONTACT_CALL: 'edit-contact-call',
       DELETE_CONTACT_CALL: 'delete-contact-call',
+      RESCHEDULE_CONTACT_CALL: 'rechedule-contact-call',
+      RESET_OUTCOME_CONTACT_CALL: 'reset-contact-call-outcome',
+      CONTACT_CALL_STATUS: 'contact-call-status',
+    },
+    CONTACT_MEETING: {
+      CREATE_CONTACT_MEETING: 'create-contact-meeting',
+      CONTACT_MEETING_LIST: 'contact-meeting-list',
+      CONTACT_MEETING: 'contact-meeting',
+      EDIT_CONTACT_MEETING: 'edit-contact-meeting',
+      DELETE_CONTACT_MEETING: 'delete-contact-meeting',
+      RESCHEDULE_CONTACT_MEETING: 'rechedule-contact-meeting',
+      RESET_OUTCOME_CONTACT_MEETING: 'reset-contact-meeting-outcome',
+      CONTACT_MEETING_STATUS: 'contact-meeting-status',
     },
   },
 
@@ -156,11 +175,13 @@ export const RMQ_MESSAGES = {
       DELETE_PURCHASEORDER: 'delete-purchaseorder',
       UPDATE_PURCHASEORDER: 'update-purchaseorder',
       ADD_ASSOCIATE_ORDER: 'add-associate-order',
+      ADD_APPROVER_ORDER: 'add-approver-order',
       ADD_SOFTWARE: 'add-software',
       ADD_SOFTWARE_DEVICE: 'add-software-device',
       GET_PURCHASEORDERLIST: 'get-purchaseorderlist',
       ASSOCIATE_INVENTORY_LIST: 'associate-inventory-list',
       GET_PURCHASEORDER: 'get-purchaseorder',
+      GET_PURCHASEORDER_RECIEVED: 'get-purchaseorder-recieved',
       EDIT_SOFTWARE: 'edit-software',
       DELETE_SOFTWARE: 'delete-software',
       GET_SOFTWARE: 'get-software',
@@ -170,7 +191,12 @@ export const RMQ_MESSAGES = {
       DELETE_SOFTWARE_DEVICE: 'delete-software-device',
       GET_INVENTORY_SOFTWARE_DETAILS: 'get-inventory-software-details',
       DELETE_ASSOCIATE_ORDER: 'delete-associate-order',
+      ADD_SOFTWARE_USERS: 'add-software-users',
+      SOFTWARE_USERS_DETAILS: 'software-users-details',
       GET_PURCHASEORDERASSOCIATE: 'get-purchaseorder-associate',
+      SOFTWARE_ALLOCATE_CONTRACT: 'software-allocate-contract',
+      SOFTWARE_DEALLOCATE_CONTRACT: 'software-deallocate-contract',
+      SOFTWARE_USERS_REMOVE: 'software-users-remove',
     },
     TASK: {
       ADD_TASK: 'add_task',
@@ -186,16 +212,26 @@ export const RMQ_MESSAGES = {
       DELETE_TASK: 'delete-task',
       TASK_ACTIVITY_LIST: 'task-activity',
     },
+    WORK_LOAD_MANAGEMENT: {
+      WORK_LOAD_LIST: 'workload-list',
+    },
     EXPENSE: {
       ADD_EXPENSE: 'add-expense',
       GET_EXPENSE: 'get-expense',
     },
     CONTRACT: {
       ADD_CONTRACT: 'add-contract',
+      ADD_CONTRACTS_ASSET: 'add-contract-asset',
+      DELETE_CONTRACTS_ASSET: 'delete-contract-asset',
       DELETE_CONTRACT: 'delete-contract',
       UPDATE_CONTRACT: 'update-contract',
       RENEW_EXTEND_CONTRACT: 'renew-extend-contract',
       GET_CONTRACTS: 'get-contracts',
+    },
+    KNOWLEDGE_BASE: {
+      ARTICLES: {
+        WRITE: 'write-article',
+      },
     },
   },
 
@@ -284,5 +320,20 @@ export const RMQ_MESSAGES = {
   ACTIVITY_LOGS: {
     CREATE_ACTIVITY_LOG: 'create-activity-log',
     GET_ACTIVITY_LOG: 'activity-logs',
+  },
+  SALES: {
+    DEALS: {
+      CREATE_DEAL: 'create-deal',
+      UPDATE_DEAL: 'update-deal',
+      GET_DEALS_LIST_VIEW: 'get-deals-list-view',
+    },
+  },
+
+  DEAL_NOTE: {
+    CREATE_DEAL_NOTE: 'create-deal-note',
+    GET_DEAL_NOTES: 'get-deal-notes',
+    GET_DEAL_NOTE: 'get-deal-note',
+    UPDATE_DEAL_NOTE: 'update-deal-note',
+    DELETE_DEAL_NOTE: 'delete-deal-note',
   },
 };

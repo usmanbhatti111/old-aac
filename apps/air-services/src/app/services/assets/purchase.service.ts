@@ -9,6 +9,8 @@ import {
   DeletePurchaseOrderDto,
   UpdatePurchaseOrderDto,
   IdDTO,
+  FilterPurchaseOrderRecievedDto,
+  AddPurchaseOrderApprover,
   FilterPurchaseOrderDto,
 } from '@shared/dto';
 
@@ -34,7 +36,6 @@ export class PurchaseOrderService {
       } else {
         payload.subTotal = 0;
       }
-
       const res = await this.purchaseRepository.create({ ...payload });
       return successResponse(HttpStatus.CREATED, 'Success', res);
     } catch (error) {
@@ -75,6 +76,7 @@ export class PurchaseOrderService {
       throw new RpcException(error);
     }
   }
+
   async getPurchaseOrderList(payload: FilterPurchaseOrderDto) {
     try {
       const {
@@ -164,6 +166,57 @@ export class PurchaseOrderService {
         data
       );
       return response;
+    } catch (error) {
+      throw new RpcException(error);
+    }
+  }
+
+  async addPurchaseOrderApprover(payload: {
+    dto: AddPurchaseOrderApprover;
+    userId: string;
+  }) {
+    try {
+      const { dto, userId } = payload;
+      const { id } = dto;
+      delete dto.id;
+      const Param = {
+        userId,
+        approvalStatus: dto.PurchaseApprovals[0].approvalStatus,
+        requestedapprId: dto.PurchaseApprovals[0].requestedapprId,
+      };
+      const data = await this.purchaseRepository.findOneAndUpdate(
+        { _id: id },
+        { $push: { PurchaseApprovals: Param } }
+      );
+      const response = successResponse(
+        HttpStatus.OK,
+        `PurchaseOrder Edit Successfully`,
+        data
+      );
+
+      return response;
+    } catch (error) {
+      throw new RpcException(error);
+    }
+  }
+  async getPurchaseOrderRecived(payload: FilterPurchaseOrderRecievedDto) {
+    try {
+      const { page, limit, status } = payload;
+
+      const filterQuery = {};
+      const pipeline = [];
+      if (status) {
+        filterQuery['status'] = status;
+      }
+      const res = await this.purchaseRepository.newPaginate(
+        filterQuery,
+        pipeline,
+        {
+          page,
+          limit,
+        }
+      );
+      return successResponse(HttpStatus.OK, ResponseMessage.SUCCESS, res);
     } catch (error) {
       throw new RpcException(error);
     }

@@ -277,6 +277,7 @@ export class InvoiceService {
 
       const paramOrg = {};
       paramOrg['lastInvoicePaidDate'] = new Date();
+      paramOrg['status'] = 'ACTIVE';
 
       const billingCycle = orgplan.billingCycle;
       const billingDate = orgplan.billingDate;

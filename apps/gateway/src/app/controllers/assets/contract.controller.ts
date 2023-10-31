@@ -8,6 +8,8 @@ import {
   Query,
   Get,
   Res,
+  Param,
+  UploadedFile,
 } from '@nestjs/common';
 import { ClientProxy, RpcException } from '@nestjs/microservices';
 import { ApiTags, ApiBearerAuth } from '@nestjs/swagger';
@@ -23,23 +25,36 @@ import {
   UpdateContractDTO,
   ExtendRenewContractDTO,
   GetContactsDto,
+  IdDto,
+  AddAssetToContractDto,
+  DeleteAssetToContractDto,
 } from '@shared/dto';
 import { DownloadService } from '@shared/services';
 import { firstValueFrom } from 'rxjs';
 import { Auth } from '../../decorators/auth.decorator';
+import { ApiFormData } from '@shared';
 @ApiBearerAuth()
 @ApiTags(API_TAGS.CONTRACT)
 @Controller(CONTROLLERS.CONTRACT)
 export class ContractController {
   constructor(
     @Inject(SERVICES.AIR_SERVICES) private airServiceClient: ClientProxy,
-    // @Inject(SERVICES.COMMON_FEATURE) private commonFeatureClient: ClientProxy,
+    @Inject(SERVICES.COMMON_FEATURE) private commonClient: ClientProxy,
     private readonly downloadService: DownloadService
   ) {}
 
   @Auth(true)
   @Post(API_ENDPOINTS.AIR_SERVICES.CONTRACT.ADD_CONTRACT)
-  public async addContract(@Body() payload: CreateContractDTO) {
+  @ApiFormData({
+    single: true,
+    fieldName: 'fileUrl',
+    fileTypes: ['pdf', 'jpg', 'png'],
+    errorMessage: 'Invalid document file entered.',
+  })
+  public async addContract(
+    @Body() payload: CreateContractDTO,
+    @UploadedFile() fileUrl: any
+  ) {
     try {
       const response = await firstValueFrom(
         this.airServiceClient.send(
@@ -47,18 +62,15 @@ export class ContractController {
           payload
         )
       );
+      payload.recordId = response.data._id;
+      await firstValueFrom(
+        this.commonClient.send(RMQ_MESSAGES.ATTACHMENT.ADD_ATTACHMENT, {
+          fileUrl,
+          dto: payload,
+        })
+      );
 
-      // const logsPayload: ICreateActivityLog = {
-      //   entityId: "65152939f50394f42cee2db4",
-      //   activity: 'test updated',
-      //   performedBy: '65152939f50394f42cee2db4'
-      // }
-      // this.commonFeatureClient.emit(
-      //   RMQ_MESSAGES.ACTIVITY_LOGS.CREATE_ACTIVITY_LOG,
-      //   logsPayload
-      // )
-
-      return response;
+      return { response };
     } catch (err) {
       throw new RpcException(err);
     }
@@ -106,6 +118,51 @@ export class ContractController {
         this.airServiceClient.send(
           { cmd: RMQ_MESSAGES.AIR_SERVICES.CONTRACT.RENEW_EXTEND_CONTRACT },
           payload
+        )
+      );
+
+      return response;
+    } catch (error) {
+      throw new RpcException(error);
+    }
+  }
+
+  @Auth(true)
+  @Patch(API_ENDPOINTS.AIR_SERVICES.CONTRACT.ADD_CONTRACT_ASSET)
+  public async addContractsAsset(
+    @Param() { id }: IdDto,
+    @Body() { contractIds }: AddAssetToContractDto
+  ) {
+    try {
+      const response = await firstValueFrom(
+        this.airServiceClient.send(
+          RMQ_MESSAGES.AIR_SERVICES.CONTRACT.ADD_CONTRACTS_ASSET,
+          {
+            id,
+            contractIds,
+          }
+        )
+      );
+      return response;
+    } catch (error) {
+      throw new RpcException(error);
+    }
+  }
+
+  @Auth(true)
+  @Patch(API_ENDPOINTS.AIR_SERVICES.CONTRACT.DELETE_CONTRACT_ASSET)
+  public async deleteContractsAsset(
+    @Param() { id }: IdDto,
+    @Body() { assetsIds }: DeleteAssetToContractDto
+  ) {
+    try {
+      const response = await firstValueFrom(
+        this.airServiceClient.send(
+          RMQ_MESSAGES.AIR_SERVICES.CONTRACT.DELETE_CONTRACTS_ASSET,
+          {
+            id,
+            assetsIds,
+          }
         )
       );
 

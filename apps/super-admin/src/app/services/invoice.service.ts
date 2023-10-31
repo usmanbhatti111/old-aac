@@ -723,6 +723,69 @@ export class InvoiceService {
     }
   }
 
+  @Cron(CronExpression.EVERY_DAY_AT_MIDNIGHT)
+  async autoOverDueInvoices() {
+    try {
+      let response = {};
+      const todayStart = dayjs().startOf('day').toDate(); // Start of the current day
+      const todayEnd = dayjs().endOf('day').toDate();
+
+      const pipeline = [
+        {
+          $match: {
+            status: 'PENDING',
+            isDeleted: false,
+            dueDate: {
+              $gte: todayStart,
+              $lte: todayEnd,
+            },
+          },
+        },
+      ];
+
+      const invoiceIds = [];
+      const orgPlanIds = [];
+      const invoices = await this.invoiceRepository.aggregate(pipeline);
+
+      const filterQueryInvoices = {
+        _id: {
+          $in: invoiceIds,
+        },
+      };
+      const filterQueryOrgPlan = {
+        _id: {
+          $in: orgPlanIds,
+        },
+      };
+
+      const updateInvoices = {
+        $set: { status: 'OVERDUE' },
+      };
+
+      const updateOrgPlan = {
+        $set: { status: 'INACTIVE' },
+      };
+
+      invoices.forEach((row) => {
+        invoiceIds.push(row._id);
+        orgPlanIds.push(row.organizationPlanId);
+      });
+
+      response = await this.invoiceRepository.updateMany(
+        filterQueryInvoices,
+        updateInvoices
+      );
+      await this.orgPlanRepository.updateMany(
+        filterQueryOrgPlan,
+        updateOrgPlan
+      );
+
+      return successResponse(HttpStatus.OK, ResponseMessage.SUCCESS, response);
+    } catch (error) {
+      throw new RpcException(error);
+    }
+  }
+
   async updateInvoice(payload: UpdateInvoiceDto) {
     try {
       const { invoiceId, updatedBy, dueDate, invoiceDiscount, status } =

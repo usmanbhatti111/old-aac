@@ -15,14 +15,12 @@ export class DealPipeline extends AbstractSchema implements IDealPipeline {
   @Prop({ type: Boolean, default: false })
   isDefault?: boolean;
 
-  @Prop({ type: [SchemaTypes.Mixed], required: false })
-  stages?: [StageDto];
-
-  @Prop({ type: Date, required: false })
-  createdAt?: Date;
-
-  @Prop({ type: Date, required: false })
-  updatedAt?: Date;
+  @Prop({
+    required: false,
+    type: [SchemaTypes.ObjectId],
+    ref: 'lifecyclestages',
+  })
+  stages?: string[];
 
   @Prop({ type: Date, required: false })
   deletedAt?: Date;

@@ -2,16 +2,17 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument, SchemaTypes } from 'mongoose';
 import { AbstractSchema } from '../../abstract-repo/abstract.schema';
 import { MODEL } from '@shared/constants';
+import { MediaObject } from '@shared/dto';
 
 export type ContactDocument = HydratedDocument<Contact>;
 
 @Schema({ versionKey: false, timestamps: true })
 export class Contact extends AbstractSchema {
   @Prop({ required: true, unique: true })
-  email?: string;
+  email: string;
 
-  @Prop({ type: SchemaTypes.ObjectId, ref: 'attachments' })
-  profilePictureId: string;
+  @Prop({ type: SchemaTypes.Mixed })
+  profilePicture?: MediaObject;
 
   @Prop({ required: true })
   firstName: string;

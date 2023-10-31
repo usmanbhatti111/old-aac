@@ -6,6 +6,8 @@ import {
   DeletePurchaseOrderDto,
   UpdatePurchaseOrderDto,
   FilterPurchaseOrderDto,
+  FilterPurchaseOrderRecievedDto,
+  AddPurchaseOrderApprover,
   IdDTO,
 } from '@shared/dto';
 import { PurchaseOrderService } from '../../services/assets/purchase.service';
@@ -43,5 +45,19 @@ export class PurchaseOrderController {
   @MessagePattern(RMQ_MESSAGES.AIR_SERVICES.ASSETS.CHANGE_PURCHASEORDER_STATUS)
   public async updatePurchaseOrderStatus(@Payload() payload: IdDTO) {
     return this.purchaseService.updatePurchaseOrderStatus(payload);
+  }
+  @MessagePattern({ cmd: RMQ_MESSAGES.AIR_SERVICES.ASSETS.ADD_APPROVER_ORDER })
+  public async addPurchaseOrderApprover(
+    @Payload() payload: { dto: AddPurchaseOrderApprover; userId: string }
+  ) {
+    return this.purchaseService.addPurchaseOrderApprover(payload);
+  }
+  @MessagePattern({
+    cmd: RMQ_MESSAGES.AIR_SERVICES.ASSETS.GET_PURCHASEORDER_RECIEVED,
+  })
+  async getPurchaseOrderRecived(
+    @Payload() payload: FilterPurchaseOrderRecievedDto
+  ) {
+    return await this.purchaseService.getPurchaseOrderRecived(payload);
   }
 }

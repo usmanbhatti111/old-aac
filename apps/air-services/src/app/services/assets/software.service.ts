@@ -1,18 +1,25 @@
 import { HttpStatus, Injectable } from '@nestjs/common';
 import { RpcException } from '@nestjs/microservices';
-import { AssetsSoftwareRepository, mongooseDateFilter } from '@shared';
+import { AssetsSoftwareRepository, SoftwareUsersRepository } from '@shared';
+import { mongooseDateFilter } from '@shared';
 import {
+  AllocateSoftwareContractDto,
   AssetsSoftwareDto,
   GetAssetsSoftwareDetails,
+  GetSoftwareUserDto,
   IdDto,
   PaginationDto,
+  SoftwareUsersDto,
 } from '@shared/dto';
 
 import { successResponse } from '@shared/constants';
 
 @Injectable()
 export class SoftwareService {
-  constructor(private softwareRepository: AssetsSoftwareRepository) {}
+  constructor(
+    private softwareRepository: AssetsSoftwareRepository,
+    private softwareUsersRepo: SoftwareUsersRepository
+  ) {}
 
   async addSoftware(payload: AssetsSoftwareDto) {
     try {
@@ -127,6 +134,168 @@ export class SoftwareService {
         { $set: { categoryId: category.categoryId } }
       );
       return successResponse(HttpStatus.OK, 'Success', response);
+    } catch (error) {
+      throw new RpcException(error);
+    }
+  }
+  async addSoftwareUsers(payload: { dto: SoftwareUsersDto; userId: string }) {
+    try {
+      const { userId } = payload;
+      const { ...dto } = payload;
+      const { contractId } = dto.dto;
+
+      const softwareUsers = await this.softwareUsersRepo.create({
+        contractId: dto.dto.contractId,
+        userRefId: dto.dto.userRefId,
+        softwareId: dto.dto.softwareId,
+        userId: userId,
+        isContractAllocated: contractId ? true : false,
+      });
+
+      const response = successResponse(
+        HttpStatus.CREATED,
+        `Software Users Added Successfully`,
+        softwareUsers
+      );
+      return response;
+    } catch (error) {
+      throw new RpcException(error);
+    }
+  }
+  async getSoftwareUsers(payload: {
+    id: IdDto;
+    userId: string;
+    dto: GetSoftwareUserDto;
+  }) {
+    try {
+      const { id } = payload.id;
+      const { limit, page, search, name, assignedDate } = payload.dto;
+      const assign = new Date(assignedDate);
+      const filterQuery = {
+        softwareId: id,
+      };
+      const pipelines: any = [
+        {
+          $lookup: {
+            from: 'users',
+            localField: 'userRefId',
+
+            foreignField: '_id',
+            as: 'details',
+          },
+        },
+        {
+          $lookup: {
+            from: 'contracts',
+            localField: 'contractId',
+
+            foreignField: '_id',
+            as: 'contracts',
+          },
+        },
+
+        {
+          $unwind: '$details',
+        },
+        {
+          $unwind: '$contracts',
+        },
+      ];
+      if (search) {
+        pipelines.push({
+          $match: {
+            'details.firstName': { $regex: search, $options: 'i' },
+          },
+        });
+      }
+      if (name) {
+        pipelines.push({
+          $match: {
+            'details.firstName': { $regex: name, $options: 'i' },
+          },
+        });
+      }
+      if (assignedDate) {
+        pipelines.push({
+          $match: {
+            createdAt: {
+              $lte: new Date(assign.getTime() + 1 * 24 * 60 * 60 * 1000),
+              $gte: new Date(assign.getTime()),
+            },
+          },
+        });
+      }
+      const Param = {
+        filterQuery,
+        pipelines,
+        limit,
+        offset: page,
+      };
+      const softwareDetails = await this.softwareUsersRepo.paginate(Param);
+      const response = successResponse(
+        HttpStatus.OK,
+        `Software Users Details Successfully`,
+        softwareDetails
+      );
+      return response;
+    } catch (error) {
+      throw new RpcException(error);
+    }
+  }
+
+  async allocateSoftwareContract(payload: {
+    dto: AllocateSoftwareContractDto;
+    userId: string;
+  }) {
+    try {
+      const { id, contractId } = payload.dto;
+
+      const allocate = await this.softwareUsersRepo.findOneAndUpdate(
+        { _id: id },
+        { $set: { contractId, isContractAllocated: true } }
+      );
+      const response = successResponse(
+        HttpStatus.OK,
+        `Contract Allocated Successfully`,
+        allocate
+      );
+      return response;
+    } catch (error) {
+      throw new RpcException(error);
+    }
+  }
+
+  async deAllocateSoftwareContract(payload: {
+    dto: AllocateSoftwareContractDto;
+    userId: string;
+  }) {
+    try {
+      const { id, contractId } = payload.dto;
+
+      const allocate = await this.softwareUsersRepo.findOneAndUpdate(
+        { _id: id },
+        { $unset: { contractId }, $set: { isContractAllocated: false } }
+      );
+      const response = successResponse(
+        HttpStatus.OK,
+        `Contract Deallocated Successfully`,
+        allocate
+      );
+      return response;
+    } catch (error) {
+      throw new RpcException(error);
+    }
+  }
+  async softwareUserRemove(payload: { id: IdDto }) {
+    try {
+      const { id } = payload.id;
+      const removeUser = await this.softwareUsersRepo.delete({ _id: id });
+      const response = successResponse(
+        HttpStatus.OK,
+        `User Remove Successfully`,
+        removeUser
+      );
+      return response;
     } catch (error) {
       throw new RpcException(error);
     }

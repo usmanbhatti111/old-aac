@@ -41,19 +41,24 @@ import {
   TicketRepository,
   UserAccountsRepository,
   UserORepository,
-  LifeCycleStageRepository,
   DealPipelineRepository,
   SalesProductRepository,
   ContactNoteRepository,
   UserRepository,
   AttachmentRepository,
   ContactCallRepository,
+  SoftwareUsersRepository,
   ActivityLogRepository,
   DashboardRepository,
+  ArticlesRepository,
+  ContactMeetingRepository,
+  DealsRepository,
+  NoteRepository,
 } from '../src/repositories/index';
 import { MongooseConfig } from './config/mongo.config';
 import { SharedService } from './shared.service';
 import { DownloadService, S3Service } from './services';
+
 @Module({
   imports: [
     ConfigModule.forRoot(),
@@ -108,13 +113,16 @@ import { DownloadService, S3Service } from './services';
     OrganizationCompanyAccountRepository,
     ContactStateRepository,
     ContractRepository,
-    LifecycleStagesRepository,
     DealPipelineRepository,
     SalesProductRepository,
     AttachmentRepository,
     ContactCallRepository,
     LifecycleStagesRepository,
+    SoftwareUsersRepository,
     DashboardRepository,
+    ContactMeetingRepository,
+    DealsRepository,
+    NoteRepository,
     {
       provide: 'S3',
       useFactory: (config: ConfigService) =>
@@ -130,6 +138,7 @@ import { DownloadService, S3Service } from './services';
     S3Service,
     DownloadService,
     ActivityLogRepository,
+    ArticlesRepository,
   ],
   exports: [
     SharedService,
@@ -185,7 +194,14 @@ import { DownloadService, S3Service } from './services';
     ContactStateRepository,
     ContactCallRepository,
     LifecycleStagesRepository,
+    SoftwareUsersRepository,
     ActivityLogRepository,
+    ArticlesRepository,
+    ContactMeetingRepository,
+    DealPipelineRepository,
+    SalesProductRepository,
+    DealsRepository,
+    NoteRepository,
   ],
 })
 export class SharedModule {}

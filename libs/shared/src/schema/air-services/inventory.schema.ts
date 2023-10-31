@@ -19,6 +19,12 @@ export class Inventory extends AbstractSchema {
   deviceIds: [string];
 
   @Prop({
+    type: [SchemaTypes.ObjectId],
+    required: false,
+  })
+  contractIds: [string];
+
+  @Prop({
     type: SchemaTypes.ObjectId,
     required: false,
   })
