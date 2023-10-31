@@ -276,6 +276,13 @@ export const API_ENDPOINTS = {
       CREATE_DEAL: '/',
       UPDATE_DEAL: '/:id',
       GET_DEALS_LIST_VIEW: 'get-deals-list-view',
+      GET_ASSOCIATIONS:'get-associations/:id',
+      CREATE_ASSOCIATION:'create-association',
+      DELETE_ASSOCIATION:'delete-association',
+      ADD_TASK:'add-task',
+      DELETE_TASK:'delete-task',
+      ADD_NOTE:'add-note',
+      DELETE_NOTE:'delete-note'
     },
   },
 

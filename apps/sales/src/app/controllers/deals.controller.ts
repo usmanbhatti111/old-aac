@@ -1,7 +1,7 @@
 import { Controller } from '@nestjs/common';
 import { MessagePattern, Payload } from '@nestjs/microservices';
 import { RMQ_MESSAGES } from '@shared/constants';
-import { CreateDealDto, GetDealsListViewDto, UpdateDealDto } from '@shared/dto';
+import { CreateDealDto, DealAssociationDto, GetDealsListViewDto, IdDto, UpdateDealDto } from '@shared/dto';
 import { DealsService } from '../services/deals.service';
 
 @Controller()
@@ -21,5 +21,20 @@ export class DealsController {
   @MessagePattern(RMQ_MESSAGES.SALES.DEALS.GET_DEALS_LIST_VIEW)
   async getDealsListVew(@Payload() payload: GetDealsListViewDto) {
     return this.dealsService.getDealsListVew(payload);
+  }
+
+  @MessagePattern(RMQ_MESSAGES.SALES.DEALS.CREATE_ASSOCIATION)
+  async associateDeal(@Payload() payload: DealAssociationDto) {
+    return this.dealsService.associateDeal(payload);
+  }
+
+  @MessagePattern(RMQ_MESSAGES.SALES.DEALS.DELETE_ASSOCIATION)
+  async disassociateDeal(@Payload() payload: DealAssociationDto) {
+    return this.dealsService.disassociateDeal(payload);
+  }
+
+  @MessagePattern(RMQ_MESSAGES.SALES.DEALS.GET_ASSOCIATIONS)
+  async populateAssociations(@Payload() payload: IdDto) {
+    return this.dealsService.populateAssociations(payload);
   }
 }

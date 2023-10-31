@@ -26,6 +26,8 @@ import {
 import {
   CreateDealDto,
   CreateDealResponseDto,
+  DealAssociationDto,
+  DealAssociationResponseDto,
   GetDealsListViewDto,
   GetDealsListViewResponseDto,
   IdDto,
@@ -45,37 +47,36 @@ export class DealsController {
     private orgAdminService: ClientProxy
   ) {}
 
-  @Auth(true)
-  @Post(API_ENDPOINTS.SALES.DEALS.CREATE_DEAL)
-  @ApiCreatedResponse({ type: CreateDealResponseDto })
-  public async createDeal(
+   @Auth(true)
+  @Patch(API_ENDPOINTS.SALES.DEALS.CREATE_ASSOCIATION)
+  @ApiOkResponse({ type: DealAssociationResponseDto })
+  public async associateDeal(
     @Req() request: AppRequest,
-    @Body() payload: CreateDealDto
-  ): Promise<CreateDealResponseDto> {
-    payload.createdBy = request?.user?._id;
-
+    @Body() payload: DealAssociationDto
+  ): Promise<DealAssociationResponseDto> {
+    
     const response = await firstValueFrom(
-      this.orgAdminService.send(RMQ_MESSAGES.SALES.DEALS.CREATE_DEAL, payload)
+      this.orgAdminService.send(
+        RMQ_MESSAGES.SALES.DEALS.CREATE_ASSOCIATION,
+        payload
+      )
     );
-
     return response;
   }
-
-  @Auth(true)
-  @Patch(API_ENDPOINTS.SALES.DEALS.UPDATE_DEAL)
-  @ApiOkResponse({ type: UpdateDealResponseDto })
-  public async updateDeal(
+ @Auth(true)
+  @Patch(API_ENDPOINTS.SALES.DEALS.DELETE_ASSOCIATION)
+  @ApiOkResponse({ type: DealAssociationResponseDto })
+  public async disassociateDeal(
     @Req() request: AppRequest,
-    @Param() params: IdDto,
-    @Body() payload: UpdateDealDto
-  ): Promise<UpdateDealResponseDto> {
-    payload.updatedBy = request?.user?._id;
-    payload.id = params.id;
-
+    @Body() payload: DealAssociationDto
+  ): Promise<DealAssociationResponseDto> {
+    
     const response = await firstValueFrom(
-      this.orgAdminService.send(RMQ_MESSAGES.SALES.DEALS.UPDATE_DEAL, payload)
+      this.orgAdminService.send(
+        RMQ_MESSAGES.SALES.DEALS.DELETE_ASSOCIATION,
+        payload
+      )
     );
-
     return response;
   }
 
@@ -97,4 +98,56 @@ export class DealsController {
 
     return response;
   }
+
+  @Auth(true)
+  @Get(API_ENDPOINTS.SALES.DEALS.GET_ASSOCIATIONS)
+  @ApiOkResponse({ type: DealAssociationResponseDto })
+  public async populateAssociations(
+    @Req() request: AppRequest,
+    @Param() payload: IdDto
+  ): Promise<DealAssociationResponseDto> {
+    const response = await firstValueFrom(
+      this.orgAdminService.send(
+        RMQ_MESSAGES.SALES.DEALS.GET_ASSOCIATIONS,
+        payload
+      )
+    );
+
+    return response;
+  }
+
+   @Auth(true)
+   @Post(API_ENDPOINTS.SALES.DEALS.CREATE_DEAL)
+   @ApiCreatedResponse({ type: CreateDealResponseDto })
+   public async createDeal(
+     @Req() request: AppRequest,
+     @Body() payload: CreateDealDto
+   ): Promise<CreateDealResponseDto> {
+     payload.createdBy = request?.user?._id;
+ 
+     const response = await firstValueFrom(
+       this.orgAdminService.send(RMQ_MESSAGES.SALES.DEALS.CREATE_DEAL, payload)
+     );
+ 
+     return response;
+   }
+ 
+   @Auth(true)
+   @Patch(API_ENDPOINTS.SALES.DEALS.UPDATE_DEAL)
+   @ApiOkResponse({ type: UpdateDealResponseDto })
+   public async updateDeal(
+     @Req() request: AppRequest,
+     @Param() params: IdDto,
+     @Body() payload: UpdateDealDto
+   ): Promise<UpdateDealResponseDto> {
+     payload.updatedBy = request?.user?._id;
+     payload.id = params.id;
+ 
+     const response = await firstValueFrom(
+       this.orgAdminService.send(RMQ_MESSAGES.SALES.DEALS.UPDATE_DEAL, payload)
+     );
+ 
+     return response;
+   }
+
 }

@@ -295,6 +295,9 @@ export const RMQ_MESSAGES = {
       CREATE_DEAL: 'create-deal',
       UPDATE_DEAL: 'update-deal',
       GET_DEALS_LIST_VIEW: 'get-deals-list-view',
+      GET_ASSOCIATIONS:'get-associations',
+      CREATE_ASSOCIATION:'create-association',
+      DELETE_ASSOCIATION:'delete-association'
     },
   },
 

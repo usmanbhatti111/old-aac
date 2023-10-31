@@ -51,7 +51,7 @@ import { ContactNoteController } from './controllers/common-features/contact/con
 import { ContactCallController } from './controllers/common-features/contact/contact-call.controller';
 import { ContactMeetingController } from './controllers/common-features/contact/contact-meeting.controller';
 import { DealsController } from './controllers/sales/deals.controller';
-import { NoteController } from './controllers/sales-settings/note.controller';
+import { NoteController } from './controllers/sales/note.controller';
 
 @Module({
   imports: [
