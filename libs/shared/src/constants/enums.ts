@@ -98,6 +98,13 @@ export enum BillingCycleEnum {
   QUARTERLY = 'QUARTERLY',
   HALF_YEARLY = 'HALF_YEARLY',
   YEARLY = 'YEARLY',
+  ONE_TIME = 'ONE_TIME',
+}
+
+export enum LicenceTypeEnum {
+  VOLUME = 'VOLUME',
+  ENTERPRISE = 'ENTERPRISE',
+  TRAIL = 'TRAIL',
 }
 
 export enum ProductDropDown {

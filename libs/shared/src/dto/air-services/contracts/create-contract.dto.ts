@@ -1,5 +1,9 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { EExtendRenewStatus } from '../../../constants/enums';
+import {
+  BillingCycleEnum,
+  EExtendRenewStatus,
+  LicenceTypeEnum,
+} from '../../../constants/enums';
 import {
   IsBoolean,
   IsNotEmpty,
@@ -13,6 +17,8 @@ import {
   IsArray,
 } from 'class-validator';
 import mongoose from 'mongoose';
+import { ApiSingleFile } from 'libs/shared/src/custom';
+import { AttachmentDTO } from '../../common';
 export class DeleteContractDto {
   @ApiProperty({
     example: '651e6368a3a6baf2f193efb0',
@@ -22,7 +28,48 @@ export class DeleteContractDto {
   id: string;
 }
 
-export class CreateContractDTO {
+export class ItemsDetailDto {
+  @IsNotEmpty()
+  @IsString()
+  @ApiProperty({
+    example: 'Service Name',
+    required: false,
+  })
+  serviceName: string;
+
+  @IsNotEmpty()
+  @IsString()
+  @ApiProperty({
+    example: 'Per Unit',
+    required: false,
+  })
+  principleModel: string;
+
+  @IsNotEmpty()
+  @IsNumber()
+  @ApiProperty({
+    example: 12,
+    required: false,
+  })
+  cost: number;
+
+  @IsNotEmpty()
+  @IsNumber()
+  @ApiProperty({
+    example: 5,
+    required: true,
+  })
+  count: number;
+
+  @IsOptional()
+  @IsString()
+  @ApiProperty({
+    example: 'Comments',
+    required: false,
+  })
+  comments: string;
+}
+export class CreateContractDTO extends AttachmentDTO {
   @ApiProperty({ example: 'contract name' })
   @IsString()
   @IsNotEmpty()
@@ -36,15 +83,7 @@ export class CreateContractDTO {
   @ApiProperty({ example: '651d72b06c9932a97b031a34' })
   @IsMongoId()
   @IsNotEmpty()
-  type: string;
-
-  @ApiProperty({
-    type: [String],
-    example: ['652ee528da86b788fd6ca7ea'],
-  })
-  @IsArray()
-  @IsOptional()
-  attachments: mongoose.Types.ObjectId[];
+  contractType: string;
 
   @ApiProperty({ type: Number, example: 200 })
   @IsNumber()
@@ -89,6 +128,44 @@ export class CreateContractDTO {
   @IsMongoId()
   @IsOptional()
   assetId: string;
+
+  @ApiProperty({ example: '652ee528da86b788fd6ca7ea' })
+  @IsMongoId()
+  @IsOptional()
+  moduleId: string;
+
+  @IsOptional()
+  @ApiProperty({
+    type: [ItemsDetailDto],
+    required: false,
+  })
+  itemsDetail: ItemsDetailDto[];
+
+  @ApiProperty({
+    enum: BillingCycleEnum,
+    required: false,
+    example: BillingCycleEnum.MONTHLY,
+  })
+  @ApiProperty({
+    enum: BillingCycleEnum,
+    required: false,
+    example: BillingCycleEnum.MONTHLY,
+  })
+  @IsOptional()
+  billingCycle: string;
+
+  @ApiProperty({
+    enum: LicenceTypeEnum,
+    required: false,
+    example: LicenceTypeEnum.ENTERPRISE,
+  })
+  @IsOptional()
+  licenseType: string;
+
+  @ApiProperty({ example: 'License Key' })
+  @IsString()
+  @IsNotEmpty()
+  licenseKey: string;
 }
 export class UpdateContractDTO {
   @ApiProperty({
@@ -101,13 +178,6 @@ export class UpdateContractDTO {
   @IsString()
   @IsOptional()
   name: string;
-
-  @ApiProperty({
-    type: [String],
-    example: ['652ee528da86b788fd6ca7ea'],
-  })
-  @ArrayNotEmpty()
-  attachments: string;
 
   @ApiProperty({ example: 'CNTW-6', required: false })
   @IsString()

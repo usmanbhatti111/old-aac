@@ -2,23 +2,20 @@ import { ApiProperty } from '@nestjs/swagger';
 import { IsNotEmpty, IsString } from 'class-validator';
 import { ApiSingleFile } from '../../custom/api-single-file.decorator';
 export class AttachmentDTO {
-  @IsString()
-  @IsNotEmpty()
   @ApiProperty({
     type: String,
     example: '651bdf53beeb02bc627d6804',
     required: false,
   })
   organizationAdminId: string;
-  @IsString()
-  @IsNotEmpty()
+
   @ApiProperty({
     type: String,
     example: '651bdf53beeb02bc627d6804',
     required: false,
   })
   companyAdminId: string;
-  @IsString()
+
   @IsNotEmpty()
   @ApiProperty({
     type: String,
@@ -26,6 +23,7 @@ export class AttachmentDTO {
     required: false,
   })
   type: string;
+
   @IsString()
   @IsNotEmpty()
   @ApiProperty({
@@ -44,4 +42,12 @@ export class AttachmentDTO {
     required: true,
   })
   recordId: string;
+  @IsString()
+  @IsNotEmpty()
+  @ApiProperty({
+    type: String,
+    example: '651bdf53beeb02bc627d6804',
+    required: true,
+  })
+  moduleId: string;
 }
