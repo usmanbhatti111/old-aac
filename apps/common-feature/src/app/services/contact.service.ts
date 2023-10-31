@@ -9,7 +9,11 @@ import {
   LifecycleStagesRepository,
   UserRepository,
 } from '@shared';
-import { ContactAssociationEnum, successResponse } from '@shared/constants';
+import {
+  ContactAssociationEnum,
+  RecordStatusEnum,
+  successResponse,
+} from '@shared/constants';
 import {
   AssignContactOwnerDto,
   ContactCallDeleteDto,
@@ -22,6 +26,7 @@ import {
   ContactMeetingDeleteDto,
   ContactMeetingFilterDto,
   ContactMeetingIdParamDto,
+  ContactMultiDto,
   ContactNoteDeleteDto,
   ContactNoteFilterDto,
   ContactNoteIdParamDto,
@@ -57,7 +62,19 @@ export class ContactService {
   ) {}
 
   notDeletedFilter = {
+    recordStatus: RecordStatusEnum.ACTIVE,
+  };
+
+  otherNotDeletedFilter = {
     isDeleted: false,
+  };
+
+  softDeletedFilter = {
+    recordStatus: RecordStatusEnum.SOFT_DELETED,
+  };
+
+  deletedFilter = {
+    isDeleted: true,
   };
 
   async getContactTasks(payload: ContactNoteFilterDto) {
@@ -90,12 +107,102 @@ export class ContactService {
     }
   }
 
+  async deleteContactMulti(payload: ContactMultiDto) {
+    try {
+      const { contactIds, deletedBy } = payload;
+
+      for (const contactId of contactIds) {
+        await this.contactRepository.findOneAndUpdate(
+          { _id: contactId, ...this.notDeletedFilter },
+          { ...this.softDeletedFilter, deletedAt: Date.now(), deletedBy }
+        );
+      }
+
+      return successResponse(
+        HttpStatus.CREATED,
+        'Contacts Deleted Successfully',
+        {}
+      );
+    } catch (error) {
+      throw new RpcException(error);
+    }
+  }
+
+  async restoreContactMulti(payload: ContactMultiDto) {
+    try {
+      const { contactIds } = payload;
+
+      for (const contactId of contactIds) {
+        await this.contactRepository.findOneAndUpdate(
+          { _id: contactId, ...this.softDeletedFilter },
+          this.notDeletedFilter
+        );
+      }
+
+      return successResponse(
+        HttpStatus.CREATED,
+        'Contacts Restored Successfully',
+        {}
+      );
+    } catch (error) {
+      throw new RpcException(error);
+    }
+  }
+
+  async permanentDeleteContactMulti(payload: ContactMultiDto) {
+    try {
+      const { deletedBy, contactIds } = payload;
+
+      for (const contactId of contactIds) {
+        await this.contactRepository.findOneAndUpdate(
+          { _id: contactId, ...this.softDeletedFilter },
+          {
+            recordStatus: RecordStatusEnum.HARD_DELETED,
+            deletedAt: Date.now(),
+            deletedBy,
+          }
+        );
+      }
+
+      return successResponse(
+        HttpStatus.CREATED,
+        'All Contacts Permanent Deleted Successfully',
+        {}
+      );
+    } catch (error) {
+      throw new RpcException(error);
+    }
+  }
+
+  async permanentDeleteContact(payload: ContactDeleteDto) {
+    try {
+      const { deletedBy, contactId } = payload;
+
+      await this.contactRepository.findOneAndUpdate(
+        { _id: contactId, ...this.softDeletedFilter },
+        {
+          recordStatus: RecordStatusEnum.HARD_DELETED,
+          deletedAt: Date.now(),
+          deletedBy,
+        }
+      );
+
+      return successResponse(
+        HttpStatus.CREATED,
+        'Contact Permanent Deleted Successfully',
+        {}
+      );
+    } catch (error) {
+      throw new RpcException(error);
+    }
+  }
+
   async restoreContact(payload: ContactIdParamDto) {
     try {
       const { contactId } = payload;
 
       await this.contactRepository.findOneAndUpdate(
-        { _id: contactId, isDeleted: true },
+        { _id: contactId, ...this.softDeletedFilter },
         this.notDeletedFilter
       );
 
@@ -160,7 +267,7 @@ export class ContactService {
       const filterQuery = {
         ...createdAtFilter,
         ...payload,
-        isDeleted: true,
+        ...this.softDeletedFilter,
         ...searchFilter,
       };
 
@@ -236,17 +343,18 @@ export class ContactService {
 
   async createContact(payload: CreateContactDto) {
     try {
-      const s3Response = await this.s3.uploadFile(
-        payload.profilePicture,
-        'contacts/{uuid}'
-      );
-
-      const profilePicture: MediaObject = {
-        ...s3Response,
-        size: payload.profilePicture.size,
-        mimetype: payload.profilePicture.mimetype,
-      };
-
+      if (payload.profilePicture) {
+        const s3Response = await this.s3.uploadFile(
+          payload.profilePicture,
+          'contacts/{uuid}'
+        );
+        const profilePicture: MediaObject = {
+          ...s3Response,
+          size: payload.profilePicture.size,
+          mimetype: payload.profilePicture.mimetype,
+        };
+        payload.profilePicture = profilePicture;
+      }
       if (payload.contactOwnerId)
         await this.userRepository.findOne({
           _id: payload.contactOwnerId,
@@ -257,16 +365,14 @@ export class ContactService {
       if (payload.lifeCycleStageId)
         await this.lifecycleRepository.findOne({
           _id: payload.lifeCycleStageId,
-          ...this.notDeletedFilter,
+          ...this.otherNotDeletedFilter,
         });
 
       if (payload.statusId)
         await this.statusRepository.findOne({
           _id: payload.statusId,
-          ...this.notDeletedFilter,
+          ...this.otherNotDeletedFilter,
         });
-
-      payload.profilePicture = profilePicture;
 
       const res = await this.contactRepository.create(payload);
 
@@ -381,7 +487,7 @@ export class ContactService {
   async editContact(payload: EditContactDto) {
     try {
       const { contactId } = payload;
-      await this.contactRepository.findOne({
+      const contact = await this.contactRepository.findOne({
         _id: contactId,
         ...this.notDeletedFilter,
       });
@@ -395,14 +501,46 @@ export class ContactService {
       if (payload.lifeCycleStageId)
         await this.lifecycleRepository.findOne({
           _id: payload.lifeCycleStageId,
-          ...this.notDeletedFilter,
+          ...this.otherNotDeletedFilter,
         });
 
       if (payload.statusId)
         await this.statusRepository.findOne({
           _id: payload.statusId,
-          ...this.notDeletedFilter,
+          ...this.otherNotDeletedFilter,
         });
+
+      if (payload.profilePicture) {
+        if (contact?.profilePicture) {
+          const { url } = contact.profilePicture;
+          await this.s3.deleteFile(url);
+          const s3Response = await this.s3.uploadFile(
+            payload.profilePicture,
+            'contacts/{uuid}'
+          );
+
+          const profilePicture: MediaObject = {
+            ...s3Response,
+            size: payload.profilePicture?.size,
+            mimetype: payload.profilePicture?.mimetype,
+          };
+
+          payload.profilePicture = profilePicture;
+        } else {
+          const s3Response = await this.s3.uploadFile(
+            payload.profilePicture,
+            'contacts/{uuid}'
+          );
+
+          const profilePicture: MediaObject = {
+            ...s3Response,
+            size: payload.profilePicture.size,
+            mimetype: payload.profilePicture.mimetype,
+          };
+
+          payload.profilePicture = profilePicture;
+        }
+      }
 
       delete payload.contactId;
       const payloadPlan = {
@@ -458,13 +596,55 @@ export class ContactService {
     }
   }
 
+  async assignContactOwnerMulti(payload: ContactMultiDto) {
+    try {
+      const { contactIds, deletedBy, contactOwnerId } = payload;
+
+      let res = null;
+      for (const contactId of contactIds) {
+        await this.contactRepository.findOneAndUpdate(
+          { _id: contactId, ...this.notDeletedFilter },
+          { ...this.softDeletedFilter, deletedAt: Date.now(), deletedBy }
+        );
+        await this.contactRepository.findOne({
+          _id: contactId,
+          ...this.notDeletedFilter,
+        });
+
+        if (contactOwnerId)
+          await this.userRepository.findOne({
+            _id: contactOwnerId,
+            status: 'ACTIVE',
+          });
+
+        const payloadPlan = {
+          contactOwnerId,
+          updatedAt: Date.now(),
+        };
+
+        res = await this.contactRepository.findOneAndUpdate(
+          { _id: contactId, ...this.notDeletedFilter },
+          payloadPlan
+        );
+      }
+
+      return successResponse(
+        HttpStatus.CREATED,
+        'Contacts Updated Successfully',
+        res
+      );
+    } catch (error) {
+      throw new RpcException(error);
+    }
+  }
+
   async deleteContact(payload: ContactDeleteDto) {
     try {
       const { deletedBy, contactId } = payload;
 
       await this.contactRepository.findOneAndUpdate(
         { _id: contactId, ...this.notDeletedFilter },
-        { isDeleted: true, deletedAt: Date.now(), deletedBy }
+        { ...this.softDeletedFilter, deletedAt: Date.now(), deletedBy }
       );
 
       return successResponse(
@@ -479,6 +659,20 @@ export class ContactService {
 
   async createContactNote(payload: CreateContactNoteDto) {
     try {
+      if (payload.attachment) {
+        const s3Response = await this.s3.uploadFile(
+          payload.attachment,
+          'contact-notes/{uuid}'
+        );
+
+        const attachment: MediaObject = {
+          ...s3Response,
+          size: payload.attachment.size,
+          mimetype: payload.attachment.mimetype,
+        };
+
+        payload.attachment = attachment;
+      }
       await this.contactRepository.findOne({
         _id: payload.contactId,
         ...this.notDeletedFilter,
@@ -503,7 +697,7 @@ export class ContactService {
     try {
       const res = await this.contactNoteRepository.findOne({
         _id: payload.contactNoteId,
-        ...this.notDeletedFilter,
+        ...this.otherNotDeletedFilter,
       });
       return successResponse(
         HttpStatus.OK,
@@ -526,7 +720,7 @@ export class ContactService {
 
       const filterQuery = {
         ...payload,
-        ...this.notDeletedFilter,
+        ...this.otherNotDeletedFilter,
       };
 
       const paginateRes = await this.contactNoteRepository.paginate({
@@ -548,9 +742,9 @@ export class ContactService {
   async editContactNote(payload: EditContactNoteDto) {
     try {
       const { contactNoteId } = payload;
-      await this.contactNoteRepository.findOne({
+      const contactNote = await this.contactNoteRepository.findOne({
         _id: contactNoteId,
-        ...this.notDeletedFilter,
+        ...this.otherNotDeletedFilter,
       });
 
       if (payload.contactId)
@@ -564,6 +758,38 @@ export class ContactService {
         ...payload,
         updatedAt: Date.now(),
       };
+
+      if (payload.attachment) {
+        if (contactNote?.attachment) {
+          const { url } = contactNote.attachment;
+          await this.s3.deleteFile(url);
+          const s3Response = await this.s3.uploadFile(
+            payload.attachment,
+            'contact-notes/{uuid}'
+          );
+
+          const attachment: MediaObject = {
+            ...s3Response,
+            size: payload.attachment?.size,
+            mimetype: payload.attachment?.mimetype,
+          };
+
+          payload.attachment = attachment;
+        } else {
+          const s3Response = await this.s3.uploadFile(
+            payload.attachment,
+            'contacts-notes/{uuid}'
+          );
+
+          const attachment: MediaObject = {
+            ...s3Response,
+            size: payload.attachment.size,
+            mimetype: payload.attachment.mimetype,
+          };
+
+          payload.attachment = attachment;
+        }
+      }
 
       const res = await this.contactNoteRepository.findOneAndUpdate(
         { _id: contactNoteId },
@@ -584,8 +810,8 @@ export class ContactService {
       const { deletedBy, contactNoteId } = payload;
 
       await this.contactNoteRepository.findOneAndUpdate(
-        { _id: contactNoteId, ...this.notDeletedFilter },
-        { isDeleted: true, deletedAt: Date.now(), deletedBy }
+        { _id: contactNoteId, ...this.otherNotDeletedFilter },
+        { ...this.deletedFilter, deletedAt: Date.now(), deletedBy }
       );
 
       return successResponse(
@@ -639,7 +865,7 @@ export class ContactService {
     try {
       const res = await this.contactCallRepository.findOne({
         _id: payload.contactCallId,
-        ...this.notDeletedFilter,
+        ...this.otherNotDeletedFilter,
       });
       return successResponse(
         HttpStatus.OK,
@@ -662,7 +888,7 @@ export class ContactService {
 
       const filterQuery = {
         ...payload,
-        ...this.notDeletedFilter,
+        ...this.otherNotDeletedFilter,
       };
 
       const paginateRes = await this.contactCallRepository.paginate({
@@ -686,7 +912,7 @@ export class ContactService {
       const { contactCallId } = payload;
       await this.contactCallRepository.findOne({
         _id: contactCallId,
-        ...this.notDeletedFilter,
+        ...this.otherNotDeletedFilter,
       });
 
       if (payload.contactId)
@@ -730,8 +956,8 @@ export class ContactService {
       const { deletedBy, contactCallId } = payload;
 
       await this.contactCallRepository.findOneAndUpdate(
-        { _id: contactCallId, ...this.notDeletedFilter },
-        { isDeleted: true, deletedAt: Date.now(), deletedBy }
+        { _id: contactCallId, ...this.otherNotDeletedFilter },
+        { ...this.deletedFilter, deletedAt: Date.now(), deletedBy }
       );
 
       return successResponse(
@@ -749,7 +975,7 @@ export class ContactService {
       const { contactCallId } = payload;
       const contactCall = await this.contactCallRepository.findOne({
         _id: contactCallId,
-        ...this.notDeletedFilter,
+        ...this.otherNotDeletedFilter,
       });
 
       if (dayjs(payload.startDate).isAfter(dayjs(contactCall.startDate))) {
@@ -765,7 +991,7 @@ export class ContactService {
         };
 
         const res = await this.contactCallRepository.findOneAndUpdate(
-          { _id: contactCallId, ...this.notDeletedFilter },
+          { _id: contactCallId, ...this.otherNotDeletedFilter },
           payloadPlan
         );
         return successResponse(
@@ -788,7 +1014,7 @@ export class ContactService {
       const { contactCallId } = payload;
       await this.contactCallRepository.findOne({
         _id: contactCallId,
-        ...this.notDeletedFilter,
+        ...this.otherNotDeletedFilter,
       });
 
       delete payload.contactCallId;
@@ -816,7 +1042,7 @@ export class ContactService {
       const { contactId } = payload;
       const totalCount = await this.contactCallRepository.count({
         contactId,
-        ...this.notDeletedFilter,
+        ...this.otherNotDeletedFilter,
       });
 
       const totalUpcommingCount = await this.contactCallRepository.count({
@@ -824,7 +1050,7 @@ export class ContactService {
           gte: dayjs(),
         },
         contactId,
-        ...this.notDeletedFilter,
+        ...this.otherNotDeletedFilter,
       });
 
       const totalCompleteCount = await this.contactCallRepository.count({
@@ -832,7 +1058,7 @@ export class ContactService {
           lte: dayjs(),
         },
         contactId,
-        ...this.notDeletedFilter,
+        ...this.otherNotDeletedFilter,
       });
 
       const res = {
@@ -892,7 +1118,7 @@ export class ContactService {
     try {
       const res = await this.contactMeetingRepository.findOne({
         _id: payload.contactMeetingId,
-        ...this.notDeletedFilter,
+        ...this.otherNotDeletedFilter,
       });
       return successResponse(
         HttpStatus.OK,
@@ -915,7 +1141,7 @@ export class ContactService {
 
       const filterQuery = {
         ...payload,
-        ...this.notDeletedFilter,
+        ...this.otherNotDeletedFilter,
       };
 
       const paginateRes = await this.contactMeetingRepository.paginate({
@@ -939,7 +1165,7 @@ export class ContactService {
       const { contactMeetingId } = payload;
       await this.contactMeetingRepository.findOne({
         _id: contactMeetingId,
-        ...this.notDeletedFilter,
+        ...this.otherNotDeletedFilter,
       });
 
       if (payload.contactId)
@@ -984,8 +1210,8 @@ export class ContactService {
       const { deletedBy, contactMeetingId } = payload;
 
       await this.contactMeetingRepository.findOneAndUpdate(
-        { _id: contactMeetingId, ...this.notDeletedFilter },
-        { isDeleted: true, deletedAt: Date.now(), deletedBy }
+        { _id: contactMeetingId, ...this.otherNotDeletedFilter },
+        { ...this.deletedFilter, deletedAt: Date.now(), deletedBy }
       );
 
       return successResponse(
@@ -1003,7 +1229,7 @@ export class ContactService {
       const { contactMeetingId } = payload;
       const contactMeeting = await this.contactMeetingRepository.findOne({
         _id: contactMeetingId,
-        ...this.notDeletedFilter,
+        ...this.otherNotDeletedFilter,
       });
 
       if (dayjs(payload.startDate).isAfter(dayjs(contactMeeting.startDate))) {
@@ -1019,7 +1245,7 @@ export class ContactService {
         };
 
         const res = await this.contactMeetingRepository.findOneAndUpdate(
-          { _id: contactMeetingId, ...this.notDeletedFilter },
+          { _id: contactMeetingId, ...this.otherNotDeletedFilter },
           payloadPlan
         );
         return successResponse(
@@ -1042,7 +1268,7 @@ export class ContactService {
       const { contactMeetingId } = payload;
       await this.contactMeetingRepository.findOne({
         _id: contactMeetingId,
-        ...this.notDeletedFilter,
+        ...this.otherNotDeletedFilter,
       });
 
       delete payload.contactMeetingId;
@@ -1071,7 +1297,7 @@ export class ContactService {
 
       const totalCount = await this.contactMeetingRepository.count({
         contactId,
-        ...this.notDeletedFilter,
+        ...this.otherNotDeletedFilter,
       });
 
       const totalUpcommingCount = await this.contactMeetingRepository.count({
@@ -1079,7 +1305,7 @@ export class ContactService {
           gte: dayjs(),
         },
         contactId,
-        ...this.notDeletedFilter,
+        ...this.otherNotDeletedFilter,
       });
 
       const totalCompleteCount = await this.contactMeetingRepository.count({
@@ -1087,7 +1313,7 @@ export class ContactService {
           lte: dayjs(),
         },
         contactId,
-        ...this.notDeletedFilter,
+        ...this.otherNotDeletedFilter,
       });
 
       const res = {

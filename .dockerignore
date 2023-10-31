@@ -1,2 +1,12 @@
+<<<<<<< HEAD
 **/.git
 **/node_modules
+=======
+/node_modules
+/build
+
+/out
+
+/.next
+/dist
+>>>>>>> dev

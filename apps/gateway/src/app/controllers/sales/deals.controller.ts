@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Inject,
   Param,
@@ -26,9 +27,18 @@ import {
 import {
   CreateDealDto,
   CreateDealResponseDto,
+  DealAssociationDto,
+  DealAssociationResponseDto,
+  DeleteDealsDto,
+  DeleteDealsResponseDto,
+  GetDealsGridtViewDto,
   GetDealsListViewDto,
   GetDealsListViewResponseDto,
+  GetSoftDeletedDealsDto,
+  GetSoftDeletedDealsResponseDto,
   IdDto,
+  RestoreDealActionDto,
+  RestoreDealActionResponseDto,
   UpdateDealDto,
   UpdateDealResponseDto,
 } from '@shared/dto';
@@ -45,6 +55,144 @@ export class DealsController {
     private orgAdminService: ClientProxy
   ) {}
 
+  @Auth(true)
+  @Patch(API_ENDPOINTS.SALES.DEALS.CREATE_ASSOCIATION)
+  @ApiOkResponse({ type: DealAssociationResponseDto })
+  public async associateDeal(
+    @Req() request: AppRequest,
+    @Body() payload: DealAssociationDto
+  ): Promise<DealAssociationResponseDto> {
+    const response = await firstValueFrom(
+      this.orgAdminService.send(
+        RMQ_MESSAGES.SALES.DEALS.CREATE_ASSOCIATION,
+        payload
+      )
+    );
+    return response;
+  }
+  @Auth(true)
+  @Patch(API_ENDPOINTS.SALES.DEALS.DELETE_ASSOCIATION)
+  @ApiOkResponse({ type: DealAssociationResponseDto })
+  public async disassociateDeal(
+    @Req() request: AppRequest,
+    @Body() payload: DealAssociationDto
+  ): Promise<DealAssociationResponseDto> {
+    const response = await firstValueFrom(
+      this.orgAdminService.send(
+        RMQ_MESSAGES.SALES.DEALS.DELETE_ASSOCIATION,
+        payload
+      )
+    );
+    return response;
+  }
+
+  @Auth(true)
+  @Get(API_ENDPOINTS.SALES.DEALS.GET_DEALS_LIST_VIEW)
+  @ApiOkResponse({ type: GetDealsListViewResponseDto })
+  public async getDealsListVew(
+    @Req() request: AppRequest,
+    @Query() payload: GetDealsListViewDto
+  ): Promise<GetDealsListViewResponseDto> {
+    payload.userId = request?.user?._id;
+
+    const response = await firstValueFrom(
+      this.orgAdminService.send(
+        RMQ_MESSAGES.SALES.DEALS.GET_DEALS_LIST_VIEW,
+        payload
+      )
+    );
+
+    return response;
+  }
+
+  @Auth(true)
+  @Get(API_ENDPOINTS.SALES.DEALS.GET_DEALS_GRID_VIEW)
+  @ApiOkResponse({ type: GetDealsListViewResponseDto })
+  public async getDealsGridView(
+    @Req() request: AppRequest,
+    @Query() payload: GetDealsGridtViewDto
+  ): Promise<GetDealsListViewResponseDto> {
+    payload.userId = request?.user?._id;
+
+    const response = await firstValueFrom(
+      this.orgAdminService.send(
+        RMQ_MESSAGES.SALES.DEALS.GET_DEALS_GRID_VIEW,
+        payload
+      )
+    );
+
+    return response;
+  }
+
+  @Get(API_ENDPOINTS.SALES.DEALS.GET_ASSOCIATIONS)
+  @ApiOkResponse({ type: DealAssociationResponseDto })
+  public async populateAssociations(
+    @Req() request: AppRequest,
+    @Param() payload: IdDto
+  ): Promise<DealAssociationResponseDto> {
+    const response = await firstValueFrom(
+      this.orgAdminService.send(
+        RMQ_MESSAGES.SALES.DEALS.GET_ASSOCIATIONS,
+        payload
+      )
+    );
+
+    return response;
+  }
+
+  @Auth(true)
+  @Delete(API_ENDPOINTS.SALES.DEALS.DELTE_DEALS)
+  @ApiOkResponse({ type: DeleteDealsResponseDto })
+  public async deleteDeals(
+    @Req() request: AppRequest,
+    @Param() payload: DeleteDealsDto
+  ): Promise<DeleteDealsResponseDto> {
+    payload.deletedBy = request?.user?._id;
+
+    const response = await firstValueFrom(
+      this.orgAdminService.send(RMQ_MESSAGES.SALES.DEALS.DELTE_DEALS, payload)
+    );
+
+    return response;
+  }
+
+  @Auth(true)
+  @Get(API_ENDPOINTS.SALES.DEALS.GET_SOFT_DELETED_DEALS)
+  @ApiOkResponse({ type: GetSoftDeletedDealsResponseDto })
+  public async getSoftDeletedDeals(
+    @Req() request: AppRequest,
+    @Query() payload: GetSoftDeletedDealsDto
+  ): Promise<GetSoftDeletedDealsResponseDto> {
+    payload.deletedBy = request?.user?._id;
+
+    const response = await firstValueFrom(
+      this.orgAdminService.send(
+        RMQ_MESSAGES.SALES.DEALS.GET_SOFT_DELETED_DEALS,
+        payload
+      )
+    );
+
+    return response;
+  }
+
+  @Auth(true)
+  @Delete(API_ENDPOINTS.SALES.DEALS.RESTORE_DEAL_ACTION)
+  @ApiOkResponse({ type: RestoreDealActionResponseDto })
+  public async restoreDealActionRestore(
+    @Req() request: AppRequest,
+    @Query() payload: RestoreDealActionDto
+  ): Promise<RestoreDealActionResponseDto> {
+    payload.deletedBy = request?.user?._id;
+
+    const response = await firstValueFrom(
+      this.orgAdminService.send(
+        RMQ_MESSAGES.SALES.DEALS.RESTORE_DEAL_ACTION,
+        payload
+      )
+    );
+
+    return response;
+  }
   @Auth(true)
   @Post(API_ENDPOINTS.SALES.DEALS.CREATE_DEAL)
   @ApiCreatedResponse({ type: CreateDealResponseDto })
@@ -74,25 +222,6 @@ export class DealsController {
 
     const response = await firstValueFrom(
       this.orgAdminService.send(RMQ_MESSAGES.SALES.DEALS.UPDATE_DEAL, payload)
-    );
-
-    return response;
-  }
-
-  @Auth(true)
-  @Get(API_ENDPOINTS.SALES.DEALS.GET_DEALS_LIST_VIEW)
-  @ApiOkResponse({ type: GetDealsListViewResponseDto })
-  public async getDealsListVew(
-    @Req() request: AppRequest,
-    @Query() payload: GetDealsListViewDto
-  ): Promise<GetDealsListViewResponseDto> {
-    payload.userId = request?.user?._id;
-
-    const response = await firstValueFrom(
-      this.orgAdminService.send(
-        RMQ_MESSAGES.SALES.DEALS.GET_DEALS_LIST_VIEW,
-        payload
-      )
     );
 
     return response;

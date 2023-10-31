@@ -127,6 +127,12 @@ export enum StatusEnum {
   INACTIVE,
 }
 
+export enum RecordStatusEnum {
+  ACTIVE = 'ACTIVE',
+  SOFT_DELETED = 'SOFT_DELETED',
+  HARD_DELETED = 'HARD_DELETED',
+}
+
 export enum AssetsSoftwareStatusEnum {
   RESTRICTED = 'Restricted',
   IGNORED = 'Ignored',
@@ -254,4 +260,10 @@ export enum EDealProbabilityStage {
   'NEGOTIATION' = 90,
   'WON' = 100,
   'LOW' = 0,
+}
+
+export enum EIsDeletedStatus {
+  ACTIVE = 'ACTIVE',
+  SOFT_DELETED = 'SOFT_DELETED',
+  HARD_DELETED = 'HARD_DELETED',
 }

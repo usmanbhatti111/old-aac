@@ -9,6 +9,7 @@ import {
 } from 'class-validator';
 import { Transform } from 'class-transformer';
 import { toMongoObjectId } from '../../functions';
+import { ApiSingleFile } from '../../custom';
 export class EditContactDto {
   @ApiProperty({
     required: false,
@@ -20,13 +21,9 @@ export class EditContactDto {
   @IsOptional()
   email: string;
 
+  @ApiSingleFile({ required: false })
   @IsOptional()
-  @Transform(toMongoObjectId, { toClassOnly: true })
-  @ApiProperty({
-    example: '651bdf53beeb02bc627d6804',
-    required: false,
-  })
-  profilePictureId: string;
+  profilePicture: any;
 
   @ApiProperty({
     example: 'Maarij',

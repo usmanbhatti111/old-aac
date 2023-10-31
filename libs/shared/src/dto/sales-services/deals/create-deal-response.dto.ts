@@ -9,17 +9,17 @@ export class CreateDealResponseDto {
 
   @ApiProperty({
     example: {
-      _id: '6539e86a5dcfc436da36ebcb',
+      _id: '653f38f781f49cda3cd33c7d',
       name: 'Deal name',
-      dealPiplineId: '6538bb480b3f9e9d83d4a2ce',
-      DealStageId: '6538bb480b3f9e9d83d4a2ce',
+      dealPiplineId: '653b441c976aabdb035a6f8c',
+      dealStageId: '653b445484125f0d1523e265',
       amount: 10000,
-      closeDate: '2023-10-26T04:16:06.567Z',
-      dealOwnerId: '6538bb480b3f9e9d83d4a2ce',
+      closeDate: '2023-10-30T04:56:48.150Z',
+      dealOwnerId: '653b47c4bb3e468fdf58c9ac',
       priority: 'Low',
       addLineItemId: '6538bb480b3f9e9d83d4a2ce',
       billingFrequency: 'monthly',
-      probability: 0,
+      probability: 20,
       activitiesIds: [],
       contactsIds: [],
       ticketsIds: [],
@@ -33,10 +33,10 @@ export class CreateDealResponseDto {
       callsIds: [],
       emailsIds: [],
       meetingsIds: [],
-      createdBy: '6539e749aa96470831c3343c',
-      isDeleted: false,
-      createdAt: '2023-10-26T04:17:46.613Z',
-      updatedAt: '2023-10-26T04:17:46.613Z',
+      createdBy: '653b47c4bb3e468fdf58c9ac',
+      isDeleted: 'ACTIVE',
+      createdAt: '2023-10-30T05:02:47.030Z',
+      updatedAt: '2023-10-30T05:02:47.030Z',
     },
   })
   data: {};
