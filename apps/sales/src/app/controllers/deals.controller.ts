@@ -4,6 +4,7 @@ import { RMQ_MESSAGES } from '@shared/constants';
 import {
   CreateDealDto,
   DeleteDealsDto,
+  GetDealsGridtViewDto,
   GetDealsListViewDto,
   GetSoftDeletedDealsDto,
   RestoreDealActionDto,
@@ -28,6 +29,11 @@ export class DealsController {
   @MessagePattern(RMQ_MESSAGES.SALES.DEALS.GET_DEALS_LIST_VIEW)
   async getDealsListVew(@Payload() payload: GetDealsListViewDto) {
     return this.dealsService.getDealsListVew(payload);
+  }
+
+  @MessagePattern(RMQ_MESSAGES.SALES.DEALS.GET_DEALS_GRID_VIEW)
+  async getDealsGridView(@Payload() payload: GetDealsGridtViewDto) {
+    return this.dealsService.getDealsGridView(payload);
   }
 
   @MessagePattern(RMQ_MESSAGES.SALES.DEALS.DELTE_DEALS)

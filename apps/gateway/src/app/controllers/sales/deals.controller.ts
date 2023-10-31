@@ -29,6 +29,7 @@ import {
   CreateDealResponseDto,
   DeleteDealsDto,
   DeleteDealsResponseDto,
+  GetDealsGridtViewDto,
   GetDealsListViewDto,
   GetDealsListViewResponseDto,
   GetSoftDeletedDealsDto,
@@ -98,6 +99,25 @@ export class DealsController {
     const response = await firstValueFrom(
       this.orgAdminService.send(
         RMQ_MESSAGES.SALES.DEALS.GET_DEALS_LIST_VIEW,
+        payload
+      )
+    );
+
+    return response;
+  }
+
+  @Auth(true)
+  @Get(API_ENDPOINTS.SALES.DEALS.GET_DEALS_GRID_VIEW)
+  @ApiOkResponse({ type: GetDealsListViewResponseDto })
+  public async getDealsGridView(
+    @Req() request: AppRequest,
+    @Query() payload: GetDealsGridtViewDto
+  ): Promise<GetDealsListViewResponseDto> {
+    payload.userId = request?.user?._id;
+
+    const response = await firstValueFrom(
+      this.orgAdminService.send(
+        RMQ_MESSAGES.SALES.DEALS.GET_DEALS_GRID_VIEW,
         payload
       )
     );

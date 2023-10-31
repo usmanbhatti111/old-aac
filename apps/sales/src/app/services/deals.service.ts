@@ -11,6 +11,7 @@ import {
 import {
   CreateDealDto,
   DeleteDealsDto,
+  GetDealsGridtViewDto,
   GetDealsListViewDto,
   GetSoftDeletedDealsDto,
   RestoreDealActionDto,
@@ -239,6 +240,159 @@ export class DealsService {
       );
 
       return response;
+    } catch (error) {
+      throw new RpcException(error);
+    }
+  }
+
+  async getDealsGridView(payload: GetDealsGridtViewDto) {
+    try {
+      const { userId } = payload;
+
+      const filterQuery = {
+        isDeleted: EIsDeletedStatus.ACTIVE,
+        createdBy: userId,
+      };
+
+      if (payload?.dealPiplineId) {
+        filterQuery['dealPiplineId'] = payload.dealPiplineId;
+      }
+
+      if (payload?.name) {
+        filterQuery['name'] = { $regex: payload.name, $options: 'i' };
+      }
+
+      if (payload?.dealOwnerId) {
+        filterQuery['dealOwnerId'] = payload.dealStageId;
+      }
+
+      if (payload?.dateStart && payload?.dateEnd) {
+        const startOfDate = dayjs(payload.dateStart).startOf('day').toDate();
+        const endOfDate = dayjs(payload.dateEnd).endOf('day').toDate();
+
+        filterQuery['closeDate'] = { $gte: startOfDate, $lte: endOfDate };
+      }
+
+      if (payload?.dealStageId) {
+        filterQuery['dealStageId'] = payload.dealStageId;
+      }
+
+      const filterQueryPipline = [
+        {
+          $match: {
+            ...filterQuery,
+          },
+        },
+      ];
+
+      const dealStagePipeline = [
+        {
+          $lookup: {
+            from: MODEL.LIFECYCLE_STAGE,
+            localField: 'dealStageId',
+            foreignField: '_id',
+            as: 'dealStage',
+          },
+        },
+        {
+          $unwind: {
+            path: '$dealStage',
+            preserveNullAndEmptyArrays: true,
+          },
+        },
+        {
+          $addFields: {
+            dealStage: { $ifNull: ['$dealStage.name', ''] },
+          },
+        },
+      ];
+
+      const dealOwnerPipline = [
+        {
+          $lookup: {
+            from: MODEL.USER,
+            localField: 'dealOwnerId',
+            foreignField: '_id',
+            as: 'dealOwner',
+            pipeline: [
+              {
+                $project: {
+                  _id: 1,
+                  name: {
+                    $concat: [
+                      { $ifNull: ['$firstName', ''] },
+                      ' ',
+                      { $ifNull: ['$lastName', ''] },
+                    ],
+                  },
+                  // add user profile image
+                },
+              },
+            ],
+          },
+        },
+        {
+          $unwind: {
+            path: '$dealOwner',
+            preserveNullAndEmptyArrays: true,
+          },
+        },
+      ];
+
+      let searchPipeline = [];
+
+      if (payload?.search) {
+        const search = { $regex: payload.search, $options: 'i' };
+        searchPipeline = [
+          {
+            $match: {
+              $or: [
+                { name: search },
+                { dealStage: search },
+                { 'dealOwner.name': search },
+              ],
+            },
+          },
+        ];
+      }
+
+      const groupByPipeline = [
+        {
+          $group: { _id: '$dealStageId', deals: { $push: '$$ROOT' } },
+        },
+        {
+          $project: {
+            _id: 0,
+            deals: 1,
+          },
+        },
+      ];
+
+      const res = await this.dealsRepository.aggregate([
+        ...filterQueryPipline,
+        ...dealStagePipeline,
+        ...dealOwnerPipline,
+        ...searchPipeline,
+        ...groupByPipeline,
+      ]);
+
+      // Initialize an empty object to store the transformed result
+      const response = {};
+
+      // Loop through the original result and organize it by deal stage name
+      res.forEach((item) => {
+        item.deals.forEach((deal) => {
+          const dealStage = deal?.dealStage;
+
+          if (!response[dealStage]) {
+            response[dealStage] = [];
+          }
+
+          response[dealStage].push(deal);
+        });
+      });
+
+      return successResponse(HttpStatus.OK, ResponseMessage.SUCCESS, response);
     } catch (error) {
       throw new RpcException(error);
     }

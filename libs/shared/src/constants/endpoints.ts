@@ -276,6 +276,7 @@ export const API_ENDPOINTS = {
       CREATE_DEAL: '/',
       UPDATE_DEAL: '/:id',
       GET_DEALS_LIST_VIEW: 'get-deals-list-view',
+      GET_DEALS_GRID_VIEW: 'get-deals-grid-view',
       DELTE_DEALS: 'delete-deals/:ids',
       GET_SOFT_DELETED_DEALS: 'get-soft-deleted-deals',
       RESTORE_DEAL_ACTION: 'restore-deal-action',

@@ -10,3 +10,4 @@ export * from './get-soft-deleted-deals.dto';
 export * from './get-soft-deleted-deals-response.dto';
 export * from './restore-deal-action.dto';
 export * from './restore-deal-action-response.dto';
+export * from './deals-grid-view.dto';
