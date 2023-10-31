@@ -202,6 +202,8 @@ export const API_ENDPOINTS = {
 
     CONTRACT: {
       ADD_CONTRACT: 'add-contract',
+      ADD_CONTRACT_ASSET: 'add-contract-asset/:id',
+      DELETE_CONTRACT_ASSET: 'delete-contract-asset/:id',
       DELETE_CONTRACT: '/:id',
       UPDATE_CONTRACT: 'update/:id',
       RENEW_EXTEND_CONTRACT: 'renew-extend/:id',

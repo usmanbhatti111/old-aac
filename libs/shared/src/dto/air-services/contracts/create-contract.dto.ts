@@ -28,6 +28,20 @@ export class DeleteContractDto {
   id: string;
 }
 
+export class AddAssetToContractDto {
+  @IsNotEmpty()
+  @ApiProperty({
+    type: [String],
+  })
+  contractIds: [string];
+}
+export class DeleteAssetToContractDto {
+  @IsNotEmpty()
+  @ApiProperty({
+    type: [String],
+  })
+  assetsIds: [string];
+}
 export class ItemsDetailDto {
   @IsNotEmpty()
   @IsString()

@@ -1,6 +1,10 @@
 import { HttpStatus, Injectable } from '@nestjs/common';
 import { successResponse } from '@shared/constants';
-import { ContractRepository, mongooseDateFilter } from '@shared';
+import {
+  ContractRepository,
+  InventoryRepository,
+  mongooseDateFilter,
+} from '@shared';
 import { RpcException } from '@nestjs/microservices';
 import {
   ExtendRenewContractDTO,
@@ -11,12 +15,40 @@ import mongoose from 'mongoose';
 
 @Injectable()
 export class ContractService {
-  constructor(private contractRepository: ContractRepository) {}
+  constructor(
+    private contractRepository: ContractRepository,
+    private inventoryRepository: InventoryRepository
+  ) {}
 
   async addContract(payload: any) {
     try {
       const res = await this.contractRepository.create({ ...payload });
       return successResponse(HttpStatus.CREATED, 'Success', res);
+    } catch (error) {
+      throw new RpcException(error);
+    }
+  }
+  async addContractsAsset(payload) {
+    try {
+      const { id, contractIds } = payload;
+      const response = await this.inventoryRepository.updateMany(
+        { _id: { $in: contractIds } },
+        { $push: { contractIds: id } }
+      );
+      return successResponse(HttpStatus.OK, 'Success', response);
+    } catch (error) {
+      throw new RpcException(error);
+    }
+  }
+
+  async deleteContractsAsset(payload) {
+    try {
+      const { id, assetsIds } = payload;
+      const response = await this.inventoryRepository.updateMany(
+        { _id: { $in: assetsIds } },
+        { $pull: { contractIds: id } }
+      );
+      return successResponse(HttpStatus.OK, 'Success', response);
     } catch (error) {
       throw new RpcException(error);
     }

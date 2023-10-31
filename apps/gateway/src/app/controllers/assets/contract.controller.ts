@@ -8,6 +8,7 @@ import {
   Query,
   Get,
   Res,
+  Param,
   UploadedFile,
 } from '@nestjs/common';
 import { ClientProxy, RpcException } from '@nestjs/microservices';
@@ -24,6 +25,9 @@ import {
   UpdateContractDTO,
   ExtendRenewContractDTO,
   GetContactsDto,
+  IdDto,
+  AddAssetToContractDto,
+  DeleteAssetToContractDto,
 } from '@shared/dto';
 import { DownloadService } from '@shared/services';
 import { firstValueFrom } from 'rxjs';
@@ -114,6 +118,51 @@ export class ContractController {
         this.airServiceClient.send(
           { cmd: RMQ_MESSAGES.AIR_SERVICES.CONTRACT.RENEW_EXTEND_CONTRACT },
           payload
+        )
+      );
+
+      return response;
+    } catch (error) {
+      throw new RpcException(error);
+    }
+  }
+
+  @Auth(true)
+  @Patch(API_ENDPOINTS.AIR_SERVICES.CONTRACT.ADD_CONTRACT_ASSET)
+  public async addContractsAsset(
+    @Param() { id }: IdDto,
+    @Body() { contractIds }: AddAssetToContractDto
+  ) {
+    try {
+      const response = await firstValueFrom(
+        this.airServiceClient.send(
+          RMQ_MESSAGES.AIR_SERVICES.CONTRACT.ADD_CONTRACTS_ASSET,
+          {
+            id,
+            contractIds,
+          }
+        )
+      );
+      return response;
+    } catch (error) {
+      throw new RpcException(error);
+    }
+  }
+
+  @Auth(true)
+  @Patch(API_ENDPOINTS.AIR_SERVICES.CONTRACT.DELETE_CONTRACT_ASSET)
+  public async deleteContractsAsset(
+    @Param() { id }: IdDto,
+    @Body() { assetsIds }: DeleteAssetToContractDto
+  ) {
+    try {
+      const response = await firstValueFrom(
+        this.airServiceClient.send(
+          RMQ_MESSAGES.AIR_SERVICES.CONTRACT.DELETE_CONTRACTS_ASSET,
+          {
+            id,
+            assetsIds,
+          }
         )
       );
 
