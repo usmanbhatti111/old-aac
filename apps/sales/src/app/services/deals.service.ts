@@ -1,6 +1,14 @@
 import { BadRequestException, HttpStatus, Injectable } from '@nestjs/common';
 import { RpcException } from '@nestjs/microservices';
-import { DealsRepository, LifecycleStagesRepository } from '@shared';
+import {
+  AttachmentRepository,
+  ContactRepository,
+  DealsRepository,
+  LifecycleStagesRepository,
+  OrganizationRepository,
+  SalesProductRepository,
+  TicketRepository,
+} from '@shared';
 import {
   EDealProbabilityStage,
   EIsDeletedStatus,
@@ -18,13 +26,19 @@ import {
   UpdateDealDto,
 } from '@shared/dto';
 
+import { DealAssociationDto, IdDto } from '@shared/dto';
 import dayjs from 'dayjs';
 
 @Injectable()
 export class DealsService {
   constructor(
     private dealsRepository: DealsRepository,
-    private readonly lifecycleStagesRepository: LifecycleStagesRepository
+    private readonly salesProductRepository: SalesProductRepository,
+    private readonly lifecycleStagesRepository: LifecycleStagesRepository,
+    private readonly contactRepository: ContactRepository,
+    private readonly attachmentRepository: AttachmentRepository,
+    private readonly ticketRepository: TicketRepository,
+    private readonly organizationRepository: OrganizationRepository
   ) {}
 
   async createDeal(payload: CreateDealDto) {
@@ -398,6 +412,27 @@ export class DealsService {
     }
   }
 
+  async associateDeal(payload: DealAssociationDto) {
+    try {
+      const filter = { _id: payload.dealId, isDeleted: false };
+
+      const res = await this.dealsRepository.findOneAndUpdate(filter, {
+        $push: {
+          productsIds: payload.productId,
+          contactsIds: payload.contactId,
+          quotesIds: payload.quoteId,
+          companiesIds: payload.companyId,
+          ticketsIds: payload.ticketId,
+          attachmentsIds: payload.attachmentId,
+        },
+      });
+
+      return successResponse(HttpStatus.OK, ResponseMessage.SUCCESS, res);
+    } catch (error) {
+      throw new RpcException(error);
+    }
+  }
+
   async deleteDeals(payload: DeleteDealsDto) {
     try {
       const ids = payload?.ids?.split(',');
@@ -528,6 +563,27 @@ export class DealsService {
     }
   }
 
+  async disassociateDeal(payload: DealAssociationDto) {
+    try {
+      const filter = { _id: payload.dealId, isDeleted: false };
+
+      const res = await this.dealsRepository.findOneAndUpdate(filter, {
+        $pull: {
+          productsIds: payload.productId,
+          contactsIds: payload.contactId,
+          quotesIds: payload.quoteId,
+          companiesIds: payload.companyId,
+          ticketsIds: payload.ticketId,
+          attachmentsIds: payload.attachmentId,
+        },
+      });
+
+      return successResponse(HttpStatus.OK, ResponseMessage.SUCCESS, res);
+    } catch (error) {
+      throw new RpcException(error);
+    }
+  }
+
   async restoreDealAction(payload: RestoreDealActionDto) {
     try {
       const { id, deletedBy, action } = payload;
@@ -554,6 +610,36 @@ export class DealsService {
       await this.dealsRepository.findOneAndUpdate(filterQuery, data);
 
       return successResponse(HttpStatus.OK, ResponseMessage.SUCCESS, {});
+    } catch (error) {
+      throw new RpcException(error);
+    }
+  }
+
+  async populateAssociations(payload: IdDto) {
+    try {
+      const filter = { _id: payload.id, isDeleted: false };
+      const deal = await this.dealsRepository.findOne(filter);
+      const res = {};
+      res['products'] = await this.salesProductRepository.find({
+        _id: { $in: deal.productsIds },
+      });
+      res['contacts'] = await this.contactRepository.find({
+        _id: { $in: deal.contactsIds },
+      });
+      // deal['quotes'] = await this..find({
+      // _id: { $in: deal.quotesIds },
+      // });
+      res['attachments'] = await this.attachmentRepository.find({
+        _id: { $in: deal.attachmentsIds },
+      });
+      res['companies'] = await this.organizationRepository.find({
+        _id: { $in: deal.companiesIds },
+      });
+      res['tickets'] = await this.ticketRepository.find({
+        _id: { $in: deal.ticketsIds },
+      });
+
+      return successResponse(HttpStatus.OK, ResponseMessage.SUCCESS, res);
     } catch (error) {
       throw new RpcException(error);
     }

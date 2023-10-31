@@ -94,8 +94,13 @@ export const RMQ_MESSAGES = {
     EDIT_CONTACT: 'edit-contact',
     CONTACT: 'contact',
     DELETE_CONTACT: 'delete-contact',
+    PERMANENT_DELETE_CONTACT: 'permanent-delete-contact',
     RESTORE_CONTACT: 'restore-contact',
     ASSIGN_CONTACT_OWNER: 'assign-contact-owner',
+    DELETE_CONTACT_MULTI: 'delete-contact-multi',
+    PERMANENT_DELETE_CONTACT_MULTI: 'permanent-delete-contact-multi',
+    RESTORE_CONTACT_MULTI: 'restore-contact-multi',
+    ASSIGN_CONTACT_OWNER_MULTI: 'assign-contact-owner-multi',
     CONTACT_NOTE: {
       CREATE_CONTACT_NOTE: 'create-contact-note',
       CONTACT_NOTE_LIST: 'contact-note-list',
@@ -299,6 +304,9 @@ export const RMQ_MESSAGES = {
       DELTE_DEALS: 'delete-deals',
       GET_SOFT_DELETED_DEALS: 'get-soft-deleted-deals',
       RESTORE_DEAL_ACTION: 'restore-deal-action',
+      GET_ASSOCIATIONS: 'get-associations',
+      CREATE_ASSOCIATION: 'create-association',
+      DELETE_ASSOCIATION: 'delete-association',
     },
   },
 

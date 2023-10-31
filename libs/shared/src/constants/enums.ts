@@ -130,6 +130,12 @@ export enum StatusEnum {
   INACTIVE,
 }
 
+export enum RecordStatusEnum {
+  ACTIVE = 'ACTIVE',
+  SOFT_DELETED = 'SOFT_DELETED',
+  HARD_DELETED = 'HARD_DELETED',
+}
+
 export enum AssetsSoftwareStatusEnum {
   RESTRICTED = 'Restricted',
   IGNORED = 'Ignored',
