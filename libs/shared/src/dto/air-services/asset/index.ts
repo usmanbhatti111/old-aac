@@ -12,3 +12,7 @@ export * from './inventory-software-response.dto';
 export * from './add-software-users.dto';
 export * from './software-users-response.dto';
 export * from './get-software-users.dto';
+export * from './software-users-details-response.dto';
+export * from './allocate-software-contract.dto';
+export * from './allocate-software-contract-response.dto';
+export * from './software-user-remove.dto';

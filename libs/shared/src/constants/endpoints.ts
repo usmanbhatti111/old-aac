@@ -170,6 +170,9 @@ export const API_ENDPOINTS = {
       ADD_SOFTWARE_USERS: 'add-software-users',
       SOFTWARE_USERS_DETAILS: 'software-users-details/:id',
       SOFTWARE_USERS_DOWNLOAD_FILE: 'software-users-download-file',
+      SOFTWARE_ALLOCATE_CONTRACT: 'software-allocate-contract',
+      SOFTWARE_DEALLOCATE_CONTRACT: 'software-deallocate-contract',
+      SOFTWARE_USERS_REMOVE: 'software-users-remove/:id',
     },
     TASK: {
       ADD_TASK: '/',

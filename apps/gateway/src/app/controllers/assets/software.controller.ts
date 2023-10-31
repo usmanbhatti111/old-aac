@@ -27,6 +27,7 @@ import {
   SERVICES,
 } from '@shared/constants';
 import {
+  AllocateSoftwareContractDto,
   AssetsSoftwareAssignDto,
   AssetsSoftwareDeviceDto,
   AssetsSoftwareDto,
@@ -37,6 +38,9 @@ import {
   GetSoftwareUserDto,
   IdDto,
   PaginationDto,
+  SoftwareContractResponse,
+  SoftwareUserRemoveResponse,
+  SoftwareUsersDetailsResponse,
   SoftwareUsersDto,
   SoftwareUsersResponse,
 } from '@shared/dto';
@@ -243,7 +247,7 @@ export class SoftwareController {
     name: 'id',
     description: 'id should be Assets softwareId',
   })
-  @ApiOkResponse({ type: SoftwareUsersResponse })
+  @ApiOkResponse({ type: SoftwareUsersDetailsResponse })
   async getSoftwareUsers(
     @Param() id: IdDto,
     @Req() { user: { _id } },
@@ -264,6 +268,71 @@ export class SoftwareController {
         return file;
       }
       return res.status(response.statusCode).json(response);
+    } catch (err) {
+      throw new RpcException(err);
+    }
+  }
+  @Put(API_ENDPOINTS.AIR_SERVICES.ASSETS.SOFTWARE_ALLOCATE_CONTRACT)
+  @Auth(true)
+  @ApiOkResponse({ type: SoftwareContractResponse })
+  async allocateSoftwareContract(
+    @Query() dto: AllocateSoftwareContractDto,
+    @Req() { user: { _id } }
+  ): Promise<SoftwareContractResponse> {
+    try {
+      const response = await firstValueFrom(
+        this.airServiceClient.send(
+          RMQ_MESSAGES.AIR_SERVICES.ASSETS.SOFTWARE_ALLOCATE_CONTRACT,
+          { dto, userId: _id }
+        )
+      );
+
+      return response;
+    } catch (err) {
+      throw new RpcException(err);
+    }
+  }
+  @Put(API_ENDPOINTS.AIR_SERVICES.ASSETS.SOFTWARE_DEALLOCATE_CONTRACT)
+  @Auth(true)
+  @ApiOkResponse({ type: SoftwareContractResponse })
+  async deAllocateSoftwareContract(
+    @Query() dto: AllocateSoftwareContractDto,
+    @Req() { user: { _id } }
+  ): Promise<SoftwareContractResponse> {
+    try {
+      const response = await firstValueFrom(
+        this.airServiceClient.send(
+          RMQ_MESSAGES.AIR_SERVICES.ASSETS.SOFTWARE_DEALLOCATE_CONTRACT,
+          { dto, userId: _id }
+        )
+      );
+
+      return response;
+    } catch (err) {
+      throw new RpcException(err);
+    }
+  }
+  @Auth(true)
+  @Delete(API_ENDPOINTS.AIR_SERVICES.ASSETS.SOFTWARE_USERS_REMOVE)
+  @ApiOkResponse({ type: SoftwareUserRemoveResponse })
+  @ApiParam({
+    type: String,
+    name: 'id',
+    description: 'id should be Assets software Users id',
+  })
+  async removeSoftwareUser(
+    @Param() id: IdDto
+  ): Promise<SoftwareUserRemoveResponse> {
+    try {
+      const response = await firstValueFrom(
+        this.airServiceClient.send(
+          RMQ_MESSAGES.AIR_SERVICES.ASSETS.SOFTWARE_USERS_REMOVE,
+          {
+            id,
+          }
+        )
+      );
+      return response;
     } catch (err) {
       throw new RpcException(err);
     }

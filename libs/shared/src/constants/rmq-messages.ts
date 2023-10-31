@@ -192,6 +192,9 @@ export const RMQ_MESSAGES = {
       ADD_SOFTWARE_USERS: 'add-software-users',
       SOFTWARE_USERS_DETAILS: 'software-users-details',
       GET_PURCHASEORDERASSOCIATE: 'get-purchaseorder-associate',
+      SOFTWARE_ALLOCATE_CONTRACT: 'software-allocate-contract',
+      SOFTWARE_DEALLOCATE_CONTRACT: 'software-deallocate-contract',
+      SOFTWARE_USERS_REMOVE: 'software-users-remove',
     },
     TASK: {
       ADD_TASK: 'add_task',

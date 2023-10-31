@@ -8,5 +8,7 @@ export * from './attachment.dto';
 export * from './attachment-response.dto';
 export * from './attachment-get-response';
 export * from './attachment-delete-response.dto';
+export * from './media.dto';
+export * from './activity-log.dto';
 export * from './activity-log.dto';
 export * from './media.dto';

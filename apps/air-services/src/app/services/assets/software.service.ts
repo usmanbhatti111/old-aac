@@ -3,6 +3,7 @@ import { RpcException } from '@nestjs/microservices';
 import { AssetsSoftwareRepository, SoftwareUsersRepository } from '@shared';
 import { mongooseDateFilter } from '@shared';
 import {
+  AllocateSoftwareContractDto,
   AssetsSoftwareDto,
   GetAssetsSoftwareDetails,
   GetSoftwareUserDto,
@@ -137,7 +138,6 @@ export class SoftwareService {
       throw new RpcException(error);
     }
   }
-
   async addSoftwareUsers(payload: { dto: SoftwareUsersDto; userId: string }) {
     try {
       const { userId } = payload;
@@ -236,6 +236,64 @@ export class SoftwareService {
         HttpStatus.OK,
         `Software Users Details Successfully`,
         softwareDetails
+      );
+      return response;
+    } catch (error) {
+      throw new RpcException(error);
+    }
+  }
+
+  async allocateSoftwareContract(payload: {
+    dto: AllocateSoftwareContractDto;
+    userId: string;
+  }) {
+    try {
+      const { id, contractId } = payload.dto;
+
+      const allocate = await this.softwareUsersRepo.findOneAndUpdate(
+        { _id: id },
+        { $set: { contractId, isContractAllocated: true } }
+      );
+      const response = successResponse(
+        HttpStatus.OK,
+        `Contract Allocated Successfully`,
+        allocate
+      );
+      return response;
+    } catch (error) {
+      throw new RpcException(error);
+    }
+  }
+
+  async deAllocateSoftwareContract(payload: {
+    dto: AllocateSoftwareContractDto;
+    userId: string;
+  }) {
+    try {
+      const { id, contractId } = payload.dto;
+
+      const allocate = await this.softwareUsersRepo.findOneAndUpdate(
+        { _id: id },
+        { $unset: { contractId }, $set: { isContractAllocated: false } }
+      );
+      const response = successResponse(
+        HttpStatus.OK,
+        `Contract Deallocated Successfully`,
+        allocate
+      );
+      return response;
+    } catch (error) {
+      throw new RpcException(error);
+    }
+  }
+  async softwareUserRemove(payload: { id: IdDto }) {
+    try {
+      const { id } = payload.id;
+      const removeUser = await this.softwareUsersRepo.delete({ _id: id });
+      const response = successResponse(
+        HttpStatus.OK,
+        `User Remove Successfully`,
+        removeUser
       );
       return response;
     } catch (error) {

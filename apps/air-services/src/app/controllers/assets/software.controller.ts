@@ -2,6 +2,7 @@ import { Controller } from '@nestjs/common';
 import { MessagePattern, Payload } from '@nestjs/microservices';
 import { RMQ_MESSAGES } from '@shared/constants';
 import {
+  AllocateSoftwareContractDto,
   AssetsSoftwareAssignDto,
   AssetsSoftwareDto,
   GetAssetsSoftwareDetails,
@@ -55,5 +56,21 @@ export class SoftwareController {
     @Payload() payload: { id: IdDto; userId: string; dto: GetSoftwareUserDto }
   ) {
     return this.softwareService.getSoftwareUsers(payload);
+  }
+  @MessagePattern(RMQ_MESSAGES.AIR_SERVICES.ASSETS.SOFTWARE_ALLOCATE_CONTRACT)
+  allocateSoftwareContract(
+    @Payload() payload: { dto: AllocateSoftwareContractDto; userId: string }
+  ) {
+    return this.softwareService.allocateSoftwareContract(payload);
+  }
+  @MessagePattern(RMQ_MESSAGES.AIR_SERVICES.ASSETS.SOFTWARE_DEALLOCATE_CONTRACT)
+  deAllocateSoftwareContract(
+    @Payload() payload: { dto: AllocateSoftwareContractDto; userId: string }
+  ) {
+    return this.softwareService.deAllocateSoftwareContract(payload);
+  }
+  @MessagePattern(RMQ_MESSAGES.AIR_SERVICES.ASSETS.SOFTWARE_USERS_REMOVE)
+  async softwareUsersRemove(@Payload() payload: { id: IdDto }) {
+    return this.softwareService.softwareUserRemove(payload);
   }
 }
