@@ -9,6 +9,7 @@ import {
 } from 'class-validator';
 import { Transform } from 'class-transformer';
 import { toMongoObjectId } from '../../functions';
+import { ApiSingleFile } from '../../custom';
 export class CreateContactDto {
   @ApiProperty({
     required: true,
@@ -19,11 +20,7 @@ export class CreateContactDto {
   @IsEmail()
   email: string;
 
-  @ApiProperty({
-    type: String,
-    format: 'binary',
-    example: 'testimg.png',
-  })
+  @ApiSingleFile({ required: false })
   @IsOptional()
   profilePicture: any;
 
@@ -59,12 +56,14 @@ export class CreateContactDto {
   @IsISO8601()
   @ApiProperty({
     example: new Date().toISOString(),
+    required: false,
   })
   dateOfBirth: Date;
 
   @ApiProperty({
     example: '00923165372970',
     maxLength: 50,
+    required: false,
   })
   @IsOptional()
   @IsMobilePhone()
@@ -73,6 +72,7 @@ export class CreateContactDto {
   @ApiProperty({
     example: '00923165372970',
     maxLength: 50,
+    required: false,
   })
   @IsMobilePhone()
   @IsOptional()
@@ -91,6 +91,7 @@ export class CreateContactDto {
   @Transform(toMongoObjectId, { toClassOnly: true })
   @ApiProperty({
     example: '651bdf53beeb02bc627d6804',
+    required: false,
   })
   contactOwnerId: string;
 
@@ -98,6 +99,7 @@ export class CreateContactDto {
   @Transform(toMongoObjectId, { toClassOnly: true })
   @ApiProperty({
     example: '651bdf53beeb02bc627d6804',
+    required: false,
   })
   lifeCycleStageId: string;
 
@@ -105,6 +107,7 @@ export class CreateContactDto {
   @IsISO8601()
   @ApiProperty({
     example: new Date().toISOString(),
+    required: false,
   })
   dataOfJoinig: Date;
 
@@ -112,6 +115,7 @@ export class CreateContactDto {
   @Transform(toMongoObjectId, { toClassOnly: true })
   @ApiProperty({
     example: '651bdf53beeb02bc627d6804',
+    required: false,
   })
   statusId: string;
 

@@ -14,6 +14,7 @@ import {
   ContactMeetingDeleteDto,
   ContactMeetingFilterDto,
   ContactMeetingIdParamDto,
+  ContactMultiDto,
   ContactNoteDeleteDto,
   ContactNoteFilterDto,
   ContactNoteIdParamDto,
@@ -36,9 +37,34 @@ import {
 export class ContactController {
   constructor(private readonly contactService: ContactService) {}
 
+  @MessagePattern(RMQ_MESSAGES.CONTACT.PERMANENT_DELETE_CONTACT_MULTI)
+  async permanentDeleteContactMulti(@Payload() payload: ContactMultiDto) {
+    return await this.contactService.permanentDeleteContactMulti(payload);
+  }
+
+  @MessagePattern(RMQ_MESSAGES.CONTACT.RESTORE_CONTACT_MULTI)
+  async restoreContactMulti(@Payload() payload: ContactMultiDto) {
+    return await this.contactService.restoreContactMulti(payload);
+  }
+
+  @MessagePattern(RMQ_MESSAGES.CONTACT.ASSIGN_CONTACT_OWNER_MULTI)
+  async assignContactOwnerMulti(@Payload() payload: ContactMultiDto) {
+    return await this.contactService.assignContactOwnerMulti(payload);
+  }
+
+  @MessagePattern(RMQ_MESSAGES.CONTACT.DELETE_CONTACT_MULTI)
+  async deleteContactMulti(@Payload() payload: ContactMultiDto) {
+    return await this.contactService.deleteContactMulti(payload);
+  }
+
   @MessagePattern(RMQ_MESSAGES.CONTACT.CONTACT_DELETED_LIST)
   async getDeletedContacts(@Payload() payload: ContactDeletedFilterDto) {
     return await this.contactService.getDeletedContacts(payload);
+  }
+
+  @MessagePattern(RMQ_MESSAGES.CONTACT.PERMANENT_DELETE_CONTACT)
+  async permanentDeleteContact(@Payload() payload: ContactDeleteDto) {
+    return await this.contactService.permanentDeleteContact(payload);
   }
 
   @MessagePattern(RMQ_MESSAGES.CONTACT.DELETE_CONTACT)

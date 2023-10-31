@@ -43,6 +43,11 @@ export const API_ENDPOINTS = {
     RESTORE_CONTACT: 'restore/:contactId',
     CONTACT_TASKS: 'contact-tasks/',
     ASSIGN_CONTACT_OWNER: 'assign-contact-owner/:contactId',
+    PERMANENT_DELETE_CONTACT: 'permanent/:contactId',
+    DELETE_CONTACT_MULTI: '/',
+    PERMANENT_DELETE_CONTACT_MULTI: 'permanent/',
+    RESTORE_CONTACT_MULTI: 'restore/',
+    ASSIGN_CONTACT_OWNER_MULTI: 'assign-contact-owner/',
     CONTACT_NOTE: {
       CREATE_CONTACT_NOTE: 'note/',
       CONTACT_NOTE_LIST: 'note/',

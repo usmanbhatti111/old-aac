@@ -10,12 +10,10 @@ import {
   Query,
   Req,
   UploadedFile,
-  UseInterceptors,
 } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
 import {
   ApiBearerAuth,
-  ApiConsumes,
   ApiCreatedResponse,
   ApiOkResponse,
   ApiTags,
@@ -41,7 +39,7 @@ import {
 import { firstValueFrom } from 'rxjs';
 import { Auth } from '../../../decorators/auth.decorator';
 import { AppRequest } from '../../../shared/interface/request.interface';
-import { FilesInterceptor } from '@nestjs/platform-express';
+import { ApiFormData } from '@shared';
 
 @ApiTags(API_TAGS.CONTACT_NOTE)
 @Controller(CONTROLLERS.CONTACT_NOTE)
@@ -53,8 +51,13 @@ export class ContactNoteController {
 
   @Auth(true)
   @Post(API_ENDPOINTS.CONTACT.CONTACT_NOTE.CREATE_CONTACT_NOTE)
-  @ApiConsumes('multipart/form-data')
-  @UseInterceptors(FilesInterceptor('attachment'))
+  @ApiFormData({
+    required: false,
+    single: true,
+    fieldName: 'attachment',
+    fileTypes: ['jpg', 'png'],
+    errorMessage: 'Invalid document file entered.',
+  })
   @ApiCreatedResponse({ type: CreateContactNoteResponseDto })
   public async createContactNote(
     @Body() payload: CreateContactNoteDto,

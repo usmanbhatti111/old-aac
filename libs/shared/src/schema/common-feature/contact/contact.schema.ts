@@ -1,7 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument, SchemaTypes } from 'mongoose';
 import { AbstractSchema } from '../../abstract-repo/abstract.schema';
-import { MODEL } from '@shared/constants';
+import { MODEL, RecordStatusEnum } from '@shared/constants';
 import { MediaObject } from '@shared/dto';
 
 export type ContactDocument = HydratedDocument<Contact>;
@@ -32,6 +32,14 @@ export class Contact extends AbstractSchema {
   @Prop()
   whatsAppNumber?: string;
 
+  @Prop({
+    type: String,
+    required: false,
+    default: RecordStatusEnum.ACTIVE,
+    enum: RecordStatusEnum,
+  })
+  recordStatus?: string;
+
   @Prop({ required: true, type: SchemaTypes.ObjectId, ref: MODEL.USER })
   contactOwnerId?: string;
 
@@ -56,10 +64,12 @@ export class Contact extends AbstractSchema {
   @Prop({ required: false, type: SchemaTypes.ObjectId, ref: MODEL.USER })
   deletedBy?: string;
 
-  @Prop({ default: false })
-  isDeleted?: boolean;
-
-  @Prop({ default: true, type: SchemaTypes.ObjectId, ref: 'lifecyclestages' })
+  @Prop({
+    required: false,
+    default: true,
+    type: SchemaTypes.ObjectId,
+    ref: 'lifecyclestages',
+  })
   lifeCycleStageId?: string;
 
   @Prop({ required: false, type: SchemaTypes.ObjectId, ref: 'statuses' })
