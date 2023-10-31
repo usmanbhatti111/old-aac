@@ -33,6 +33,7 @@ import { UserController } from './controllers/user-account/user.controller';
 import { AuthGuard } from './shared/guards/auth.guard';
 import { SoftwareController } from './controllers/assets/software.controller';
 import { TaskManagementController } from './controllers/tasks/task-management.controller';
+import { WorkloadManagementController } from './controllers/workload/workload-management.controller';
 // import { ActivityLogMiddleware } from './middleware/activity-log.middleware';
 import { RequestLogController } from './controllers/log/request-log.controller';
 import { SubscriptionController } from './controllers/org-admin/subscription.controller';
@@ -101,6 +102,7 @@ import { NoteController } from './controllers/sales-settings/note.controller';
     DocumentsController,
     ContractController,
     ProductCategoriesController,
+    WorkloadManagementController,
     LifecycleStagesController,
     AirServicesDashboardController,
     DealPipelineController,

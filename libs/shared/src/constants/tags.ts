@@ -8,6 +8,7 @@ export const API_TAGS = {
   ORGANIZATION_COMPANY_ACCOUNT: 'Organization Company Account',
   TASK: 'Task',
   TASK_MANAGEMENT: 'Task Management',
+  WORK_LOAD_MANAGEMENT: 'Work Load Management',
   SUPER_ADMIN: 'Super Admin',
   SETTINGS: 'Settings',
   TICKETS: 'Tickets',

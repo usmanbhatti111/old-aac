@@ -197,6 +197,9 @@ export const API_ENDPOINTS = {
       DELETE_TASK: 'management/:id',
       TASK_ACTIVITY_LIST: 'activity',
     },
+    WORK_LOAD_MANAGEMENT: {
+      WORK_LOAD_LIST: 'workload-management',
+    },
     EXPENSE: {
       ADD_EXPENSE: 'add-expense',
       GET_EXPENSE: 'get-expense',

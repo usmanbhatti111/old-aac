@@ -212,6 +212,9 @@ export const RMQ_MESSAGES = {
       DELETE_TASK: 'delete-task',
       TASK_ACTIVITY_LIST: 'task-activity',
     },
+    WORK_LOAD_MANAGEMENT: {
+      WORK_LOAD_LIST: 'workload-list',
+    },
     EXPENSE: {
       ADD_EXPENSE: 'add-expense',
       GET_EXPENSE: 'get-expense',
