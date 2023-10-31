@@ -4,12 +4,10 @@ RUN mkdir -p /var/www/air-services
 WORKDIR /var/www/air-services
 ADD . /var/www/air-services
 
-RUN npm install -g pnpm
+RUN npm config set network-timeout 600000 -g
 
-RUN pnpm config set network-timeout 600000 -g
+RUN npm install
 
-RUN pnpm install
-
-RUN pnpm exec nx build air-services
+RUN npm exec nx build air-services
 
 CMD ["node", "./dist/apps/air-services/main.js"]
