@@ -4,10 +4,6 @@ RUN mkdir -p /var/www/marketing
 WORKDIR /var/www/marketing
 ADD . /var/www/marketing
 
-RUN npm config set fetch-retry-maxtimeout 600000 -g
-
-RUN npm install
-
 RUN npx nx build marketing
 
 CMD ["node", "./dist/apps/marketing/main.js"]
