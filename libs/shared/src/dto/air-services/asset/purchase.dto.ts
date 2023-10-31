@@ -10,7 +10,10 @@ import {
   IsArray,
   ArrayNotEmpty,
 } from 'class-validator';
-import { EPurchaseOrderStatus } from '../../../constants/enums';
+import {
+  EPurchaseOrderStatus,
+  EApprovalStatusStatus,
+} from '../../../constants/enums';
 import { paginationDTO } from '../../pagination/pagination.dto';
 import { EMongooseDateFilter, EExportFile } from '@shared/constants';
 export class PurchaseDetailDto {
@@ -143,6 +146,7 @@ export class addPurchaseOrderDto {
     required: false,
   })
   purchaseDetails: PurchaseDetailDto[];
+
   @IsOptional()
   @IsNumber()
   @ApiProperty({
@@ -443,4 +447,51 @@ export class DeleteAssociatePurchaseOrderDto {
     required: false,
   })
   associateOrderId: string;
+}
+export class ApproverDto {
+  @IsMongoId()
+  @ApiProperty({
+    type: String,
+    example: '652ffb62436eb52662f9752e',
+    required: true,
+  })
+  requestedapprId: string;
+  @IsMongoId()
+  @ApiProperty({
+    type: String,
+    example: '652ffb62436eb52662f9752e',
+    required: false,
+  })
+  userId: string;
+
+  @ApiProperty({
+    enum: EApprovalStatusStatus,
+    required: false,
+    example: 'PENDING',
+  })
+  @IsOptional()
+  approvalStatus: string;
+}
+export class AddPurchaseOrderApprover {
+  @ApiProperty({ example: 200 })
+  statusCode: number;
+  @ApiProperty({
+    required: true,
+    example: '65152939f50394f42cee2db4',
+  })
+  id: string;
+
+  @ApiProperty({
+    type: [ApproverDto],
+    required: false,
+  })
+  PurchaseApprovals: ApproverDto[];
+}
+export class FilterPurchaseOrderRecievedDto extends paginationDTO {
+  @IsOptional()
+  @ApiProperty({
+    required: true,
+    example: 'RECIEVED',
+  })
+  status: string;
 }

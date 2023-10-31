@@ -37,8 +37,10 @@ import {
   UpdatePurchaseOrderDto,
   GetPurchasesResponseOrderDto,
   IdDto,
+  FilterPurchaseOrderRecievedDto,
   GetPurchasesAssociationResponseOrderDto,
   DeleteAssociatePurchaseOrderDto,
+  AddPurchaseOrderApprover,
   AssociatePurchaseOrderDto,
 } from '@shared/dto';
 import { DownloadService } from '@shared/services';
@@ -252,6 +254,49 @@ export class PurchaseOrderController {
       return res.status(response.statusCode).json(response);
     } catch (err) {
       throw new RpcException(err);
+    }
+  }
+  @Auth(true)
+  @Patch(API_ENDPOINTS.AIR_SERVICES.ASSETS.ADD_APPROVER_ORDER)
+  public async addPurchaseOrderApprover(
+    @Body() dto: AddPurchaseOrderApprover,
+    @Req() request: AppRequest,
+    @Req() { user: { _id } }
+  ) {
+    try {
+      const response = await firstValueFrom(
+        this.airServiceClient.send(
+          { cmd: RMQ_MESSAGES.AIR_SERVICES.ASSETS.ADD_APPROVER_ORDER },
+          { dto, userId: _id }
+        )
+      );
+      return response;
+    } catch (error) {
+      throw new RpcException(error);
+    }
+  }
+  @Auth(true)
+  @Get(API_ENDPOINTS.AIR_SERVICES.ASSETS.GET_PURCHASEORDER_RECIEVED)
+  @ApiCreatedResponse({ type: GetPurchasesResponseOrderDto })
+  public async getPurchaseOrderRecived(
+    @Query() filterOrder: FilterPurchaseOrderRecievedDto,
+    @Req() request: AppRequest
+  ) {
+    try {
+      const { user } = request;
+
+      const organizationId = user?.organization;
+
+      const createdBy = user._id;
+      const response = await firstValueFrom(
+        this.airServiceClient.send(
+          { cmd: RMQ_MESSAGES.AIR_SERVICES.ASSETS.GET_PURCHASEORDER_RECIEVED },
+          { ...filterOrder, organizationId, createdBy }
+        )
+      );
+      return response;
+    } catch (error) {
+      throw new RpcException(error);
     }
   }
 }
