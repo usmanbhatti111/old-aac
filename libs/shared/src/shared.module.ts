@@ -47,6 +47,7 @@ import {
   UserRepository,
   AttachmentRepository,
   ContactCallRepository,
+  SoftwareUsersRepository,
   ActivityLogRepository,
   DashboardRepository,
   ArticlesRepository,
@@ -117,6 +118,7 @@ import { DownloadService, S3Service } from './services';
     AttachmentRepository,
     ContactCallRepository,
     LifecycleStagesRepository,
+    SoftwareUsersRepository,
     DashboardRepository,
     ContactMeetingRepository,
     DealsRepository,
@@ -136,7 +138,7 @@ import { DownloadService, S3Service } from './services';
     S3Service,
     DownloadService,
     ActivityLogRepository,
-    ArticlesRepository
+    ArticlesRepository,
   ],
   exports: [
     SharedService,
@@ -192,6 +194,7 @@ import { DownloadService, S3Service } from './services';
     ContactStateRepository,
     ContactCallRepository,
     LifecycleStagesRepository,
+    SoftwareUsersRepository,
     ActivityLogRepository,
     ArticlesRepository,
     ContactMeetingRepository,

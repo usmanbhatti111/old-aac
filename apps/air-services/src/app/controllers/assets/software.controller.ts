@@ -5,8 +5,10 @@ import {
   AssetsSoftwareAssignDto,
   AssetsSoftwareDto,
   GetAssetsSoftwareDetails,
+  GetSoftwareUserDto,
   IdDto,
   PaginationDto,
+  SoftwareUsersDto,
 } from '@shared/dto';
 
 import { SoftwareService } from '../../services/assets/software.service';
@@ -41,5 +43,17 @@ export class SoftwareController {
   @MessagePattern(RMQ_MESSAGES.AIR_SERVICES.ASSETS.ASSIGN_CATEGORY)
   assignCatToSoftware(@Payload() payload: AssetsSoftwareAssignDto) {
     return this.softwareService.assignCatToSoftware(payload);
+  }
+  @MessagePattern(RMQ_MESSAGES.AIR_SERVICES.ASSETS.ADD_SOFTWARE_USERS)
+  addSoftwareUsers(
+    @Payload() payload: { dto: SoftwareUsersDto; userId: string }
+  ) {
+    return this.softwareService.addSoftwareUsers(payload);
+  }
+  @MessagePattern(RMQ_MESSAGES.AIR_SERVICES.ASSETS.SOFTWARE_USERS_DETAILS)
+  getSoftwareUsers(
+    @Payload() payload: { id: IdDto; userId: string; dto: GetSoftwareUserDto }
+  ) {
+    return this.softwareService.getSoftwareUsers(payload);
   }
 }

@@ -9,6 +9,8 @@ import {
   Put,
   Query,
   Patch,
+  Req,
+  Res,
 } from '@nestjs/common';
 import { ClientProxy, RpcException } from '@nestjs/microservices';
 import {
@@ -32,17 +34,23 @@ import {
   DeleteAssetsSoftwareResponse,
   EditAssetsSoftwareResponse,
   GetAssetsSoftwareDetails,
+  GetSoftwareUserDto,
   IdDto,
   PaginationDto,
+  SoftwareUsersDto,
+  SoftwareUsersResponse,
 } from '@shared/dto';
 import { firstValueFrom } from 'rxjs';
 import { Auth } from '../../decorators/auth.decorator';
+import { DownloadService } from '@shared/services';
+@ApiBearerAuth()
 @ApiTags(API_TAGS.ASSETS)
 @Controller(CONTROLLERS.ASSETS)
 @ApiBearerAuth()
 export class SoftwareController {
   constructor(
-    @Inject(SERVICES.AIR_SERVICES) private airServiceClient: ClientProxy
+    @Inject(SERVICES.AIR_SERVICES) private airServiceClient: ClientProxy,
+    private readonly downloadService: DownloadService
   ) {}
 
   @Auth(true)
@@ -203,6 +211,59 @@ export class SoftwareController {
         )
       );
       return response;
+    } catch (err) {
+      throw new RpcException(err);
+    }
+  }
+
+  @Post(API_ENDPOINTS.AIR_SERVICES.ASSETS.ADD_SOFTWARE_USERS)
+  @Auth(true)
+  @ApiOkResponse({ type: SoftwareUsersResponse })
+  async addSoftwareUsers(
+    @Query() dto: SoftwareUsersDto,
+    @Req() { user: { _id } }
+  ): Promise<SoftwareUsersResponse> {
+    try {
+      const response = await firstValueFrom(
+        this.airServiceClient.send(
+          RMQ_MESSAGES.AIR_SERVICES.ASSETS.ADD_SOFTWARE_USERS,
+          { dto, userId: _id }
+        )
+      );
+
+      return response;
+    } catch (err) {
+      throw new RpcException(err);
+    }
+  }
+  @Get(API_ENDPOINTS.AIR_SERVICES.ASSETS.SOFTWARE_USERS_DETAILS)
+  @Auth(true)
+  @ApiParam({
+    type: String,
+    name: 'id',
+    description: 'id should be Assets softwareId',
+  })
+  @ApiOkResponse({ type: SoftwareUsersResponse })
+  async getSoftwareUsers(
+    @Param() id: IdDto,
+    @Req() { user: { _id } },
+    @Query() dto: GetSoftwareUserDto,
+    @Res() res: Response | any
+  ) {
+    try {
+      const { exportType } = dto;
+      const response = await firstValueFrom(
+        this.airServiceClient.send(
+          RMQ_MESSAGES.AIR_SERVICES.ASSETS.SOFTWARE_USERS_DETAILS,
+          { id, userId: _id, dto }
+        )
+      );
+      if (exportType) {
+        const data = response.data.softwareusers || [];
+        const file = this.downloadService.downloadFile(exportType, data, res);
+        return file;
+      }
+      return res.status(response.statusCode).json(response);
     } catch (err) {
       throw new RpcException(err);
     }

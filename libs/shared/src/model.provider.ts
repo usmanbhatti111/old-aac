@@ -88,6 +88,8 @@ import {
   DashboardSchema,
   OrganizationCompanyAccount,
   OrganizationCompanyAccountSchema,
+  SoftwareUsers,
+  SoftwareUsersSchema,
   ActivityLog,
   ActivityLogSchema,
   Articles,
@@ -317,6 +319,10 @@ export const DbModels = [
   {
     name: SalesProduct.name,
     schema: SalesProductSchema,
+  },
+  {
+    name: SoftwareUsers.name,
+    schema: SoftwareUsersSchema,
   },
   {
     name: ActivityLog.name,

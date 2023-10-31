@@ -167,6 +167,9 @@ export const API_ENDPOINTS = {
       SEARCH_INVENTORY: 'search-inventory',
       DELETE_SOFTWARE_DEVICE: 'software-device/:id',
       GET_INVENTORY_SOFTWARE_DETAILS: 'get-inventory-software/:id',
+      ADD_SOFTWARE_USERS: 'add-software-users',
+      SOFTWARE_USERS_DETAILS: 'software-users-details/:id',
+      SOFTWARE_USERS_DOWNLOAD_FILE: 'software-users-download-file',
     },
     TASK: {
       ADD_TASK: '/',

@@ -9,3 +9,6 @@ export * from './edit-assets-software-response.dto';
 export * from './delete-assets-software-response.dto';
 export * from './get-assets-software-details.dto';
 export * from './inventory-software-response.dto';
+export * from './add-software-users.dto';
+export * from './software-users-response.dto';
+export * from './get-software-users.dto';
