@@ -264,3 +264,9 @@ export enum EDealProbabilityStage {
   'WON' = 100,
   'LOW' = 0,
 }
+
+export enum EIsDeletedStatus {
+  ACTIVE = 'ACTIVE',
+  SOFT_DELETED = 'SOFT_DELETED',
+  HARD_DELETED = 'HARD_DELETED',
+}

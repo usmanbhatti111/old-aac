@@ -21,16 +21,17 @@ export class ProductsService {
   async addProduct(payload: AddProductDto) {
     try {
       const { file } = payload;
+      if (file) {
+        const s3Response = await this.s3.uploadFile(file, 'products/{uuid}');
 
-      const s3Response = await this.s3.uploadFile(file, 'products/{uuid}');
+        const logo: MediaObject = {
+          ...s3Response,
+          size: file.size,
+          mimetype: file.mimetype,
+        };
 
-      const logo: MediaObject = {
-        ...s3Response,
-        size: file.size,
-        mimetype: file.mimetype,
-      };
-
-      payload.logo = logo;
+        payload.logo = logo;
+      }
 
       const res = await this.productsRepository.create(payload);
 

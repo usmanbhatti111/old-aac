@@ -300,9 +300,13 @@ export const RMQ_MESSAGES = {
       CREATE_DEAL: 'create-deal',
       UPDATE_DEAL: 'update-deal',
       GET_DEALS_LIST_VIEW: 'get-deals-list-view',
-      GET_ASSOCIATIONS:'get-associations',
-      CREATE_ASSOCIATION:'create-association',
-      DELETE_ASSOCIATION:'delete-association'
+      GET_DEALS_GRID_VIEW: 'get-deals-grid-view',
+      DELTE_DEALS: 'delete-deals',
+      GET_SOFT_DELETED_DEALS: 'get-soft-deleted-deals',
+      RESTORE_DEAL_ACTION: 'restore-deal-action',
+      GET_ASSOCIATIONS: 'get-associations',
+      CREATE_ASSOCIATION: 'create-association',
+      DELETE_ASSOCIATION: 'delete-association',
     },
   },
 
