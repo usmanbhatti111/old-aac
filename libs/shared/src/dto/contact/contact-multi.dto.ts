@@ -2,7 +2,6 @@ import { ApiProperty } from '@nestjs/swagger';
 import { IsArray, IsNotEmpty } from 'class-validator';
 import { Transform } from 'class-transformer';
 import { toMongoObjectId } from '../../functions';
-``;
 export class ContactMultiDto {
   @ApiProperty({
     required: true,

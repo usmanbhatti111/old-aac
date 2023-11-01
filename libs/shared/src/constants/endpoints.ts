@@ -26,6 +26,7 @@ export const API_ENDPOINTS = {
   },
   PLAN: {
     ADD_PLAN: '/',
+    ADD_PLAN_TYPE: 'plan-type',
     PLAN_LIST: '/',
     PLAN: '/:planId',
     EDIT_PLAN: '/:planId',
@@ -39,6 +40,7 @@ export const API_ENDPOINTS = {
     CONTACT_ASSOCIATIONS: 'contact-associations/',
     CONTACT: '/:contactId',
     EDIT_CONTACT: '/:contactId',
+    IMPORT_CONTACT: 'import',
     DELETE_CONTACT: '/:contactId',
     RESTORE_CONTACT: 'restore/:contactId',
     CONTACT_TASKS: 'contact-tasks/',

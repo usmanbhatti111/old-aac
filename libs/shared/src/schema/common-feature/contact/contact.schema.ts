@@ -76,7 +76,7 @@ export class Contact extends AbstractSchema {
   statusId?: string;
 
   @Prop()
-  dataOfJoinig?: Date;
+  dateOfJoinig?: Date;
 }
 
 export const ContactSchema = SchemaFactory.createForClass(Contact);

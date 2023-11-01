@@ -85,10 +85,10 @@ export class OrganizationCompanyAccountController {
   @ApiOkResponse({ type: OrganizationCompanyAccountResponseDto })
   public async updateOrganizationAccountStatus(
     @Query() payload: UpdateOrganizationCompanyAccountStatusDto,
-    @Req() request: AppRequest,
+    @Req() request: AppRequest
   ): Promise<OrganizationCompanyAccountResponseDto> {
     payload.updatedBy = request?.user?._id;
-    
+
     const response = await firstValueFrom(
       this.organizationAccountServiceClient.send(
         {

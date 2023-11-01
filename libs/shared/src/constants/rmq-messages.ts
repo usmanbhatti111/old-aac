@@ -26,6 +26,7 @@ export const RMQ_MESSAGES = {
   },
   PLAN: {
     ADD_PLAN: 'add-plan',
+    ADD_PLAN_TYPE: 'add-plan-type',
     PLAN_LIST: 'plan-list',
     EDIT_PLAN: 'edit-plan',
     PLAN: 'plan',
@@ -96,6 +97,7 @@ export const RMQ_MESSAGES = {
     CONTACT_ASSOCIATIONS: 'contact-associations',
     CONTACT_TASKS: 'contact-tasks',
     EDIT_CONTACT: 'edit-contact',
+    IMPORT_CONTACT: 'import-contact',
     CONTACT: 'contact',
     DELETE_CONTACT: 'delete-contact',
     PERMANENT_DELETE_CONTACT: 'permanent-delete-contact',

@@ -120,6 +120,4 @@ export class OrganizationController {
 
     return res.status(response.statusCode).json(response);
   }
-
-
 }
