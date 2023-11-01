@@ -262,6 +262,11 @@ export enum EDealProbabilityStage {
   'LOW' = 0,
 }
 
+export enum ESendVerifCodeChannel {
+  SMS = 'sms',
+  CALLS = 'calls',
+}
+
 export enum EIsDeletedStatus {
   ACTIVE = 'ACTIVE',
   SOFT_DELETED = 'SOFT_DELETED',

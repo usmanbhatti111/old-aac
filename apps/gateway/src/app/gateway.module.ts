@@ -47,6 +47,7 @@ import { LifecycleStagesController } from './controllers/org-admin/lifecycle-sta
 import { DealPipelineController } from './controllers/sales-settings/deal-pipeline.controller';
 import { SalesProductController } from './controllers/sales-settings/sales-product.controller';
 import { AttachmentController } from './controllers/common-features/attachment.controller';
+import { CallsController } from './controllers/common-features/calls.controller';
 import { ContactNoteController } from './controllers/common-features/contact/contact-note.controller';
 import { ContactCallController } from './controllers/common-features/contact/contact-call.controller';
 import { ContactMeetingController } from './controllers/common-features/contact/contact-meeting.controller';
@@ -102,6 +103,7 @@ import { NoteController } from './controllers/sales/note.controller';
     DealPipelineController,
     SalesProductController,
     AttachmentController,
+    CallsController,
     DealsController,
     NoteController,
   ],

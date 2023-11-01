@@ -299,6 +299,16 @@ export const RMQ_MESSAGES = {
     UPDATE_SALES_PRODUCT: 'update-sales-product',
     DELETE_SALES_PRODUCT: 'delete-sales-product',
   },
+
+  CALLS: {
+    GET_NUMBERS_LIST: 'get-numbers-list',
+    INITIATE_CALL: 'initiate-call',
+    VERIFY_PHONE_NUMBER: 'verify-phone-number',
+    NEW_OUTGOING_CALLER: 'new-outgoing-caller',
+    SEND_VERIFICATION_TOKEN: 'send-verification-token',
+    VERIFY_NUMBER_TOKEN: 'verify-number-token',
+  },
+
   SALES: {
     DEALS: {
       CREATE_DEAL: 'create-deal',

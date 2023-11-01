@@ -298,7 +298,14 @@ export const API_ENDPOINTS = {
       DELETE_NOTE: 'delete-note',
     },
   },
-
+  CALLS: {
+    GET_NUMBERS_LIST: 'get-numbers-list',
+    INITIATE_CALL: 'initiate-call',
+    VERIFY_PHONE_NUMBER: 'verify-phone-number',
+    NEW_OUTGOING_CALLER: 'new-outgoing-caller',
+    SEND_VERIFICATION_TOKEN: 'send-verification-token',
+    VERIFY_NUMBER_TOKEN: 'verify_number_token',
+  },
   DEAL_NOTE: {
     CREATE_DEAL_NOTE: '/',
     GET_DEAL_NOTES: '/',
