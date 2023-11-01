@@ -82,3 +82,9 @@ export class GetArticlesDto extends paginationDTO {
 
   organizationId?: string;
 }
+
+export class GetUnapprovedArticlesDto extends paginationDTO {
+  userId?: string;
+
+  organizationId?: string;
+}

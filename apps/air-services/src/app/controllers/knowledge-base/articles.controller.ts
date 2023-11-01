@@ -1,7 +1,11 @@
 import { Controller } from '@nestjs/common';
 import { MessagePattern, Payload } from '@nestjs/microservices';
 import { RMQ_MESSAGES } from '@shared/constants';
-import { GetArticlesDto, WriteArticleDTO } from '@shared/dto';
+import {
+  GetArticlesDto,
+  GetUnapprovedArticlesDto,
+  WriteArticleDTO,
+} from '@shared/dto';
 import { ArticlesService } from '../../services/knowledge-base/articles.service';
 @Controller()
 export class ArticlesController {
@@ -14,5 +18,12 @@ export class ArticlesController {
   @MessagePattern(RMQ_MESSAGES.AIR_SERVICES.KNOWLEDGE_BASE.ARTICLES.GET)
   getArticles(@Payload() payload: GetArticlesDto) {
     return this.articleService.getArticles(payload);
+  }
+
+  @MessagePattern(
+    RMQ_MESSAGES.AIR_SERVICES.KNOWLEDGE_BASE.ARTICLES.GET_UNAPPROVED_ARTICLES
+  )
+  getUnapprovedArticles(@Payload() payload: GetUnapprovedArticlesDto) {
+    return this.articleService.getUnapprovedArticles(payload);
   }
 }
