@@ -1,7 +1,11 @@
 import { HttpStatus, Injectable, NotFoundException } from '@nestjs/common';
 import { RpcException } from '@nestjs/microservices';
 import { Cron, CronExpression } from '@nestjs/schedule';
-import { InvoiceRepository, OrganizationPlanRepository } from '@shared';
+import {
+  InvoiceRepository,
+  OrganizationPlanRepository,
+  PlanRepository,
+} from '@shared';
 import {
   InvoiceStatusEnum,
   ResponseMessage,
@@ -11,6 +15,7 @@ import {
   AssignOrgPlanDto,
   BillingDetailsDto,
   CreateInvoiceDto,
+  FindPlanDTO,
   ListInvoicesDTO,
   ListOrgPlan,
   UpdateAssignOrgPlanSuperAdminDto,
@@ -23,7 +28,8 @@ import mongoose from 'mongoose';
 export class InvoiceService {
   constructor(
     private invoiceRepository: InvoiceRepository,
-    private orgPlanRepository: OrganizationPlanRepository
+    private orgPlanRepository: OrganizationPlanRepository,
+    private planRepository: PlanRepository
   ) {}
 
   async listOrgPlan(payload: ListOrgPlan) {
@@ -255,6 +261,27 @@ export class InvoiceService {
 
       if (!result?.length) throw new NotFoundException();
 
+      return successResponse(HttpStatus.OK, ResponseMessage.SUCCESS, result[0]);
+    } catch (error) {
+      throw new RpcException(error);
+    }
+  }
+
+  async findPlan(payload: FindPlanDTO) {
+    try {
+      const { productId, planTypeId } = payload;
+      const pipelines = [
+        {
+          $match: {
+            planProducts: new mongoose.Types.ObjectId(productId),
+            planTypeId: new mongoose.Types.ObjectId(planTypeId),
+            isActive: true,
+            isDeleted: false,
+          },
+        },
+      ];
+      const result = await this.planRepository.aggregate(pipelines);
+      if (!result?.length) throw new NotFoundException('No record found');
       return successResponse(HttpStatus.OK, ResponseMessage.SUCCESS, result[0]);
     } catch (error) {
       throw new RpcException(error);

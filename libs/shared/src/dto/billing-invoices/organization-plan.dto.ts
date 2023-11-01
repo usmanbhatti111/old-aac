@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Type } from 'class-transformer';
+import { Transform, Type } from 'class-transformer';
 import {
   IsISO8601,
   IsMongoId,
@@ -9,6 +9,7 @@ import {
   IsString,
 } from 'class-validator';
 import { PaginationDto } from '../common';
+import { toMongoObjectId } from '../../functions';
 
 export class AssignOrgPlanDto {
   @ApiProperty({
@@ -278,6 +279,40 @@ export class GetOrgPlanResponseDto {
       subtotal: 30,
       total: 28.5,
     },
+  })
+  data: object;
+
+  @ApiProperty({ example: null })
+  error: string;
+}
+export class FindPlanDTO {
+  @ApiProperty({
+    type: String,
+    required: true,
+    example: '',
+  })
+  @IsNotEmpty()
+  @Transform(toMongoObjectId)
+  productId: string;
+
+  @ApiProperty({
+    type: String,
+    required: true,
+    example: '',
+  })
+  @IsNotEmpty()
+  @Transform(toMongoObjectId)
+  planTypeId: string;
+}
+export class FindPlanDTOResponseDto {
+  @ApiProperty({ example: 200 })
+  statusCode: string;
+
+  @ApiProperty({ example: 'Success' })
+  message: string;
+
+  @ApiProperty({
+    example: {},
   })
   data: object;
 

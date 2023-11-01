@@ -103,6 +103,7 @@ export const API_ENDPOINTS = {
       BILLING_DETAILS: 'billing-details',
       ADD_DISCOUNT: 'add-discount',
       UPDATE_ASSIGN_PLAN: 'update-assign-plan',
+      FIND_PLAN: 'find-plan',
     },
     QUICK_LINKS: {
       ADD_QUICK_LINK: '/',

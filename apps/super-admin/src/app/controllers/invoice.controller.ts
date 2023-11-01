@@ -5,6 +5,7 @@ import {
   AssignOrgPlanDto,
   BillingDetailsDto,
   CreateInvoiceDto,
+  FindPlanDTO,
   ListInvoicesDTO,
   ListOrgPlan,
   UpdateAssignOrgPlanSuperAdminDto,
@@ -28,6 +29,13 @@ export class InvoiceController {
   })
   async getOrgPlan(@Payload() payload: { organizationPlanId: string }) {
     return this.billingService.getOrgPlan(payload.organizationPlanId);
+  }
+
+  @MessagePattern({
+    cmd: RMQ_MESSAGES.SUPER_ADMIN.BILLING_INVOICES.FIND_PLAN,
+  })
+  async findPlan(@Payload() payload: FindPlanDTO) {
+    return this.billingService.findPlan(payload);
   }
 
   @MessagePattern({

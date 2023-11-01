@@ -60,6 +60,7 @@ export const RMQ_MESSAGES = {
       BILLING_DETAILS: 'billing-detials',
       ADD_DISCOUNT: 'add-discount',
       UPDATE_ASSIGN_PLAN: 'update-assign-plan',
+      FIND_PLAN: 'find-plan',
     },
 
     QUICK_LINKS: {
