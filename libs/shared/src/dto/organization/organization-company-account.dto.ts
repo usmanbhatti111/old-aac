@@ -2,15 +2,22 @@ import { ApiProperty } from '@nestjs/swagger';
 import { IsInt, IsNotEmpty, IsOptional } from 'class-validator';
 import { Type } from 'class-transformer';
 import { paginationDTO } from '../pagination/pagination.dto';
+import { IdDto } from '../common';
 
 export interface IOrganizationCompanyAccount {
   organizationId: string;
   logoUrl?: string;
   accountName: string;
   phoneNo: string;
-  address: string;
+  address?: string;
+  unit?: string;
+  buildingName?: string;
+  buildingNumber?: string;
+  streetName?: string;
+  city?: string;
+  country?: string;
+  isActive: boolean;
   postCode: string;
-  status: string;
   createdAt?: Date;
   updatedAt?: Date;
   deletedAt?: Date;
@@ -47,8 +54,7 @@ export class CreateOrganizationCompanyAccountDto {
     example: '123 Main St',
     description: 'The address of the account.',
   })
-  @IsNotEmpty()
-  address: string;
+  address?: string;
 
   @ApiProperty({
     example: '12345',
@@ -70,10 +76,74 @@ export class CreateOrganizationCompanyAccountDto {
   products: string[];
 
   @ApiProperty({
-    example: 'Active',
-    description: 'The status of organization company account.',
+    example: '16',
   })
-  readonly status: string;
+  unit?: string;
+
+  @ApiProperty({
+    example: 'A',
+  })
+  buildingName?: string;
+
+  @ApiProperty({
+    example: 'A1',
+  })
+  buildingNumber?: string;
+
+  @ApiProperty({
+    example: '102',
+  })
+  streetName?: string;
+
+  @ApiProperty({
+    example: 'Islamabad',
+  })
+  city?: string;
+
+  @ApiProperty({
+    example: 'Pakistan',
+  })
+  country?: string;
+
+  @ApiProperty({
+    example: true,
+    description: 'Status of account',
+  })
+  isActive: boolean;
+  createdBy?: string;
+}
+
+export class UpdateOrganizationCompanyAccountDto extends CreateOrganizationCompanyAccountDto {
+  id?: string;
+  updatedBy?: string;
+}
+
+export class DeleteOrganizationCompanyAccountResponseDto {
+  @ApiProperty({ example: 200 })
+  statusCode: number;
+
+  @ApiProperty({ example: 'Success' })
+  message: string;
+
+  @ApiProperty({})
+  data: {};
+
+  @ApiProperty({ example: null })
+  errors: [];
+}
+
+export class DeleteOrganizationCompanyAccountDto extends IdDto {
+  deletedBy: string;
+
+}
+
+export class UpdateOrganizationCompanyAccountStatusDto extends IdDto {
+  updatedBy: string;
+  @ApiProperty({
+    example: true,
+    description: 'Status of account',
+  })
+  isActive: boolean;
 }
 
 export class GetAllOrganizationCompanyAccountsDto extends paginationDTO {
@@ -112,8 +182,7 @@ export class OrganizationCompanyAccountDto {
     example: '123 Main St',
     description: 'The address of the account.',
   })
-  @IsNotEmpty()
-  address: string;
+  address?: string;
 
   @ApiProperty({
     example: '12345',
@@ -135,10 +204,40 @@ export class OrganizationCompanyAccountDto {
   products: string[];
 
   @ApiProperty({
-    example: 'Active',
-    description: 'The status of organization company account.',
+    example: '16',
   })
-  readonly status: string;
+  unit?: string;
+
+  @ApiProperty({
+    example: 'A',
+  })
+  buildingName?: string;
+
+  @ApiProperty({
+    example: 'A1',
+  })
+  buildingNumber?: string;
+
+  @ApiProperty({
+    example: '102',
+  })
+  streetName?: string;
+
+  @ApiProperty({
+    example: 'Islamabad',
+  })
+  city?: string;
+
+  @ApiProperty({
+    example: 'Pakistan',
+  })
+  country?: string;
+
+  @ApiProperty({
+    example: true,
+    description: 'Status of account',
+  })
+  isActive: boolean;
 }
 
 export class OrganizationCompanyAccountResponseDto {

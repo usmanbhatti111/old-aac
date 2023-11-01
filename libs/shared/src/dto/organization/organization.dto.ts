@@ -135,6 +135,28 @@ export class OrganizationResponseDto {
   error: string;
 }
 
+export class OrganizationsResponseDto {
+  @ApiProperty({
+    example: 200,
+  })
+  status: number;
+
+  @ApiProperty({
+    example: 'Success',
+  })
+  message: string;
+
+  @ApiProperty({
+    type: [OrganizationDto],
+  })
+  data: OrganizationDto[];
+
+  @ApiProperty({
+    example: '',
+  })
+  error: string;
+}
+
 export class GetOrganizationDto {
   @ApiProperty({
     example: '651e6368a3a6baf2f193efb0',
