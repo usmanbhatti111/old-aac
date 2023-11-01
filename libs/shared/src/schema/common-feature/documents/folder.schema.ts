@@ -14,14 +14,8 @@ export class Folder extends AbstractSchema {
   @Prop()
   name: string;
 
-  @Prop({ default: Date.now })
-  createdAt?: Date;
-
   @Prop({ required: false, type: SchemaTypes.ObjectId })
   createdBy?: string;
-
-  @Prop({ required: false, default: Date.now })
-  updatedAt?: Date;
 
   @Prop({
     type: SchemaTypes.ObjectId,
@@ -33,7 +27,7 @@ export class Folder extends AbstractSchema {
 
   @Prop({
     type: SchemaTypes.ObjectId,
-    required: true,
+    required: false,
     ref: Organization.name,
   })
   organizationId: string;

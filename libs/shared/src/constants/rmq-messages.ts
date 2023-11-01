@@ -231,6 +231,7 @@ export const RMQ_MESSAGES = {
     KNOWLEDGE_BASE: {
       ARTICLES: {
         WRITE: 'write-article',
+        GET: 'get-articles',
       },
     },
   },

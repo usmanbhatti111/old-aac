@@ -3,6 +3,7 @@ import { AbstractSchema } from '../abstract-repo/abstract.schema';
 
 import { HydratedDocument, SchemaTypes } from 'mongoose';
 import { EArticlesStatus } from '../../constants/enums';
+import { Organization } from '../organization';
 
 export type ArticlesDocument = HydratedDocument<Articles>;
 @Schema({
@@ -44,6 +45,13 @@ export class Articles extends AbstractSchema {
 
   @Prop({ type: SchemaTypes.ObjectId, required: false })
   author: string;
+
+  @Prop({
+    type: SchemaTypes.ObjectId,
+    required: false,
+    ref: Organization.name,
+  })
+  organizationId: string;
 }
 
 export const ArticlesSchema = SchemaFactory.createForClass(Articles);
