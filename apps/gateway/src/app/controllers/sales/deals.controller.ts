@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   Body,
   Controller,
   Delete,
@@ -9,6 +10,7 @@ import {
   Post,
   Query,
   Req,
+  Res,
 } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
 import {
@@ -21,6 +23,7 @@ import {
   API_ENDPOINTS,
   API_TAGS,
   CONTROLLERS,
+  EExportFile,
   RMQ_MESSAGES,
   SERVICES,
 } from '@shared/constants';
@@ -45,6 +48,9 @@ import {
 import { firstValueFrom } from 'rxjs';
 import { Auth } from '../../decorators/auth.decorator';
 import { AppRequest } from '../../shared/interface/request.interface';
+import { DownloadService } from '@shared/services';
+import { Response } from 'express';
+import dayjs from 'dayjs';
 
 @ApiBearerAuth()
 @ApiTags(API_TAGS.DEALS)
@@ -52,7 +58,8 @@ import { AppRequest } from '../../shared/interface/request.interface';
 export class DealsController {
   constructor(
     @Inject(SERVICES.SALES)
-    private orgAdminService: ClientProxy
+    private orgAdminService: ClientProxy,
+    private readonly downloadService: DownloadService
   ) {}
 
   @Auth(true)
@@ -70,6 +77,7 @@ export class DealsController {
     );
     return response;
   }
+
   @Auth(true)
   @Patch(API_ENDPOINTS.SALES.DEALS.DELETE_ASSOCIATION)
   @ApiOkResponse({ type: DealAssociationResponseDto })
@@ -91,8 +99,9 @@ export class DealsController {
   @ApiOkResponse({ type: GetDealsListViewResponseDto })
   public async getDealsListVew(
     @Req() request: AppRequest,
-    @Query() payload: GetDealsListViewDto
-  ): Promise<GetDealsListViewResponseDto> {
+    @Query() payload: GetDealsListViewDto,
+    @Res() res: Response
+  ) {
     payload.userId = request?.user?._id;
 
     const response = await firstValueFrom(
@@ -102,7 +111,60 @@ export class DealsController {
       )
     );
 
-    return response;
+    // json response
+    if (!payload?.downloadType) return res.json(response);
+
+    if (!(payload?.downloadType in EExportFile)) {
+      throw new BadRequestException('Invalid Download Type');
+    }
+
+    const deals = response?.data?.deals;
+    if (!deals?.length) {
+      throw new BadRequestException('No Data Available');
+    }
+
+    const download = [];
+    for (let i = 0; i < deals.length; i++) {
+      const data = deals[i];
+
+      const deal = {};
+
+      deal['S. No'] = i + 1;
+      deal['Name'] = data?.name;
+      deal['Owner Name'] = data?.dealOwner?.name;
+      deal['Owner Email'] = data?.dealOwner?.email;
+      deal['Close Date'] = dayjs(data?.closeDate).format('MMMM D, YYYY');
+      deal['Amount'] = data?.amount;
+      deal['Deal Pipeline'] = data?.dealPipeline;
+      deal['Deal Stage'] = data?.dealStage;
+
+      download.push(deal);
+    }
+
+    // excel response
+    if (payload.downloadType === EExportFile.XLS) {
+      const xlsxBuffer = await this.downloadService.convertToXlsx(download);
+
+      res.setHeader(
+        'Content-Type',
+        'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+      );
+      res.setHeader('Content-Disposition', 'attachment; filename="deals.xlsx"');
+
+      return res.send(xlsxBuffer);
+    }
+
+    // csv response
+    if (payload.downloadType === EExportFile.CSV) {
+      const csvStream = this.downloadService.convertToCsv(download);
+
+      res.setHeader('Content-Type', 'text/csv');
+      res.setHeader('Content-Disposition', 'attachment; filename="deals.csv"');
+
+      return csvStream.pipe(res);
+    }
+
+    throw new BadRequestException('Invaid format');
   }
 
   @Auth(true)
