@@ -238,7 +238,7 @@ export class DealsController {
   }
 
   @Auth(true)
-  @Delete(API_ENDPOINTS.SALES.DEALS.RESTORE_DEAL_ACTION)
+  @Patch(API_ENDPOINTS.SALES.DEALS.RESTORE_DEAL_ACTION)
   @ApiOkResponse({ type: RestoreDealActionResponseDto })
   public async restoreDealActionRestore(
     @Req() request: AppRequest,
