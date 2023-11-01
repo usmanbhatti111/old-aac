@@ -32,7 +32,7 @@ export class ArticlesController {
   public async writeArticle(
     @Body() payload: WriteArticleDTO,
     @Req() req: AppRequest
-  ) {
+  ): Promise<any> {
     try {
       payload.author = req?.user?._id;
       payload.organizationId = req?.user?.organization;
@@ -54,7 +54,7 @@ export class ArticlesController {
   public async getArticles(
     @Query() payload: GetArticlesDto,
     @Req() req: AppRequest
-  ) {
+  ): Promise<any> {
     try {
       payload.organizationId = req?.user?.organization;
       const response = await firstValueFrom(
