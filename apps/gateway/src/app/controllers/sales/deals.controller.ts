@@ -255,6 +255,7 @@ export class DealsController {
 
     return response;
   }
+
   @Auth(true)
   @Post(API_ENDPOINTS.SALES.DEALS.CREATE_DEAL)
   @ApiCreatedResponse({ type: CreateDealResponseDto })

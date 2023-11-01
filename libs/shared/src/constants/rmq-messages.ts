@@ -12,6 +12,7 @@ export const RMQ_MESSAGES = {
     SEARCH_ORG_BY_CRN: 'search-org-by-crn',
   },
   USER: {
+    GET_LIST: 'get-users',
     CREATE: 'create-user',
     FIND_BY_EMAIL: 'find-user-by-email',
     FIND_BY_COGNITO: 'find-user-by-cognito',
@@ -43,6 +44,9 @@ export const RMQ_MESSAGES = {
     CREATE_ORGANIZATION_COMPANY_ACCOUNT: 'create-company-accounts',
     GET_ORGANIZATION_COMPANY_ACCOUNTS: 'get-company-accounts',
     GET_ORGANIZATION_COMPANY_ACCOUNT: 'get-company-account',
+    UPDATE_ORGANIZATION_COMPANY_ACCOUNT: 'update-company-account',
+    DELETE_ORGANIZATION_COMPANY_ACCOUNT: 'delete-company-account',
+    UPDATE_ORGANIZATION_COMPANY_ACCOUNT_STATUS: 'update-company-account-status',
   },
   SUPER_ADMIN: {
     BILLING_INVOICES: {

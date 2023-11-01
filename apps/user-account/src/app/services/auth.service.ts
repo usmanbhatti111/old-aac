@@ -73,7 +73,7 @@ export class AuthService {
       await this.confirmUserEmail(email);
 
       delete user.password;
-      await this.userService.create({
+      await this.userService.createForSignup({
         ...user,
         cognitoId: newUser?.UserSub,
         role,
