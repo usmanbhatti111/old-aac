@@ -164,6 +164,7 @@ export const RMQ_MESSAGES = {
       EDIT_TICKETS: 'edit-tickets',
       CHANGE_STATUS: 'change_status',
       GET_TICKET_LIST: 'get_ticket_list',
+      BULK_TICKET_UPDATE: 'bulk-ticket-update',
     },
     ASSETS: {
       ADD_Inventory: 'add-inventory',

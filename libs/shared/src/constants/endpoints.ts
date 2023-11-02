@@ -143,6 +143,7 @@ export const API_ENDPOINTS = {
       ASSOCIATE_ASSETS: 'associate-assets',
       DETACH_ASSETS: 'detach-assets',
       CHANGE_STATUS: 'status/:id',
+      BULK_TICKET_UPDATE: 'bulk-ticket-update',
     },
     ASSETS: {
       INVENTORY: 'inventory',
