@@ -35,6 +35,16 @@ export class ContractController {
   ) {
     return this.contractService.addContractsAsset(payload);
   }
+  @MessagePattern(
+    RMQ_MESSAGES.AIR_SERVICES.CONTRACT.UPDATE_CONTRACT_SUBMITTED_STATUS
+  )
+  updateSubmittedApproval(@Payload() payload: { id: IdDto }) {
+    return this.contractService.updateSubmittedApproval(payload);
+  }
+  @MessagePattern(RMQ_MESSAGES.AIR_SERVICES.CONTRACT.APPROVE_CONTRACT)
+  approveContract(@Payload() payload: { id: IdDto }) {
+    return this.contractService.approveContract(payload);
+  }
   @MessagePattern(RMQ_MESSAGES.AIR_SERVICES.CONTRACT.DELETE_CONTRACTS_ASSET)
   deleteContractsAsset(
     @Payload() payload: { id: IdDto; assetsIds: DeleteAssetToContractDto }

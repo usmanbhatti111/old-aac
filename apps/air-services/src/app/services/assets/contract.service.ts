@@ -1,5 +1,5 @@
 import { HttpStatus, Injectable } from '@nestjs/common';
-import { successResponse } from '@shared/constants';
+import { EContractStatus, successResponse } from '@shared/constants';
 import {
   ContractRepository,
   InventoryRepository,
@@ -24,6 +24,40 @@ export class ContractService {
     try {
       const res = await this.contractRepository.create({ ...payload });
       return successResponse(HttpStatus.CREATED, 'Success', res);
+    } catch (error) {
+      throw new RpcException(error);
+    }
+  }
+  async updateSubmittedApproval(payload) {
+    try {
+      const { id } = payload;
+      const response = await this.contractRepository.findOneAndUpdate(
+        { _id: id },
+        {
+          $set: { isSubmitted: true, status: EContractStatus.PENDING_APPROVAL },
+        }
+      );
+      return successResponse(
+        HttpStatus.OK,
+        'Contract has sent for Approval',
+        response
+      );
+    } catch (error) {
+      throw new RpcException(error);
+    }
+  }
+  async approveContract(payload) {
+    try {
+      const { id } = payload;
+      const response = await this.contractRepository.findOneAndUpdate(
+        { _id: id, isSubmitted: true },
+        { $set: { status: EContractStatus.APPROVED } }
+      );
+      return successResponse(
+        HttpStatus.OK,
+        'Contract approved successfully',
+        response
+      );
     } catch (error) {
       throw new RpcException(error);
     }

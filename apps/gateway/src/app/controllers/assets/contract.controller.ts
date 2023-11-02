@@ -12,7 +12,7 @@ import {
   UploadedFile,
 } from '@nestjs/common';
 import { ClientProxy, RpcException } from '@nestjs/microservices';
-import { ApiTags, ApiBearerAuth } from '@nestjs/swagger';
+import { ApiTags, ApiBearerAuth, ApiOkResponse } from '@nestjs/swagger';
 import {
   API_ENDPOINTS,
   API_TAGS,
@@ -28,6 +28,8 @@ import {
   IdDto,
   AddAssetToContractDto,
   DeleteAssetToContractDto,
+  SubmittedContractRequestResponse,
+  ApprovedContractResponse,
 } from '@shared/dto';
 import { DownloadService } from '@shared/services';
 import { firstValueFrom } from 'rxjs';
@@ -84,6 +86,50 @@ export class ContractController {
         this.airServiceClient.send(
           RMQ_MESSAGES.AIR_SERVICES.CONTRACT.DELETE_CONTRACT,
           { ids }
+        )
+      );
+
+      return response;
+    } catch (error) {
+      throw new RpcException(error);
+    }
+  }
+
+  @Auth(true)
+  @ApiOkResponse({ type: SubmittedContractRequestResponse })
+  @Patch(API_ENDPOINTS.AIR_SERVICES.CONTRACT.UPDATE_CONTRACT_SUBMITTED_STATUS)
+  public async UpdateSubmittedApproval(
+    @Param() { id }: IdDto
+  ): Promise<SubmittedContractRequestResponse> {
+    try {
+      const response = await firstValueFrom(
+        this.airServiceClient.send(
+          RMQ_MESSAGES.AIR_SERVICES.CONTRACT.UPDATE_CONTRACT_SUBMITTED_STATUS,
+          {
+            id,
+          }
+        )
+      );
+
+      return response;
+    } catch (error) {
+      throw new RpcException(error);
+    }
+  }
+
+  @Auth(true)
+  @ApiOkResponse({ type: ApprovedContractResponse })
+  @Patch(API_ENDPOINTS.AIR_SERVICES.CONTRACT.APPROVE_CONTRACT)
+  public async ApproveContract(
+    @Param() { id }: IdDto
+  ): Promise<ApprovedContractResponse> {
+    try {
+      const response = await firstValueFrom(
+        this.airServiceClient.send(
+          RMQ_MESSAGES.AIR_SERVICES.CONTRACT.APPROVE_CONTRACT,
+          {
+            id,
+          }
         )
       );
 

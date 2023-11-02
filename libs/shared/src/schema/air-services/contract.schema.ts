@@ -124,6 +124,12 @@ export class Contract extends AbstractSchema {
     default: false,
   })
   isDeleted?: boolean;
+
+  @Prop({
+    type: Boolean,
+    default: false,
+  })
+  isSubmitted?: boolean;
 }
 
 export const ContractSchema = SchemaFactory.createForClass(Contract);
