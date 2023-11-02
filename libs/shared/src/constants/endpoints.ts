@@ -127,9 +127,11 @@ export const API_ENDPOINTS = {
     DELETE_ALL_ATTACHMENT: 'delete-all-attachment',
   },
   JOBS: {
+    CREATE_JOB: '/',
+    GET_JOBS: '/',
     GET_JOB: '/:id',
     UPDATE_JOB: '/:id',
-    DELETE_JOB: '/',
+    DELETE_JOB: '/:ids',
   },
   FAQS: {
     GET_FAQ: '/:id',

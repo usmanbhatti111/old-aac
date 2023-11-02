@@ -1,0 +1,64 @@
+import { ApiProperty } from '@nestjs/swagger';
+
+export class GetJobsResponseDto {
+  @ApiProperty({ example: 200 })
+  statusCode: number;
+
+  @ApiProperty({ example: 'Success' })
+  message: string;
+
+  @ApiProperty({
+    example: {
+      jobs: [
+        {
+          _id: '654322560c2e5ebdc64ed4fc',
+          title: 'reactjs dev',
+          jobType: 'FULL_TIME',
+          jobCategory: 'SALES',
+          experience: 'NO_EXPERIENCE',
+          numberOfVacancy: 1,
+          deadline: '2023-11-02T18:59:59.999Z',
+          status: 'CLOSE',
+          description: '<h1>This is the description for job</h1>',
+          createdBy: {
+            _id: '6541fed9398b214df0eda809',
+            name: 'super admin 1',
+          },
+          isDeleted: false,
+          createdAt: '2023-11-02T04:15:18.123Z',
+          updatedAt: '2023-11-02T04:17:20.805Z',
+          updatedBy: '6541fed9398b214df0eda809',
+        },
+        {
+          _id: '6542010541ea55b95a225453',
+          title: 'reactjs dev',
+          jobType: 'FULL_TIME',
+          jobCategory: 'SALES',
+          experience: 'NO_EXPERIENCE',
+          numberOfVacancy: 1,
+          deadline: '2023-11-01T18:59:59.999Z',
+          status: 'OPEN',
+          description: '<h1>This is the description for job</h1>',
+          createdBy: {
+            _id: '6541fed9398b214df0eda809',
+            name: 'super admin 1',
+          },
+          isDeleted: false,
+          createdAt: '2023-11-01T07:40:53.587Z',
+          updatedAt: '2023-11-01T07:55:28.033Z',
+          updatedBy: '6541fed9398b214df0eda809',
+        },
+      ],
+      meta: {
+        page: 1,
+        pages: 1,
+        limit: 10,
+        total: 2,
+      },
+    },
+  })
+  data: {};
+
+  @ApiProperty({ example: null })
+  errors: [];
+}

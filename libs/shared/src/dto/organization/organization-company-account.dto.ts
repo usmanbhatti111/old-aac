@@ -134,7 +134,6 @@ export class DeleteOrganizationCompanyAccountResponseDto {
 
 export class DeleteOrganizationCompanyAccountDto extends IdDto {
   deletedBy: string;
-
 }
 
 export class UpdateOrganizationCompanyAccountStatusDto extends IdDto {

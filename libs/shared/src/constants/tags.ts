@@ -10,6 +10,7 @@ export const API_TAGS = {
   TASK_MANAGEMENT: 'Task Management',
   SUPER_ADMIN: 'Super Admin',
   SETTINGS: 'Settings',
+  JOBS: 'jobs',
   TICKETS: 'Tickets',
   ASSETS: 'Assets',
   EXPENSE: 'Expense',

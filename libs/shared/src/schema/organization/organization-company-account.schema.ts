@@ -44,7 +44,7 @@ export class OrganizationCompanyAccount
   streetName?: string;
 
   @Prop({ type: String, required: false })
-  city ?: string;
+  city?: string;
 
   @Prop({ type: String, required: false })
   country?: string;

@@ -55,7 +55,9 @@ export class OrganizationCompanyAccountController {
     cmd: RMQ_MESSAGES.ORGANIZATION_COMPANY_ACCOUNT
       .UPDATE_ORGANIZATION_COMPANY_ACCOUNT,
   })
-  async updateOrganizationAccount(@Payload() payload: UpdateOrganizationCompanyAccountDto) {
+  async updateOrganizationAccount(
+    @Payload() payload: UpdateOrganizationCompanyAccountDto
+  ) {
     return await this.OrganizationCompanyAccountService.updateOrganizationCompanyAccount(
       payload
     );
@@ -65,7 +67,9 @@ export class OrganizationCompanyAccountController {
     cmd: RMQ_MESSAGES.ORGANIZATION_COMPANY_ACCOUNT
       .DELETE_ORGANIZATION_COMPANY_ACCOUNT,
   })
-  async deleteOrganizationAccount(@Payload() payload: DeleteOrganizationCompanyAccountDto) {
+  async deleteOrganizationAccount(
+    @Payload() payload: DeleteOrganizationCompanyAccountDto
+  ) {
     return await this.OrganizationCompanyAccountService.deleteOrganizationCompanyAccount(
       payload
     );
@@ -75,7 +79,9 @@ export class OrganizationCompanyAccountController {
     cmd: RMQ_MESSAGES.ORGANIZATION_COMPANY_ACCOUNT
       .UPDATE_ORGANIZATION_COMPANY_ACCOUNT_STATUS,
   })
-  async updateOrganizationAccountStatus(@Payload() payload: UpdateOrganizationCompanyAccountStatusDto) {
+  async updateOrganizationAccountStatus(
+    @Payload() payload: UpdateOrganizationCompanyAccountStatusDto
+  ) {
     return await this.OrganizationCompanyAccountService.updateOrganizationCompanyAccountStatus(
       payload
     );

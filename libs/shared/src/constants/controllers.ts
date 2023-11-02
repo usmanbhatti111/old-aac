@@ -11,9 +11,9 @@ export const CONTROLLERS = {
   TASK_MANAGEMENT: 'task',
   SUPER_ADMIN: 'super-admin',
   SETTINGS: {
-    JOBS: 'jobs',
     FAQS: 'faqs',
   },
+  JOBS: 'jobs',
   PRODUCTS: 'products',
   TICKET: 'ticket',
   ASSETS: 'assets',
