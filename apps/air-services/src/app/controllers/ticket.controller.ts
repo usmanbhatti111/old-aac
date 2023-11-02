@@ -13,7 +13,6 @@ import {
   GetAssociateAssetsDto,
   AssociatePurchaseOrderDto,
   DeleteAssociatePurchaseOrderDto,
-  IdsDto,
   BulkTicketUpdateDto,
 } from '@shared/dto';
 
@@ -109,7 +108,7 @@ export class TicketController {
   async bulkUpdateTickets(
     @Payload()
     payload: {
-      ids: IdsDto;
+      ids: string[];
       dto: BulkTicketUpdateDto;
     }
   ) {

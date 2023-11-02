@@ -7,7 +7,6 @@ import {
   ListTicketDTO,
   IdDto,
   paginationDTO,
-  IdsDto,
   BulkTicketUpdateDto,
 } from '@shared/dto';
 import { Types } from 'mongoose';
@@ -359,12 +358,14 @@ export class TicketService {
       throw new RpcException(error);
     }
   }
-  async bulkUpdateTickets(payload: { ids: IdsDto; dto: BulkTicketUpdateDto }) {
+  async bulkUpdateTickets(payload: {
+    ids: string[];
+    dto: BulkTicketUpdateDto;
+  }) {
     try {
-      const { ids } = payload.ids;
+      const { ids } = payload;
       const { dto } = payload;
-      const idArray = ids.split(',').map((id) => id.trim());
-      const filterQuery = { _id: idArray };
+      const filterQuery = { _id: ids };
       const updates = { ...dto };
       const ticketUpdate = await this.ticketRepository.updateMany(
         filterQuery,

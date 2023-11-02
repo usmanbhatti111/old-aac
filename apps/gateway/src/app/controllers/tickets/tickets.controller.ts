@@ -46,7 +46,6 @@ import {
   EditTicketResponse,
   DeleteTicketResponse,
   ListTicketDTO,
-  IdsDto,
   BulkTicketUpdateDto,
   UpdateManyTicketResponse,
 } from '@shared/dto';
@@ -336,7 +335,7 @@ export class TicketController {
   @ApiOkResponse({ type: UpdateManyTicketResponse })
   public async bulkTicketUpdate(
     @Res() res: Response | any,
-    @Query() ids: IdsDto,
+    @Query('ids') ids: string[],
     @Body() dto: BulkTicketUpdateDto
   ): Promise<UpdateManyTicketResponse> {
     try {
