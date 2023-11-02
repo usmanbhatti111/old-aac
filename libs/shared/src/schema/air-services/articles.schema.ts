@@ -36,7 +36,7 @@ export class Articles extends AbstractSchema {
     type: String,
     enum: EArticlesStatus,
     required: false,
-    default: EArticlesStatus.DRAFT,
+    default: EArticlesStatus.PUBLISHED,
   })
   status: string;
 
@@ -52,6 +52,9 @@ export class Articles extends AbstractSchema {
     ref: Organization.name,
   })
   organizationId: string;
+
+  @Prop({ type: Boolean, required: false, default: true })
+  isApproved: boolean;
 }
 
 export const ArticlesSchema = SchemaFactory.createForClass(Articles);

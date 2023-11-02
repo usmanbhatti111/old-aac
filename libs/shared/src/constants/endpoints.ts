@@ -314,4 +314,10 @@ export const API_ENDPOINTS = {
     UPDATE_DEAL_NOTE: '/:id',
     DELETE_DEAL_NOTE: '/:id',
   },
+
+  KNOWLEDGE_BASE: {
+    ARTICLES: {
+      GET_UNAPPROVED_ARTICLES: 'unapproved-articles',
+    },
+  },
 };

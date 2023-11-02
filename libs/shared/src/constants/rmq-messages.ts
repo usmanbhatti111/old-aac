@@ -234,6 +234,7 @@ export const RMQ_MESSAGES = {
       ARTICLES: {
         WRITE: 'write-article',
         GET: 'get-articles',
+        GET_UNAPPROVED_ARTICLES: 'unapproved-articles',
       },
     },
   },
