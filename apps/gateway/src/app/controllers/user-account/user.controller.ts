@@ -16,7 +16,7 @@ import {
   RMQ_MESSAGES,
   SERVICES,
 } from '@shared/constants';
-import { CreateUserDto, PaginationDto } from '@shared/dto';
+import { AdminUserGetResponseDto, CreateUserDto } from '@shared/dto';
 import { firstValueFrom } from 'rxjs';
 import { Auth } from '../../decorators/auth.decorator';
 import { AppRequest } from '../../shared/interface/request.interface';
@@ -36,25 +36,19 @@ export class UserController {
   ) {
     const { user } = request;
 
-    const response = await firstValueFrom(
+    return firstValueFrom(
       this.userServiceClient.send(RMQ_MESSAGES.USER.CREATE, {
         ...body,
         createdBy: user._id,
       })
     );
-
-    return response;
   }
 
   @Auth(true)
   @Get(API_ENDPOINTS.USER.GET)
-  public async createRole(@Query() query: PaginationDto) {
-    const response = await firstValueFrom(
-      this.userServiceClient.send(RMQ_MESSAGES.USER.GET_LIST, {
-        ...query,
-      })
+  public async createRole(@Query() query: AdminUserGetResponseDto) {
+    return firstValueFrom(
+      this.userServiceClient.send(RMQ_MESSAGES.USER.GET_LIST, query)
     );
-
-    return response;
   }
 }
