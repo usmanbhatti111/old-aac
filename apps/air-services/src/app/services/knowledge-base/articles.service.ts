@@ -197,7 +197,7 @@ export class ArticlesService {
           limit,
         }
       );
-      return successResponse(HttpStatus.CREATED, 'Success', response);
+      return successResponse(HttpStatus.OK, 'Success', response);
     } catch (error) {
       throw new RpcException(error);
     }
