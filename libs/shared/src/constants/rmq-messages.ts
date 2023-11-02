@@ -26,6 +26,7 @@ export const RMQ_MESSAGES = {
   },
   PLAN: {
     ADD_PLAN: 'add-plan',
+    ADD_PLAN_TYPE: 'add-plan-type',
     PLAN_LIST: 'plan-list',
     EDIT_PLAN: 'edit-plan',
     PLAN: 'plan',
@@ -59,6 +60,7 @@ export const RMQ_MESSAGES = {
       BILLING_DETAILS: 'billing-detials',
       ADD_DISCOUNT: 'add-discount',
       UPDATE_ASSIGN_PLAN: 'update-assign-plan',
+      FIND_PLAN: 'find-plan',
     },
 
     QUICK_LINKS: {
@@ -96,6 +98,7 @@ export const RMQ_MESSAGES = {
     CONTACT_ASSOCIATIONS: 'contact-associations',
     CONTACT_TASKS: 'contact-tasks',
     EDIT_CONTACT: 'edit-contact',
+    IMPORT_CONTACT: 'import-contact',
     CONTACT: 'contact',
     DELETE_CONTACT: 'delete-contact',
     PERMANENT_DELETE_CONTACT: 'permanent-delete-contact',
@@ -299,6 +302,16 @@ export const RMQ_MESSAGES = {
     UPDATE_SALES_PRODUCT: 'update-sales-product',
     DELETE_SALES_PRODUCT: 'delete-sales-product',
   },
+
+  CALLS: {
+    GET_NUMBERS_LIST: 'get-numbers-list',
+    INITIATE_CALL: 'initiate-call',
+    VERIFY_PHONE_NUMBER: 'verify-phone-number',
+    NEW_OUTGOING_CALLER: 'new-outgoing-caller',
+    SEND_VERIFICATION_TOKEN: 'send-verification-token',
+    VERIFY_NUMBER_TOKEN: 'verify-number-token',
+  },
+
   SALES: {
     DEALS: {
       CREATE_DEAL: 'create-deal',

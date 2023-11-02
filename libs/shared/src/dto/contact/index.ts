@@ -53,3 +53,7 @@ export * from './get-deleted-contacts-response.dto';
 export * from './get-contact-tasks-response.dto';
 
 export * from './contact-multi.dto';
+
+export * from './import-contact.dto';
+
+export * from './contact.dto';

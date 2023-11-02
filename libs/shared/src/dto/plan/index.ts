@@ -10,3 +10,5 @@ export * from './plan-id-param.dto';
 export * from './plane-delete.dto';
 export * from './plan-filter.dto';
 export * from './get-plan-types-response.dto';
+export * from './add-plan-type.dto';
+export * from './add-plan-type-response.dto';

@@ -26,6 +26,7 @@ export const API_ENDPOINTS = {
   },
   PLAN: {
     ADD_PLAN: '/',
+    ADD_PLAN_TYPE: 'plan-type',
     PLAN_LIST: '/',
     PLAN: '/:planId',
     EDIT_PLAN: '/:planId',
@@ -39,6 +40,7 @@ export const API_ENDPOINTS = {
     CONTACT_ASSOCIATIONS: 'contact-associations/',
     CONTACT: '/:contactId',
     EDIT_CONTACT: '/:contactId',
+    IMPORT_CONTACT: 'import',
     DELETE_CONTACT: '/:contactId',
     RESTORE_CONTACT: 'restore/:contactId',
     CONTACT_TASKS: 'contact-tasks/',
@@ -101,6 +103,7 @@ export const API_ENDPOINTS = {
       BILLING_DETAILS: 'billing-details',
       ADD_DISCOUNT: 'add-discount',
       UPDATE_ASSIGN_PLAN: 'update-assign-plan',
+      FIND_PLAN: 'find-plan',
     },
     QUICK_LINKS: {
       ADD_QUICK_LINK: '/',
@@ -298,7 +301,14 @@ export const API_ENDPOINTS = {
       DELETE_NOTE: 'delete-note',
     },
   },
-
+  CALLS: {
+    GET_NUMBERS_LIST: 'get-numbers-list',
+    INITIATE_CALL: 'initiate-call',
+    VERIFY_PHONE_NUMBER: 'verify-phone-number',
+    NEW_OUTGOING_CALLER: 'new-outgoing-caller',
+    SEND_VERIFICATION_TOKEN: 'send-verification-token',
+    VERIFY_NUMBER_TOKEN: 'verify_number_token',
+  },
   DEAL_NOTE: {
     CREATE_DEAL_NOTE: '/',
     GET_DEAL_NOTES: '/',

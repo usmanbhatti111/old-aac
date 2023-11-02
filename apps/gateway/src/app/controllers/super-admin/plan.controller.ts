@@ -28,6 +28,8 @@ import {
 import {
   AddPlanDto,
   AddPlanResponseDto,
+  AddPlanTypeDto,
+  AddPlanTypeResponseDto,
   EditPlanDto,
   EditPlanResponseDto,
   GetPlanResponseDto,
@@ -48,6 +50,23 @@ export class PlanController {
   constructor(
     @Inject(SERVICES.SUPER_ADMIN) private superAdminServiceClient: ClientProxy
   ) {}
+
+  @Auth(true)
+  @Post(API_ENDPOINTS.PLAN.ADD_PLAN_TYPE)
+  @ApiCreatedResponse({ type: AddPlanTypeResponseDto })
+  public async createPlanType(
+    @Body() payload: AddPlanTypeDto,
+    @Req() req: AppRequest
+  ): Promise<PostResponseDto<Plan>> {
+    payload.createdBy = req.user._id;
+    const response = await firstValueFrom(
+      this.superAdminServiceClient.send(
+        RMQ_MESSAGES.PLAN.ADD_PLAN_TYPE,
+        payload
+      )
+    );
+    return response;
+  }
 
   @Auth(true)
   @Post(API_ENDPOINTS.PLAN.ADD_PLAN)

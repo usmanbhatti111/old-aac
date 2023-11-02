@@ -27,6 +27,7 @@ import {
   EditContactMeetingDto,
   EditContactNoteDto,
   GetContactAssociatinsDto,
+  ImportContactDto,
   RescheduleContactCallDto,
   RescheduleContactMeetingDto,
   ResetOutcomeContactCallDto,
@@ -36,6 +37,11 @@ import {
 @Controller()
 export class ContactController {
   constructor(private readonly contactService: ContactService) {}
+
+  @MessagePattern(RMQ_MESSAGES.CONTACT.IMPORT_CONTACT)
+  async importContact(@Payload() payload: ImportContactDto) {
+    return await this.contactService.importContact(payload);
+  }
 
   @MessagePattern(RMQ_MESSAGES.CONTACT.PERMANENT_DELETE_CONTACT_MULTI)
   async permanentDeleteContactMulti(@Payload() payload: ContactMultiDto) {

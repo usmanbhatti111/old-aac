@@ -4,6 +4,7 @@ import { RMQ_MESSAGES } from '@shared/constants';
 import { PlanService } from '../services/plan.services';
 import {
   AddPlanDto,
+  AddPlanTypeDto,
   EditPlanDto,
   PlanDeleteDto,
   PlanFilterDto,
@@ -12,6 +13,11 @@ import {
 @Controller()
 export class PlanController {
   constructor(private readonly planService: PlanService) {}
+
+  @MessagePattern(RMQ_MESSAGES.PLAN.ADD_PLAN_TYPE)
+  addPlanType(@Payload() payload: AddPlanTypeDto) {
+    return this.planService.addPlanType(payload);
+  }
 
   @MessagePattern(RMQ_MESSAGES.PLAN.ADD_PLAN)
   addPlan(@Payload() payload: AddPlanDto) {
