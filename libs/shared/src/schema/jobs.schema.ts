@@ -1,11 +1,10 @@
-import { Schema, Prop, SchemaFactory } from '@nestjs/mongoose';
-import { HydratedDocument } from 'mongoose';
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import mongoose from 'mongoose';
+import { MODEL } from '../constants/models';
 import { AbstractSchema } from './abstract-repo/abstract.schema';
-// import { Admin } from './admin.model'; // Import the Admin model if needed
-// import { JobApplicant } from './job-applicant.model'; // Import the JobApplicant model if needed
+import { EJobStatus } from '../constants/enums';
 
-export type JobDocument = HydratedDocument<Job>;
-@Schema()
+@Schema({ versionKey: false, timestamps: true })
 export class Job extends AbstractSchema {
   @Prop({ type: String, required: true })
   title: string;
@@ -25,21 +24,28 @@ export class Job extends AbstractSchema {
   @Prop({ type: Date })
   deadline: Date;
 
-  @Prop({ type: String, default: 'OPEN' })
+  @Prop({
+    type: String,
+    enum: EJobStatus,
+    default: EJobStatus.OPEN,
+    required: false,
+  })
   status?: string;
-
-  @Prop({ type: Boolean, default: false })
-  isDeleted?: boolean;
 
   @Prop({ type: String })
   description: string;
 
-  //   @Prop({ type: [{ type: Schema.Types.ObjectId, ref: 'JobApplicant' }] })
-  //   applicants: JobApplicant[];
+  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: MODEL.USER })
+  createdBy?: string;
 
-  //   // Define relationships if needed
-  //   @Prop({ type: Schema.Types.ObjectId, ref: 'Admin' })
-  //   created_by: Admin;
+  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: MODEL.USER })
+  updatedBy?: string;
+
+  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: MODEL.USER })
+  deletedBy?: string;
+
+  @Prop({ type: Boolean, default: false })
+  isDeleted?: boolean;
 }
 
 export const JobSchema = SchemaFactory.createForClass(Job);
