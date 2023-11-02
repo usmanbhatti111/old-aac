@@ -3,9 +3,9 @@ import { EArticlesStatus, successResponse } from '@shared/constants';
 import { ArticlesRepository } from '@shared';
 import { RpcException } from '@nestjs/microservices';
 import {
-  GetArticlesDto,
-  GetUnapprovedArticlesDto,
-  WriteArticleDTO,
+  GetArticlesRequestDto,
+  GetUnapprovedArticlesRequestDto,
+  WriteArticleRequestDTO,
 } from '@shared/dto';
 import { Types } from 'mongoose';
 
@@ -13,7 +13,7 @@ import { Types } from 'mongoose';
 export class ArticlesService {
   constructor(private articlesRepository: ArticlesRepository) {}
 
-  async writeArticle(payload: WriteArticleDTO) {
+  async writeArticle(payload: WriteArticleRequestDTO) {
     try {
       const { isApprovel } = payload;
       const newPayload: any = payload;
@@ -28,7 +28,7 @@ export class ArticlesService {
     }
   }
 
-  async getArticles(payload: GetArticlesDto) {
+  async getArticles(payload: GetArticlesRequestDto) {
     try {
       const { status, organizationId, authorId, search, page, limit } = payload;
       const filterQuery = {
@@ -122,7 +122,7 @@ export class ArticlesService {
     }
   }
 
-  async getUnapprovedArticles(payload: GetUnapprovedArticlesDto) {
+  async getUnapprovedArticles(payload: GetUnapprovedArticlesRequestDto) {
     try {
       const { userId, page, limit } = payload;
 

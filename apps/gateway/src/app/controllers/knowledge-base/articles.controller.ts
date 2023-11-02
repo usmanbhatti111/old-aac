@@ -8,7 +8,7 @@ import {
   Query,
 } from '@nestjs/common';
 import { ClientProxy, RpcException } from '@nestjs/microservices';
-import { ApiTags, ApiBearerAuth } from '@nestjs/swagger';
+import { ApiTags, ApiBearerAuth, ApiOkResponse } from '@nestjs/swagger';
 import {
   API_ENDPOINTS,
   API_TAGS,
@@ -17,9 +17,12 @@ import {
   SERVICES,
 } from '@shared/constants';
 import {
-  GetArticlesDto,
-  GetUnapprovedArticlesDto,
-  WriteArticleDTO,
+  GetArticlesRequestDto,
+  GetArticlesResponseDto,
+  GetUnapprovedArticlesRequestDto,
+  GetUnapprovedArticlesResponseDto,
+  WriteArticleRequestDTO,
+  WriteArticleResponseDto,
 } from '@shared/dto';
 import { firstValueFrom } from 'rxjs';
 import { Auth } from '../../decorators/auth.decorator';
@@ -34,10 +37,11 @@ export class ArticlesController {
 
   @Auth(true)
   @Post()
+  @ApiOkResponse({ type: WriteArticleResponseDto })
   public async writeArticle(
-    @Body() payload: WriteArticleDTO,
+    @Body() payload: WriteArticleRequestDTO,
     @Req() req: AppRequest
-  ): Promise<any> {
+  ): Promise<WriteArticleResponseDto> {
     try {
       payload.author = req?.user?._id;
       payload.organizationId = req?.user?.organization;
@@ -56,10 +60,11 @@ export class ArticlesController {
 
   @Auth(true)
   @Get()
+  @ApiOkResponse({ type: GetArticlesResponseDto })
   public async getArticles(
-    @Query() queryParams: GetArticlesDto,
+    @Query() queryParams: GetArticlesRequestDto,
     @Req() req: AppRequest
-  ): Promise<any> {
+  ): Promise<GetArticlesResponseDto> {
     try {
       queryParams.organizationId = req?.user?.organization;
       const response = await firstValueFrom(
@@ -77,10 +82,11 @@ export class ArticlesController {
 
   @Auth(true)
   @Get(API_ENDPOINTS.KNOWLEDGE_BASE.ARTICLES.GET_UNAPPROVED_ARTICLES)
+  @ApiOkResponse({ type: GetUnapprovedArticlesResponseDto })
   public async getUnapprovedArticles(
-    @Query() queryParams: GetUnapprovedArticlesDto,
+    @Query() queryParams: GetUnapprovedArticlesRequestDto,
     @Req() req: AppRequest
-  ): Promise<any> {
+  ): Promise<GetUnapprovedArticlesResponseDto> {
     try {
       queryParams.userId = req?.user?._id;
       queryParams.organizationId = req?.user?.organization;
