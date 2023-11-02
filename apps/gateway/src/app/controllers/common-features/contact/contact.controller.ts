@@ -42,6 +42,7 @@ import {
   ContactNoteFilterDto,
   GetContactTasksResponseDto,
   ContactMultiDto,
+  ImportContactDto,
 } from '@shared/dto';
 import { firstValueFrom } from 'rxjs';
 import { Auth } from '../../../decorators/auth.decorator';
@@ -56,6 +57,23 @@ export class ContactController {
   constructor(
     @Inject(SERVICES.COMMON_FEATURE) private commonFeatureClient: ClientProxy
   ) {}
+
+  @Auth(true)
+  @Post(API_ENDPOINTS.CONTACT.IMPORT_CONTACT)
+  @ApiCreatedResponse({ type: EditContactResponseDto })
+  public async importContact(
+    @Body() payload: ImportContactDto,
+    @Req() req: AppRequest
+  ): Promise<EditContactResponseDto> {
+    payload.createdBy = req.user._id;
+    const response = await firstValueFrom(
+      this.commonFeatureClient.send(
+        RMQ_MESSAGES.CONTACT.IMPORT_CONTACT,
+        payload
+      )
+    );
+    return response;
+  }
 
   @Auth(true)
   @Patch(API_ENDPOINTS.CONTACT.ASSIGN_CONTACT_OWNER_MULTI)

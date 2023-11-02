@@ -21,6 +21,7 @@ import {
   ContactCallIdParamDto,
   ContactDeleteDto,
   ContactDeletedFilterDto,
+  ContactDto,
   ContactFilterDto,
   ContactIdParamDto,
   ContactMeetingDeleteDto,
@@ -39,6 +40,7 @@ import {
   EditContactMeetingDto,
   EditContactNoteDto,
   GetContactAssociatinsDto,
+  ImportContactDto,
   MediaObject,
   RescheduleContactCallDto,
   RescheduleContactMeetingDto,
@@ -76,6 +78,57 @@ export class ContactService {
   deletedFilter = {
     isDeleted: true,
   };
+
+  async importContact(payload: ImportContactDto) {
+    try {
+      for (const contact of payload.contacts as ContactDto[]) {
+        let contactOwnerId = undefined;
+        let lifeCycleStageId = undefined;
+        let statusId = undefined;
+        if (contact.contactOwner) {
+          contactOwnerId = (
+            await this.userRepository.findOne({
+              firstName: contact.contactOwner,
+              status: 'ACTIVE',
+            })
+          )._id;
+          delete contact.contactOwner;
+        } else contactOwnerId = payload.createdBy;
+        if (contact.lifeCycleStage) {
+          lifeCycleStageId = (
+            await this.lifecycleRepository.findOne({
+              name: contact.lifeCycleStage,
+              ...this.otherNotDeletedFilter,
+            })
+          )._id;
+          delete contact.lifeCycleStage;
+        }
+        if (contact.lifeCycleStage) {
+          statusId = (
+            await this.statusRepository.findOne({
+              name: contact.lifeCycleStage,
+              ...this.otherNotDeletedFilter,
+            })
+          )._id;
+          delete contact.lifeCycleStage;
+        }
+
+        await this.contactRepository.create({
+          ...contact,
+          lifeCycleStageId,
+          contactOwnerId,
+          statusId,
+        });
+      }
+      return successResponse(
+        HttpStatus.CREATED,
+        'Contacts Imported Successfully',
+        {}
+      );
+    } catch (error) {
+      throw new RpcException(error);
+    }
+  }
 
   async getContactTasks(payload: ContactNoteFilterDto) {
     try {

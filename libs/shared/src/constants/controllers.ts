@@ -43,6 +43,7 @@ export const CONTROLLERS = {
   DEAL_PIPELINE: 'deal-pipeline',
   SALES_PRODUCT: 'sales-product',
   ATTACHMENT: 'attachment',
+  CALLS: 'calls',
   DEALS: 'deals',
   DEAL_NOTE: 'deal-note',
 };
