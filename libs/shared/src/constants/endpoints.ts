@@ -209,17 +209,14 @@ export const API_ENDPOINTS = {
     CONTRACT: {
       ADD_CONTRACT: 'add-contract',
       ADD_CONTRACT_ASSET: 'add-contract-asset/:id',
+      APPROVE_CONTRACT: 'approve-contract/:id',
+      UPDATE_CONTRACT_SUBMITTED_STATUS: 'approval-request/:id',
       DELETE_CONTRACT_ASSET: 'delete-contract-asset/:id',
       DELETE_CONTRACT: '/:id',
       UPDATE_CONTRACT: 'update/:id',
       RENEW_EXTEND_CONTRACT: 'renew-extend/:id',
       GET_CONTRACT: 'get-contract',
       GET_CONTRACTS: 'get-contracts',
-    },
-    KNOWLEDGE_BASE: {
-      ARTICLES: {
-        WRITE: 'write-article',
-      },
     },
   },
   PRODUCT_FEATURES: {
