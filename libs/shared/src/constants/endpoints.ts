@@ -9,6 +9,8 @@ export const API_ENDPOINTS = {
     SIGNIN: 'signin',
     VERIFY_TOKEN: 'verify-token',
     SEARCH_ORG: 'search-company',
+    IG_VERIFICATION: 'ig-verification',
+    IG_STATUS_UPDATE: 'ig-status-update',
   },
   USER: {
     GET: '/',

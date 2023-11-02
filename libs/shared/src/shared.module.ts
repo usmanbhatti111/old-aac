@@ -53,7 +53,7 @@ import {
 } from '../src/repositories/index';
 import { MongooseConfig } from './config/mongo.config';
 import { SharedService } from './shared.service';
-import { DownloadService, S3Service } from './services';
+import { DownloadService, EmailService, S3Service } from './services';
 
 @Module({
   imports: [
@@ -131,6 +131,7 @@ import { DownloadService, S3Service } from './services';
     },
     S3Service,
     DownloadService,
+    EmailService,
   ],
   exports: [
     SharedService,
@@ -190,6 +191,7 @@ import { DownloadService, S3Service } from './services';
     SalesProductRepository,
     DealsRepository,
     NoteRepository,
+    EmailService,
   ],
 })
 export class SharedModule {}
