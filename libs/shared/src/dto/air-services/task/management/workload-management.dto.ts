@@ -22,5 +22,10 @@ export class WorkLoadFilterDto {
   })
   @IsOptional()
   countDayWise: boolean;
-  //TODO NEDD THESE KEYS
+  @ApiProperty({
+    example: true,
+    required: false,
+  })
+  @IsOptional()
+  countDayWiseHours: boolean;
 }

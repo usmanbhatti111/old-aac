@@ -14,7 +14,7 @@ export class WorkloadManagementService {
 
   async getWorkload(query: WorkLoadFilterDto) {
     try {
-      const { startDate, countDayWise } = query;
+      const { startDate, countDayWise, countDayWiseHours } = query;
       const startOfCustomRange = startDate
         ? dayjs(startDate).startOf('day')
         : null;
@@ -27,39 +27,142 @@ export class WorkloadManagementService {
       if (startDate) {
         pipeline.push({
           $match: {
-            startDate: {
-              $gte: startOfCustomRange.toDate(),
-              $lte: endOfCustomRange.toDate(),
-            },
+            $or: [
+              {
+                startDate: {
+                  $gte: startOfCustomRange.toDate(),
+                  $lte: endOfCustomRange.toDate(),
+                },
+              },
+              {
+                endDate: {
+                  $gte: startOfCustomRange.toDate(),
+                  $lte: endOfCustomRange.toDate(),
+                },
+              },
+            ],
           },
         });
       }
 
       if (countDayWise) {
         pipeline.push({
+          $addFields: {
+            dateRange: {
+              $setDifference: [
+                {
+                  $map: {
+                    input: {
+                      $range: [
+                        0,
+                        {
+                          $add: [
+                            1,
+                            {
+                              $divide: [
+                                { $subtract: ['$endDate', '$startDate'] },
+                                1000 * 60 * 60 * 24,
+                              ],
+                            },
+                          ],
+                        },
+                      ],
+                    },
+                    as: 'dayOffset',
+                    in: {
+                      $add: [
+                        '$startDate',
+                        { $multiply: ['$$dayOffset', 1000 * 60 * 60 * 24] },
+                      ],
+                    },
+                  },
+                },
+                [null],
+              ],
+            },
+          },
+        });
+
+        pipeline.push({
+          $unwind: '$dateRange',
+        });
+
+        pipeline.push({
+          $project: {
+            year: { $year: '$dateRange' },
+            month: { $month: '$dateRange' },
+            day: { $dayOfMonth: '$dateRange' },
+            task: '$$ROOT',
+          },
+        });
+
+        pipeline.push({
           $group: {
             _id: {
-              year: { $year: '$startDate' },
-              month: { $month: '$startDate' },
-              day: { $dayOfMonth: '$startDate' },
+              year: '$year',
+              month: '$month',
+              day: '$day',
             },
-            tasks: { $push: '$$ROOT' },
+            tasks: { $push: '$task' },
             count: { $sum: 1 },
           },
         });
 
-        if (startDate) {
-          pipeline.push({
-            $project: {
-              _id: 0,
-              year: '$_id.year',
-              month: '$_id.month',
-              day: '$_id.day',
-              count: 1,
-              tasks: 1,
+        pipeline.push({
+          $project: {
+            _id: 0,
+            year: '$_id.year',
+            month: '$_id.month',
+            day: '$_id.day',
+            count: 1,
+            tasks: 1,
+          },
+        });
+      }
+
+      if (countDayWiseHours) {
+        pipeline.push({
+          $match: {
+            endDate: { $ne: null },
+          },
+        });
+
+        pipeline.push({
+          $addFields: {
+            dateRange: {
+              $setDifference: [
+                {
+                  $map: {
+                    input: {
+                      $range: [
+                        0,
+                        {
+                          $add: [
+                            1,
+                            {
+                              $divide: [
+                                { $subtract: ['$endDate', '$startDate'] },
+                                1000 * 60 * 60 * 24,
+                              ],
+                            },
+                          ],
+                        },
+                      ],
+                    },
+                    as: 'dayOffset',
+                    in: {
+                      $add: [
+                        '$startDate',
+                        { $multiply: ['$$dayOffset', 1000 * 60 * 60 * 24] },
+                      ],
+                    },
+                  },
+                },
+                [null],
+              ],
             },
-          });
-        }
+          },
+        });
       }
 
       const res = await this.taskRepository.aggregate(pipeline);
