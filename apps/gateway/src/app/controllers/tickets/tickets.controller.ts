@@ -11,6 +11,7 @@ import {
   Put,
   UsePipes,
   ValidationPipe,
+  Patch,
 } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
 import { RpcException } from '@nestjs/microservices';
@@ -45,6 +46,8 @@ import {
   EditTicketResponse,
   DeleteTicketResponse,
   ListTicketDTO,
+  BulkTicketUpdateDto,
+  UpdateManyTicketResponse,
 } from '@shared/dto';
 import { ColumnPipe } from '../../pipes/column.pipe';
 
@@ -319,6 +322,27 @@ export class TicketController {
         this.ariServiceClient.send(
           RMQ_MESSAGES.AIR_SERVICES.TICKETS.GET_TICKET_LIST,
           { listTicketDTO, columnNames }
+        )
+      );
+      return res.status(response.statusCode).json(response);
+    } catch (err) {
+      throw new RpcException(err);
+    }
+  }
+
+  @Auth(true)
+  @Patch(API_ENDPOINTS.AIR_SERVICES.TICKETS.BULK_TICKET_UPDATE)
+  @ApiOkResponse({ type: UpdateManyTicketResponse })
+  public async bulkTicketUpdate(
+    @Res() res: Response | any,
+    @Query('ids') ids: string[],
+    @Body() dto: BulkTicketUpdateDto
+  ): Promise<UpdateManyTicketResponse> {
+    try {
+      const response = await firstValueFrom(
+        this.ariServiceClient.send(
+          RMQ_MESSAGES.AIR_SERVICES.TICKETS.BULK_TICKET_UPDATE,
+          { ids, dto }
         )
       );
       return res.status(response.statusCode).json(response);

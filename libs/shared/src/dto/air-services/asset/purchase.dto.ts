@@ -453,6 +453,7 @@ export class ApproverStatusDto {
     required: true,
     example: '65152939f50394f42cee2db4',
   })
+  @IsMongoId()
   id: string;
   @ApiProperty({
     enum: EApprovalStatusStatus,
@@ -465,6 +466,7 @@ export class ApproverStatusDto {
     required: false,
   })
   @IsOptional()
+  @IsString()
   reasons: string;
 }
 export class AddPurchaseOrderApprover {

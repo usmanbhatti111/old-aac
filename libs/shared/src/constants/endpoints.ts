@@ -143,6 +143,7 @@ export const API_ENDPOINTS = {
       ASSOCIATE_ASSETS: 'associate-assets',
       DETACH_ASSETS: 'detach-assets',
       CHANGE_STATUS: 'status/:id',
+      BULK_TICKET_UPDATE: 'bulk-ticket-update',
     },
     ASSETS: {
       INVENTORY: 'inventory',
@@ -314,5 +315,11 @@ export const API_ENDPOINTS = {
     GET_DEAL_NOTE: '/:id',
     UPDATE_DEAL_NOTE: '/:id',
     DELETE_DEAL_NOTE: '/:id',
+  },
+
+  KNOWLEDGE_BASE: {
+    ARTICLES: {
+      GET_UNAPPROVED_ARTICLES: 'unapproved-articles',
+    },
   },
 };

@@ -16,6 +16,7 @@ import {
   AddPurchaseOrderApprover,
   FilterPurchaseOrderRecievedDto,
   FilterPurchaseOrderDto,
+  ApproverStatusDto,
 } from '@shared/dto';
 
 import { Types } from 'mongoose';
@@ -232,7 +233,8 @@ export class PurchaseOrderService {
       throw new RpcException(error);
     }
   }
-  async updatePurchaseOrderApprover(payload: any) {
+
+  async updatePurchaseOrderApprover(payload: ApproverStatusDto) {
     try {
       const { id } = payload;
 
