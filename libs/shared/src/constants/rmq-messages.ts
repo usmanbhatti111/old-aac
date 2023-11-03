@@ -177,6 +177,7 @@ export const RMQ_MESSAGES = {
       UPDATE_PURCHASEORDER: 'update-purchaseorder',
       ADD_ASSOCIATE_ORDER: 'add-associate-order',
       ADD_APPROVER_ORDER: 'add-approver-order',
+      APPROVER_ORDER_STATUS: 'approver-order-status',
       ADD_SOFTWARE: 'add-software',
       ADD_SOFTWARE_DEVICE: 'add-software-device',
       GET_PURCHASEORDERLIST: 'get-purchaseorderlist',

@@ -37,11 +37,13 @@ import {
   UpdatePurchaseOrderDto,
   GetPurchasesResponseOrderDto,
   IdDto,
+  IdDTO,
+  ApproverStatusDto,
   FilterPurchaseOrderRecievedDto,
   GetPurchasesAssociationResponseOrderDto,
   DeleteAssociatePurchaseOrderDto,
-  AddPurchaseOrderApprover,
   AssociatePurchaseOrderDto,
+  AddPurchaseOrderApprover,
 } from '@shared/dto';
 import { DownloadService } from '@shared/services';
 import { Auth } from '../../decorators/auth.decorator';
@@ -257,17 +259,18 @@ export class PurchaseOrderController {
     }
   }
   @Auth(true)
-  @Patch(API_ENDPOINTS.AIR_SERVICES.ASSETS.ADD_APPROVER_ORDER)
+  @Post(API_ENDPOINTS.AIR_SERVICES.ASSETS.ADD_APPROVER_ORDER)
   public async addPurchaseOrderApprover(
-    @Body() dto: AddPurchaseOrderApprover,
-    @Req() request: AppRequest,
-    @Req() { user: { _id } }
+    @Query() id: IdDTO,
+    @Query() purchaseId: AddPurchaseOrderApprover,
+    @Req() request: AppRequest
   ) {
     try {
+      const { user } = request;
       const response = await firstValueFrom(
         this.airServiceClient.send(
           { cmd: RMQ_MESSAGES.AIR_SERVICES.ASSETS.ADD_APPROVER_ORDER },
-          { dto, userId: _id }
+          { id, createdBy: user._id, purchaseId }
         )
       );
       return response;
@@ -292,6 +295,25 @@ export class PurchaseOrderController {
         this.airServiceClient.send(
           { cmd: RMQ_MESSAGES.AIR_SERVICES.ASSETS.GET_PURCHASEORDER_RECIEVED },
           { ...filterOrder, organizationId, createdBy }
+        )
+      );
+      return response;
+    } catch (error) {
+      throw new RpcException(error);
+    }
+  }
+  @Auth(true)
+  @Patch(API_ENDPOINTS.AIR_SERVICES.ASSETS.APPROVER_ORDER_STATUS)
+  public async updatePurchaseOrderApprover(
+    @Body() dto: ApproverStatusDto,
+    @Req() request: AppRequest
+  ) {
+    try {
+      const { user } = request;
+      const response = await firstValueFrom(
+        this.airServiceClient.send(
+          { cmd: RMQ_MESSAGES.AIR_SERVICES.ASSETS.APPROVER_ORDER_STATUS },
+          { ...dto, user }
         )
       );
       return response;

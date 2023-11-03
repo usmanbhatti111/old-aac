@@ -98,6 +98,8 @@ import {
   DealsSchema,
   Note,
   NoteSchema,
+  PurchaseApproval,
+  PurchaseApprovalSchema,
 } from './schema';
 
 import {
@@ -340,5 +342,9 @@ export const DbModels = [
   {
     name: Note.name,
     schema: NoteSchema,
+  },
+  {
+    name: PurchaseApproval.name,
+    schema: PurchaseApprovalSchema,
   },
 ];

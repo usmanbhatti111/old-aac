@@ -26,6 +26,7 @@ import {
   PaymentRepository,
   PermissionRepository,
   PlanProductFeatureRepository,
+  PurchaseApprovalRepository,
   PlanProductModulePermissionRepository,
   PlanRepository,
   PlanTypeRepository,
@@ -99,6 +100,7 @@ import { DownloadService, S3Service } from './services';
     PermissionRepository,
     UserORepository,
     TaskManagementRepository,
+    PurchaseApprovalRepository,
     UserORepository,
     ContactRepository,
     PlanTypeRepository,
@@ -202,6 +204,7 @@ import { DownloadService, S3Service } from './services';
     SalesProductRepository,
     DealsRepository,
     NoteRepository,
+    PurchaseApprovalRepository,
   ],
 })
 export class SharedModule {}
