@@ -17,6 +17,7 @@ export const API_ENDPOINTS = {
     GET_ONE: '/:id',
     CREATE: '/',
     UPDATE: '/:id',
+    EDIT_USER: 'edit/:id',
     DELETE: '/:id',
   },
   ROLE: {

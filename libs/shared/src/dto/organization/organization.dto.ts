@@ -3,11 +3,16 @@ import { IsMongoId, IsNotEmpty } from 'class-validator';
 
 export interface IOrganization {
   logoUrl?: string;
-  registrationNumber?: string;
+  crn?: string;
   name: string;
   email?: string;
   phoneNo?: string;
-  address?: string;
+  address?: {
+    street: string;
+    city: string;
+    state: string;
+    postalCode: string;
+  };
   postCode?: string;
   createdAt?: Date;
   updatedAt?: Date;

@@ -18,6 +18,9 @@ export const RMQ_MESSAGES = {
     CREATE: 'create-user',
     FIND_BY_EMAIL: 'find-user-by-email',
     FIND_BY_COGNITO: 'find-user-by-cognito',
+    PROFILE: 'profile',
+    UPDATE_PROFILE: 'update-profile',
+    EDIT_USER: 'edit-user-by-admin',
   },
   ROLE: {
     CREATE_ROLE: 'create-role',
