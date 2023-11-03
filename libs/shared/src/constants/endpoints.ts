@@ -177,6 +177,7 @@ export const API_ENDPOINTS = {
       SOFTWARE_ALLOCATE_CONTRACT: 'software-allocate-contract',
       SOFTWARE_DEALLOCATE_CONTRACT: 'software-deallocate-contract',
       SOFTWARE_USERS_REMOVE: 'software-users-remove/:id',
+      GET_SOFTWARE_DEVICES: 'software-devices',
     },
     TASK: {
       ADD_TASK: '/',
@@ -201,6 +202,7 @@ export const API_ENDPOINTS = {
     },
     WORK_LOAD_MANAGEMENT: {
       WORK_LOAD_LIST: 'workload-management',
+      GET_USER_TASKS: 'user-tasks',
     },
     EXPENSE: {
       ADD_EXPENSE: 'add-expense',

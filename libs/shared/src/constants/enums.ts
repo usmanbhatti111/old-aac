@@ -196,6 +196,19 @@ export enum ETaskStatus {
   COMPLETED = 'Complete',
 }
 
+export enum ETicketsTaskStatus {
+  TODO = 'Todo',
+  IN_PROGRESS = 'In-Progress',
+  DONE = 'Done',
+}
+
+export enum ETaskNotifyStatus {
+  FIVE_MINS = '5',
+  TEN_MINS = '10',
+  FIFTEEN_MINS = '15',
+  THIRTY_MINS = '30',
+}
+
 export enum ETaskAssociate {
   COMPANIES = 'Companies',
   CONTACTS = 'Contacts',

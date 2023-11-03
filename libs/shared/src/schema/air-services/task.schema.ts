@@ -2,6 +2,7 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument, SchemaTypes } from 'mongoose';
 import { AbstractSchema } from '../abstract-repo/abstract.schema';
 import { TicketDocument } from './ticket.schema';
+import { ETaskNotifyStatus, ETicketsTaskStatus } from '../../constants/enums';
 
 export type TaskDocument = HydratedDocument<Task>;
 
@@ -19,23 +20,48 @@ export class Task extends AbstractSchema {
   })
   description: string;
 
-  @Prop({ type: String, required: false })
-  workSpace: string;
+  @Prop({
+    type: SchemaTypes.ObjectId,
+    required: false,
+  })
+  departmentId: string;
 
-  @Prop({ type: String, required: false })
+  @Prop({
+    type: SchemaTypes.ObjectId,
+    required: false,
+  })
+  createdBy: string;
+
+  @Prop({ type: SchemaTypes.ObjectId, required: false })
   assignTo: string;
 
-  @Prop({ type: String, required: false })
+  @Prop({
+    type: String,
+    required: false,
+    enum: ETicketsTaskStatus,
+    default: ETicketsTaskStatus.TODO,
+  })
   status: string;
 
-  @Prop({ type: String, required: false })
+  @Prop({
+    type: String,
+    required: false,
+    enum: ETaskNotifyStatus,
+    default: ETaskNotifyStatus.FIVE_MINS,
+  })
   notifyBefore: string;
 
   @Prop()
   startDate: Date;
 
+  @Prop({ type: String, required: false })
+  startDateTime: string;
+
   @Prop()
   endDate: Date;
+
+  @Prop({ type: String, required: false })
+  endDateTime: string;
 
   @Prop({ type: String, required: false })
   plannedEffort: String;

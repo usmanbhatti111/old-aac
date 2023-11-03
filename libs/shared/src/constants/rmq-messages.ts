@@ -199,6 +199,7 @@ export const RMQ_MESSAGES = {
       SOFTWARE_ALLOCATE_CONTRACT: 'software-allocate-contract',
       SOFTWARE_DEALLOCATE_CONTRACT: 'software-deallocate-contract',
       SOFTWARE_USERS_REMOVE: 'software-users-remove',
+      GET_SOFTWARE_DEVICES: 'software-devices',
     },
     TASK: {
       ADD_TASK: 'add_task',
@@ -216,6 +217,7 @@ export const RMQ_MESSAGES = {
     },
     WORK_LOAD_MANAGEMENT: {
       WORK_LOAD_LIST: 'workload-list',
+      GET_USER_TASKS: 'users-tasks',
     },
     EXPENSE: {
       ADD_EXPENSE: 'add-expense',
