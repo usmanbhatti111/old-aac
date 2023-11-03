@@ -236,6 +236,21 @@ export enum EExportFile {
   XLS = 'XLS',
 }
 
+export enum FileType {
+  PDF = 'PDF',
+  PNG = 'PNG',
+}
+export enum IsRecurring {
+  YES = 'YES',
+  NO = 'NO',
+}
+
+export enum Schedule {
+  DAILY = 'Daily',
+  WEEKLY = 'Weekly',
+  MONTHLY = 'Monthly',
+}
+
 export enum ECardTypes {
   MASTER = 'MASTER',
   VISA = 'VISA',

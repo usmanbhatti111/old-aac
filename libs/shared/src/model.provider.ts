@@ -98,6 +98,8 @@ import {
   DealsSchema,
   Note,
   NoteSchema,
+  SendDashboard,
+  SendDashboardSchema,
 } from './schema';
 
 import {
@@ -307,6 +309,10 @@ export const DbModels = [
   {
     name: Dashboard.name,
     schema: DashboardSchema,
+  },
+  {
+    name: SendDashboard.name,
+    schema: SendDashboardSchema,
   },
   {
     name: OrganizationCompanyAccount.name,

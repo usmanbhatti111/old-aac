@@ -150,6 +150,7 @@ export const RMQ_MESSAGES = {
       GET_DASHBOARD: 'get-dashboard',
       UPDATE_DASHBOARD: 'update-dashboard',
       DELETE_DASHBOARD: 'delete-dashboard',
+      SEND_DASHBOARD_URL: 'send-dashboard-url',
     },
     TICKETS: {
       CREATE_TICKET: 'create-ticket',

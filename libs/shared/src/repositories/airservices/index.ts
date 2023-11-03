@@ -7,4 +7,5 @@ export * from './contract.repository';
 export * from './task-activity.repository';
 export * from './software-users-repository';
 export * from './dashboard.repository';
+export * from './send-dashboard.repository';
 export * from './articles.repository';

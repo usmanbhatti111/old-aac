@@ -8,7 +8,12 @@ import {
   Query,
 } from '@nestjs/common';
 import { ClientProxy, RpcException } from '@nestjs/microservices';
-import { ApiParam, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiOkResponse,
+  ApiParam,
+  ApiTags,
+} from '@nestjs/swagger';
 import {
   API_ENDPOINTS,
   API_TAGS,
@@ -17,8 +22,15 @@ import {
   SERVICES,
 } from '@shared/constants';
 import { firstValueFrom } from 'rxjs';
-import { CreateDashboardtDTO, IdDto, ListDashboardDTO } from '@shared/dto';
-
+import {
+  CreateDashboardtDTO,
+  IdDto,
+  ListDashboardDTO,
+  SendDashboardDTO,
+  SendDashboardResponseDTO,
+} from '@shared/dto';
+import { Auth } from '../decorators/auth.decorator';
+@ApiBearerAuth()
 @ApiTags(API_TAGS.AIR_SERVICES_DASHBOARD)
 @Controller(CONTROLLERS.AIR_SERVICES_DASHBOARD)
 export class AirServicesDashboardController {
@@ -33,6 +45,25 @@ export class AirServicesDashboardController {
         this.ariServiceClient.send(
           RMQ_MESSAGES.AIR_SERVICES.DASHBOARD.CREATE_DASHBOARD,
           dashboardDTO
+        )
+      );
+      return dashboard;
+    } catch (err) {
+      throw new RpcException(err);
+    }
+  }
+
+  @Auth(true)
+  @ApiOkResponse({ type: SendDashboardResponseDTO })
+  @Post(API_ENDPOINTS.AIR_SERVICES.DASHBOARD.SEND_DASHBOARD_URL)
+  public async sendDashboardUrl(
+    @Query() dashboardEmailDTO: SendDashboardDTO
+  ): Promise<SendDashboardResponseDTO> {
+    try {
+      const dashboard = await firstValueFrom(
+        this.ariServiceClient.send(
+          RMQ_MESSAGES.AIR_SERVICES.DASHBOARD.SEND_DASHBOARD_URL,
+          dashboardEmailDTO
         )
       );
       return dashboard;

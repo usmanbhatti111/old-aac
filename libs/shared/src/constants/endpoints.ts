@@ -189,6 +189,7 @@ export const API_ENDPOINTS = {
       GET_DASHBOARD: '/:id',
       UPDATE_DASHBOARD: '/:id',
       DELETE_DASHBOARD: '/:id',
+      SEND_DASHBOARD_URL: 'send-dashboard-url',
     },
     TASK_MANAGEMENT: {
       CREATE_TASK: 'management',
