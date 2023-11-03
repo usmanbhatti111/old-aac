@@ -66,6 +66,7 @@ export class AirServicesDashboardController {
           dashboardEmailDTO
         )
       );
+
       return dashboard;
     } catch (err) {
       throw new RpcException(err);
