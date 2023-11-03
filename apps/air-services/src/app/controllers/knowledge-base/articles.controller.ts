@@ -2,8 +2,10 @@ import { Controller } from '@nestjs/common';
 import { MessagePattern, Payload } from '@nestjs/microservices';
 import { RMQ_MESSAGES } from '@shared/constants';
 import {
+  DeleteArticleRequestDto,
   GetArticlesRequestDto,
   GetUnapprovedArticlesRequestDto,
+  UpdateArticleRequestDto,
   WriteArticleRequestDTO,
 } from '@shared/dto';
 import { ArticlesService } from '../../services/knowledge-base/articles.service';
@@ -25,5 +27,14 @@ export class ArticlesController {
   )
   getUnapprovedArticles(@Payload() payload: GetUnapprovedArticlesRequestDto) {
     return this.articleService.getUnapprovedArticles(payload);
+  }
+
+  @MessagePattern(RMQ_MESSAGES.AIR_SERVICES.KNOWLEDGE_BASE.ARTICLES.UPDATE)
+  updateArticle(@Payload() payload: UpdateArticleRequestDto) {
+    return this.articleService.updateArticle(payload);
+  }
+  @MessagePattern(RMQ_MESSAGES.AIR_SERVICES.KNOWLEDGE_BASE.ARTICLES.DELETE)
+  deleteArticle(@Payload() payload: DeleteArticleRequestDto) {
+    return this.articleService.deleteArticle(payload);
   }
 }
