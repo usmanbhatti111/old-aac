@@ -6,6 +6,8 @@ import {
   Req,
   Get,
   Query,
+  Patch,
+  Delete,
 } from '@nestjs/common';
 import { ClientProxy, RpcException } from '@nestjs/microservices';
 import { ApiTags, ApiBearerAuth, ApiOkResponse } from '@nestjs/swagger';
@@ -17,10 +19,14 @@ import {
   SERVICES,
 } from '@shared/constants';
 import {
+  DeleteArticleRequestDto,
+  DeleteArticleResponseDto,
   GetArticlesRequestDto,
   GetArticlesResponseDto,
   GetUnapprovedArticlesRequestDto,
   GetUnapprovedArticlesResponseDto,
+  UpdateArticleRequestDto,
+  UpdateArticleResponseDto,
   WriteArticleRequestDTO,
   WriteArticleResponseDto,
 } from '@shared/dto';
@@ -94,6 +100,46 @@ export class ArticlesController {
         this.airServiceClient.send(
           RMQ_MESSAGES.AIR_SERVICES.KNOWLEDGE_BASE.ARTICLES
             .GET_UNAPPROVED_ARTICLES,
+          queryParams
+        )
+      );
+
+      return response;
+    } catch (err) {
+      throw new RpcException(err);
+    }
+  }
+
+  @Auth(true)
+  @Patch()
+  @ApiOkResponse({ type: UpdateArticleResponseDto })
+  public async updateArticle(
+    @Body() body: UpdateArticleRequestDto
+  ): Promise<UpdateArticleResponseDto> {
+    try {
+      const response = await firstValueFrom(
+        this.airServiceClient.send(
+          RMQ_MESSAGES.AIR_SERVICES.KNOWLEDGE_BASE.ARTICLES.UPDATE,
+          body
+        )
+      );
+
+      return response;
+    } catch (err) {
+      throw new RpcException(err);
+    }
+  }
+
+  @Auth(true)
+  @Delete()
+  @ApiOkResponse({ type: DeleteArticleResponseDto })
+  public async deleteArticle(
+    @Query() queryParams: DeleteArticleRequestDto
+  ): Promise<DeleteArticleResponseDto> {
+    try {
+      const response = await firstValueFrom(
+        this.airServiceClient.send(
+          RMQ_MESSAGES.AIR_SERVICES.KNOWLEDGE_BASE.ARTICLES.DELETE,
           queryParams
         )
       );

@@ -47,7 +47,7 @@ export enum EPurchaseOrderStatus {
 export enum EApprovalStatusStatus {
   PENDING = 'PENDING',
   APPROVE = 'APPROVE',
-  REJECT = 'REJECT',
+  REJECT = 'REJECTED',
 }
 export enum EExtendRenewStatus {
   EXTEND = 'EXTEND',

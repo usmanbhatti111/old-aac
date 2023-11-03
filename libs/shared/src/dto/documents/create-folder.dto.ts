@@ -27,7 +27,7 @@ export class CreateFolderDto {
 
   @ApiProperty({
     required: false,
-    example: '',
+    example: EFolderType.KNOWLEDGE_BASE,
     enum: EFolderType,
   })
   @IsEnum(EFolderType)

@@ -1,5 +1,6 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty, PartialType } from '@nestjs/swagger';
 import {
+  IsArray,
   IsBoolean,
   IsEnum,
   IsISO8601,
@@ -11,6 +12,7 @@ import {
 } from 'class-validator';
 import { paginationDTO } from '../../pagination/pagination.dto';
 import { EArticlesStatus } from '@shared/constants';
+import { IdDto } from '../../common';
 
 export class WriteArticleRequestDTO {
   @ApiProperty({
@@ -53,6 +55,10 @@ export class WriteArticleRequestDTO {
   author?: string;
 
   organizationId?: string;
+
+  isApproved?: boolean;
+
+  status?: string;
 }
 
 export class WriteArticleResponseDto {
@@ -141,3 +147,88 @@ export class GetUnapprovedArticlesRequestDto extends paginationDTO {
 }
 
 export class GetUnapprovedArticlesResponseDto extends GetArticlesResponseDto {}
+
+export class UpdateArticleRequestDto extends PartialType(
+  WriteArticleRequestDTO
+) {
+  @ApiProperty({ example: '6543af689999bc729ce962b4' })
+  @IsMongoId()
+  @IsNotEmpty()
+  id: string;
+
+  @ValidateIf((value) => value.isApprovel === true)
+  @IsMongoId()
+  approver: string;
+
+  @ValidateIf((value) => value.isApprovel === true)
+  @IsISO8601()
+  reviewDate: Date;
+}
+
+export class UpdateArticleResponseDto {
+  @ApiProperty({ example: 200, description: 'HTTP status code' })
+  statusCode: number;
+
+  @ApiProperty({
+    example: 'Update successfully',
+    description: 'Response message',
+  })
+  message: string;
+
+  @ApiProperty({
+    example: {
+      _id: '6543a1b4a12f3e109bfbbb34',
+      details: 'Lorem Ipsum is simply dummy text of the printing...',
+      folder: '6543af689999bc729ce962b4',
+      tags: '#tags',
+      keywords: 'keywords',
+      isApprovel: false,
+      reviewDate: '2023-11-02T00:00:00.000Z',
+      status: 'PUBLISHED',
+      author: '653be0ede94d507754aa6738',
+      isApproved: true,
+      createdAt: '2023-11-02T13:18:44.936Z',
+      updatedAt: '2023-11-02T15:35:04.691Z',
+    },
+    description: 'Response data object',
+  })
+  data: {};
+
+  @ApiProperty({ example: null, description: 'Error details (if any)' })
+  error: null | string;
+}
+
+export class DeleteArticleRequestDto {
+  @ApiProperty({
+    example: ['651e6368a3a6baf2f193efb0', '65154bdc3064871640f8ce14'],
+    description: 'Array of MongoDB IDs',
+  })
+  @IsArray()
+  @IsMongoId({
+    each: true,
+  })
+  ids: string[];
+}
+
+export class DeleteArticleResponseDto {
+  @ApiProperty({ example: 200, description: 'HTTP status code' })
+  statusCode: number;
+
+  @ApiProperty({
+    example: 'Deleted successfully',
+    description: 'Response message',
+  })
+  message: string;
+
+  @ApiProperty({
+    example: {
+      acknowledged: true,
+      deletedCount: 1,
+    },
+    description: 'Response data object',
+  })
+  data: {};
+
+  @ApiProperty({ example: null, description: 'Error details (if any)' })
+  error: null | string;
+}

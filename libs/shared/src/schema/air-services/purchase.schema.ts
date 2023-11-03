@@ -3,32 +3,30 @@ import { SchemaTypes, HydratedDocument } from 'mongoose';
 import { AbstractSchema } from './../abstract-repo/abstract.schema';
 import { EApprovalStatusStatus } from '../../constants/index';
 export type PurchaseDocument = HydratedDocument<Purchase>;
-
-@Schema()
-@Schema()
-export class PurchaseApproval {
+export type PurchaseApprovalDocument = HydratedDocument<PurchaseApproval>;
+@Schema({ timestamps: true })
+export class PurchaseApproval extends AbstractSchema {
   @Prop({
     type: String,
     required: false,
     default: EApprovalStatusStatus.PENDING,
     enum: EApprovalStatusStatus,
   })
-  approvalStatus: string;
+  approvalStatus?: string;
 
-  @Prop({ type: SchemaTypes.ObjectId, required: false, ref: 'users' })
-  requestedapprId: string;
+  @Prop({ type: SchemaTypes.ObjectId, required: true, ref: 'users' })
+  approverId?: string;
 
-  @Prop({ type: SchemaTypes.ObjectId, required: false, ref: 'users' })
-  userId: string;
-
-  @Prop({ type: Object, required: false })
-  details: object;
-
-  @Prop({ type: Object, required: false })
-  reminderDetails: object;
+  @Prop({ type: SchemaTypes.ObjectId, required: true, ref: 'users' })
+  createdBy?: string;
+  @Prop({ type: SchemaTypes.ObjectId, required: true, ref: 'purchases' })
+  purchaseId?: string;
+  @Prop({ type: String, required: false })
+  reasons?: string;
 }
 
-const PurchaseApprovalSchema = SchemaFactory.createForClass(PurchaseApproval);
+export const PurchaseApprovalSchema =
+  SchemaFactory.createForClass(PurchaseApproval);
 
 @Schema()
 export class PurchaseDetail {
@@ -109,8 +107,6 @@ export class Purchase extends AbstractSchema {
 
   @Prop({ type: [PurchaseDetailSchema], required: false })
   purchaseDetails: PurchaseDetail[];
-  @Prop({ type: [PurchaseApprovalSchema], required: false })
-  PurchaseApprovals: PurchaseApproval[];
   @Prop({ type: String, required: true })
   status: string;
 }
