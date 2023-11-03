@@ -3,16 +3,20 @@ import {
   Controller,
   Delete,
   Get,
-  HttpStatus,
   Inject,
   Param,
   Patch,
   Post,
   Query,
-  Res,
+  Req,
 } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
-import { ApiBearerAuth, ApiCreatedResponse, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiCreatedResponse,
+  ApiOkResponse,
+  ApiTags,
+} from '@nestjs/swagger';
 import {
   API_ENDPOINTS,
   API_TAGS,
@@ -23,108 +27,105 @@ import {
 import {
   CreateJobDto,
   CreateJobResponseDto,
-  FilterJobsDto,
+  DeleteJobsDto,
+  DeleteJobsResponseDto,
   GetJobResponseDto,
+  GetJobsDto,
   GetJobsResponseDto,
+  IdDto,
   UpdateJobDto,
+  UpdateJobResponseDto,
 } from '@shared/dto';
-import { Response } from 'express';
 import { firstValueFrom } from 'rxjs';
+import { Auth } from '../../decorators/auth.decorator';
+import { AppRequest } from '../../shared/interface/request.interface';
 
-@ApiTags(API_TAGS.SETTINGS)
-@Controller(CONTROLLERS.SETTINGS.JOBS)
+@ApiTags(API_TAGS.JOBS)
+@Controller(CONTROLLERS.JOBS)
 @ApiBearerAuth()
 export class JobsController {
   constructor(
     @Inject(SERVICES.SUPER_ADMIN) private userServiceClient: ClientProxy
   ) {}
 
-  @Post()
+  @Auth(true)
+  @Post(API_ENDPOINTS.JOBS.CREATE_JOB)
   @ApiCreatedResponse({ type: CreateJobResponseDto })
   public async createJob(
-    @Body() payload: CreateJobDto,
-    @Res() res: Response | any
+    @Req() request: AppRequest,
+    @Body() payload: CreateJobDto
   ) {
-    try {
-      const response = await firstValueFrom(
-        this.userServiceClient.send(
-          { cmd: RMQ_MESSAGES.JOBS.CREATE_JOB },
-          payload
-        )
-      );
-      res.status(response.statusCode).json(response);
-    } catch (err) {
-      res.status(HttpStatus.INTERNAL_SERVER_ERROR).json(err);
-    }
+    payload.createdBy = request?.user?._id;
+
+    const response = await firstValueFrom(
+      this.userServiceClient.send(
+        { cmd: RMQ_MESSAGES.JOBS.CREATE_JOB },
+        payload
+      )
+    );
+
+    return response;
   }
 
+  @Auth(true)
   @Get(API_ENDPOINTS.JOBS.GET_JOB)
-  @ApiCreatedResponse({ type: GetJobResponseDto })
-  public async getJob(@Param('id') id: string, @Res() res: Response | any) {
-    try {
-      const response = await firstValueFrom(
-        this.userServiceClient.send({ cmd: RMQ_MESSAGES.JOBS.GET_JOB }, { id })
-      );
-      res.status(response.statusCode).json(response);
-    } catch (err) {
-      res.status(HttpStatus.INTERNAL_SERVER_ERROR).json(err);
-    }
+  @ApiOkResponse({ type: GetJobResponseDto })
+  public async getJob(@Param() payload: IdDto) {
+    const response = await firstValueFrom(
+      this.userServiceClient.send({ cmd: RMQ_MESSAGES.JOBS.GET_JOB }, payload)
+    );
+
+    return response;
   }
 
-  @Get()
-  @ApiCreatedResponse({ type: GetJobsResponseDto })
-  public async getJobs(
-    @Query() filter: FilterJobsDto,
-    @Res() res: Response | any
-  ) {
-    try {
-      const response = await firstValueFrom(
-        this.userServiceClient.send({ cmd: RMQ_MESSAGES.JOBS.GET_JOBS }, filter)
-      );
-      res.status(response.statusCode).json(response);
-    } catch (err) {
-      res.status(HttpStatus.INTERNAL_SERVER_ERROR).json(err);
-    }
+  @Auth(true)
+  @Get(API_ENDPOINTS.JOBS.GET_JOBS)
+  @ApiOkResponse({ type: GetJobsResponseDto })
+  public async getJobs(@Query() payload: GetJobsDto) {
+    const response = await firstValueFrom(
+      this.userServiceClient.send({ cmd: RMQ_MESSAGES.JOBS.GET_JOBS }, payload)
+    );
+
+    return response;
   }
 
+  @Auth(true)
   @Patch(API_ENDPOINTS.JOBS.UPDATE_JOB)
-  @ApiCreatedResponse({ type: GetJobResponseDto })
+  @ApiOkResponse({ type: UpdateJobResponseDto })
   public async updateJob(
-    @Body() payload: UpdateJobDto,
-    @Res() res: Response | any
+    @Req() request: AppRequest,
+    @Param() params: IdDto,
+    @Body() payload: UpdateJobDto
   ) {
-    try {
-      const response = await firstValueFrom(
-        this.userServiceClient.send(
-          { cmd: RMQ_MESSAGES.JOBS.UPDATE_JOB },
-          payload
-        )
-      );
+    payload.updatedBy = request?.user?._id;
+    payload.id = params.id;
 
-      res.status(response.statusCode).json(response);
-    } catch (err) {
-      res.status(HttpStatus.INTERNAL_SERVER_ERROR).json(err);
-    }
+    const response = await firstValueFrom(
+      this.userServiceClient.send(
+        { cmd: RMQ_MESSAGES.JOBS.UPDATE_JOB },
+        payload
+      )
+    );
+
+    return response;
   }
 
+  @Auth(true)
   @Delete(API_ENDPOINTS.JOBS.DELETE_JOB)
-  @ApiCreatedResponse({ type: GetJobResponseDto })
+  @ApiOkResponse({ type: DeleteJobsResponseDto })
   public async deleteJob(
-    @Query('id') id: string[],
-    @Res() res: Response | any
+    @Req() request: AppRequest,
+    @Param() payload: DeleteJobsDto
   ) {
-    try {
-      if (typeof id === 'string') id = [id];
+    payload.deletedBy = request?.user?._id;
 
-      const response = await firstValueFrom(
-        this.userServiceClient.send(
-          { cmd: RMQ_MESSAGES.JOBS.DELETE_JOB },
-          { id }
-        )
-      );
-      res.status(response.statusCode).json(response);
-    } catch (err) {
-      res.status(HttpStatus.INTERNAL_SERVER_ERROR).json(err);
-    }
+    const response = await firstValueFrom(
+      this.userServiceClient.send(
+        { cmd: RMQ_MESSAGES.JOBS.DELETE_JOB },
+        payload
+      )
+    );
+
+    return response;
   }
 }

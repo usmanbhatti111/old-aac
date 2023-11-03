@@ -1,7 +1,7 @@
 import { Controller } from '@nestjs/common';
 import { MessagePattern, Payload } from '@nestjs/microservices';
 import { RMQ_MESSAGES } from '@shared/constants';
-import { CreateUserDto, PaginationDto } from '@shared/dto';
+import { AdminUserGetResponseDto, CreateUserDto } from '@shared/dto';
 import { UserService } from '../services/user.service';
 
 @Controller()
@@ -14,7 +14,7 @@ export class UserController {
   }
 
   @MessagePattern(RMQ_MESSAGES.USER.GET_LIST)
-  listUsers(@Payload() payload: PaginationDto) {
+  listUsers(@Payload() payload: AdminUserGetResponseDto) {
     return this.userService.listUsers(payload);
   }
 

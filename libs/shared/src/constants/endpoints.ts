@@ -9,6 +9,8 @@ export const API_ENDPOINTS = {
     SIGNIN: 'signin',
     VERIFY_TOKEN: 'verify-token',
     SEARCH_ORG: 'search-company',
+    IG_VERIFICATION: 'ig-verification',
+    IG_STATUS_UPDATE: 'ig-status-update',
   },
   USER: {
     GET: '/',
@@ -130,14 +132,18 @@ export const API_ENDPOINTS = {
     DELETE_ALL_ATTACHMENT: 'delete-all-attachment',
   },
   JOBS: {
+    CREATE_JOB: '/',
+    GET_JOBS: '/',
     GET_JOB: '/:id',
     UPDATE_JOB: '/:id',
-    DELETE_JOB: '/',
+    DELETE_JOB: '/:ids',
   },
   FAQS: {
+    CREATE_FAQ: '/',
+    GET_FAQS: '/',
     GET_FAQ: '/:id',
     UPDATE_FAQ: '/:id',
-    DELETE_FAQ: '/:id',
+    DELETE_FAQ: '/:ids',
   },
   PRODUCTS: {
     ADD_PRODUCT: '/',

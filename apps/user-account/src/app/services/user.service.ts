@@ -3,7 +3,7 @@ import { RpcException } from '@nestjs/microservices';
 import { InjectModel } from '@nestjs/mongoose';
 import { User, UserRepository } from '@shared';
 import { ResponseMessage, successResponse, UserRole } from '@shared/constants';
-import { CreateUserDto, PaginationDto } from '@shared/dto';
+import { AdminUserGetResponseDto, CreateUserDto } from '@shared/dto';
 import { Model } from 'mongoose';
 import { CompanyHouseService } from './company-house.service';
 
@@ -43,27 +43,54 @@ export class UserService {
     }
   }
 
-  async listUsers(payload: PaginationDto) {
+  async listUsers(payload: AdminUserGetResponseDto) {
     try {
-      const { page = 1, limit = 10 } = payload;
-      const skip = (page - 1) * limit;
+      const { page = 1, limit = 10, search } = payload;
+      const offset = (page - 1) * limit;
+      delete payload.page;
+      delete payload.limit;
+      delete payload.search;
 
-      const res = await this.userReposity.paginate({
-        pipelines: [
-          {
-            $project: {
-              _id: 1,
-              firstName: 1,
-              middleName: 1,
-              lastName: 1,
-              role: 1,
-              status: 1,
-              createdAt: 1,
+      let filterQuery = {};
+      if (search) {
+        filterQuery = {
+          $or: [
+            {
+              firstName: {
+                $regex: search,
+                $options: 'i',
+              },
             },
-          },
-        ],
-        offset: skip,
-        limit: limit,
+            {
+              lastName: {
+                $regex: search,
+                $options: 'i',
+              },
+            },
+          ],
+        };
+      }
+
+      filterQuery = { ...filterQuery, ...payload };
+
+      const pipelines = [];
+
+      pipelines.push({
+        $project: {
+          _id: 1,
+          firstName: 1,
+          middleName: 1,
+          lastName: 1,
+          role: 1,
+          status: 1,
+          createdAt: 1,
+        },
+      });
+      const res = await this.userReposity.paginate({
+        filterQuery,
+        pipelines,
+        offset,
+        limit,
       });
 
       return successResponse(HttpStatus.OK, ResponseMessage.SUCCESS, res);
