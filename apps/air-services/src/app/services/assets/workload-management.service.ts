@@ -122,44 +122,32 @@ export class WorkloadManagementService {
 
       if (countDayWiseHours) {
         pipeline.push({
-          $match: {
-            endDate: { $ne: null },
+          $addFields: {
+            plannedEffortHours: {
+              $toInt: {
+                $arrayElemAt: [{ $split: ['$plannedEffort', 'h'] }, 0],
+              },
+            },
           },
         });
 
         pipeline.push({
           $addFields: {
-            dateRange: {
-              $setDifference: [
-                {
-                  $map: {
-                    input: {
-                      $range: [
-                        0,
-                        {
-                          $add: [
-                            1,
-                            {
-                              $divide: [
-                                { $subtract: ['$endDate', '$startDate'] },
-                                1000 * 60 * 60 * 24,
-                              ],
-                            },
-                          ],
-                        },
-                      ],
-                    },
-                    as: 'dayOffset',
-                    in: {
-                      $add: [
-                        '$startDate',
-                        { $multiply: ['$$dayOffset', 1000 * 60 * 60 * 24] },
-                      ],
-                    },
-                  },
-                },
-                [null],
+            plannedEffortTotalMinutes: {
+              $add: [
+                { $multiply: [{ $toInt: '$plannedEffortHours' }, 60] },
+                { $toInt: { $arrayElemAt: ['$plannedEffortMinutes', 0] } },
               ],
+            },
+          },
+        });
+
+        pipeline.push({
+          $addFields: {
+            plannedEffortHours: {
+              $toInt: {
+                $arrayElemAt: [{ $split: ['$plannedEffort', 'h'] }, 0],
+              },
             },
           },
         });
