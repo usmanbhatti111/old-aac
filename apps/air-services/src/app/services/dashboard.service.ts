@@ -1,5 +1,5 @@
 import { HttpStatus, Injectable } from '@nestjs/common';
-import { DashboardRepository, SendDashboardRepository } from '@shared';
+import { DashboardRepository, EmailedDashboardsRepository } from '@shared';
 import { RpcException } from '@nestjs/microservices';
 import { CreateDashboardtDTO, IdDto, ListDashboardDTO } from '@shared/dto';
 import { successResponse } from '@shared/constants';
@@ -8,7 +8,7 @@ import { successResponse } from '@shared/constants';
 export class DashboardService {
   constructor(
     private readonly dashboardRepository: DashboardRepository,
-    private readonly sendDashboardRepository: SendDashboardRepository
+    private readonly emailedDashboardsRepository: EmailedDashboardsRepository
   ) {}
 
   async addDashboard(payload: CreateDashboardtDTO) {
@@ -22,7 +22,7 @@ export class DashboardService {
 
   async sendDashboard(payload) {
     try {
-      const res = await this.sendDashboardRepository.create(payload);
+      const res = await this.emailedDashboardsRepository.create(payload);
       const response = successResponse(HttpStatus.CREATED, `Success`, res);
       return response;
     } catch (error) {

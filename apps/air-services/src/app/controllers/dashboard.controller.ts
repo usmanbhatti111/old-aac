@@ -4,9 +4,9 @@ import { RMQ_MESSAGES } from '@shared/constants';
 import { DashboardService } from '../services/dashboard.service';
 import {
   CreateDashboardtDTO,
+  EmailedDashboardDTO,
   IdDto,
   ListDashboardDTO,
-  SendDashboardDTO,
 } from '@shared/dto';
 
 @Controller()
@@ -18,8 +18,8 @@ export class DashboardController {
     return this.dashboardService.addDashboard(payload);
   }
 
-  @MessagePattern(RMQ_MESSAGES.AIR_SERVICES.DASHBOARD.SEND_DASHBOARD_URL)
-  public async sendDashboard(@Payload() payload: SendDashboardDTO) {
+  @MessagePattern(RMQ_MESSAGES.AIR_SERVICES.DASHBOARD.EMAILED_DASHBOARD)
+  public async sendDashboard(@Payload() payload: EmailedDashboardDTO) {
     return this.dashboardService.sendDashboard(payload);
   }
 

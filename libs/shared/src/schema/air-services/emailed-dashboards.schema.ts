@@ -2,13 +2,13 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument } from 'mongoose';
 import { AbstractSchema } from '../abstract-repo/abstract.schema';
 
-export type SendDashboardDocument = HydratedDocument<SendDashboard>;
+export type EmailedDashboardsDocument = HydratedDocument<EmailedDashboards>;
 
 @Schema({
   versionKey: false,
   timestamps: true,
 })
-export class SendDashboard extends AbstractSchema {
+export class EmailedDashboards extends AbstractSchema {
   @Prop({ type: String, required: true, default: 'NO' })
   isRecurring: string;
 
@@ -31,4 +31,5 @@ export class SendDashboard extends AbstractSchema {
   fileType: string;
 }
 
-export const SendDashboardSchema = SchemaFactory.createForClass(SendDashboard);
+export const EmailedDashboardsSchema =
+  SchemaFactory.createForClass(EmailedDashboards);

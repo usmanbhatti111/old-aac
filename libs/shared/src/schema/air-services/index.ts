@@ -10,5 +10,5 @@ export * from './task-activity.schema';
 export * from './contract.schema';
 export * from './software-users.schema';
 export * from './dashboard.schema';
-export * from './send-dashboard.schema';
+export * from './emailed-dashboards.schema';
 export * from './articles.schema';

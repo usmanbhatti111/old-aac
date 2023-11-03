@@ -55,7 +55,7 @@ import {
   ContactMeetingRepository,
   DealsRepository,
   NoteRepository,
-  SendDashboardRepository,
+  EmailedDashboardsRepository,
 } from '../src/repositories/index';
 import { MongooseConfig } from './config/mongo.config';
 import { SharedService } from './shared.service';
@@ -123,7 +123,7 @@ import { DownloadService, S3Service } from './services';
     LifecycleStagesRepository,
     SoftwareUsersRepository,
     DashboardRepository,
-    SendDashboardRepository,
+    EmailedDashboardsRepository,
     ContactMeetingRepository,
     DealsRepository,
     NoteRepository,
@@ -179,7 +179,7 @@ import { DownloadService, S3Service } from './services';
     UserORepository,
     TaskManagementRepository,
     DashboardRepository,
-    SendDashboardRepository,
+    EmailedDashboardsRepository,
     UserORepository,
     ContactRepository,
     PlanTypeRepository,

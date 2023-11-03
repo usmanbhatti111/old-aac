@@ -98,10 +98,10 @@ import {
   DealsSchema,
   Note,
   NoteSchema,
-  SendDashboard,
-  SendDashboardSchema,
   PurchaseApproval,
   PurchaseApprovalSchema,
+  EmailedDashboards,
+  EmailedDashboardsSchema,
 } from './schema';
 
 import {
@@ -313,8 +313,8 @@ export const DbModels = [
     schema: DashboardSchema,
   },
   {
-    name: SendDashboard.name,
-    schema: SendDashboardSchema,
+    name: EmailedDashboards.name,
+    schema: EmailedDashboardsSchema,
   },
   {
     name: OrganizationCompanyAccount.name,

@@ -24,10 +24,10 @@ import {
 import { firstValueFrom } from 'rxjs';
 import {
   CreateDashboardtDTO,
+  EmailedDashboardDTO,
+  EmailedDashboardResponseDTO,
   IdDto,
   ListDashboardDTO,
-  SendDashboardDTO,
-  SendDashboardResponseDTO,
 } from '@shared/dto';
 import { Auth } from '../decorators/auth.decorator';
 @ApiBearerAuth()
@@ -54,15 +54,15 @@ export class AirServicesDashboardController {
   }
 
   @Auth(true)
-  @ApiOkResponse({ type: SendDashboardResponseDTO })
-  @Post(API_ENDPOINTS.AIR_SERVICES.DASHBOARD.SEND_DASHBOARD_URL)
+  @ApiOkResponse({ type: EmailedDashboardResponseDTO })
+  @Post(API_ENDPOINTS.AIR_SERVICES.DASHBOARD.EMAILED_DASHBOARD)
   public async sendDashboardUrl(
-    @Query() dashboardEmailDTO: SendDashboardDTO
-  ): Promise<SendDashboardResponseDTO> {
+    @Query() dashboardEmailDTO: EmailedDashboardDTO
+  ): Promise<EmailedDashboardResponseDTO> {
     try {
       const dashboard = await firstValueFrom(
         this.ariServiceClient.send(
-          RMQ_MESSAGES.AIR_SERVICES.DASHBOARD.SEND_DASHBOARD_URL,
+          RMQ_MESSAGES.AIR_SERVICES.DASHBOARD.EMAILED_DASHBOARD,
           dashboardEmailDTO
         )
       );

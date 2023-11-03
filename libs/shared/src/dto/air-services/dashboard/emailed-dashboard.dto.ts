@@ -8,7 +8,7 @@ import {
   IsString,
 } from 'class-validator';
 
-export class SendDashboardDTO {
+export class EmailedDashboardDTO {
   @IsEnum(IsRecurring)
   @IsNotEmpty()
   @ApiProperty({
@@ -89,7 +89,7 @@ export class SendDashboardDTO {
   fileType: string;
 }
 
-export class SendDashboardResponseDTO {
+export class EmailedDashboardResponseDTO {
   @ApiProperty({ example: 201 })
   statusCode: number;
 
