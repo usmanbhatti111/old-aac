@@ -25,10 +25,8 @@ export class QuickLinksService {
 
   async getQuickLinks(payload: GetQuickLinksDto) {
     try {
-      let { page, limit } = payload;
-      limit = limit ? limit : 10;
-      page = page ? page : 1;
-      const offset = limit * (page - 1);
+      const limit = payload?.limit || 10;
+      const offset = payload?.page || 1;
 
       const filterQuery = { isDeleted: false };
 

@@ -139,9 +139,11 @@ export const API_ENDPOINTS = {
     DELETE_JOB: '/:ids',
   },
   FAQS: {
+    CREATE_FAQ: '/',
+    GET_FAQS: '/',
     GET_FAQ: '/:id',
     UPDATE_FAQ: '/:id',
-    DELETE_FAQ: '/:id',
+    DELETE_FAQ: '/:ids',
   },
   PRODUCTS: {
     ADD_PRODUCT: '/',

@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 
-export class GetFaqsResponseDto {
+export class GetJobsResponseDto {
   @ApiProperty({ example: 200 })
   statusCode: number;
 
