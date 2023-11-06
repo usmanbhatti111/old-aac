@@ -2,6 +2,7 @@ import { Controller } from '@nestjs/common';
 import { MessagePattern, Payload } from '@nestjs/microservices';
 import { RMQ_MESSAGES } from '@shared/constants';
 import {
+  ForceConfirmDto,
   InitiateVerificationRequestDto,
   SignInDto,
   SignupDto,
@@ -16,6 +17,11 @@ export class AuthController {
     private readonly authService: AuthService,
     private readonly verificationService: VerificationService
   ) {}
+
+  @MessagePattern(RMQ_MESSAGES.AUTHENTICATION.FORCE_CONFIRM)
+  confirmUser(@Payload() payload: ForceConfirmDto) {
+    return this.authService.forceConfirmUser(payload.email);
+  }
 
   @MessagePattern(RMQ_MESSAGES.AUTHENTICATION.SIGNUP)
   signUp(@Payload() payload: SignupDto) {

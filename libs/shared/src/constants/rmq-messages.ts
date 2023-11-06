@@ -5,6 +5,7 @@ export const RMQ_MESSAGES = {
     EDIT_EXAMPLE: 'edit-example',
   },
   AUTHENTICATION: {
+    FORCE_CONFIRM: 'force-confirm-user',
     SIGNUP: 'auth-signup',
     SIGNIN: 'auth-signin',
     VERIFY_TOKEN: 'verify-token',
@@ -151,6 +152,7 @@ export const RMQ_MESSAGES = {
   },
   PRODUCTS: {
     ADD_PRODUCT: 'add-product',
+    GET_PRODUCT: 'get-product',
     GET_PRODUCTS: 'get-products',
     EDIT_PRODUCT: 'edit-product',
   },

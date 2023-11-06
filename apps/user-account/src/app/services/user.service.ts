@@ -8,6 +8,7 @@ import {
   CreateUserDto,
   UpdateProfileDto,
   EditUserByAdminDto,
+  SignupDto,
 } from '@shared/dto';
 import { Model } from 'mongoose';
 import { CompanyHouseService } from './company-house.service';
@@ -35,32 +36,7 @@ export class UserService {
           response
         );
       } else if (role === UserRole.ORG_ADMIN) {
-        const { data } = await this.companyHouseService.searchCompanyByCode({
-          crn,
-        });
-
-        const { company_name, registered_office_address, company_number } =
-          data;
-        const {
-          country,
-          postal_code,
-          address_line_2,
-          address_line_1,
-          locality,
-        } = registered_office_address;
-        const organizationAddress = {
-          street: `${address_line_1}, ${address_line_2}`,
-          city: locality,
-          state: country,
-          postalCode: postal_code,
-        };
-        const orgPayload = {
-          crn: company_number,
-          name: company_name,
-          address: organizationAddress,
-        };
-
-        const org = await this.orgRepository.create(orgPayload);
+        const org = await this.createUserOrg(crn);
         payload.organization = org._id.toString();
         const result = await this.userRepository.create(payload);
 
@@ -153,8 +129,15 @@ export class UserService {
     }
   }
 
-  async createForSignup(payload: User) {
+  async createForSignup(payload: SignupDto) {
     try {
+      const { role } = payload;
+
+      if (role === UserRole.ORG_ADMIN) {
+        const org = await this.createUserOrg(payload.crn);
+        payload.organization = org._id.toString();
+      }
+
       return successResponse(
         HttpStatus.OK,
         ResponseMessage.SUCCESS,
@@ -190,7 +173,7 @@ export class UserService {
         ResponseMessage.SUCCESS,
         await this.userRepository.findOne(
           { ...payload },
-          '_id firstName middleName lastName role products organization'
+          '_id firstName middleName lastName role products organization igStatus status'
         )
       );
     } catch (error) {
@@ -242,5 +225,28 @@ export class UserService {
     } catch (error) {
       throw new RpcException(error);
     }
+  }
+
+  async createUserOrg(crn: number) {
+    const { data } = await this.companyHouseService.searchCompanyByCode({
+      crn,
+    });
+
+    const { company_name, registered_office_address, company_number } = data;
+    const { country, postal_code, address_line_2, address_line_1, locality } =
+      registered_office_address;
+    const organizationAddress = {
+      street: `${address_line_1}, ${address_line_2}`,
+      city: locality,
+      state: country,
+      postalCode: postal_code,
+    };
+    const orgPayload = {
+      crn: company_number,
+      name: company_name,
+      address: organizationAddress,
+    };
+
+    return this.orgRepository.create(orgPayload);
   }
 }

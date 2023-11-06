@@ -1,5 +1,5 @@
 import { Body, Controller, Get, Inject, Post, Query } from '@nestjs/common';
-import { ClientProxy } from '@nestjs/microservices';
+import { ClientProxy, RpcException } from '@nestjs/microservices';
 import {
   ApiBearerAuth,
   ApiCreatedResponse,
@@ -12,9 +12,11 @@ import {
   CONTROLLERS,
   RMQ_MESSAGES,
   SERVICES,
+  UserRole,
 } from '@shared/constants';
 import {
   CompanyHouseSearchQueryDto,
+  ForceConfirmDto,
   InitiateVerificationRequestDto,
   InitiateVerificationResponseDto,
   SignInDto,
@@ -28,15 +30,58 @@ import { firstValueFrom } from 'rxjs';
 @Controller(CONTROLLERS.AUTHENTICATION)
 @ApiBearerAuth()
 export class AuthController {
-  constructor(@Inject(SERVICES.USER) private userServiceClient: ClientProxy) {}
+  constructor(
+    @Inject(SERVICES.USER) private userServiceClient: ClientProxy,
+    @Inject(SERVICES.SUPER_ADMIN) private superAdminClient: ClientProxy
+  ) {}
 
-  @Post(API_ENDPOINTS.AUTHENTICATION.SIGNUP)
-  public async createUser(@Body() payload: SignupDto) {
+  @Post(API_ENDPOINTS.AUTHENTICATION.FORCE_CONFIRM)
+  public async forceConfirmUser(@Body() payload: ForceConfirmDto) {
     const response = await firstValueFrom(
-      this.userServiceClient.send(RMQ_MESSAGES.AUTHENTICATION.SIGNUP, payload)
+      this.userServiceClient.send(
+        RMQ_MESSAGES.AUTHENTICATION.FORCE_CONFIRM,
+        payload
+      )
     );
 
     return response;
+  }
+
+  @Post(API_ENDPOINTS.AUTHENTICATION.SIGNUP)
+  public async createUser(@Body() payload: SignupDto) {
+    try {
+      const { role } = payload;
+      // let newOrg: any;
+
+      if (role === UserRole.ORG_ADMIN) {
+        await firstValueFrom(
+          this.userServiceClient.send(
+            RMQ_MESSAGES.AUTHENTICATION.SEARCH_ORG_BY_CRN,
+            { crn: Number(payload.crn) }
+          )
+        );
+
+        const { products } = payload;
+
+        if (products.length > 0) {
+          for (const item of products) {
+            await firstValueFrom(
+              this.superAdminClient.send(RMQ_MESSAGES.PRODUCTS.GET_PRODUCT, {
+                id: item,
+              })
+            );
+          }
+        }
+      }
+
+      const response = await firstValueFrom(
+        this.userServiceClient.send(RMQ_MESSAGES.AUTHENTICATION.SIGNUP, payload)
+      );
+
+      return response;
+    } catch (err) {
+      throw new RpcException(err);
+    }
   }
 
   @Post(API_ENDPOINTS.AUTHENTICATION.SIGNIN)

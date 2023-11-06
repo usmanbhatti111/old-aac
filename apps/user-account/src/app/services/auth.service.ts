@@ -1,8 +1,18 @@
-import { BadRequestException, HttpStatus, Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  HttpStatus,
+  Injectable,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { RpcException } from '@nestjs/microservices';
-import { ResponseMessage, successResponse } from '@shared/constants';
-import { SignInDto, SignupDto } from '@shared/dto';
+import { UserRepository } from '@shared';
+import {
+  ResponseMessage,
+  successResponse,
+  UserStatus,
+} from '@shared/constants';
+import { SignInDto, SignupDto, VerificationStatus } from '@shared/dto';
 import { CognitoJwtVerifier } from 'aws-jwt-verify';
 import AWS, { CognitoIdentityServiceProvider } from 'aws-sdk';
 import {
@@ -22,7 +32,8 @@ export class AuthService {
 
   constructor(
     private configService: ConfigService,
-    private userService: UserService
+    private userService: UserService,
+    private userRepository: UserRepository
   ) {
     AWS.config.update({
       accessKeyId: this.configService.get<string>('COGNITO_ACCESS_KEY'),
@@ -67,10 +78,6 @@ export class AuthService {
           GroupName: role,
         })
         .promise();
-
-      // Change it to sync with ig in the future
-      await this.adminConfirmPassword(email);
-      await this.confirmUserEmail(email);
 
       delete user.password;
       await this.userService.createForSignup({
@@ -119,6 +126,27 @@ export class AuthService {
         Username: email,
       })
       .promise();
+  }
+
+  async forceConfirmUser(email: string) {
+    try {
+      await this.userRepository.findOneAndUpdate(
+        { email },
+        {
+          $set: {
+            igStatus: VerificationStatus.Approved,
+            status: UserStatus.ACTIVE,
+          },
+        }
+      );
+
+      await this.adminConfirmPassword(email);
+      await this.confirmUserEmail(email);
+
+      return successResponse(HttpStatus.OK, ResponseMessage.SUCCESS, {});
+    } catch (error) {
+      throw new RpcException(error);
+    }
   }
 
   public async signin(user: SignInDto) {
@@ -173,11 +201,18 @@ export class AuthService {
         cognitoId: verify.sub,
       });
 
-      return successResponse(
-        HttpStatus.OK,
-        ResponseMessage.SUCCESS,
-        user?.data
-      );
+      if (
+        user.data.status === UserStatus.ACTIVE &&
+        user.data.igStatus === VerificationStatus.Approved
+      ) {
+        return successResponse(
+          HttpStatus.OK,
+          ResponseMessage.SUCCESS,
+          user?.data
+        );
+      }
+
+      throw new UnauthorizedException('Not allowed');
     } catch (err) {
       throw new RpcException('Invald Token');
     }
