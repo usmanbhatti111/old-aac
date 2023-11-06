@@ -151,6 +151,11 @@ export const RMQ_MESSAGES = {
       UPDATE_DASHBOARD: 'update-dashboard',
       DELETE_DASHBOARD: 'delete-dashboard',
     },
+    WIDGETS: {
+      CREATE_WIDGETS: 'create-widgets',
+      GET_WIDGETS_LIST: 'get-widgets-list',
+      GET_WIDGETS: 'get-widgets',
+    },
     TICKETS: {
       CREATE_TICKET: 'create-ticket',
       GET_TICKET_DETAILS: 'get-ticket-details',

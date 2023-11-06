@@ -192,6 +192,13 @@ export const API_ENDPOINTS = {
       UPDATE_DASHBOARD: '/:id',
       DELETE_DASHBOARD: '/:id',
     },
+    REPORT_WIDGETS: {
+      ADD_REPORT_WIDGET: '/',
+      GET_REPORT_WIDGETS: '/',
+      GET_REPORT_WIDGET: '/:id',
+      UPDATE_REPORT_WIDGET: '/:id',
+      DELETE_REPORT_WIDGET: '/:id',
+    },
     TASK_MANAGEMENT: {
       CREATE_TASK: 'management',
       TASK_LIST: 'management',
