@@ -346,6 +346,8 @@ export const API_ENDPOINTS = {
       DELETE_TASK: 'delete-task',
       ADD_NOTE: 'add-note',
       DELETE_NOTE: 'delete-note',
+      GET_NOTES: 'get-notes/:id',
+      GET_TASKS: 'get-tasks/:id',
     },
   },
   CALLS: {

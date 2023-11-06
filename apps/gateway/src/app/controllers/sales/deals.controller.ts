@@ -31,6 +31,10 @@ import {
   CreateDealResponseDto,
   DealAssociationDto,
   DealAssociationResponseDto,
+  DealNoteDto,
+  DealNotesResponseDto,
+  DealTaskDto,
+  DealTasksResponseDto,
   DeleteDealsDto,
   DeleteDealsResponseDto,
   GetDealsGridtViewDto,
@@ -61,6 +65,40 @@ export class DealsController {
   ) {}
 
   @Auth(true)
+  @Get(API_ENDPOINTS.SALES.DEALS.GET_NOTES)
+  @ApiOkResponse({ type: DealAssociationResponseDto })
+  public async getNotes(
+    @Req() request: AppRequest,
+    @Param() payload: IdDto
+  ): Promise<DealAssociationResponseDto> {
+    const response = await firstValueFrom(
+      this.orgAdminService.send(
+        RMQ_MESSAGES.SALES.DEALS.GET_NOTES,
+        payload
+      )
+    );
+
+    return response;
+  }
+
+  @Auth(true)
+  @Get(API_ENDPOINTS.SALES.DEALS.GET_TASKS)
+  @ApiOkResponse({ type: DealAssociationResponseDto })
+  public async getTasks(
+    @Req() request: AppRequest,
+    @Param() payload: IdDto
+  ): Promise<DealAssociationResponseDto> {
+    const response = await firstValueFrom(
+      this.orgAdminService.send(
+        RMQ_MESSAGES.SALES.DEALS.GET_TASKS,
+        payload
+      )
+    );
+
+    return response;
+  }
+
+  @Auth(true)
   @Patch(API_ENDPOINTS.SALES.DEALS.CREATE_ASSOCIATION)
   @ApiOkResponse({ type: DealAssociationResponseDto })
   public async associateDeal(
@@ -86,6 +124,68 @@ export class DealsController {
     const response = await firstValueFrom(
       this.orgAdminService.send(
         RMQ_MESSAGES.SALES.DEALS.DELETE_ASSOCIATION,
+        payload
+      )
+    );
+    return response;
+  }
+
+  @Auth(true)
+  @Patch(API_ENDPOINTS.SALES.DEALS.ADD_TASK)
+  @ApiOkResponse({ type: DealTasksResponseDto })
+  public async addTask(
+    @Req() request: AppRequest,
+    @Body() payload: DealTaskDto
+  ): Promise<DealTasksResponseDto> {
+    const response = await firstValueFrom(
+      this.orgAdminService.send(
+        RMQ_MESSAGES.SALES.DEALS.ADD_TASK,
+        payload
+      )
+    );
+    return response;
+  }
+  @Auth(true)
+  @Patch(API_ENDPOINTS.SALES.DEALS.DELETE_TASK)
+  @ApiOkResponse({ type: DealTasksResponseDto })
+  public async deleteTask(
+    @Req() request: AppRequest,
+    @Body() payload: DealTaskDto
+  ): Promise<DealTasksResponseDto> {
+    const response = await firstValueFrom(
+      this.orgAdminService.send(
+        RMQ_MESSAGES.SALES.DEALS.DELETE_TASK,
+        payload
+      )
+    );
+    return response;
+  }
+
+  @Auth(true)
+  @Patch(API_ENDPOINTS.SALES.DEALS.ADD_NOTE)
+  @ApiOkResponse({ type: DealNotesResponseDto })
+  public async addNote(
+    @Req() request: AppRequest,
+    @Body() payload: DealNoteDto
+  ): Promise<DealNotesResponseDto> {
+    const response = await firstValueFrom(
+      this.orgAdminService.send(
+        RMQ_MESSAGES.SALES.DEALS.ADD_NOTE,
+        payload
+      )
+    );
+    return response;
+  }
+  @Auth(true)
+  @Patch(API_ENDPOINTS.SALES.DEALS.DELETE_NOTE)
+  @ApiOkResponse({ type: DealNotesResponseDto })
+  public async deleteNote(
+    @Req() request: AppRequest,
+    @Body() payload: DealNoteDto
+  ): Promise<DealNotesResponseDto> {
+    const response = await firstValueFrom(
+      this.orgAdminService.send(
+        RMQ_MESSAGES.SALES.DEALS.DELETE_NOTE,
         payload
       )
     );

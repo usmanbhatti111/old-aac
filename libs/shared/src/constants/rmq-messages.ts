@@ -376,6 +376,12 @@ export const RMQ_MESSAGES = {
       GET_ASSOCIATIONS: 'get-associations',
       CREATE_ASSOCIATION: 'create-association',
       DELETE_ASSOCIATION: 'delete-association',
+      ADD_TASK: 'add-task',
+      DELETE_TASK: 'delete-task',
+      ADD_NOTE: 'add-note',
+      DELETE_NOTE: 'delete-note',
+      GET_NOTES: 'get-notes',
+      GET_TASKS: 'get-tasks',
     },
   },
 

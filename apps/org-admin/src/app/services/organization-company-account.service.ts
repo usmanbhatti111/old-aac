@@ -63,18 +63,27 @@ export class OrganizationCompanyAccountService {
         organizationId: payload?.organizationId,
       });
 
+      const pipelines: any = [
+        {
+          $lookup: {
+            from: 'products',
+            localField: 'products',
+            foreignField: '_id',
+            as: 'products',
+          },
+        },
+      ];
+
       const res = await this.organizationCompanyAccountRepository.paginate({
         filterQuery: {
           organizationId: new mongoose.Types.ObjectId(payload?.organizationId),
         },
-        // include: {
-        //   products: true,
-        // },
         offset: skip,
         limit: perPage,
+        pipelines
       });
 
-      return successResponse(HttpStatus.OK, 'Success', res, {
+      return successResponse(HttpStatus.OK, 'Success',res, {
         count: totalCount,
         page: page,
         limit: perPage,
