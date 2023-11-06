@@ -45,12 +45,11 @@ import {
   UpdateDealDto,
   UpdateDealResponseDto,
 } from '@shared/dto';
+import { DownloadService } from '@shared/services';
+import { Response } from 'express';
 import { firstValueFrom } from 'rxjs';
 import { Auth } from '../../decorators/auth.decorator';
 import { AppRequest } from '../../shared/interface/request.interface';
-import { DownloadService } from '@shared/services';
-import { Response } from 'express';
-import dayjs from 'dayjs';
 
 @ApiBearerAuth()
 @ApiTags(API_TAGS.DEALS)
@@ -114,36 +113,11 @@ export class DealsController {
     // json response
     if (!payload?.downloadType) return res.json(response);
 
-    if (!(payload?.downloadType in EExportFile)) {
-      throw new BadRequestException('Invalid Download Type');
-    }
-
-    const deals = response?.data?.deals;
-    if (!deals?.length) {
-      throw new BadRequestException('No Data Available');
-    }
-
-    const download = [];
-    for (let i = 0; i < deals.length; i++) {
-      const data = deals[i];
-
-      const deal = {};
-
-      deal['S. No'] = i + 1;
-      deal['Name'] = data?.name;
-      deal['Owner Name'] = data?.dealOwner?.name;
-      deal['Owner Email'] = data?.dealOwner?.email;
-      deal['Close Date'] = dayjs(data?.closeDate).format('MMMM D, YYYY');
-      deal['Amount'] = data?.amount;
-      deal['Deal Pipeline'] = data?.dealPipeline;
-      deal['Deal Stage'] = data?.dealStage;
-
-      download.push(deal);
-    }
-
     // excel response
-    if (payload.downloadType === EExportFile.XLS) {
-      const xlsxBuffer = await this.downloadService.convertToXlsx(download);
+    if (payload?.downloadType === EExportFile.XLS) {
+      const xlsxBuffer = await this.downloadService.convertToXlsx(
+        response?.data
+      );
 
       res.setHeader(
         'Content-Type',
@@ -155,8 +129,8 @@ export class DealsController {
     }
 
     // csv response
-    if (payload.downloadType === EExportFile.CSV) {
-      const csvStream = this.downloadService.convertToCsv(download);
+    if (payload?.downloadType === EExportFile.CSV) {
+      const csvStream = this.downloadService.convertToCsv(response?.data);
 
       res.setHeader('Content-Type', 'text/csv');
       res.setHeader('Content-Disposition', 'attachment; filename="deals.csv"');
@@ -164,7 +138,7 @@ export class DealsController {
       return csvStream.pipe(res);
     }
 
-    throw new BadRequestException('Invaid format');
+    throw new BadRequestException('Invaid download format');
   }
 
   @Auth(true)

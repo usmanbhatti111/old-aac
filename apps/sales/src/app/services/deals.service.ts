@@ -11,6 +11,7 @@ import {
 } from '@shared';
 import {
   EDealProbabilityStage,
+  EExportFile,
   EIsDeletedStatus,
   MODEL,
   ResponseMessage,
@@ -246,6 +247,38 @@ export class DealsService {
         limit,
         pipelines,
       });
+
+      if (payload?.downloadType in EExportFile) {
+        const deals = res?.deals;
+        const response = [];
+
+        if (!deals?.length) {
+          throw new BadRequestException('No Data Available');
+        }
+
+        for (let i = 0; i < deals.length; i++) {
+          const data = deals[i];
+
+          const deal = {};
+
+          deal['S. No'] = i + 1;
+          deal['Name'] = data?.name;
+          deal['Owner Name'] = data?.dealOwner?.name;
+          deal['Owner Email'] = data?.dealOwner?.email;
+          deal['Close Date'] = dayjs(data?.closeDate).format('MMMM D, YYYY');
+          deal['Amount'] = data?.amount;
+          deal['Deal Pipeline'] = data?.dealPipeline;
+          deal['Deal Stage'] = data?.dealStage;
+
+          response.push(deal);
+        }
+
+        return successResponse(
+          HttpStatus.OK,
+          ResponseMessage.SUCCESS,
+          response
+        );
+      }
 
       const response = successResponse(
         HttpStatus.OK,
