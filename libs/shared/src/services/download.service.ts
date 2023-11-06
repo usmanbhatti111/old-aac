@@ -4,17 +4,20 @@ import {
   HttpStatus,
   Injectable,
 } from '@nestjs/common';
-import * as fastCsv from 'fast-csv';
 import * as xlsx from 'xlsx';
 import { EExportFile } from '../constants/enums';
 
 @Injectable()
 export class DownloadService {
   convertToCsv(data: any[]) {
-    const csvStream = fastCsv.format({ headers: true });
-    data.forEach((row) => csvStream.write(row));
-    csvStream.end();
-    return csvStream;
+    const worksheet = xlsx.utils.json_to_sheet(data);
+    const workbook = xlsx.utils.book_new();
+    xlsx.utils.book_append_sheet(workbook, worksheet, 'Data');
+    const csvBuffer = xlsx.write(workbook, {
+      bookType: 'csv',
+      type: 'buffer',
+    });
+    return csvBuffer;
   }
 
   convertToXlsx(data: any[]) {

@@ -28,6 +28,7 @@ import {
 } from '@shared/dto';
 
 import { DealAssociationDto, IdDto } from '@shared/dto';
+import { DownloadService } from '@shared/services';
 import dayjs from 'dayjs';
 
 @Injectable()
@@ -39,7 +40,8 @@ export class DealsService {
     private readonly contactRepository: ContactRepository,
     private readonly attachmentRepository: AttachmentRepository,
     private readonly ticketRepository: TicketRepository,
-    private readonly organizationRepository: OrganizationRepository
+    private readonly organizationRepository: OrganizationRepository,
+    private readonly downloadService: DownloadService
   ) {}
 
   async createDeal(payload: CreateDealDto) {
@@ -248,7 +250,10 @@ export class DealsService {
         pipelines,
       });
 
-      if (payload?.downloadType in EExportFile) {
+      if (payload?.downloadType) {
+        if (!(payload?.downloadType in EExportFile))
+          throw new BadRequestException('Invaid download format');
+
         const deals = res?.deals;
         const response = [];
 
@@ -273,11 +278,27 @@ export class DealsService {
           response.push(deal);
         }
 
-        return successResponse(
-          HttpStatus.OK,
-          ResponseMessage.SUCCESS,
-          response
-        );
+        // excel response
+        if (payload?.downloadType === EExportFile.XLS) {
+          const xlsxBuffer = await this.downloadService.convertToXlsx(response);
+
+          return successResponse(
+            HttpStatus.OK,
+            ResponseMessage.SUCCESS,
+            xlsxBuffer
+          );
+        }
+
+        // csv response
+        if (payload?.downloadType === EExportFile.CSV) {
+          const csvStream = this.downloadService.convertToCsv(response);
+
+          return successResponse(
+            HttpStatus.OK,
+            ResponseMessage.SUCCESS,
+            csvStream
+          );
+        }
       }
 
       const response = successResponse(

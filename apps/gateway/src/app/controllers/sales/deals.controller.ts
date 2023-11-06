@@ -1,5 +1,4 @@
 import {
-  BadRequestException,
   Body,
   Controller,
   Delete,
@@ -110,14 +109,9 @@ export class DealsController {
       )
     );
 
-    // json response
-    if (!payload?.downloadType) return res.json(response);
-
     // excel response
     if (payload?.downloadType === EExportFile.XLS) {
-      const xlsxBuffer = await this.downloadService.convertToXlsx(
-        response?.data
-      );
+      const data = Buffer.from(response?.data);
 
       res.setHeader(
         'Content-Type',
@@ -125,20 +119,21 @@ export class DealsController {
       );
       res.setHeader('Content-Disposition', 'attachment; filename="deals.xlsx"');
 
-      return res.send(xlsxBuffer);
+      return res.send(data);
     }
 
     // csv response
     if (payload?.downloadType === EExportFile.CSV) {
-      const csvStream = this.downloadService.convertToCsv(response?.data);
+      const data = Buffer.from(response?.data);
 
       res.setHeader('Content-Type', 'text/csv');
       res.setHeader('Content-Disposition', 'attachment; filename="deals.csv"');
 
-      return csvStream.pipe(res);
+      return res.send(data);
     }
 
-    throw new BadRequestException('Invaid download format');
+    // json response
+    return res.json(response);
   }
 
   @Auth(true)
