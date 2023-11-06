@@ -12,6 +12,18 @@ import { Types, isValidObjectId } from 'mongoose';
 // }
 
 export function toMongoObjectId({ value, key }): Types.ObjectId {
+  if (!value) return;
+  if (Array.isArray(value)) {
+    for (const val of value) {
+      if (isValidObjectId(val)) {
+        return new Types.ObjectId(val);
+      } else {
+        throw new BadRequestException(
+          `${val} of ${key} is not a valid MongoId`
+        );
+      }
+    }
+  }
   if (isValidObjectId(value)) {
     return new Types.ObjectId(value);
   } else {

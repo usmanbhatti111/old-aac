@@ -1,7 +1,12 @@
 import { Controller } from '@nestjs/common';
 import { MessagePattern, Payload } from '@nestjs/microservices';
 import { RMQ_MESSAGES } from '@shared/constants';
-import { AddProductDto, EditProductDto, GetProductsDto } from '@shared/dto';
+import {
+  AddProductDto,
+  EditProductDto,
+  GetProductsDto,
+  IdDto,
+} from '@shared/dto';
 import { ProductsService } from '../services/products.service';
 
 @Controller()
@@ -16,6 +21,11 @@ export class ProductsController {
   @MessagePattern(RMQ_MESSAGES.PRODUCTS.GET_PRODUCTS)
   getProducts(@Payload() payload: GetProductsDto) {
     return this.productsService.getProducts(payload);
+  }
+
+  @MessagePattern(RMQ_MESSAGES.PRODUCTS.GET_PRODUCT)
+  getProduct(@Payload() payload: IdDto) {
+    return this.productsService.getProduct(payload);
   }
 
   @MessagePattern(RMQ_MESSAGES.PRODUCTS.EDIT_PRODUCT)

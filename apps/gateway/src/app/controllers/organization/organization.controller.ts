@@ -27,9 +27,11 @@ import {
   GetOrganizationDto,
   IdDto,
   OrganizationResponseDto,
+  OrganizationsResponseDto,
 } from '@shared/dto';
 import { Response } from 'express';
 import { firstValueFrom } from 'rxjs';
+import { Auth } from '../../decorators/auth.decorator';
 
 @ApiTags(API_TAGS.ORGANIZATION)
 @Controller(CONTROLLERS.ORGANIZATION)
@@ -39,6 +41,7 @@ export class OrganizationController {
     @Inject(SERVICES.ORG_ADMIN) private organizationServiceClient: ClientProxy
   ) {}
 
+  @Auth(true)
   @Post(API_ENDPOINTS.ORGANIZATION.CREATE_ORGANIZATION)
   @ApiCreatedResponse({
     description: 'Successfully created an organization',
@@ -58,6 +61,7 @@ export class OrganizationController {
     return res.status(response.statusCode).json(response);
   }
 
+  @Auth(true)
   @Put(API_ENDPOINTS.ORGANIZATION.UPDATE_ORGANIZATION)
   @ApiOkResponse({
     description: 'Successfully updated the organization.',
@@ -78,6 +82,26 @@ export class OrganizationController {
     return res.status(response.statusCode).json(response);
   }
 
+  @Auth(true)
+  @Get(API_ENDPOINTS.ORGANIZATION.GET_ORGANIZATIONS)
+  @ApiOkResponse({
+    description: 'Successfully retrieved the organizations.',
+    type: OrganizationsResponseDto,
+  })
+  public async getOrganizations(
+    @Res() res: Response | any
+  ): Promise<OrganizationsResponseDto> {
+    const response = await firstValueFrom(
+      this.organizationServiceClient.send(
+        { cmd: RMQ_MESSAGES.ORGANIZATION.GET_ORGANTIZATIONS },
+        {}
+      )
+    );
+
+    return res.status(response.statusCode).json(response);
+  }
+
+  @Auth(true)
   @Get(API_ENDPOINTS.ORGANIZATION.GET_ORGANIZATION)
   @ApiOkResponse({
     description: 'Successfully retrieved the organization.',

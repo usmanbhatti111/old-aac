@@ -3,16 +3,20 @@ import {
   Controller,
   Delete,
   Get,
-  HttpStatus,
   Inject,
   Param,
   Patch,
   Post,
   Query,
-  Res,
+  Req,
 } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
-import { ApiBearerAuth, ApiCreatedResponse, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiCreatedResponse,
+  ApiOkResponse,
+  ApiTags,
+} from '@nestjs/swagger';
 import {
   API_ENDPOINTS,
   API_TAGS,
@@ -23,101 +27,96 @@ import {
 import {
   CreateFaqDto,
   CreateFaqResponseDto,
-  FilterFaqsDto,
+  DeleteFaqsDto,
+  DeleteFaqsResponseDto,
   GetFaqResponseDto,
+  GetFaqsDto,
   GetFaqsResponseDto,
+  IdDto,
   UpdateFaqDto,
+  UpdateFaqResponseDto,
 } from '@shared/dto';
-import { Response } from 'express';
 import { firstValueFrom } from 'rxjs';
+import { Auth } from '../../decorators/auth.decorator';
+import { AppRequest } from '../../shared/interface/request.interface';
 
-@ApiTags(API_TAGS.SETTINGS)
-@Controller(CONTROLLERS.SETTINGS.FAQS)
+@ApiTags(API_TAGS.FAQS)
+@Controller(CONTROLLERS.FAQS)
 @ApiBearerAuth()
 export class FaqsController {
   constructor(
     @Inject(SERVICES.SUPER_ADMIN) private faqServiceClient: ClientProxy
   ) {}
 
-  @Post()
+  @Auth(true)
+  @Post(API_ENDPOINTS.FAQS.CREATE_FAQ)
   @ApiCreatedResponse({ type: CreateFaqResponseDto })
   public async createFaq(
-    @Body() payload: CreateFaqDto,
-    @Res() res: Response | any
+    @Req() request: AppRequest,
+    @Body() payload: CreateFaqDto
   ) {
+    payload.createdBy = request?.user?._id;
+
     const response = await firstValueFrom(
       this.faqServiceClient.send({ cmd: RMQ_MESSAGES.FAQS.CREATE_FAQ }, payload)
     );
 
-    return res.status(response.statusCode).json(response);
+    return response;
   }
 
+  @Auth(true)
   @Get(API_ENDPOINTS.FAQS.GET_FAQ)
-  @ApiCreatedResponse({ type: GetFaqResponseDto })
-  public async getFaq(@Param('id') id: string, @Res() res: Response | any) {
-    try {
-      const response = await firstValueFrom(
-        this.faqServiceClient.send({ cmd: RMQ_MESSAGES.FAQS.GET_FAQ }, { id })
-      );
-      res.status(response.statusCode).json(response);
-    } catch (err) {
-      res.status(HttpStatus.INTERNAL_SERVER_ERROR).json(err);
-    }
+  @ApiOkResponse({ type: GetFaqResponseDto })
+  public async getFaq(@Param() payload: IdDto) {
+    const response = await firstValueFrom(
+      this.faqServiceClient.send({ cmd: RMQ_MESSAGES.FAQS.GET_FAQ }, payload)
+    );
+
+    return response;
   }
 
-  @Get()
+  @Auth(true)
+  @Get(API_ENDPOINTS.FAQS.GET_FAQS)
   @ApiCreatedResponse({ type: GetFaqsResponseDto })
-  public async getFaqs(
-    @Query() filter: FilterFaqsDto,
-    @Res() res: Response | any
-  ) {
-    try {
-      const response = await firstValueFrom(
-        this.faqServiceClient.send({ cmd: RMQ_MESSAGES.FAQS.GET_FAQS }, filter)
-      );
-      res.status(response.statusCode).json(response);
-    } catch (err) {
-      res.status(HttpStatus.INTERNAL_SERVER_ERROR).json(err);
-    }
+  public async getFaqs(@Query() payload: GetFaqsDto) {
+    const response = await firstValueFrom(
+      this.faqServiceClient.send({ cmd: RMQ_MESSAGES.FAQS.GET_FAQS }, payload)
+    );
+
+    return response;
   }
 
+  @Auth(true)
   @Patch(API_ENDPOINTS.FAQS.UPDATE_FAQ)
-  @ApiCreatedResponse({ type: GetFaqResponseDto })
+  @ApiOkResponse({ type: UpdateFaqResponseDto })
   public async updateFaq(
-    @Body() payload: UpdateFaqDto,
-    @Res() res: Response | any
+    @Req() request: AppRequest,
+    @Param() params: IdDto,
+    @Body() payload: UpdateFaqDto
   ) {
-    try {
-      const response = await firstValueFrom(
-        this.faqServiceClient.send(
-          { cmd: RMQ_MESSAGES.FAQS.UPDATE_FAQ },
-          payload
-        )
-      );
+    payload.updatedBy = request?.user?._id;
+    payload.id = params.id;
 
-      res.status(response.statusCode).json(response);
-    } catch (err) {
-      res.status(HttpStatus.INTERNAL_SERVER_ERROR).json(err);
-    }
+    const response = await firstValueFrom(
+      this.faqServiceClient.send({ cmd: RMQ_MESSAGES.FAQS.UPDATE_FAQ }, payload)
+    );
+
+    return response;
   }
 
+  @Auth(true)
   @Delete(API_ENDPOINTS.FAQS.DELETE_FAQ)
-  @ApiCreatedResponse({ type: GetFaqResponseDto })
+  @ApiOkResponse({ type: DeleteFaqsResponseDto })
   public async deleteFaq(
-    @Query('id') id: [string],
-    @Res() res: Response | any
+    @Req() request: AppRequest,
+    @Param() payload: DeleteFaqsDto
   ) {
-    try {
-      if (typeof id === 'string') id = [id];
-      const response = await firstValueFrom(
-        this.faqServiceClient.send(
-          { cmd: RMQ_MESSAGES.FAQS.DELETE_FAQ },
-          { id }
-        )
-      );
-      res.status(response.statusCode).json(response);
-    } catch (err) {
-      res.status(HttpStatus.INTERNAL_SERVER_ERROR).json(err);
-    }
+    payload.deletedBy = request?.user?._id;
+
+    const response = await firstValueFrom(
+      this.faqServiceClient.send({ cmd: RMQ_MESSAGES.FAQS.DELETE_FAQ }, payload)
+    );
+
+    return response;
   }
 }

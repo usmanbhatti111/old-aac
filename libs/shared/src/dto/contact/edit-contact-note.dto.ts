@@ -2,14 +2,11 @@ import { ApiProperty } from '@nestjs/swagger';
 import { IsMongoId, IsOptional, IsString } from 'class-validator';
 import { Transform } from 'class-transformer';
 import { toMongoObjectId } from '../../functions';
+import { ApiSingleFile } from '../../custom';
 export class EditContactNoteDto {
+  @ApiSingleFile({ required: false })
   @IsOptional()
-  @Transform(toMongoObjectId, { toClassOnly: true })
-  @ApiProperty({
-    example: '651bdf53beeb02bc627d6804',
-    required: false,
-  })
-  attachmentId: string;
+  attachment: any;
 
   @Transform(toMongoObjectId, { toClassOnly: true })
   @IsOptional()

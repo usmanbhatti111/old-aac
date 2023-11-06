@@ -8,7 +8,7 @@ import { UserRole, UserStatus } from '../../constants/enums';
 
 @Schema({ timestamps: true, versionKey: false })
 export class UserAccounts extends AbstractSchema {
-  @Prop({ type: String, default: UserRole.ACCOUNT_ADMIN })
+  @Prop({ type: String, default: UserRole.SUPER_ADMIN })
   manageRole?: string;
 
   @Prop({ type: String, default: UserStatus.INACTIVE })

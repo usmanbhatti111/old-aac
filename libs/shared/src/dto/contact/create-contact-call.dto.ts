@@ -72,4 +72,3 @@ export class CreateContactCallDto {
 
   updatedBy?: string;
 }
-``;

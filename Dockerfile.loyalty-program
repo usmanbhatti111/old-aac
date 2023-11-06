@@ -4,14 +4,6 @@ RUN mkdir -p /var/www/loyalty-program
 WORKDIR /var/www/loyalty-program
 ADD . /var/www/loyalty-program
 
-RUN npm install -g pnpm
-
-RUN pnpm config set network-timeout 600000 -g
-
-RUN pnpm install
-
-RUN pnpm nx reset
-
-RUN pnpm exec nx build loyalty-program
+RUN npx nx build loyalty-program
 
 CMD ["node", "./dist/apps/loyalty-program/main.js"]

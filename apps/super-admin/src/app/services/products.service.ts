@@ -6,6 +6,7 @@ import {
   AddProductDto,
   EditProductDto,
   GetProductsDto,
+  IdDto,
   MediaObject,
 } from '@shared/dto';
 import { S3Service } from '@shared/services';
@@ -21,16 +22,17 @@ export class ProductsService {
   async addProduct(payload: AddProductDto) {
     try {
       const { file } = payload;
+      if (file) {
+        const s3Response = await this.s3.uploadFile(file, 'products/{uuid}');
 
-      const s3Response = await this.s3.uploadFile(file, 'products/{uuid}');
+        const logo: MediaObject = {
+          ...s3Response,
+          size: file.size,
+          mimetype: file.mimetype,
+        };
 
-      const logo: MediaObject = {
-        ...s3Response,
-        size: file.size,
-        mimetype: file.mimetype,
-      };
-
-      payload.logo = logo;
+        payload.logo = logo;
+      }
 
       const res = await this.productsRepository.create(payload);
 
@@ -39,6 +41,28 @@ export class ProductsService {
         ResponseMessage.SUCCESS,
         res
       );
+      return response;
+    } catch (error) {
+      throw new RpcException(error);
+    }
+  }
+
+  async getProduct(payload: IdDto) {
+    try {
+      const filterQuery = { isDeleted: false, _id: payload.id };
+
+      const res = await this.productsRepository.findOne(
+        filterQuery,
+        {},
+        { sort: '-createdAt' }
+      );
+
+      const response = successResponse(
+        HttpStatus.OK,
+        ResponseMessage.SUCCESS,
+        res
+      );
+
       return response;
     } catch (error) {
       throw new RpcException(error);

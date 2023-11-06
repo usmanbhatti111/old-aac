@@ -12,13 +12,12 @@ export class DownloadService {
   convertToCsv(data: any[]) {
     const worksheet = xlsx.utils.json_to_sheet(data);
     const workbook = xlsx.utils.book_new();
-
     xlsx.utils.book_append_sheet(workbook, worksheet, 'Data');
-    const xlsxBuffer = xlsx.write(workbook, {
+    const csvBuffer = xlsx.write(workbook, {
       bookType: 'csv',
       type: 'buffer',
     });
-    return xlsxBuffer;
+    return csvBuffer;
   }
 
   convertToXlsx(data: any[]) {
