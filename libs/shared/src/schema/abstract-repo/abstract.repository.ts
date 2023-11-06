@@ -349,6 +349,7 @@ export abstract class AbstractRepository<TDocument extends AbstractSchema> {
         },
       },
       ...pipelines,
+
       {
         $sort: {
           ...sort,

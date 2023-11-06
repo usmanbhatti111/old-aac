@@ -41,6 +41,11 @@ export enum EPurchaseOrderStatus {
   CLOSED = 'CLOSED',
   REJECTED = 'REJECTED',
 }
+export enum EApprovalStatusStatus {
+  PENDING = 'PENDING',
+  APPROVE = 'APPROVE',
+  REJECT = 'REJECTED',
+}
 export enum EExtendRenewStatus {
   EXTEND = 'EXTEND',
   RENEW = 'RENEW',
@@ -95,6 +100,13 @@ export enum BillingCycleEnum {
   QUARTERLY = 'QUARTERLY',
   HALF_YEARLY = 'HALF_YEARLY',
   YEARLY = 'YEARLY',
+  ONE_TIME = 'ONE_TIME',
+}
+
+export enum LicenceTypeEnum {
+  VOLUME = 'VOLUME',
+  ENTERPRISE = 'ENTERPRISE',
+  TRAIL = 'TRAIL',
 }
 
 export enum ProductDropDown {
@@ -163,12 +175,12 @@ export enum ContactAssociationEnum {
 }
 
 export enum AssetSoftwareCreatedAtEnum {
-  NONE = 'None',
-  ALL_TIME = 'AllTime',
-  TODAY = 'Today',
-  YESTERDAY = 'Yesterday',
-  PREVIOUS_WEEK = 'PreviousWeek',
-  PREVIOUS_MONTH = 'PreviousMonth',
+  NONE = 'NONE',
+  ALL_TIME = 'ALL_TIME',
+  TODAY = 'TODAY',
+  YESTERDAY = 'YESTERDAY',
+  PREVIOUS_WEEK = 'PREVIOUS_WEEK',
+  PREVIOUS_MONTH = 'PREVIOUS_MONTH',
 }
 export enum ETaskType {
   CALL = 'Call',
@@ -185,6 +197,19 @@ export enum ETaskStatus {
   PENDING = 'Pending',
   INPROGRESS = 'Inprogress',
   COMPLETED = 'Complete',
+}
+
+export enum ETicketsTaskStatus {
+  TODO = 'Todo',
+  IN_PROGRESS = 'In-Progress',
+  DONE = 'Done',
+}
+
+export enum ETaskNotifyStatus {
+  FIVE_MINS = '5',
+  TEN_MINS = '10',
+  FIFTEEN_MINS = '15',
+  THIRTY_MINS = '30',
 }
 
 export enum ETaskAssociate {
@@ -211,7 +236,7 @@ export enum EContractStatus {
   TERMINATED = 'TERMINATED',
 }
 
-export enum EContractExpiry {
+export enum EMongooseDateFilter {
   NONE = 'NONE',
   ALL_TIME = 'ALL_TIME',
   TODAY = 'TODAY',
@@ -232,6 +257,14 @@ export enum ECardTypes {
   VISA = 'VISA',
 }
 
+export enum EFolderType {
+  KNOWLEDGE_BASE = 'KNOWLEDGE_BASE',
+}
+
+export enum EArticlesStatus {
+  DRAFT = 'DRAFT',
+  PUBLISHED = 'PUBLISHED',
+}
 export enum EBillingFrequency {
   MONTHLY = 'monthly',
   QUARTERLY = 'quarterly',

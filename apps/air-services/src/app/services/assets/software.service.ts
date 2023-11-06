@@ -1,18 +1,25 @@
 import { HttpStatus, Injectable } from '@nestjs/common';
 import { RpcException } from '@nestjs/microservices';
-import { AssetsSoftwareRepository } from '@shared';
+import { AssetsSoftwareRepository, SoftwareUsersRepository } from '@shared';
+import { mongooseDateFilter } from '@shared';
 import {
+  AllocateSoftwareContractDto,
   AssetsSoftwareDto,
   GetAssetsSoftwareDetails,
+  GetSoftwareUserDto,
   IdDto,
   PaginationDto,
+  SoftwareUsersDto,
 } from '@shared/dto';
 
 import { successResponse } from '@shared/constants';
 
 @Injectable()
 export class SoftwareService {
-  constructor(private softwareRepository: AssetsSoftwareRepository) {}
+  constructor(
+    private softwareRepository: AssetsSoftwareRepository,
+    private softwareUsersRepo: SoftwareUsersRepository
+  ) {}
 
   async addSoftware(payload: AssetsSoftwareDto) {
     try {
@@ -69,7 +76,7 @@ export class SoftwareService {
       const { search, type, status, createdDate, updatedDate } = payload.dto;
       const { limit } = payload.pagination;
       const offset = payload.pagination.page;
-      const today = new Date();
+
       let searchFilter: any;
       if (search) {
         searchFilter = {
@@ -94,113 +101,12 @@ export class SoftwareService {
         filterQuery.status = status;
       }
       if (createdDate) {
-        switch (createdDate) {
-          case 'Today':
-            {
-              const Today = {
-                $match: {
-                  createdAt: {
-                    $lte: new Date(),
-                    $gte: new Date(today.getTime() - 1 * 12 * 60 * 60 * 1000),
-                  },
-                },
-              };
-              pipelines.push(Today);
-            }
-            break;
-          case 'Yesterday':
-            {
-              const yesterday = {
-                $match: {
-                  createdAt: {
-                    $lte: new Date(today.getTime() - 1 * 12 * 60 * 60 * 1000),
-                    $gte: new Date(today.getTime() - 2 * 24 * 60 * 60 * 1000),
-                  },
-                },
-              };
-              pipelines.push(yesterday);
-            }
-            break;
-          case 'PreviousWeek':
-            {
-              const previousWeek = {
-                $match: {
-                  createdAt: {
-                    $lte: new Date(today.getTime() - 7 * 24 * 60 * 60 * 1000),
-                    $gte: new Date(today.getTime() - 14 * 24 * 60 * 60 * 1000),
-                  },
-                },
-              };
-              pipelines.push(previousWeek);
-            }
-            break;
-          case 'PreviousMonth': {
-            const PreviousMonth = {
-              $match: {
-                createdAt: {
-                  $lte: new Date(today.getTime() - 30 * 24 * 60 * 60 * 1000),
-                  $gte: new Date(today.getTime() - 60 * 24 * 60 * 60 * 1000),
-                },
-              },
-            };
-            pipelines.push(PreviousMonth);
-          }
-        }
+        const filter = mongooseDateFilter(createdDate, 'createdAt');
+        pipelines.push({ $match: filter });
       }
       if (updatedDate) {
-        switch (updatedDate) {
-          case 'Today':
-            {
-              const Today = {
-                $match: {
-                  updatedAt: {
-                    $lte: new Date(),
-                    $gte: new Date(today.getTime() - 1 * 24 * 60 * 60 * 1000),
-                  },
-                },
-              };
-
-              pipelines.push(Today);
-            }
-            break;
-          case 'Yesterday':
-            {
-              const yesterday = {
-                $match: {
-                  updatedAt: {
-                    $lte: new Date(today.getTime() - 1 * 12 * 60 * 60 * 1000),
-                    $gte: new Date(today.getTime() - 2 * 24 * 60 * 60 * 1000),
-                  },
-                },
-              };
-              pipelines.push(yesterday);
-            }
-            break;
-          case 'PreviousWeek':
-            {
-              const previousWeek = {
-                $match: {
-                  updatedAt: {
-                    $lte: new Date(today.getTime() - 7 * 24 * 60 * 60 * 1000),
-                    $gte: new Date(today.getTime() - 14 * 24 * 60 * 60 * 1000),
-                  },
-                },
-              };
-              pipelines.push(previousWeek);
-            }
-            break;
-          case 'PreviousMonth': {
-            const PreviousMonth = {
-              $match: {
-                updatedAt: {
-                  $lte: new Date(today.getTime() - 30 * 24 * 60 * 60 * 1000),
-                  $gte: new Date(today.getTime() - 60 * 24 * 60 * 60 * 1000),
-                },
-              },
-            };
-            pipelines.push(PreviousMonth);
-          }
-        }
+        const filter = mongooseDateFilter(updatedDate, 'updatedAt');
+        pipelines.push({ $match: filter });
       }
 
       const softwareDetails = await this.softwareRepository.paginate({
@@ -232,40 +138,166 @@ export class SoftwareService {
       throw new RpcException(error);
     }
   }
-  getTimeLogicForPipeLine(dateFilter, dateKey) {
-    const today = new Date();
-    const dateMatchFilter = {
-      $match: {},
-    };
-    switch (dateFilter) {
-      case 'Today': {
-        dateMatchFilter.$match[dateKey] = {
-          $lte: new Date(),
-          $gte: new Date(today.getTime() - 1 * 24 * 60 * 60 * 1000),
-        };
-        return dateMatchFilter;
+  async addSoftwareUsers(payload: { dto: SoftwareUsersDto; userId: string }) {
+    try {
+      const { userId } = payload;
+      const { ...dto } = payload;
+      const { contractId } = dto.dto;
+
+      const softwareUsers = await this.softwareUsersRepo.create({
+        contractId: dto.dto.contractId,
+        userRefId: dto.dto.userRefId,
+        softwareId: dto.dto.softwareId,
+        userId: userId,
+        isContractAllocated: contractId ? true : false,
+      });
+
+      const response = successResponse(
+        HttpStatus.CREATED,
+        `Software Users Added Successfully`,
+        softwareUsers
+      );
+      return response;
+    } catch (error) {
+      throw new RpcException(error);
+    }
+  }
+  async getSoftwareUsers(payload: {
+    id: IdDto;
+    userId: string;
+    dto: GetSoftwareUserDto;
+  }) {
+    try {
+      const { id } = payload.id;
+      const { limit, page, search, name, assignedDate } = payload.dto;
+      const assign = new Date(assignedDate);
+      const filterQuery = {
+        softwareId: id,
+      };
+      const pipelines: any = [
+        {
+          $lookup: {
+            from: 'users',
+            localField: 'userRefId',
+
+            foreignField: '_id',
+            as: 'details',
+          },
+        },
+        {
+          $lookup: {
+            from: 'contracts',
+            localField: 'contractId',
+
+            foreignField: '_id',
+            as: 'contracts',
+          },
+        },
+
+        {
+          $unwind: '$details',
+        },
+        {
+          $unwind: '$contracts',
+        },
+      ];
+      if (search) {
+        pipelines.push({
+          $match: {
+            'details.firstName': { $regex: search, $options: 'i' },
+          },
+        });
       }
-      case 'Yesterday': {
-        dateMatchFilter.$match[dateKey] = {
-          $lte: new Date(today.getTime() - 1 * 12 * 60 * 60 * 1000),
-          $gte: new Date(today.getTime() - 2 * 24 * 60 * 60 * 1000),
-        };
-        return dateMatchFilter;
+      if (name) {
+        pipelines.push({
+          $match: {
+            'details.firstName': { $regex: name, $options: 'i' },
+          },
+        });
       }
-      case 'PreviousWeek': {
-        dateMatchFilter.$match[dateKey] = {
-          $lte: new Date(today.getTime() - 7 * 24 * 60 * 60 * 1000),
-          $gte: new Date(today.getTime() - 14 * 24 * 60 * 60 * 1000),
-        };
-        return dateMatchFilter;
+      if (assignedDate) {
+        pipelines.push({
+          $match: {
+            createdAt: {
+              $lte: new Date(assign.getTime() + 1 * 24 * 60 * 60 * 1000),
+              $gte: new Date(assign.getTime()),
+            },
+          },
+        });
       }
-      case 'PreviousMonth': {
-        dateMatchFilter.$match[dateKey] = {
-          $lte: new Date(today.getTime() - 30 * 24 * 60 * 60 * 1000),
-          $gte: new Date(today.getTime() - 60 * 24 * 60 * 60 * 1000),
-        };
-        return dateMatchFilter;
-      }
+      const Param = {
+        filterQuery,
+        pipelines,
+        limit,
+        offset: page,
+      };
+      const softwareDetails = await this.softwareUsersRepo.paginate(Param);
+      const response = successResponse(
+        HttpStatus.OK,
+        `Software Users Details Successfully`,
+        softwareDetails
+      );
+      return response;
+    } catch (error) {
+      throw new RpcException(error);
+    }
+  }
+
+  async allocateSoftwareContract(payload: {
+    dto: AllocateSoftwareContractDto;
+    userId: string;
+  }) {
+    try {
+      const { id, contractId } = payload.dto;
+
+      const allocate = await this.softwareUsersRepo.findOneAndUpdate(
+        { _id: id },
+        { $set: { contractId, isContractAllocated: true } }
+      );
+      const response = successResponse(
+        HttpStatus.OK,
+        `Contract Allocated Successfully`,
+        allocate
+      );
+      return response;
+    } catch (error) {
+      throw new RpcException(error);
+    }
+  }
+
+  async deAllocateSoftwareContract(payload: {
+    dto: AllocateSoftwareContractDto;
+    userId: string;
+  }) {
+    try {
+      const { id, contractId } = payload.dto;
+
+      const allocate = await this.softwareUsersRepo.findOneAndUpdate(
+        { _id: id },
+        { $unset: { contractId }, $set: { isContractAllocated: false } }
+      );
+      const response = successResponse(
+        HttpStatus.OK,
+        `Contract Deallocated Successfully`,
+        allocate
+      );
+      return response;
+    } catch (error) {
+      throw new RpcException(error);
+    }
+  }
+  async softwareUserRemove(payload: { id: IdDto }) {
+    try {
+      const { id } = payload.id;
+      const removeUser = await this.softwareUsersRepo.delete({ _id: id });
+      const response = successResponse(
+        HttpStatus.OK,
+        `User Remove Successfully`,
+        removeUser
+      );
+      return response;
+    } catch (error) {
+      throw new RpcException(error);
     }
   }
 }

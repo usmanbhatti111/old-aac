@@ -3,9 +3,31 @@ import { HydratedDocument, SchemaTypes } from 'mongoose';
 import { AbstractSchema } from '../abstract-repo/abstract.schema';
 import { EExtendRenewStatus } from '../../constants/index';
 import { Inventory } from './inventory.schema';
-import { EContractStatus } from '../../constants/enums';
+import {
+  BillingCycleEnum,
+  EContractStatus,
+  LicenceTypeEnum,
+} from '../../constants/enums';
 export type ContractDocument = HydratedDocument<Contract>;
 
+@Schema()
+export class ItemsDetail {
+  @Prop({ type: String, required: true })
+  serviceName: string;
+
+  @Prop({ type: String, required: false })
+  principleModel: string;
+
+  @Prop({ type: Number, required: false })
+  cost: number;
+
+  @Prop({ type: Number, required: true })
+  count: number;
+
+  @Prop({ type: String, required: false })
+  comments: string;
+}
+const ItemsDetailSchema = SchemaFactory.createForClass(ItemsDetail);
 @Schema({
   versionKey: false,
   timestamps: true,
@@ -15,7 +37,7 @@ export class Contract extends AbstractSchema {
   name: string;
 
   @Prop({ type: String, required: false })
-  type: string;
+  contractType: string;
 
   @Prop({ type: String, required: false })
   cost: string;
@@ -43,11 +65,30 @@ export class Contract extends AbstractSchema {
   })
   status?: string;
 
+  @Prop({
+    type: String,
+    required: false,
+    default: BillingCycleEnum.MONTHLY,
+    enum: BillingCycleEnum,
+  })
+  billingCycle?: string;
+
+  @Prop({
+    type: String,
+    required: false,
+    default: LicenceTypeEnum.ENTERPRISE,
+    enum: LicenceTypeEnum,
+  })
+  licenseType?: string;
+
   @Prop({ type: SchemaTypes.ObjectId, required: false })
   vendor: string;
 
   @Prop({ type: SchemaTypes.ObjectId, required: false })
   approver: string;
+
+  @Prop({ type: String, required: false })
+  licenseKey: string;
 
   @Prop({
     type: Boolean,
@@ -72,11 +113,23 @@ export class Contract extends AbstractSchema {
   @Prop({ type: SchemaTypes.ObjectId, required: false })
   assetId: string;
 
+  @Prop({ type: SchemaTypes.ObjectId, required: false })
+  softwareId: string;
+
+  @Prop({ type: [ItemsDetailSchema], required: false })
+  itemsDetail: ItemsDetail[];
+
   @Prop({
     type: Boolean,
     default: false,
   })
   isDeleted?: boolean;
+
+  @Prop({
+    type: Boolean,
+    default: false,
+  })
+  isSubmitted?: boolean;
 }
 
 export const ContractSchema = SchemaFactory.createForClass(Contract);

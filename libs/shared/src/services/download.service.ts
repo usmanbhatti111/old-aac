@@ -90,9 +90,10 @@ export class DownloadService {
     }
     if (type === EExportFile.CSV) {
       const csvStream = this.convertToCsv(data);
-      res.setHeader('Content-Type', 'text/csv');
-      res.setHeader('Content-Disposition', 'attachment; filename="data.csv"');
-      csvStream.pipe(res);
+      res.setHeader('Content-Type', 'application/vnd.openxmlformats');
+      res.setHeader('Content-Disposition', 'attachment; filename=data.csv');
+      res.write(csvStream, 'binary');
+      res.end(null, 'binary');
     } else if (type === EExportFile.XLS) {
       const xlsxBuffer = this.convertToXlsx(data);
       res.setHeader(
@@ -100,7 +101,8 @@ export class DownloadService {
         'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
       );
       res.setHeader('Content-Disposition', 'attachment; filename="data.xlsx"');
-      res.send(xlsxBuffer);
+      res.write(xlsxBuffer, 'binary');
+      res.end(null, 'binary');
     } else {
       throw new HttpException('Invalid format', HttpStatus.BAD_REQUEST);
     }

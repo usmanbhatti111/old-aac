@@ -1,5 +1,12 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNotEmpty, IsString, IsISO8601 } from 'class-validator';
+import { ETaskNotifyStatus, ETicketsTaskStatus } from '@shared/constants';
+import {
+  IsNotEmpty,
+  IsString,
+  IsISO8601,
+  IsOptional,
+  IsMongoId,
+} from 'class-validator';
 
 export class AddTaskDto {
   @IsNotEmpty()
@@ -12,7 +19,7 @@ export class AddTaskDto {
   title: string;
 
   @IsNotEmpty()
-  @IsString()
+  @IsMongoId()
   @ApiProperty({
     type: String,
     example: '651bdf53beeb02bc627d6804',
@@ -30,19 +37,28 @@ export class AddTaskDto {
   description: string;
 
   @IsNotEmpty()
-  @IsString()
+  @IsMongoId()
   @ApiProperty({
     type: String,
-    example: 'Content will display here...',
+    example: '651bdf53beeb02bc627d6804',
     required: true,
   })
-  workSpace: string;
+  departmentId: string;
 
   @IsNotEmpty()
-  @IsString()
+  @IsMongoId()
   @ApiProperty({
     type: String,
-    example: 'User',
+    example: '651bdf53beeb02bc627d6804',
+    required: true,
+  })
+  createdBy: string;
+
+  @IsNotEmpty()
+  @IsMongoId()
+  @ApiProperty({
+    type: String,
+    example: '651bdf53beeb02bc627d6804',
     required: true,
   })
   assignTo: string;
@@ -51,7 +67,7 @@ export class AddTaskDto {
   @IsString()
   @ApiProperty({
     type: String,
-    example: 'Status',
+    example: ETicketsTaskStatus.TODO,
     required: true,
   })
   status: string;
@@ -60,7 +76,7 @@ export class AddTaskDto {
   @IsString()
   @ApiProperty({
     type: String,
-    example: '15 Minutes',
+    example: ETaskNotifyStatus.FIVE_MINS,
     required: true,
   })
   notifyBefore: string;
@@ -73,6 +89,14 @@ export class AddTaskDto {
   })
   startDate: Date;
 
+  @IsOptional()
+  @IsString()
+  @ApiProperty({
+    type: String,
+    required: true,
+  })
+  startDateTime: string;
+
   @IsNotEmpty()
   @IsISO8601()
   @ApiProperty({
@@ -80,6 +104,14 @@ export class AddTaskDto {
     required: true,
   })
   endDate: Date;
+
+  @IsOptional()
+  @IsString()
+  @ApiProperty({
+    type: String,
+    required: true,
+  })
+  endDateTime: string;
 
   @IsNotEmpty()
   @IsString()

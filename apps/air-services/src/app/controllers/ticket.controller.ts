@@ -13,6 +13,7 @@ import {
   GetAssociateAssetsDto,
   AssociatePurchaseOrderDto,
   DeleteAssociatePurchaseOrderDto,
+  BulkTicketUpdateDto,
 } from '@shared/dto';
 
 @Controller()
@@ -85,7 +86,14 @@ export class TicketController {
   ) {
     return await this.ticketService.addAssociatePurchaseOrder(payload);
   }
+  @MessagePattern({
+    cmd: RMQ_MESSAGES.AIR_SERVICES.ASSETS.GET_PURCHASEORDERASSOCIATE,
+  })
+  async getPurchaseOrderAssociate(@Payload() payload: { id: IdDto }) {
+    const { id } = payload;
 
+    return await this.ticketService.getPurchaseOrderAssociate(id);
+  }
   @MessagePattern(RMQ_MESSAGES.AIR_SERVICES.ASSETS.DELETE_ASSOCIATE_ORDER)
   async dissociatePurchaseOrder(
     @Payload()
@@ -95,5 +103,15 @@ export class TicketController {
     }
   ) {
     return await this.ticketService.dissociatePurchaseOrder(payload);
+  }
+  @MessagePattern(RMQ_MESSAGES.AIR_SERVICES.TICKETS.BULK_TICKET_UPDATE)
+  async bulkUpdateTickets(
+    @Payload()
+    payload: {
+      ids: string[];
+      dto: BulkTicketUpdateDto;
+    }
+  ) {
+    return await this.ticketService.bulkUpdateTickets(payload);
   }
 }

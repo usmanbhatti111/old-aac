@@ -36,11 +36,13 @@ export class InvoicesController {
   ) {
     const { user } = request;
     const organizationId = user?.organization;
+    const userId = user._id;
+    const userRole = user.role;
 
     const response = await firstValueFrom(
       this.orgAdminServiceClient.send(
         { cmd: RMQ_MESSAGES.ORG_ADMIN.INVOICES.GET_ALL_INVOICES },
-        { ...payload, organizationId: organizationId }
+        { ...payload, organizationId, userId, userRole }
       )
     );
     return response;

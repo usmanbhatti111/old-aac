@@ -163,6 +163,18 @@ export const RMQ_MESSAGES = {
     DELETE_ALL_ATTACHMENT: 'delete-all-attachment',
   },
   AIR_SERVICES: {
+    DASHBOARD: {
+      CREATE_DASHBOARD: 'create-dashboard',
+      GET_DASHBOARD_LIST: 'get-dashboard-list',
+      GET_DASHBOARD: 'get-dashboard',
+      UPDATE_DASHBOARD: 'update-dashboard',
+      DELETE_DASHBOARD: 'delete-dashboard',
+    },
+    WIDGETS: {
+      CREATE_WIDGETS: 'create-widgets',
+      GET_WIDGETS_LIST: 'get-widgets-list',
+      GET_WIDGETS: 'get-widgets',
+    },
     TICKETS: {
       CREATE_TICKET: 'create-ticket',
       GET_TICKET_DETAILS: 'get-ticket-details',
@@ -176,6 +188,7 @@ export const RMQ_MESSAGES = {
       EDIT_TICKETS: 'edit-tickets',
       CHANGE_STATUS: 'change_status',
       GET_TICKET_LIST: 'get_ticket_list',
+      BULK_TICKET_UPDATE: 'bulk-ticket-update',
     },
     ASSETS: {
       ADD_Inventory: 'add-inventory',
@@ -187,19 +200,30 @@ export const RMQ_MESSAGES = {
       DELETE_PURCHASEORDER: 'delete-purchaseorder',
       UPDATE_PURCHASEORDER: 'update-purchaseorder',
       ADD_ASSOCIATE_ORDER: 'add-associate-order',
+      ADD_APPROVER_ORDER: 'add-approver-order',
+      APPROVER_ORDER_STATUS: 'approver-order-status',
       ADD_SOFTWARE: 'add-software',
       ADD_SOFTWARE_DEVICE: 'add-software-device',
       GET_PURCHASEORDERLIST: 'get-purchaseorderlist',
       ASSOCIATE_INVENTORY_LIST: 'associate-inventory-list',
       GET_PURCHASEORDER: 'get-purchaseorder',
+      GET_PURCHASEORDER_RECIEVED: 'get-purchaseorder-recieved',
       EDIT_SOFTWARE: 'edit-software',
       DELETE_SOFTWARE: 'delete-software',
       GET_SOFTWARE: 'get-software',
       ASSIGN_CATEGORY: 'assign-category',
+      CHANGE_PURCHASEORDER_STATUS: 'change_purchaseorder_status',
       SEARCH_INVENTORY: 'search-inventory',
       DELETE_SOFTWARE_DEVICE: 'delete-software-device',
       GET_INVENTORY_SOFTWARE_DETAILS: 'get-inventory-software-details',
       DELETE_ASSOCIATE_ORDER: 'delete-associate-order',
+      ADD_SOFTWARE_USERS: 'add-software-users',
+      SOFTWARE_USERS_DETAILS: 'software-users-details',
+      GET_PURCHASEORDERASSOCIATE: 'get-purchaseorder-associate',
+      SOFTWARE_ALLOCATE_CONTRACT: 'software-allocate-contract',
+      SOFTWARE_DEALLOCATE_CONTRACT: 'software-deallocate-contract',
+      SOFTWARE_USERS_REMOVE: 'software-users-remove',
+      GET_SOFTWARE_DEVICES: 'software-devices',
     },
     TASK: {
       ADD_TASK: 'add_task',
@@ -215,16 +239,33 @@ export const RMQ_MESSAGES = {
       DELETE_TASK: 'delete-task',
       TASK_ACTIVITY_LIST: 'task-activity',
     },
+    WORK_LOAD_MANAGEMENT: {
+      WORK_LOAD_LIST: 'workload-list',
+      GET_USER_TASKS: 'users-tasks',
+    },
     EXPENSE: {
       ADD_EXPENSE: 'add-expense',
       GET_EXPENSE: 'get-expense',
     },
     CONTRACT: {
       ADD_CONTRACT: 'add-contract',
+      ADD_CONTRACTS_ASSET: 'add-contract-asset',
+      APPROVE_CONTRACT: 'approve-contract',
+      UPDATE_CONTRACT_SUBMITTED_STATUS: 'approval-request',
+      DELETE_CONTRACTS_ASSET: 'delete-contract-asset',
       DELETE_CONTRACT: 'delete-contract',
       UPDATE_CONTRACT: 'update-contract',
       RENEW_EXTEND_CONTRACT: 'renew-extend-contract',
       GET_CONTRACTS: 'get-contracts',
+    },
+    KNOWLEDGE_BASE: {
+      ARTICLES: {
+        WRITE: 'write-article',
+        GET: 'get-articles',
+        GET_UNAPPROVED_ARTICLES: 'unapproved-articles',
+        UPDATE: 'update-article',
+        DELETE: 'delete-article',
+      },
     },
   },
 
@@ -310,6 +351,10 @@ export const RMQ_MESSAGES = {
     DELETE_SALES_PRODUCT: 'delete-sales-product',
   },
 
+  ACTIVITY_LOGS: {
+    CREATE_ACTIVITY_LOG: 'create-activity-log',
+    GET_ACTIVITY_LOG: 'activity-logs',
+  },
   CALLS: {
     GET_NUMBERS_LIST: 'get-numbers-list',
     INITIATE_CALL: 'initiate-call',

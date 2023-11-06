@@ -163,6 +163,7 @@ export const API_ENDPOINTS = {
       ASSOCIATE_ASSETS: 'associate-assets',
       DETACH_ASSETS: 'detach-assets',
       CHANGE_STATUS: 'status/:id',
+      BULK_TICKET_UPDATE: 'bulk-ticket-update',
     },
     ASSETS: {
       INVENTORY: 'inventory',
@@ -170,10 +171,14 @@ export const API_ENDPOINTS = {
       DELETE_INVENTORY: '/:id',
       PURCHASEORDER: 'purchaseorder',
       GET_PURCHASEORDER: 'purchaseorder/:id',
+      GET_PURCHASEORDER_RECIEVED: 'purchaseorder-recieved',
+      GET_PURCHASEORDERASSOCIATE: 'purchaseorderassociate/:id',
       GET_PURCHASEORDERLIST: 'purchaseorderlist',
       DELETE_PURCHASEORDER: 'purchaseorder/:id',
       UPDATE_PURCHASEORDER: 'purchaseorder/:id',
       ADD_ASSOCIATE_ORDER: 'add-associate-order/:id',
+      ADD_APPROVER_ORDER: 'add-approver-order',
+      APPROVER_ORDER_STATUS: 'approver-order-status/:id',
       DELETE_ASSOCIATE_ORDER: 'delete-associate-order/:id',
       ADD_SOFTWARE: 'add_software',
       ASSOCIATE_INVENTORY_LIST: 'associate-inventory-list',
@@ -182,15 +187,37 @@ export const API_ENDPOINTS = {
       DELETE_SOFTWARE: 'delete-software/:id',
       GET_SOFTWARE: 'get-software',
       ASSIGN_CATEGORY: 'assign-category/:id',
+      CHANGE_PURCHASEORDER_STATUS: 'status-purchaseorder/:id',
       SEARCH_INVENTORY: 'search-inventory',
       DELETE_SOFTWARE_DEVICE: 'software-device/:id',
       GET_INVENTORY_SOFTWARE_DETAILS: 'get-inventory-software/:id',
+      ADD_SOFTWARE_USERS: 'add-software-users',
+      SOFTWARE_USERS_DETAILS: 'software-users-details/:id',
+      SOFTWARE_USERS_DOWNLOAD_FILE: 'software-users-download-file',
+      SOFTWARE_ALLOCATE_CONTRACT: 'software-allocate-contract',
+      SOFTWARE_DEALLOCATE_CONTRACT: 'software-deallocate-contract',
+      SOFTWARE_USERS_REMOVE: 'software-users-remove/:id',
+      GET_SOFTWARE_DEVICES: 'software-devices',
     },
     TASK: {
       ADD_TASK: '/',
       GET_TASK: '/',
       UPDATE_TASK: '/:id',
       DELETE_TASK: '/:id',
+    },
+    DASHBOARD: {
+      ADD_DASHBOARD: '/',
+      GET_DASHBOARDS: '/',
+      GET_DASHBOARD: '/:id',
+      UPDATE_DASHBOARD: '/:id',
+      DELETE_DASHBOARD: '/:id',
+    },
+    REPORT_WIDGETS: {
+      ADD_REPORT_WIDGET: '/',
+      GET_REPORT_WIDGETS: '/',
+      GET_REPORT_WIDGET: '/:id',
+      UPDATE_REPORT_WIDGET: '/:id',
+      DELETE_REPORT_WIDGET: '/:id',
     },
     TASK_MANAGEMENT: {
       CREATE_TASK: 'management',
@@ -200,6 +227,10 @@ export const API_ENDPOINTS = {
       DELETE_TASK: 'management/:id',
       TASK_ACTIVITY_LIST: 'activity',
     },
+    WORK_LOAD_MANAGEMENT: {
+      WORK_LOAD_LIST: 'workload-management',
+      GET_USER_TASKS: 'user-tasks',
+    },
     EXPENSE: {
       ADD_EXPENSE: 'add-expense',
       GET_EXPENSE: 'get-expense',
@@ -207,6 +238,10 @@ export const API_ENDPOINTS = {
 
     CONTRACT: {
       ADD_CONTRACT: 'add-contract',
+      ADD_CONTRACT_ASSET: 'add-contract-asset/:id',
+      APPROVE_CONTRACT: 'approve-contract/:id',
+      UPDATE_CONTRACT_SUBMITTED_STATUS: 'approval-request/:id',
+      DELETE_CONTRACT_ASSET: 'delete-contract-asset/:id',
       DELETE_CONTRACT: '/:id',
       UPDATE_CONTRACT: 'update/:id',
       RENEW_EXTEND_CONTRACT: 'renew-extend/:id',
@@ -291,6 +326,10 @@ export const API_ENDPOINTS = {
     UPDATE_SALES_PRODUCT: '/:id',
     DELETE_SALES_PRODUCT: '/:id',
   },
+
+  ACTIVITY_LOGS: {
+    GET_ACTIVITY_LOG: '/',
+  },
   SALES: {
     DEALS: {
       CREATE_DEAL: '/',
@@ -323,5 +362,11 @@ export const API_ENDPOINTS = {
     GET_DEAL_NOTE: '/:id',
     UPDATE_DEAL_NOTE: '/:id',
     DELETE_DEAL_NOTE: '/:id',
+  },
+
+  KNOWLEDGE_BASE: {
+    ARTICLES: {
+      GET_UNAPPROVED_ARTICLES: 'unapproved-articles',
+    },
   },
 };

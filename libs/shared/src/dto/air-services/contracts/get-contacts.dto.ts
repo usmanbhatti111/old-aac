@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import {
-  EContractExpiry,
+  EMongooseDateFilter,
   EContractStatus,
   EExportFile,
 } from '@shared/constants';
@@ -33,11 +33,11 @@ export class GetContactsDto extends PaginationDto {
   vendor: string;
 
   @ApiProperty({
-    enum: EContractExpiry,
+    enum: EMongooseDateFilter,
     example: '',
     required: false,
   })
-  @IsEnum(EContractExpiry)
+  @IsEnum(EMongooseDateFilter)
   @IsOptional()
   expiry: string;
 

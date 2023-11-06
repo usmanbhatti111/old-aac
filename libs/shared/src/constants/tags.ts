@@ -8,6 +8,7 @@ export const API_TAGS = {
   ORGANIZATION_COMPANY_ACCOUNT: 'Organization Company Account',
   TASK: 'Task',
   TASK_MANAGEMENT: 'Task Management',
+  WORK_LOAD_MANAGEMENT: 'Work Load Management',
   SUPER_ADMIN: 'Super Admin',
   FAQS: 'Faqs',
   JOBS: 'Jobs',
@@ -18,9 +19,9 @@ export const API_TAGS = {
   BILLING_INVOICES: 'Billing & Invoices',
   PRODUCTS: 'Products',
   PRODUCT_FEATURES: 'Product Features',
-
+  AIR_SERVICES_DASHBOARD: 'Air Services Dashboard',
   NEWS_AND_EVENTS: 'News and Events',
-
+  REPORTS_WIDGETS: 'Reports',
   PAYMENTS: 'Payments',
   DOCUMENTS: 'Documents',
 
@@ -37,6 +38,8 @@ export const API_TAGS = {
   DEAL_PIPELINE: 'Deal pipeline',
   SALES_PRODUCT: 'Sales product',
   ATTACHMENT: 'Attachment',
+  ACTIVITY_LOGS: 'Activity Logs',
+  ARTICLES: 'Articles',
   CALLS: 'Calls',
   DEALS: 'Deals',
   DEAL_NOTE: 'Deal notes',

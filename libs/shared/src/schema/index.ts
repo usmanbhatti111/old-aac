@@ -19,5 +19,6 @@ export * from './super-admin';
 export * from './status.schema';
 export * from './common-feature';
 export * from './sales-settings';
+export * from './activity-log.schema';
 export * from './sales-services';
 export * from './deals';

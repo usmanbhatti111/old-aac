@@ -7,6 +7,7 @@ import {
   ListTicketDTO,
   IdDto,
   paginationDTO,
+  BulkTicketUpdateDto,
 } from '@shared/dto';
 import { Types } from 'mongoose';
 import { GetAssociateAssetsDto, GetTicketByIdDto } from '@shared/dto';
@@ -136,6 +137,29 @@ export class TicketService {
         updatedTickets
       );
       return response;
+    } catch (error) {
+      throw new RpcException(error);
+    }
+  }
+
+  async getPurchaseOrderAssociate(payload) {
+    try {
+      const pipeline = [
+        {
+          $match: {
+            associatePurchaseOrders: new mongoose.Types.ObjectId(payload),
+          },
+        },
+        {
+          $project: {
+            id: 1,
+            status: 1,
+          },
+        },
+      ];
+      const res = await this.ticketRepository.aggregate(pipeline);
+
+      return successResponse(HttpStatus.OK, `Success`, res);
     } catch (error) {
       throw new RpcException(error);
     }
@@ -329,6 +353,26 @@ export class TicketService {
       const response = successResponse(HttpStatus.OK, `Retrived`, res);
       // TODO - Add Logger
 
+      return response;
+    } catch (error) {
+      throw new RpcException(error);
+    }
+  }
+  async bulkUpdateTickets(payload: {
+    ids: string[];
+    dto: BulkTicketUpdateDto;
+  }) {
+    try {
+      const { ids } = payload;
+      const { dto } = payload;
+      const filterQuery = { _id: ids };
+      const updates = { ...dto };
+      const ticketUpdate = await this.ticketRepository.updateMany(
+        filterQuery,
+        updates
+      );
+
+      const response = successResponse(HttpStatus.OK, `Update`, ticketUpdate);
       return response;
     } catch (error) {
       throw new RpcException(error);

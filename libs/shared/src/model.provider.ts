@@ -84,13 +84,27 @@ import {
   Attachment,
   AttachmentSchema,
   ContractSchema,
+  Dashboard,
+  DashboardSchema,
   OrganizationCompanyAccount,
   OrganizationCompanyAccountSchema,
+  SoftwareUsers,
+  SoftwareUsersSchema,
+  ActivityLog,
+  ActivityLogSchema,
+  Articles,
+  ArticlesSchema,
   Deals,
   DealsSchema,
   Note,
   NoteSchema,
+  PurchaseApproval,
+  PurchaseApprovalSchema,
 } from './schema';
+import {
+  ReportsWidget,
+  ReportsWidgetSchema,
+} from './schema/air-services/reports-widgets.schema';
 
 import {
   Contact,
@@ -297,6 +311,10 @@ export const DbModels = [
     schema: ContactMeetingSchema,
   },
   {
+    name: Dashboard.name,
+    schema: DashboardSchema,
+  },
+  {
     name: OrganizationCompanyAccount.name,
     schema: OrganizationCompanyAccountSchema,
   },
@@ -309,6 +327,22 @@ export const DbModels = [
     schema: SalesProductSchema,
   },
   {
+    name: ReportsWidget.name,
+    schema: ReportsWidgetSchema,
+  },
+  {
+    name: SoftwareUsers.name,
+    schema: SoftwareUsersSchema,
+  },
+  {
+    name: ActivityLog.name,
+    schema: ActivityLogSchema,
+  },
+  {
+    name: Articles.name,
+    schema: ArticlesSchema,
+  },
+  {
     name: Deals.name,
     schema: DealsSchema,
     collection: MODEL.DEAL,
@@ -316,5 +350,9 @@ export const DbModels = [
   {
     name: Note.name,
     schema: NoteSchema,
+  },
+  {
+    name: PurchaseApproval.name,
+    schema: PurchaseApprovalSchema,
   },
 ];

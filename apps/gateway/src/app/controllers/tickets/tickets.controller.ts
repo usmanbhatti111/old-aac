@@ -11,11 +11,18 @@ import {
   Put,
   UsePipes,
   ValidationPipe,
+  Patch,
 } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
 import { RpcException } from '@nestjs/microservices';
-import { ApiOkResponse, ApiParam, ApiQuery, ApiTags } from '@nestjs/swagger';
-
+import {
+  ApiOkResponse,
+  ApiParam,
+  ApiQuery,
+  ApiTags,
+  ApiBearerAuth,
+} from '@nestjs/swagger';
+import { Auth } from '../../decorators/auth.decorator';
 import {
   API_ENDPOINTS,
   API_TAGS,
@@ -39,16 +46,20 @@ import {
   EditTicketResponse,
   DeleteTicketResponse,
   ListTicketDTO,
+  BulkTicketUpdateDto,
+  UpdateManyTicketResponse,
 } from '@shared/dto';
 import { ColumnPipe } from '../../pipes/column.pipe';
 
 @ApiTags(API_TAGS.TICKETS)
 @Controller(CONTROLLERS.TICKET)
+@ApiBearerAuth()
 export class TicketController {
   constructor(
     @Inject(SERVICES.AIR_SERVICES) private ariServiceClient: ClientProxy
   ) {}
 
+  @Auth(true)
   @Post()
   public async createTicket(
     @Body() payload: CreateTicketDTO,
@@ -67,6 +78,7 @@ export class TicketController {
     }
   }
 
+  @Auth(true)
   @Get(API_ENDPOINTS.AIR_SERVICES.TICKETS.ASSOCIATE_ASSETS)
   public async getAssociateAssets(@Query() queryParams: GetAssociateAssetsDto) {
     try {
@@ -82,6 +94,7 @@ export class TicketController {
     }
   }
 
+  @Auth(true)
   @Get(':ticketId')
   public async getTicketDetails(@Param() params: GetTicketByIdDto) {
     try {
@@ -97,9 +110,10 @@ export class TicketController {
     }
   }
 
+  @Auth(true)
   @Delete()
   @ApiOkResponse({ type: DeleteTicketResponse })
-  public async deleteTicket(
+  public async deleteTickets(
     @Res() res: Response | any,
     @Query('ids') ids: string[]
   ) {
@@ -116,6 +130,7 @@ export class TicketController {
     }
   }
 
+  @Auth(true)
   @Post(API_ENDPOINTS.AIR_SERVICES.TICKETS.ASSOCIATE_ASSETS)
   public async associateAssets(@Body() payload: AssociateAssetsDTO) {
     try {
@@ -131,6 +146,7 @@ export class TicketController {
     }
   }
 
+  @Auth(true)
   @Delete(API_ENDPOINTS.AIR_SERVICES.TICKETS.DETACH_ASSETS)
   public async detachAssets(
     @Query() payload: DetachAssetsDTO,
@@ -149,6 +165,7 @@ export class TicketController {
     }
   }
 
+  @Auth(true)
   @Post(API_ENDPOINTS.AIR_SERVICES.TICKETS.ADD_CHILD_TICKET)
   @ApiOkResponse({ type: CreateTicketResponse })
   @ApiQuery({
@@ -177,6 +194,7 @@ export class TicketController {
     }
   }
 
+  @Auth(true)
   @Get(API_ENDPOINTS.AIR_SERVICES.TICKETS.GET_CHILD_TICKETS)
   @ApiOkResponse({ type: GetChildTicketResponse })
   public async getChildTicket(
@@ -197,6 +215,7 @@ export class TicketController {
     }
   }
 
+  @Auth(true)
   @Delete(API_ENDPOINTS.AIR_SERVICES.TICKETS.DELETE_CHILD_TICKETS)
   @ApiOkResponse({ type: DeleteTicketResponse })
   @ApiParam({
@@ -223,6 +242,7 @@ export class TicketController {
     }
   }
 
+  @Auth(true)
   @Put(API_ENDPOINTS.AIR_SERVICES.TICKETS.CHANGE_STATUS)
   @ApiOkResponse({ type: EditTicketResponse })
   @ApiParam({
@@ -256,6 +276,7 @@ export class TicketController {
     }
   }
 
+  @Auth(true)
   @Put(':id')
   @ApiOkResponse({ type: EditTicketResponse })
   @ApiParam({
@@ -284,6 +305,7 @@ export class TicketController {
     }
   }
 
+  @Auth(true)
   @Get()
   @ApiQuery({
     name: 'columnNames',
@@ -300,6 +322,27 @@ export class TicketController {
         this.ariServiceClient.send(
           RMQ_MESSAGES.AIR_SERVICES.TICKETS.GET_TICKET_LIST,
           { listTicketDTO, columnNames }
+        )
+      );
+      return res.status(response.statusCode).json(response);
+    } catch (err) {
+      throw new RpcException(err);
+    }
+  }
+
+  @Auth(true)
+  @Patch(API_ENDPOINTS.AIR_SERVICES.TICKETS.BULK_TICKET_UPDATE)
+  @ApiOkResponse({ type: UpdateManyTicketResponse })
+  public async bulkTicketUpdate(
+    @Res() res: Response | any,
+    @Query('ids') ids: string[],
+    @Body() dto: BulkTicketUpdateDto
+  ): Promise<UpdateManyTicketResponse> {
+    try {
+      const response = await firstValueFrom(
+        this.ariServiceClient.send(
+          RMQ_MESSAGES.AIR_SERVICES.TICKETS.BULK_TICKET_UPDATE,
+          { ids, dto }
         )
       );
       return res.status(response.statusCode).json(response);
