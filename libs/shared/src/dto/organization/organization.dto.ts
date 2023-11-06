@@ -26,7 +26,7 @@ export class CreateOrganizationDto {
   @ApiProperty({
     example: '8C68902',
   })
-  registrationNumber: string;
+  crn: string;
 
   @ApiProperty({
     example: 'Orcalo Holdings',
@@ -49,10 +49,15 @@ export class CreateOrganizationDto {
 
   @ApiProperty({
     required: true,
-    example: 'Street#234 ',
+    example: {
+      street: 'address',
+      city: 'city',
+      state: 'state',
+      postalCode: 'AN213',
+    },
   })
   @IsNotEmpty()
-  address: string;
+  address: object;
 
   @ApiProperty({
     required: true,

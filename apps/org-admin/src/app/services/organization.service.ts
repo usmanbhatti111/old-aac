@@ -15,7 +15,7 @@ export class OrganizationService {
     isDeleted: false,
   };
 
-  async createOrganization(payload: CreateOrganizationDto) {
+  async createOrganization(payload: CreateOrganizationDto | any) {
     try {
       const res = await this.organizationRepository.create({
         ...payload,
