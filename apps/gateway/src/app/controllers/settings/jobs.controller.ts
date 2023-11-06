@@ -81,9 +81,9 @@ export class JobsController {
   @Auth(true)
   @Get(API_ENDPOINTS.JOBS.GET_JOBS)
   @ApiOkResponse({ type: GetJobsResponseDto })
-  public async getJobs(@Query() filter: GetJobsDto) {
+  public async getJobs(@Query() payload: GetJobsDto) {
     const response = await firstValueFrom(
-      this.userServiceClient.send({ cmd: RMQ_MESSAGES.JOBS.GET_JOBS }, filter)
+      this.userServiceClient.send({ cmd: RMQ_MESSAGES.JOBS.GET_JOBS }, payload)
     );
 
     return response;

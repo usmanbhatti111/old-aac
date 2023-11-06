@@ -1,7 +1,12 @@
 import { Controller } from '@nestjs/common';
 import { MessagePattern, Payload } from '@nestjs/microservices';
 import { RMQ_MESSAGES } from '@shared/constants';
-import { CreateUserDto, PaginationDto } from '@shared/dto';
+import {
+  GetAdminUserDto,
+  CreateUserDto,
+  UpdateProfileDto,
+  EditUserByAdminDto,
+} from '@shared/dto';
 import { UserService } from '../services/user.service';
 
 @Controller()
@@ -14,7 +19,7 @@ export class UserController {
   }
 
   @MessagePattern(RMQ_MESSAGES.USER.GET_LIST)
-  listUsers(@Payload() payload: PaginationDto) {
+  listUsers(@Payload() payload: GetAdminUserDto) {
     return this.userService.listUsers(payload);
   }
 
@@ -28,5 +33,20 @@ export class UserController {
     return this.userService.findUserByUniqueFields({
       cognitoId: payload.cognitoId,
     });
+  }
+
+  @MessagePattern(RMQ_MESSAGES.USER.PROFILE)
+  userProfile(userId: string) {
+    return this.userService.userProfile(userId);
+  }
+
+  @MessagePattern(RMQ_MESSAGES.USER.UPDATE_PROFILE)
+  updateProfile(@Payload() payload: UpdateProfileDto) {
+    return this.userService.updateProfile(payload);
+  }
+
+  @MessagePattern(RMQ_MESSAGES.USER.UPDATE_PROFILE)
+  editUser(@Payload() payload: EditUserByAdminDto) {
+    return this.userService.editUserByAdmin(payload);
   }
 }

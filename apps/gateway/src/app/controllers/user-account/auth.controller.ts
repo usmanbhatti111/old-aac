@@ -1,6 +1,11 @@
 import { Body, Controller, Get, Inject, Post, Query } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
-import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiCreatedResponse,
+  ApiOperation,
+  ApiTags,
+} from '@nestjs/swagger';
 import {
   API_ENDPOINTS,
   API_TAGS,
@@ -10,9 +15,12 @@ import {
 } from '@shared/constants';
 import {
   CompanyHouseSearchQueryDto,
+  InitiateVerificationRequestDto,
+  InitiateVerificationResponseDto,
   SignInDto,
   SignupDto,
   VerifyTokenDto,
+  WebhookRequestDto,
 } from '@shared/dto';
 import { firstValueFrom } from 'rxjs';
 
@@ -73,6 +81,36 @@ export class AuthController {
         )
       );
     }
+
+    return response;
+  }
+
+  @Post(API_ENDPOINTS.AUTHENTICATION.IG_VERIFICATION)
+  @ApiOperation({ summary: 'Initiate IdentityGram Verification Session' })
+  @ApiCreatedResponse({
+    type: InitiateVerificationResponseDto,
+  })
+  public async initiateVerification(
+    @Body() payload: InitiateVerificationRequestDto
+  ) {
+    const response = await firstValueFrom(
+      this.userServiceClient.send(RMQ_MESSAGES.AUTHENTICATION.IG_VERIFICATION, {
+        ...payload,
+      })
+    );
+
+    return response;
+  }
+
+  @Post(API_ENDPOINTS.AUTHENTICATION.IG_STATUS_UPDATE)
+  @ApiOperation({ summary: 'Webhook: IdentityGram Verification Status Update' })
+  public async updateIgVerificationStatus(@Body() payload: WebhookRequestDto) {
+    const response = await firstValueFrom(
+      this.userServiceClient.send(
+        RMQ_MESSAGES.AUTHENTICATION.IG_STATUS_UPDATE,
+        { ...payload }
+      )
+    );
 
     return response;
   }

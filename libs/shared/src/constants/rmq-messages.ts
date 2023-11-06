@@ -10,12 +10,17 @@ export const RMQ_MESSAGES = {
     VERIFY_TOKEN: 'verify-token',
     SEARCH_ORG_BY_NAME: 'search-org-by-name',
     SEARCH_ORG_BY_CRN: 'search-org-by-crn',
+    IG_VERIFICATION: 'IG_VERIFICATION',
+    IG_STATUS_UPDATE: 'IG_STATUS_UPDATE',
   },
   USER: {
     GET_LIST: 'get-users',
     CREATE: 'create-user',
     FIND_BY_EMAIL: 'find-user-by-email',
     FIND_BY_COGNITO: 'find-user-by-cognito',
+    PROFILE: 'profile',
+    UPDATE_PROFILE: 'update-profile',
+    EDIT_USER: 'edit-user-by-admin',
   },
   ROLE: {
     CREATE_ROLE: 'create-role',

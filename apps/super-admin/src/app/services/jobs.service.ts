@@ -15,10 +15,6 @@ import dayjs from 'dayjs';
 export class JobsService {
   constructor(private jobRepository: JobRepository) {}
 
-  notDeletedFilter = {
-    isDeleted: false,
-  };
-
   async createJob(payload: CreateJobDto) {
     try {
       if (payload?.deadline) {

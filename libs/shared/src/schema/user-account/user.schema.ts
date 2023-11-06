@@ -1,6 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import mongoose, { HydratedDocument, SchemaTypes } from 'mongoose';
-import { UserStatus } from '../../constants';
+import { UserRole, UserStatus } from '../../constants';
 import { AbstractSchema } from '../abstract-repo/abstract.schema';
 import { Organization } from '../organization';
 import { Products } from '../super-admin';
@@ -64,7 +64,7 @@ export class User extends AbstractSchema {
   @Prop({ required: false })
   cognitoId?: string;
 
-  @Prop({ required: true })
+  @Prop({ enum: UserRole, required: true })
   role: string;
 
   @Prop()
