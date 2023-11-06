@@ -5,6 +5,7 @@ export const API_ENDPOINTS = {
     EDIT_EXAMPLE: '/:id',
   },
   AUTHENTICATION: {
+    FORCE_CONFIRM: 'force-confirm-user',
     SIGNUP: 'signup',
     SIGNIN: 'signin',
     VERIFY_TOKEN: 'verify-token',

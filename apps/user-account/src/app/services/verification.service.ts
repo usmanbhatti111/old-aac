@@ -13,7 +13,7 @@ import { ApproveEmail } from '../templates/verification-approve';
 import { EmailService } from '@shared/services';
 import { UserRepository } from '@shared';
 import { Types } from 'mongoose';
-import { successResponse, UserAccountStatus } from '@shared/constants';
+import { successResponse, UserStatus } from '@shared/constants';
 import { RpcException } from '@nestjs/microservices';
 import { AuthService } from './auth.service';
 @Injectable()
@@ -106,19 +106,19 @@ export class VerificationService {
       }
 
       if (status === VerificationStatus.Submitted) {
-        await this.authService.adminConfirmPassword(uniqueIdentifier);
+        await this.authService.confirmUserEmail(verify.email);
+        await this.authService.adminConfirmPassword(verify.email);
       }
 
       const updatePayload = {
-        veriffStatus: status,
+        igStatus: status,
         ...([
           VerificationStatus.Submitted,
           VerificationStatus.Approved,
         ].includes(status) && {
-          status: UserAccountStatus.ACTIVE,
-          isBlocked: false,
-          verificationId: id,
-          verifiedPhoneNumber,
+          status: UserStatus.ACTIVE,
+          igVerficationId: id,
+          igVerifiedPhoneNumber: verifiedPhoneNumber,
         }),
       };
 
