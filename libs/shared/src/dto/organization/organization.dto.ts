@@ -87,7 +87,7 @@ export class OrganizationDto {
   @ApiProperty({
     example: '8C68902',
   })
-  registrationNumber: string;
+  crn: string;
 
   @ApiProperty({
     example: 'Orcalo Holdings',
