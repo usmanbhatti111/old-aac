@@ -6,6 +6,7 @@ import {
   EBillingFrequency,
   EContactMode,
   EDealType,
+  EIsDeletedStatus,
   ETaskPriority,
 } from '../../constants/enums';
 import { MODEL } from '../../constants/models';
@@ -190,7 +191,13 @@ export class Deals extends AbstractSchema {
   deletedBy?: string;
 
   @Prop({ type: Boolean, default: false })
-  isDeleted?: boolean;
+  // @Prop({
+  //   type: String,
+  //   enum: EIsDeletedStatus,
+  //   required: false,
+  //   default: EIsDeletedStatus.ACTIVE,
+  // })
+  isDeleted?: string;
 
   @Prop({ required: false })
   deletedAt?: Date;

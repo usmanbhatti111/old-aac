@@ -5,16 +5,20 @@ export const API_ENDPOINTS = {
     EDIT_EXAMPLE: '/:id',
   },
   AUTHENTICATION: {
+    FORCE_CONFIRM: 'force-confirm-user',
     SIGNUP: 'signup',
     SIGNIN: 'signin',
     VERIFY_TOKEN: 'verify-token',
     SEARCH_ORG: 'search-company',
+    IG_VERIFICATION: 'ig-verification',
+    IG_STATUS_UPDATE: 'ig-status-update',
   },
   USER: {
     GET: '/',
     GET_ONE: '/:id',
     CREATE: '/',
     UPDATE: '/:id',
+    EDIT_USER: 'edit/:id',
     DELETE: '/:id',
   },
   ROLE: {
@@ -26,6 +30,7 @@ export const API_ENDPOINTS = {
   },
   PLAN: {
     ADD_PLAN: '/',
+    ADD_PLAN_TYPE: 'plan-type',
     PLAN_LIST: '/',
     PLAN: '/:planId',
     EDIT_PLAN: '/:planId',
@@ -39,10 +44,16 @@ export const API_ENDPOINTS = {
     CONTACT_ASSOCIATIONS: 'contact-associations/',
     CONTACT: '/:contactId',
     EDIT_CONTACT: '/:contactId',
+    IMPORT_CONTACT: 'import',
     DELETE_CONTACT: '/:contactId',
     RESTORE_CONTACT: 'restore/:contactId',
     CONTACT_TASKS: 'contact-tasks/',
     ASSIGN_CONTACT_OWNER: 'assign-contact-owner/:contactId',
+    PERMANENT_DELETE_CONTACT: 'permanent/:contactId',
+    DELETE_CONTACT_MULTI: '/',
+    PERMANENT_DELETE_CONTACT_MULTI: 'permanent/',
+    RESTORE_CONTACT_MULTI: 'restore/',
+    ASSIGN_CONTACT_OWNER_MULTI: 'assign-contact-owner/',
     CONTACT_NOTE: {
       CREATE_CONTACT_NOTE: 'note/',
       CONTACT_NOTE_LIST: 'note/',
@@ -75,11 +86,15 @@ export const API_ENDPOINTS = {
     CREATE_ORGANIZATION: '/',
     UPDATE_ORGANIZATION: '/:id',
     GET_ORGANIZATION: '/:id',
+    GET_ORGANIZATIONS: 'get-organizations',
   },
   ORGANIZATION_COMPANY_ACCOUNT: {
     CREATE_ORGANIZATION_COMPANY_ACCOUNT: '/',
     GET_ORGANIZATION_COMPANY_ACCOUNTS: 'get-accounts/:organizationId',
     GET_ORGANIZATION_COMPANY_ACCOUNT: '/:id',
+    UPDATE_ORGANIZATION_COMPANY_ACCOUNT: '/:id',
+    DELETE_ORGANIZATION_COMPANY_ACCOUNT: '/:id',
+    UPDATE_ORGANIZATION_COMPANY_ACCOUNT_STATUS: 'update-status',
   },
   SUPER_ADMIN: {
     BILLING_INVOICES: {
@@ -92,6 +107,7 @@ export const API_ENDPOINTS = {
       BILLING_DETAILS: 'billing-details',
       ADD_DISCOUNT: 'add-discount',
       UPDATE_ASSIGN_PLAN: 'update-assign-plan',
+      FIND_PLAN: 'find-plan',
     },
     QUICK_LINKS: {
       ADD_QUICK_LINK: '/',
@@ -118,14 +134,18 @@ export const API_ENDPOINTS = {
     DELETE_ALL_ATTACHMENT: 'delete-all-attachment',
   },
   JOBS: {
+    CREATE_JOB: '/',
+    GET_JOBS: '/',
     GET_JOB: '/:id',
     UPDATE_JOB: '/:id',
-    DELETE_JOB: '/',
+    DELETE_JOB: '/:ids',
   },
   FAQS: {
+    CREATE_FAQ: '/',
+    GET_FAQS: '/',
     GET_FAQ: '/:id',
     UPDATE_FAQ: '/:id',
-    DELETE_FAQ: '/:id',
+    DELETE_FAQ: '/:ids',
   },
   PRODUCTS: {
     ADD_PRODUCT: '/',
@@ -143,6 +163,7 @@ export const API_ENDPOINTS = {
       ASSOCIATE_ASSETS: 'associate-assets',
       DETACH_ASSETS: 'detach-assets',
       CHANGE_STATUS: 'status/:id',
+      BULK_TICKET_UPDATE: 'bulk-ticket-update',
     },
     ASSETS: {
       INVENTORY: 'inventory',
@@ -156,7 +177,8 @@ export const API_ENDPOINTS = {
       DELETE_PURCHASEORDER: 'purchaseorder/:id',
       UPDATE_PURCHASEORDER: 'purchaseorder/:id',
       ADD_ASSOCIATE_ORDER: 'add-associate-order/:id',
-      ADD_APPROVER_ORDER: 'add-approver-order/:id',
+      ADD_APPROVER_ORDER: 'add-approver-order',
+      APPROVER_ORDER_STATUS: 'approver-order-status/:id',
       DELETE_ASSOCIATE_ORDER: 'delete-associate-order/:id',
       ADD_SOFTWARE: 'add_software',
       ASSOCIATE_INVENTORY_LIST: 'associate-inventory-list',
@@ -175,6 +197,7 @@ export const API_ENDPOINTS = {
       SOFTWARE_ALLOCATE_CONTRACT: 'software-allocate-contract',
       SOFTWARE_DEALLOCATE_CONTRACT: 'software-deallocate-contract',
       SOFTWARE_USERS_REMOVE: 'software-users-remove/:id',
+      GET_SOFTWARE_DEVICES: 'software-devices',
     },
     TASK: {
       ADD_TASK: '/',
@@ -189,6 +212,13 @@ export const API_ENDPOINTS = {
       UPDATE_DASHBOARD: '/:id',
       DELETE_DASHBOARD: '/:id',
     },
+    REPORT_WIDGETS: {
+      ADD_REPORT_WIDGET: '/',
+      GET_REPORT_WIDGETS: '/',
+      GET_REPORT_WIDGET: '/:id',
+      UPDATE_REPORT_WIDGET: '/:id',
+      DELETE_REPORT_WIDGET: '/:id',
+    },
     TASK_MANAGEMENT: {
       CREATE_TASK: 'management',
       TASK_LIST: 'management',
@@ -199,6 +229,7 @@ export const API_ENDPOINTS = {
     },
     WORK_LOAD_MANAGEMENT: {
       WORK_LOAD_LIST: 'workload-management',
+      GET_USER_TASKS: 'user-tasks',
     },
     EXPENSE: {
       ADD_EXPENSE: 'add-expense',
@@ -304,14 +335,40 @@ export const API_ENDPOINTS = {
       CREATE_DEAL: '/',
       UPDATE_DEAL: '/:id',
       GET_DEALS_LIST_VIEW: 'get-deals-list-view',
+      GET_DEALS_GRID_VIEW: 'get-deals-grid-view',
+      DELTE_DEALS: 'delete-deals/:ids',
+      GET_SOFT_DELETED_DEALS: 'get-soft-deleted-deals',
+      RESTORE_DEAL_ACTION: 'restore-deal-action',
+      GET_ASSOCIATIONS: 'get-associations/:id',
+      CREATE_ASSOCIATION: 'create-association',
+      DELETE_ASSOCIATION: 'delete-association',
+      ADD_TASK: 'add-task',
+      DELETE_TASK: 'delete-task',
+      ADD_NOTE: 'add-note',
+      DELETE_NOTE: 'delete-note',
+      GET_NOTES: 'get-notes/:id',
+      GET_TASKS: 'get-tasks/:id',
     },
   },
-
+  CALLS: {
+    GET_NUMBERS_LIST: 'get-numbers-list',
+    INITIATE_CALL: 'initiate-call',
+    VERIFY_PHONE_NUMBER: 'verify-phone-number',
+    NEW_OUTGOING_CALLER: 'new-outgoing-caller',
+    SEND_VERIFICATION_TOKEN: 'send-verification-token',
+    VERIFY_NUMBER_TOKEN: 'verify_number_token',
+  },
   DEAL_NOTE: {
     CREATE_DEAL_NOTE: '/',
     GET_DEAL_NOTES: '/',
     GET_DEAL_NOTE: '/:id',
     UPDATE_DEAL_NOTE: '/:id',
     DELETE_DEAL_NOTE: '/:id',
+  },
+
+  KNOWLEDGE_BASE: {
+    ARTICLES: {
+      GET_UNAPPROVED_ARTICLES: 'unapproved-articles',
+    },
   },
 };

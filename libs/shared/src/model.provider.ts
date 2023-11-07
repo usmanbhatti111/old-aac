@@ -98,7 +98,13 @@ import {
   DealsSchema,
   Note,
   NoteSchema,
+  PurchaseApproval,
+  PurchaseApprovalSchema,
 } from './schema';
+import {
+  ReportsWidget,
+  ReportsWidgetSchema,
+} from './schema/air-services/reports-widgets.schema';
 
 import {
   Contact,
@@ -321,6 +327,10 @@ export const DbModels = [
     schema: SalesProductSchema,
   },
   {
+    name: ReportsWidget.name,
+    schema: ReportsWidgetSchema,
+  },
+  {
     name: SoftwareUsers.name,
     schema: SoftwareUsersSchema,
   },
@@ -340,5 +350,9 @@ export const DbModels = [
   {
     name: Note.name,
     schema: NoteSchema,
+  },
+  {
+    name: PurchaseApproval.name,
+    schema: PurchaseApprovalSchema,
   },
 ];

@@ -5,16 +5,23 @@ export const RMQ_MESSAGES = {
     EDIT_EXAMPLE: 'edit-example',
   },
   AUTHENTICATION: {
+    FORCE_CONFIRM: 'force-confirm-user',
     SIGNUP: 'auth-signup',
     SIGNIN: 'auth-signin',
     VERIFY_TOKEN: 'verify-token',
     SEARCH_ORG_BY_NAME: 'search-org-by-name',
     SEARCH_ORG_BY_CRN: 'search-org-by-crn',
+    IG_VERIFICATION: 'IG_VERIFICATION',
+    IG_STATUS_UPDATE: 'IG_STATUS_UPDATE',
   },
   USER: {
+    GET_LIST: 'get-users',
     CREATE: 'create-user',
     FIND_BY_EMAIL: 'find-user-by-email',
     FIND_BY_COGNITO: 'find-user-by-cognito',
+    PROFILE: 'profile',
+    UPDATE_PROFILE: 'update-profile',
+    EDIT_USER: 'edit-user-by-admin',
   },
   ROLE: {
     CREATE_ROLE: 'create-role',
@@ -25,6 +32,7 @@ export const RMQ_MESSAGES = {
   },
   PLAN: {
     ADD_PLAN: 'add-plan',
+    ADD_PLAN_TYPE: 'add-plan-type',
     PLAN_LIST: 'plan-list',
     EDIT_PLAN: 'edit-plan',
     PLAN: 'plan',
@@ -43,6 +51,9 @@ export const RMQ_MESSAGES = {
     CREATE_ORGANIZATION_COMPANY_ACCOUNT: 'create-company-accounts',
     GET_ORGANIZATION_COMPANY_ACCOUNTS: 'get-company-accounts',
     GET_ORGANIZATION_COMPANY_ACCOUNT: 'get-company-account',
+    UPDATE_ORGANIZATION_COMPANY_ACCOUNT: 'update-company-account',
+    DELETE_ORGANIZATION_COMPANY_ACCOUNT: 'delete-company-account',
+    UPDATE_ORGANIZATION_COMPANY_ACCOUNT_STATUS: 'update-company-account-status',
   },
   SUPER_ADMIN: {
     BILLING_INVOICES: {
@@ -55,6 +66,7 @@ export const RMQ_MESSAGES = {
       BILLING_DETAILS: 'billing-detials',
       ADD_DISCOUNT: 'add-discount',
       UPDATE_ASSIGN_PLAN: 'update-assign-plan',
+      FIND_PLAN: 'find-plan',
     },
 
     QUICK_LINKS: {
@@ -92,10 +104,16 @@ export const RMQ_MESSAGES = {
     CONTACT_ASSOCIATIONS: 'contact-associations',
     CONTACT_TASKS: 'contact-tasks',
     EDIT_CONTACT: 'edit-contact',
+    IMPORT_CONTACT: 'import-contact',
     CONTACT: 'contact',
     DELETE_CONTACT: 'delete-contact',
+    PERMANENT_DELETE_CONTACT: 'permanent-delete-contact',
     RESTORE_CONTACT: 'restore-contact',
     ASSIGN_CONTACT_OWNER: 'assign-contact-owner',
+    DELETE_CONTACT_MULTI: 'delete-contact-multi',
+    PERMANENT_DELETE_CONTACT_MULTI: 'permanent-delete-contact-multi',
+    RESTORE_CONTACT_MULTI: 'restore-contact-multi',
+    ASSIGN_CONTACT_OWNER_MULTI: 'assign-contact-owner-multi',
     CONTACT_NOTE: {
       CREATE_CONTACT_NOTE: 'create-contact-note',
       CONTACT_NOTE_LIST: 'contact-note-list',
@@ -134,6 +152,7 @@ export const RMQ_MESSAGES = {
   },
   PRODUCTS: {
     ADD_PRODUCT: 'add-product',
+    GET_PRODUCT: 'get-product',
     GET_PRODUCTS: 'get-products',
     EDIT_PRODUCT: 'edit-product',
   },
@@ -151,6 +170,11 @@ export const RMQ_MESSAGES = {
       UPDATE_DASHBOARD: 'update-dashboard',
       DELETE_DASHBOARD: 'delete-dashboard',
     },
+    WIDGETS: {
+      CREATE_WIDGETS: 'create-widgets',
+      GET_WIDGETS_LIST: 'get-widgets-list',
+      GET_WIDGETS: 'get-widgets',
+    },
     TICKETS: {
       CREATE_TICKET: 'create-ticket',
       GET_TICKET_DETAILS: 'get-ticket-details',
@@ -164,6 +188,7 @@ export const RMQ_MESSAGES = {
       EDIT_TICKETS: 'edit-tickets',
       CHANGE_STATUS: 'change_status',
       GET_TICKET_LIST: 'get_ticket_list',
+      BULK_TICKET_UPDATE: 'bulk-ticket-update',
     },
     ASSETS: {
       ADD_Inventory: 'add-inventory',
@@ -176,6 +201,7 @@ export const RMQ_MESSAGES = {
       UPDATE_PURCHASEORDER: 'update-purchaseorder',
       ADD_ASSOCIATE_ORDER: 'add-associate-order',
       ADD_APPROVER_ORDER: 'add-approver-order',
+      APPROVER_ORDER_STATUS: 'approver-order-status',
       ADD_SOFTWARE: 'add-software',
       ADD_SOFTWARE_DEVICE: 'add-software-device',
       GET_PURCHASEORDERLIST: 'get-purchaseorderlist',
@@ -197,6 +223,7 @@ export const RMQ_MESSAGES = {
       SOFTWARE_ALLOCATE_CONTRACT: 'software-allocate-contract',
       SOFTWARE_DEALLOCATE_CONTRACT: 'software-deallocate-contract',
       SOFTWARE_USERS_REMOVE: 'software-users-remove',
+      GET_SOFTWARE_DEVICES: 'software-devices',
     },
     TASK: {
       ADD_TASK: 'add_task',
@@ -214,6 +241,7 @@ export const RMQ_MESSAGES = {
     },
     WORK_LOAD_MANAGEMENT: {
       WORK_LOAD_LIST: 'workload-list',
+      GET_USER_TASKS: 'users-tasks',
     },
     EXPENSE: {
       ADD_EXPENSE: 'add-expense',
@@ -234,6 +262,9 @@ export const RMQ_MESSAGES = {
       ARTICLES: {
         WRITE: 'write-article',
         GET: 'get-articles',
+        GET_UNAPPROVED_ARTICLES: 'unapproved-articles',
+        UPDATE: 'update-article',
+        DELETE: 'delete-article',
       },
     },
   },
@@ -324,11 +355,33 @@ export const RMQ_MESSAGES = {
     CREATE_ACTIVITY_LOG: 'create-activity-log',
     GET_ACTIVITY_LOG: 'activity-logs',
   },
+  CALLS: {
+    GET_NUMBERS_LIST: 'get-numbers-list',
+    INITIATE_CALL: 'initiate-call',
+    VERIFY_PHONE_NUMBER: 'verify-phone-number',
+    NEW_OUTGOING_CALLER: 'new-outgoing-caller',
+    SEND_VERIFICATION_TOKEN: 'send-verification-token',
+    VERIFY_NUMBER_TOKEN: 'verify-number-token',
+  },
+
   SALES: {
     DEALS: {
       CREATE_DEAL: 'create-deal',
       UPDATE_DEAL: 'update-deal',
       GET_DEALS_LIST_VIEW: 'get-deals-list-view',
+      GET_DEALS_GRID_VIEW: 'get-deals-grid-view',
+      DELTE_DEALS: 'delete-deals',
+      GET_SOFT_DELETED_DEALS: 'get-soft-deleted-deals',
+      RESTORE_DEAL_ACTION: 'restore-deal-action',
+      GET_ASSOCIATIONS: 'get-associations',
+      CREATE_ASSOCIATION: 'create-association',
+      DELETE_ASSOCIATION: 'delete-association',
+      ADD_TASK: 'add-task',
+      DELETE_TASK: 'delete-task',
+      ADD_NOTE: 'add-note',
+      DELETE_NOTE: 'delete-note',
+      GET_NOTES: 'get-notes',
+      GET_TASKS: 'get-tasks',
     },
   },
 

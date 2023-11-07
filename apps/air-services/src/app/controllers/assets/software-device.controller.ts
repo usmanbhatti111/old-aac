@@ -1,7 +1,11 @@
 import { Controller } from '@nestjs/common';
 import { MessagePattern, Payload } from '@nestjs/microservices';
 import { RMQ_MESSAGES } from '@shared/constants';
-import { AssetsSoftwareDeviceDto, IdDto } from '@shared/dto';
+import {
+  AssetsSoftwareDeviceDto,
+  GetSoftwareDevicesDto,
+  IdDto,
+} from '@shared/dto';
 import { SoftwareDeviceService } from '../../services/assets/software-device.service';
 
 @Controller()
@@ -13,6 +17,11 @@ export class SoftwareDeviceController {
     @Payload() payload: { id: IdDto; softwareId: AssetsSoftwareDeviceDto }
   ) {
     return this.softwareDeviceService.addSoftwareDevice(payload);
+  }
+
+  @MessagePattern(RMQ_MESSAGES.AIR_SERVICES.ASSETS.GET_SOFTWARE_DEVICES)
+  getSoftwareDevices(@Payload() payload: GetSoftwareDevicesDto) {
+    return this.softwareDeviceService.getSoftwareDevices(payload);
   }
 
   @MessagePattern(RMQ_MESSAGES.AIR_SERVICES.ASSETS.DELETE_SOFTWARE_DEVICE)

@@ -28,14 +28,32 @@ export class OrganizationCompanyAccount
   @Prop({ type: String, required: true })
   phoneNo: string;
 
-  @Prop({ type: String, required: true })
-  address: string;
+  @Prop({ type: String, required: false })
+  address?: string;
+
+  @Prop({ type: String, required: false })
+  unit?: string;
+
+  @Prop({ type: String, required: false })
+  buildingName?: string;
+
+  @Prop({ type: String, required: false })
+  buildingNumber?: string;
+
+  @Prop({ type: String, required: false })
+  streetName?: string;
+
+  @Prop({ type: String, required: false })
+  city?: string;
+
+  @Prop({ type: String, required: false })
+  country?: string;
 
   @Prop({ type: String, required: true })
   postCode: string;
 
-  @Prop({ type: String, required: false, default: 'Active' })
-  status: string;
+  @Prop({ type: Boolean, required: false, default: true })
+  isActive: boolean;
 
   @Prop({ type: [SchemaTypes.ObjectId], ref: 'products', default: [] })
   products: string[];

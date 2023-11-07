@@ -1,5 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import mongoose, { HydratedDocument, SchemaTypes } from 'mongoose';
+import { UserRole, UserStatus } from '../../constants';
 import { AbstractSchema } from '../abstract-repo/abstract.schema';
 import { Organization } from '../organization';
 import { Products } from '../super-admin';
@@ -60,10 +61,10 @@ export class User extends AbstractSchema {
   @Prop({ type: Boolean })
   isOwner?: boolean; // for first user
 
-  @Prop({ required: true })
-  cognitoId: string;
+  @Prop({ required: false })
+  cognitoId?: string;
 
-  @Prop({ required: true })
+  @Prop({ enum: UserRole, required: true })
   role: string;
 
   @Prop()
@@ -78,7 +79,7 @@ export class User extends AbstractSchema {
   @Prop()
   liveStatus?: string; // AVAILABLE, BUSY, MEETING, AWAY, BREAK
 
-  @Prop()
+  @Prop({ enum: UserStatus, default: UserStatus.INACTIVE, required: true })
   status?: string; // ACTIVE, INACTIVE, BLOCKED, DELETED
 
   @Prop({

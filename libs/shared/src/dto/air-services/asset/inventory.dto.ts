@@ -66,12 +66,20 @@ export class AddInventoryDto {
     example: '651bdf53beeb02bc627d6804',
   })
   locationId: string;
+
   @IsOptional()
   @IsMongoId()
   @ApiProperty({
     example: '651bdf53beeb02bc627d6804',
   })
   departmentId: string;
+
+  @IsOptional()
+  @IsMongoId()
+  @ApiProperty({
+    example: '651bdf53beeb02bc627d6805',
+  })
+  usedBy: string;
 
   @IsOptional()
   @IsISO8601()
@@ -176,7 +184,7 @@ export class GetInventoryAssociateDto extends paginationDTO {
     required: false,
     example: '651bdf53beeb02bc627d6804',
   })
-  deviceId: string;
+  deviceId: string; // this is actually software Id
 
   @ApiProperty({
     type: String,

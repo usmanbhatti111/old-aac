@@ -4,14 +4,6 @@ RUN mkdir -p /var/www/gateway
 WORKDIR /var/www/gateway
 ADD . /var/www/gateway
 
-RUN npm install -g pnpm
-
-RUN pnpm config set network-timeout 600000 -g
-
-RUN pnpm install
-
-RUN pnpm nx reset
-
-RUN pnpm exec nx build gateway
+RUN npx nx build gateway
 
 CMD ["node", "./dist/apps/gateway/main.js"]

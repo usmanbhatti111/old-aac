@@ -3,12 +3,14 @@ import {
   Controller,
   Get,
   Inject,
+  Param,
+  Patch,
   Post,
   Query,
   Req,
 } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
-import { ApiBearerAuth, ApiQuery, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import {
   API_ENDPOINTS,
   API_TAGS,
@@ -16,7 +18,12 @@ import {
   RMQ_MESSAGES,
   SERVICES,
 } from '@shared/constants';
-import { CreateUserDto } from '@shared/dto';
+import {
+  GetAdminUserDto,
+  CreateUserDto,
+  UpdateProfileDto,
+  EditUserByAdminDto,
+} from '@shared/dto';
 import { firstValueFrom } from 'rxjs';
 import { Auth } from '../../decorators/auth.decorator';
 import { AppRequest } from '../../shared/interface/request.interface';
@@ -29,39 +36,58 @@ export class UserController {
 
   @Auth(true)
   @Post(API_ENDPOINTS.USER.CREATE)
-  @ApiQuery({ description: 'Create users as Super Admin' })
-  public async createUser(
-    @Body() body: CreateUserDto,
-    @Req() request: AppRequest
-  ) {
+  @ApiOperation({ summary: 'Create users as Super Admin' })
+  public createUser(@Body() body: CreateUserDto, @Req() request: AppRequest) {
     const { user } = request;
-
-    const response = await firstValueFrom(
+    return firstValueFrom(
       this.userServiceClient.send(RMQ_MESSAGES.USER.CREATE, {
         ...body,
         createdBy: user._id,
       })
     );
-
-    return response;
   }
 
   @Auth(true)
-  @Get('')
-  @ApiQuery({ name: 'email', type: String })
-  public async createRole(
-    @Query('email') email: string,
-    @Req() request: AppRequest
-  ) {
-    const { user } = request;
-
-    const response = await firstValueFrom(
-      this.userServiceClient.send(RMQ_MESSAGES.USER.FIND_BY_EMAIL, {
-        email,
-        user,
-      })
+  @Get(API_ENDPOINTS.USER.GET)
+  @ApiOperation({ summary: 'List Admin User' })
+  public getUsers(@Query() query: GetAdminUserDto) {
+    return firstValueFrom(
+      this.userServiceClient.send(RMQ_MESSAGES.USER.GET_LIST, query)
     );
+  }
 
-    return response;
+  @Auth(true)
+  @Get(API_ENDPOINTS.USER.GET_ONE)
+  @ApiOperation({ summary: 'User Profile' })
+  public profile(@Param('id') userId: string) {
+    return firstValueFrom(
+      this.userServiceClient.send(RMQ_MESSAGES.USER.PROFILE, userId)
+    );
+  }
+
+  @Auth(true)
+  @Patch(API_ENDPOINTS.USER.UPDATE)
+  @ApiOperation({ summary: 'Update Profile' })
+  public updateProfile(
+    @Param('id') userId: string,
+    @Query() query: UpdateProfileDto
+  ) {
+    query.userId = userId;
+    return firstValueFrom(
+      this.userServiceClient.send(RMQ_MESSAGES.USER.UPDATE_PROFILE, query)
+    );
+  }
+
+  @Auth(true)
+  @Patch(API_ENDPOINTS.USER.EDIT_USER)
+  @ApiOperation({ summary: 'Edit User by Admin' })
+  public editUser(
+    @Param('id') userId: string,
+    @Query() query: EditUserByAdminDto
+  ) {
+    query.userId = userId;
+    return firstValueFrom(
+      this.userServiceClient.send(RMQ_MESSAGES.USER.EDIT_USER, query)
+    );
   }
 }

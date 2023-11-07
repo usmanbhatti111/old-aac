@@ -7,6 +7,7 @@ import {
 } from '@shared/constants';
 import {
   AddPlanDto,
+  AddPlanTypeDto,
   EditPlanDto,
   PlanDeleteDto,
   PlanFilterDto,
@@ -87,6 +88,16 @@ export class PlanService {
         'Plans Types Fetched Successfully',
         res
       );
+    } catch (error) {
+      throw new RpcException(error);
+    }
+  }
+
+  async addPlanType(payload: AddPlanTypeDto) {
+    try {
+      const res = await this.planTypeRepository.create(payload);
+
+      return successResponse(HttpStatus.CREATED, 'A new Plan type added', res);
     } catch (error) {
       throw new RpcException(error);
     }

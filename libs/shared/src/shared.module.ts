@@ -26,6 +26,7 @@ import {
   PaymentRepository,
   PermissionRepository,
   PlanProductFeatureRepository,
+  PurchaseApprovalRepository,
   PlanProductModulePermissionRepository,
   PlanRepository,
   PlanTypeRepository,
@@ -50,6 +51,7 @@ import {
   SoftwareUsersRepository,
   ActivityLogRepository,
   DashboardRepository,
+  ReportsWidgetRepository,
   ArticlesRepository,
   ContactMeetingRepository,
   DealsRepository,
@@ -57,7 +59,7 @@ import {
 } from '../src/repositories/index';
 import { MongooseConfig } from './config/mongo.config';
 import { SharedService } from './shared.service';
-import { DownloadService, S3Service } from './services';
+import { DownloadService, EmailService, S3Service } from './services';
 
 @Module({
   imports: [
@@ -99,6 +101,7 @@ import { DownloadService, S3Service } from './services';
     PermissionRepository,
     UserORepository,
     TaskManagementRepository,
+    PurchaseApprovalRepository,
     UserORepository,
     ContactRepository,
     PlanTypeRepository,
@@ -120,6 +123,7 @@ import { DownloadService, S3Service } from './services';
     LifecycleStagesRepository,
     SoftwareUsersRepository,
     DashboardRepository,
+    ReportsWidgetRepository,
     ContactMeetingRepository,
     DealsRepository,
     NoteRepository,
@@ -139,6 +143,7 @@ import { DownloadService, S3Service } from './services';
     DownloadService,
     ActivityLogRepository,
     ArticlesRepository,
+    EmailService,
   ],
   exports: [
     SharedService,
@@ -194,6 +199,7 @@ import { DownloadService, S3Service } from './services';
     ContactStateRepository,
     ContactCallRepository,
     LifecycleStagesRepository,
+    ReportsWidgetRepository,
     SoftwareUsersRepository,
     ActivityLogRepository,
     ArticlesRepository,
@@ -202,6 +208,8 @@ import { DownloadService, S3Service } from './services';
     SalesProductRepository,
     DealsRepository,
     NoteRepository,
+    PurchaseApprovalRepository,
+    EmailService,
   ],
 })
 export class SharedModule {}

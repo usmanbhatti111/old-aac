@@ -1,4 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { EExportFile } from '@shared/constants';
 import { Transform } from 'class-transformer';
 import {
   IsDateString,
@@ -77,4 +78,14 @@ export class DealFilterSearchDto {
   @IsOptional()
   @IsString()
   search: string;
+
+  @ApiProperty({
+    type: String,
+    enum: EExportFile,
+    required: false,
+  })
+  @IsOptional()
+  @IsNotEmpty()
+  @IsString()
+  downloadType: string;
 }

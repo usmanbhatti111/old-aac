@@ -7,6 +7,7 @@ import {
   ListTicketDTO,
   IdDto,
   paginationDTO,
+  BulkTicketUpdateDto,
 } from '@shared/dto';
 import { Types } from 'mongoose';
 import { GetAssociateAssetsDto, GetTicketByIdDto } from '@shared/dto';
@@ -352,6 +353,26 @@ export class TicketService {
       const response = successResponse(HttpStatus.OK, `Retrived`, res);
       // TODO - Add Logger
 
+      return response;
+    } catch (error) {
+      throw new RpcException(error);
+    }
+  }
+  async bulkUpdateTickets(payload: {
+    ids: string[];
+    dto: BulkTicketUpdateDto;
+  }) {
+    try {
+      const { ids } = payload;
+      const { dto } = payload;
+      const filterQuery = { _id: ids };
+      const updates = { ...dto };
+      const ticketUpdate = await this.ticketRepository.updateMany(
+        filterQuery,
+        updates
+      );
+
+      const response = successResponse(HttpStatus.OK, `Update`, ticketUpdate);
       return response;
     } catch (error) {
       throw new RpcException(error);

@@ -19,7 +19,6 @@ export * from './organization';
 export * from './org-admin';
 export * from './common-feature/documents/folder.repository';
 export * from './common-feature/documents/file.repository';
-
 export * from './super-admin';
 export * from './user-account';
 export * from './airservices/assets-software.repository';
@@ -28,7 +27,6 @@ export * from './super-admin/feature.repository';
 export * from './super-admin/module.repository';
 export * from './common-feature/documents/file.repository';
 export * from './common-feature/documents/folder.repository';
-
 export * from './logs';
 export * from './common-feature';
 export * from './sales-settings';

@@ -35,6 +35,7 @@ import {
   DeleteAssetsSoftwareResponse,
   EditAssetsSoftwareResponse,
   GetAssetsSoftwareDetails,
+  GetSoftwareDevicesDto,
   GetSoftwareUserDto,
   IdDto,
   PaginationDto,
@@ -192,6 +193,46 @@ export class SoftwareController {
           { id, softwareId }
         )
       );
+      return response;
+    } catch (err) {
+      throw new RpcException(err);
+    }
+  }
+
+  @Auth(true)
+  @Get(API_ENDPOINTS.AIR_SERVICES.ASSETS.GET_SOFTWARE_DEVICES)
+  public async getSoftwareDevices(
+    @Query() payload: GetSoftwareDevicesDto,
+    @Res() res: Response | any
+  ) {
+    try {
+      const { exportType } = payload;
+      const response = await firstValueFrom(
+        this.airServiceClient.send(
+          RMQ_MESSAGES.AIR_SERVICES.ASSETS.GET_SOFTWARE_DEVICES,
+          { ...payload }
+        )
+      );
+
+      if (exportType) {
+        const data =
+          response?.data?.inventories.map(
+            ({
+              displayName,
+              version,
+              departmentId,
+              usedBy,
+              installationDate,
+            }) => ({
+              displayName,
+              version: version ? version : '--',
+              departmentId,
+              usedBy: usedBy ? usedBy : '--',
+              installationDate,
+            })
+          ) || [];
+        return this.downloadService.downloadFile(exportType, data, res);
+      }
       return response;
     } catch (err) {
       throw new RpcException(err);
