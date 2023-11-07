@@ -1,151 +1,167 @@
 import { HttpStatus, Injectable } from '@nestjs/common';
+import { RpcException } from '@nestjs/microservices';
 import { JobRepository } from '@shared';
+import { MODEL, ResponseMessage, successResponse } from '@shared/constants';
 import {
-  ResponseMessage,
-  errorResponse,
-  successResponse,
-} from '@shared/constants';
-import { CreateJobDto, FilterJobsDto, IdDTO, UpdateJobDto } from '@shared/dto';
+  CreateJobDto,
+  DeleteJobsDto,
+  GetJobsDto,
+  IdDto,
+  UpdateJobDto,
+} from '@shared/dto';
 import dayjs from 'dayjs';
 
 @Injectable()
 export class JobsService {
   constructor(private jobRepository: JobRepository) {}
 
-  notDeletedFilter = {
-    isDeleted: false,
-  };
-
   async createJob(payload: CreateJobDto) {
     try {
+      if (payload?.deadline) {
+        payload.deadline = dayjs(payload.deadline).endOf('day').toDate();
+      }
+
       const res = await this.jobRepository.create(payload);
+
       return successResponse(HttpStatus.CREATED, ResponseMessage.CREATED, res);
     } catch (error) {
-      return errorResponse(
-        HttpStatus.BAD_REQUEST,
-        ResponseMessage.BAD_REQUEST,
-        error
-      );
+      throw new RpcException(error);
     }
   }
 
-  async getJob(payload: IdDTO) {
+  async getJob(payload: IdDto) {
     try {
-      const res = await this.jobRepository.findOne({
-        _id: payload.id,
-        ...this.notDeletedFilter,
-      });
+      const filter = { isDeleted: false, _id: payload.id };
+
+      const res = await this.jobRepository.findOne(filter);
+
       return successResponse(HttpStatus.OK, ResponseMessage.SUCCESS, res);
     } catch (error) {
-      return errorResponse(
-        HttpStatus.BAD_REQUEST,
-        ResponseMessage.BAD_REQUEST,
-        error
-      );
+      throw new RpcException(error);
     }
   }
 
-  async getJobs(payload: FilterJobsDto) {
+  async getJobs(payload: GetJobsDto) {
     try {
-      const { page, limit, search } = payload;
+      const limit = payload?.limit || 10;
+      const offset = payload?.page || 1;
 
-      const offset = limit * (page - 1);
-      delete payload.page;
-      delete payload.limit;
-      delete payload.search;
-      const createdAtFilter = {};
-      if (payload.createdAt) {
-        const startDate = dayjs(payload.createdAt).startOf('day');
-        const endDate = dayjs(payload.createdAt).endOf('day');
+      const filterQuery = { isDeleted: false };
 
-        createdAtFilter['createdAt'] = {
-          gte: startDate.toDate(),
-          lte: endDate.toDate(),
-        };
-        delete payload.createdAt;
+      if (payload?.jobCategory) {
+        filterQuery['jobCategory'] = payload.jobCategory;
       }
 
-      let searchFilter;
-      if (search) {
-        searchFilter = {
-          $or: [
-            {
-              title: {
-                $regex: search,
-                $options: 'i', // Optional: Case-insensitive search
-              },
-            },
-            {
-              description: {
-                $regex: search,
-                $options: 'i', // Optional: Case-insensitive search
-              },
-            },
-          ],
+      if (payload?.createdBy) {
+        filterQuery['createdBy'] = payload.createdBy;
+      }
+
+      if (payload?.dateStart && payload?.dateEnd) {
+        const startDate = dayjs(payload.dateStart).startOf('day').toDate();
+        const endDate = dayjs(payload.dateEnd).endOf('day').toDate();
+
+        filterQuery['createdAt'] = {
+          gte: startDate,
+          lte: endDate,
         };
       }
 
-      const filterQuery = {
-        ...createdAtFilter,
-        ...payload,
-        ...this.notDeletedFilter,
-        ...searchFilter,
-      };
+      if (payload?.status) {
+        filterQuery['status'] = payload.status;
+      }
 
-      const paginateRes = await this.jobRepository.paginate({
+      if (payload?.search) {
+        const search = { $regex: payload.search, $options: 'i' };
+
+        filterQuery['$or'] = [
+          {
+            title: search,
+          },
+          {
+            description: search,
+          },
+        ];
+      }
+
+      const pipelines = [
+        {
+          $lookup: {
+            from: MODEL.USER,
+            localField: 'createdBy',
+            foreignField: '_id',
+            as: 'createdBy',
+            pipeline: [
+              {
+                $project: {
+                  _id: 1,
+                  name: {
+                    $concat: [
+                      { $ifNull: ['$firstName', ''] },
+                      ' ',
+                      { $ifNull: ['$lastName', ''] },
+                    ],
+                  },
+                },
+              },
+            ],
+          },
+        },
+        {
+          $unwind: {
+            path: '$createdBy',
+            preserveNullAndEmptyArrays: true,
+          },
+        },
+      ];
+
+      const response = await this.jobRepository.paginate({
         filterQuery,
         offset,
         limit,
+        pipelines,
       });
 
-      return successResponse(
-        HttpStatus.OK,
-        ResponseMessage.SUCCESS,
-        paginateRes
-      );
+      return successResponse(HttpStatus.OK, ResponseMessage.SUCCESS, response);
     } catch (error) {
-      return errorResponse(
-        HttpStatus.BAD_REQUEST,
-        ResponseMessage.BAD_REQUEST,
-        error
-      );
+      throw new RpcException(error);
     }
   }
 
   async updateJob(payload: UpdateJobDto) {
     try {
       const { id } = payload;
-      delete payload.id;
-      const res = await this.jobRepository.findOneAndUpdate(
-        { _id: id, ...this.notDeletedFilter },
-        payload
-      );
+
+      const filter = { _id: id, isDeleted: false };
+
+      const res = await this.jobRepository.findOneAndUpdate(filter, payload);
+
       return successResponse(HttpStatus.OK, ResponseMessage.SUCCESS, res);
     } catch (error) {
-      return errorResponse(
-        HttpStatus.BAD_REQUEST,
-        ResponseMessage.BAD_REQUEST,
-        error
-      );
+      throw new RpcException(error);
     }
   }
 
-  async deleteJob(payload: IdDTO) {
+  async deleteJob(payload: DeleteJobsDto) {
     try {
-      const { id } = payload;
-      const res = await this.jobRepository.updateMany(
-        { _id: { $in: id } },
-        {
-          isDeleted: true,
-        }
-      );
-      return successResponse(HttpStatus.OK, ResponseMessage.SUCCESS, res);
+      const ids = payload.ids.split(',');
+
+      const filter = { _id: { $in: ids }, isDeleted: false };
+      const data = { isDeleted: true, deletedBy: payload.deletedBy };
+
+      const res = await this.jobRepository.updateMany(filter, data);
+
+      let message: string;
+      if (ids.length === res.modifiedCount) {
+        message = `${ids.length > 1 ? 'Records' : 'Record'} has been Deleted`;
+      } else {
+        message = `${res.modifiedCount} ${
+          res.modifiedCount > 1 ? 'Records' : 'Record'
+        } has been deleted outoff ${ids.length}`;
+      }
+
+      return successResponse(HttpStatus.OK, message);
     } catch (error) {
-      return errorResponse(
-        HttpStatus.BAD_REQUEST,
-        ResponseMessage.BAD_REQUEST,
-        error
-      );
+      throw new RpcException(error);
     }
   }
 }

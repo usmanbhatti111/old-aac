@@ -1,8 +1,14 @@
 import { Controller } from '@nestjs/common';
 import { MessagePattern, Payload } from '@nestjs/microservices';
 import { RMQ_MESSAGES } from '@shared/constants';
+import {
+  CreateJobDto,
+  DeleteJobsDto,
+  GetJobsDto,
+  IdDto,
+  UpdateJobDto,
+} from '@shared/dto';
 import { JobsService } from '../services/jobs.service';
-import { CreateJobDto, FilterJobsDto, IdDTO, UpdateJobDto } from '@shared/dto';
 
 @Controller()
 export class JobsController {
@@ -14,12 +20,12 @@ export class JobsController {
   }
 
   @MessagePattern({ cmd: RMQ_MESSAGES.JOBS.GET_JOB })
-  async getJob(@Payload() payload: IdDTO) {
+  async getJob(@Payload() payload: IdDto) {
     return await this.jobsService.getJob(payload);
   }
 
   @MessagePattern({ cmd: RMQ_MESSAGES.JOBS.GET_JOBS })
-  async getJobs(@Payload() payload: FilterJobsDto) {
+  async getJobs(@Payload() payload: GetJobsDto) {
     return await this.jobsService.getJobs(payload);
   }
 
@@ -29,7 +35,7 @@ export class JobsController {
   }
 
   @MessagePattern({ cmd: RMQ_MESSAGES.JOBS.DELETE_JOB })
-  async deleteJobs(@Payload() payload: IdDTO) {
+  async deleteJobs(@Payload() payload: DeleteJobsDto) {
     return await this.jobsService.deleteJob(payload);
   }
 }

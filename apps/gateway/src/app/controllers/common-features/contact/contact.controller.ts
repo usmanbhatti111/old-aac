@@ -41,6 +41,8 @@ import {
   GetDeletedContactsResponseDto,
   ContactNoteFilterDto,
   GetContactTasksResponseDto,
+  ContactMultiDto,
+  ImportContactDto,
 } from '@shared/dto';
 import { firstValueFrom } from 'rxjs';
 import { Auth } from '../../../decorators/auth.decorator';
@@ -55,13 +57,99 @@ export class ContactController {
   constructor(
     @Inject(SERVICES.COMMON_FEATURE) private commonFeatureClient: ClientProxy
   ) {}
+
+  @Auth(true)
+  @Post(API_ENDPOINTS.CONTACT.IMPORT_CONTACT)
+  @ApiCreatedResponse({ type: EditContactResponseDto })
+  public async importContact(
+    @Body() payload: ImportContactDto,
+    @Req() req: AppRequest
+  ): Promise<EditContactResponseDto> {
+    payload.createdBy = req.user._id;
+    const response = await firstValueFrom(
+      this.commonFeatureClient.send(
+        RMQ_MESSAGES.CONTACT.IMPORT_CONTACT,
+        payload
+      )
+    );
+    return response;
+  }
+
+  @Auth(true)
+  @Patch(API_ENDPOINTS.CONTACT.ASSIGN_CONTACT_OWNER_MULTI)
+  @ApiCreatedResponse({ type: EditContactResponseDto })
+  public async assignContactOwnerMulti(
+    @Body() payload: ContactMultiDto,
+    @Req() req: AppRequest
+  ): Promise<EditContactResponseDto> {
+    payload.updatedBy = req.user._id;
+    const response = await firstValueFrom(
+      this.commonFeatureClient.send(
+        RMQ_MESSAGES.CONTACT.ASSIGN_CONTACT_OWNER_MULTI,
+        payload
+      )
+    );
+    return response;
+  }
+
+  @Auth(true)
+  @Delete(API_ENDPOINTS.CONTACT.PERMANENT_DELETE_CONTACT_MULTI)
+  @ApiOkResponse({ type: PostResponseDto })
+  public async permanentDeleteContactMulti(
+    @Body() payload: ContactMultiDto,
+    @Req() req: AppRequest
+  ): Promise<PostResponseDto<any>> {
+    payload.deletedBy = req.user._id;
+    const response = await firstValueFrom(
+      this.commonFeatureClient.send(
+        RMQ_MESSAGES.CONTACT.PERMANENT_DELETE_CONTACT_MULTI,
+        payload
+      )
+    );
+    return response;
+  }
+
+  @Auth(true)
+  @Patch(API_ENDPOINTS.CONTACT.RESTORE_CONTACT_MULTI)
+  @ApiOkResponse({ type: PostResponseDto })
+  public async restoreContactMulti(
+    @Body() payload: ContactMultiDto,
+    @Req() req: AppRequest
+  ): Promise<PostResponseDto<any>> {
+    payload.updatedBy = req.user._id;
+    const response = await firstValueFrom(
+      this.commonFeatureClient.send(
+        RMQ_MESSAGES.CONTACT.RESTORE_CONTACT_MULTI,
+        payload
+      )
+    );
+    return response;
+  }
+
+  @Auth(true)
+  @Delete(API_ENDPOINTS.CONTACT.DELETE_CONTACT_MULTI)
+  @ApiOkResponse({ type: PostResponseDto })
+  public async deleteContactMulti(
+    @Body() payload: ContactMultiDto,
+    @Req() req: AppRequest
+  ): Promise<PostResponseDto<any>> {
+    payload.deletedBy = req.user._id;
+    const response = await firstValueFrom(
+      this.commonFeatureClient.send(
+        RMQ_MESSAGES.CONTACT.DELETE_CONTACT_MULTI,
+        payload
+      )
+    );
+    return response;
+  }
+
   @Post()
   @Auth(true)
   @Post(API_ENDPOINTS.CONTACT.CREATE_CONTACT)
   @ApiFormData({
     required: false,
     single: true,
-    fieldName: 'file',
+    fieldName: 'profilePicture',
     fileTypes: ['jpg', 'png'],
     errorMessage: 'Invalid document file entered.',
   })
@@ -72,11 +160,32 @@ export class ContactController {
     @UploadedFile() profilePicture: any
   ) {
     payload.createdBy = req.user._id;
+    payload.profilePicture = profilePicture;
     const response = await firstValueFrom(
-      this.commonFeatureClient.send(RMQ_MESSAGES.CONTACT.CREATE_CONTACT, {
-        ...payload,
-        profilePicture,
-      })
+      this.commonFeatureClient.send(
+        RMQ_MESSAGES.CONTACT.CREATE_CONTACT,
+        payload
+      )
+    );
+    return response;
+  }
+
+  @Auth(true)
+  @Delete(API_ENDPOINTS.CONTACT.PERMANENT_DELETE_CONTACT)
+  @ApiOkResponse({ type: PostResponseDto })
+  public async permanentDeleteContact(
+    @Param() { contactId }: ContactIdParamDto,
+    @Req() req: AppRequest
+  ): Promise<PostResponseDto<any>> {
+    const deletedBy = req.user._id;
+    const response = await firstValueFrom(
+      this.commonFeatureClient.send(
+        RMQ_MESSAGES.CONTACT.PERMANENT_DELETE_CONTACT,
+        {
+          contactId,
+          deletedBy,
+        }
+      )
     );
     return response;
   }
@@ -94,7 +203,7 @@ export class ContactController {
   }
 
   @Auth(true)
-  @Delete(API_ENDPOINTS.CONTACT.RESTORE_CONTACT)
+  @Patch(API_ENDPOINTS.CONTACT.RESTORE_CONTACT)
   @ApiOkResponse({ type: PostResponseDto })
   public async restoreContact(
     @Param() { contactId }: ContactIdParamDto,
@@ -184,15 +293,26 @@ export class ContactController {
   @Auth(true)
   @Patch(API_ENDPOINTS.CONTACT.EDIT_CONTACT)
   @ApiCreatedResponse({ type: EditContactResponseDto })
+  @ApiFormData({
+    required: false,
+    single: true,
+    fieldName: 'profilePicture',
+    fileTypes: ['jpg', 'png'],
+    errorMessage: 'Invalid document file entered.',
+  })
   public async updateContact(
     @Param() { contactId }: ContactIdParamDto,
     @Body() payload: EditContactDto,
-    @Req() req: AppRequest
+    @Req() req: AppRequest,
+    @UploadedFile() profilePicture: any
   ): Promise<EditContactResponseDto> {
     payload.contactId = contactId;
     payload.updatedBy = req.user._id;
     const response = await firstValueFrom(
-      this.commonFeatureClient.send(RMQ_MESSAGES.CONTACT.EDIT_CONTACT, payload)
+      this.commonFeatureClient.send(RMQ_MESSAGES.CONTACT.EDIT_CONTACT, {
+        ...payload,
+        profilePicture,
+      })
     );
     return response;
   }

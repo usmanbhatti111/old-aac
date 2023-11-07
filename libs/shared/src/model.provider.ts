@@ -103,6 +103,10 @@ import {
   EmailedDashboards,
   EmailedDashboardsSchema,
 } from './schema';
+import {
+  ReportsWidget,
+  ReportsWidgetSchema,
+} from './schema/air-services/reports-widgets.schema';
 
 import {
   Contact,
@@ -327,6 +331,10 @@ export const DbModels = [
   {
     name: SalesProduct.name,
     schema: SalesProductSchema,
+  },
+  {
+    name: ReportsWidget.name,
+    schema: ReportsWidgetSchema,
   },
   {
     name: SoftwareUsers.name,

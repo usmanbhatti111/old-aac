@@ -15,4 +15,6 @@ export class SignInDto {
   })
   @IsNotEmpty()
   password: string;
+
+  // Add timezone field in the future (already added in database)
 }

@@ -1,17 +1,14 @@
 export enum UserStatus {
-  ACTIVE,
-  INACTIVE,
+  ACTIVE = 'ACTIVE',
+  INACTIVE = 'INACTIVE',
+  BLOCKED = 'BLOCKED',
+  DELETED = 'DELETED',
 }
 
 export enum UserRole {
-  SUPER_ADMIN = 'SUPER ADMIN',
-  ADMINISTRATOR = 'ADMINISTRATOR',
-  MARKETING_USER = 'MARKETING USER',
-  ORG_ADMIN = 'ORGANIZATION ADMIN',
-  ACCOUNT_ADMIN = 'ACCOUNT ADMIN',
-  RESTRICTED_USER = 'RESTRICTED USER',
-  SALES_USER = 'SALES USER',
-  SUPPORT_AGENT = 'SUPPORT AGENT',
+  SUPER_ADMIN = 'SUPER_ADMIN',
+  ORG_ADMIN = 'ORG_ADMIN',
+  ORG_EMPLOYEE = 'ORG_EMPLOYEE',
 }
 
 export enum UserAccountStatus {
@@ -142,6 +139,12 @@ export enum StatusEnum {
   INACTIVE,
 }
 
+export enum RecordStatusEnum {
+  ACTIVE = 'ACTIVE',
+  SOFT_DELETED = 'SOFT_DELETED',
+  HARD_DELETED = 'HARD_DELETED',
+}
+
 export enum AssetsSoftwareStatusEnum {
   RESTRICTED = 'Restricted',
   IGNORED = 'Ignored',
@@ -194,6 +197,19 @@ export enum ETaskStatus {
   PENDING = 'Pending',
   INPROGRESS = 'Inprogress',
   COMPLETED = 'Complete',
+}
+
+export enum ETicketsTaskStatus {
+  TODO = 'Todo',
+  IN_PROGRESS = 'In-Progress',
+  DONE = 'Done',
+}
+
+export enum ETaskNotifyStatus {
+  FIVE_MINS = '5',
+  TEN_MINS = '10',
+  FIFTEEN_MINS = '15',
+  THIRTY_MINS = '30',
 }
 
 export enum ETaskAssociate {
@@ -292,4 +308,15 @@ export enum EDealProbabilityStage {
   'NEGOTIATION' = 90,
   'WON' = 100,
   'LOW' = 0,
+}
+
+export enum ESendVerifCodeChannel {
+  SMS = 'sms',
+  CALLS = 'calls',
+}
+
+export enum EIsDeletedStatus {
+  ACTIVE = 'ACTIVE',
+  SOFT_DELETED = 'SOFT_DELETED',
+  HARD_DELETED = 'HARD_DELETED',
 }

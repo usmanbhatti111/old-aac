@@ -69,4 +69,19 @@ export class WorkloadManagementService {
       return new RpcException(error);
     }
   }
+
+  async getUsersTasks(userIds) {
+    try {
+      const filterQuery =
+        userIds && userIds.length > 0 ? { assignTo: { $in: userIds } } : {};
+      const res = await this.taskRepository.find(filterQuery);
+      return successResponse(
+        HttpStatus.CREATED,
+        'Data Fetched Successfully',
+        res
+      );
+    } catch (error) {
+      return new RpcException(error);
+    }
+  }
 }

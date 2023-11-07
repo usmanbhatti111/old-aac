@@ -51,6 +51,7 @@ import {
   SoftwareUsersRepository,
   ActivityLogRepository,
   DashboardRepository,
+  ReportsWidgetRepository,
   ArticlesRepository,
   ContactMeetingRepository,
   DealsRepository,
@@ -59,7 +60,7 @@ import {
 } from '../src/repositories/index';
 import { MongooseConfig } from './config/mongo.config';
 import { SharedService } from './shared.service';
-import { DownloadService, S3Service } from './services';
+import { DownloadService, EmailService, S3Service } from './services';
 
 @Module({
   imports: [
@@ -124,6 +125,7 @@ import { DownloadService, S3Service } from './services';
     SoftwareUsersRepository,
     DashboardRepository,
     EmailedDashboardsRepository,
+    ReportsWidgetRepository,
     ContactMeetingRepository,
     DealsRepository,
     NoteRepository,
@@ -143,6 +145,7 @@ import { DownloadService, S3Service } from './services';
     DownloadService,
     ActivityLogRepository,
     ArticlesRepository,
+    EmailService,
   ],
   exports: [
     SharedService,
@@ -199,6 +202,7 @@ import { DownloadService, S3Service } from './services';
     ContactStateRepository,
     ContactCallRepository,
     LifecycleStagesRepository,
+    ReportsWidgetRepository,
     SoftwareUsersRepository,
     ActivityLogRepository,
     ArticlesRepository,
@@ -208,6 +212,7 @@ import { DownloadService, S3Service } from './services';
     DealsRepository,
     NoteRepository,
     PurchaseApprovalRepository,
+    EmailService,
   ],
 })
 export class SharedModule {}

@@ -1,5 +1,11 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsISO8601, IsOptional } from 'class-validator';
+import {
+  IsDateString,
+  IsISO8601,
+  IsNotEmpty,
+  IsOptional,
+  IsString,
+} from 'class-validator';
 import { paginationDTO } from '../pagination/pagination.dto';
 import {
   EFaqCategories,
@@ -7,12 +13,14 @@ import {
   EJobStatus,
 } from '../../constants/enums';
 
-export class FilterFaqsDto extends paginationDTO {
+export class GetFaqsDto extends paginationDTO {
   @ApiProperty({
     enum: EFaqCategories,
     required: false,
   })
+  @IsNotEmpty()
   @IsOptional()
+  @IsString()
   faqCategory: string;
 
   @ApiProperty({
@@ -20,20 +28,32 @@ export class FilterFaqsDto extends paginationDTO {
     example: '5f8b14d073bce3c5f404f78c',
   })
   @IsOptional()
-  createdById: string;
+  createdBy: string;
 
   @ApiProperty({
-    example: '2023-09-28',
     required: false,
+    example: '2023-10-02',
   })
+  @IsNotEmpty()
   @IsOptional()
-  @IsISO8601()
-  createdAt: string;
+  @IsDateString()
+  dateStart: string;
+
+  @ApiProperty({
+    required: false,
+    example: '2023-10-03',
+  })
+  @IsNotEmpty()
+  @IsOptional()
+  @IsDateString()
+  dateEnd: string;
 
   @ApiProperty({
     example: 'what is reactjs',
     required: false,
   })
   @IsOptional()
+  @IsNotEmpty()
+  @IsString()
   search: string;
 }

@@ -28,6 +28,8 @@ import {
   BillingDetailsDto,
   BillingDetailsResponseDto,
   CreateInvoiceDto,
+  FindPlanDTO,
+  FindPlanDTOResponseDto,
   GenerateInvoicesResponseDto,
   GetOrgPlanResponseDto,
   ListInvoicesDTO,
@@ -75,6 +77,19 @@ export class InvoiceController {
       this.superAdminServiceClient.send(
         { cmd: RMQ_MESSAGES.SUPER_ADMIN.BILLING_INVOICES.GET_ORG_PLAN },
         { organizationPlanId }
+      )
+    );
+    return response;
+  }
+
+  @Get(API_ENDPOINTS.SUPER_ADMIN.BILLING_INVOICES.FIND_PLAN)
+  @Auth(true)
+  @ApiOkResponse({ type: FindPlanDTOResponseDto })
+  public async findPlan(@Query() payload: FindPlanDTO) {
+    const response = await firstValueFrom(
+      this.superAdminServiceClient.send(
+        { cmd: RMQ_MESSAGES.SUPER_ADMIN.BILLING_INVOICES.FIND_PLAN },
+        { ...payload }
       )
     );
     return response;

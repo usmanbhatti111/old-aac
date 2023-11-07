@@ -15,7 +15,7 @@ export class OrganizationService {
     isDeleted: false,
   };
 
-  async createOrganization(payload: CreateOrganizationDto) {
+  async createOrganization(payload: CreateOrganizationDto | any) {
     try {
       const res = await this.organizationRepository.create({
         ...payload,
@@ -51,7 +51,7 @@ export class OrganizationService {
       const { id } = payload;
       delete payload?.id;
       delete payload?.name;
-      delete payload?.registrationNumber;
+      delete payload?.crn;
       const res = await this.organizationRepository.findOneAndUpdate(
         { _id: id },
         payload

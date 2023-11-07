@@ -22,6 +22,8 @@ import { WorkloadManagementController } from './controllers/assets/workload-mana
 import { WorkloadManagementService } from './services/assets/workload-management.service';
 import { DashboardController } from './controllers/dashboard.controller';
 import { DashboardService } from './services/dashboard.service';
+import { ReportWidgetController } from './controllers/reports.widget.controller';
+import { ReportWidgetService } from './services/reports.widget.service';
 import { ArticlesService } from './services/knowledge-base/articles.service';
 import { ArticlesController } from './controllers/knowledge-base/articles.controller';
 
@@ -39,6 +41,7 @@ import { ArticlesController } from './controllers/knowledge-base/articles.contro
     WorkloadManagementController,
     ContractController,
     DashboardController,
+    ReportWidgetController,
     ArticlesController,
   ],
   providers: [
@@ -53,6 +56,7 @@ import { ArticlesController } from './controllers/knowledge-base/articles.contro
     WorkloadManagementService,
     ContractService,
     DashboardService,
+    ReportWidgetService,
     ArticlesService,
   ],
 })

@@ -10,7 +10,8 @@ export const API_TAGS = {
   TASK_MANAGEMENT: 'Task Management',
   WORK_LOAD_MANAGEMENT: 'Work Load Management',
   SUPER_ADMIN: 'Super Admin',
-  SETTINGS: 'Settings',
+  FAQS: 'Faqs',
+  JOBS: 'Jobs',
   TICKETS: 'Tickets',
   ASSETS: 'Assets',
   EXPENSE: 'Expense',
@@ -20,7 +21,7 @@ export const API_TAGS = {
   PRODUCT_FEATURES: 'Product Features',
   AIR_SERVICES_DASHBOARD: 'Air Services Dashboard',
   NEWS_AND_EVENTS: 'News and Events',
-
+  REPORTS_WIDGETS: 'Reports',
   PAYMENTS: 'Payments',
   DOCUMENTS: 'Documents',
 
@@ -39,6 +40,7 @@ export const API_TAGS = {
   ATTACHMENT: 'Attachment',
   ACTIVITY_LOGS: 'Activity Logs',
   ARTICLES: 'Articles',
+  CALLS: 'Calls',
   DEALS: 'Deals',
   DEAL_NOTE: 'Deal notes',
 };

@@ -1,6 +1,8 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { Transform } from 'class-transformer';
 import { IsNotEmpty, IsOptional } from 'class-validator';
 import { User } from '../../schema/user-account';
+import { UserRole } from '../../constants/enums';
 
 export class CreateUserDto extends User {
   @ApiProperty({ type: String })
@@ -16,8 +18,8 @@ export class CreateUserDto extends User {
   lastName: string;
 
   @ApiProperty({
-    example: 'SUPER_ADMIN',
-    enum: ['SUPER_ADMIN', 'ORG_ADMIN'],
+    example: UserRole.SUPER_ADMIN,
+    enum: UserRole,
   })
   @IsNotEmpty()
   role: string;
@@ -57,9 +59,9 @@ export class CreateUserDto extends User {
   @IsOptional()
   linkedInUrl?: string;
 
-  @ApiProperty({ type: String })
+  @ApiProperty({ type: Number })
   @IsOptional()
-  crn?: string;
+  crn?: number;
 
   @ApiProperty({ type: String })
   @IsOptional()
@@ -68,4 +70,6 @@ export class CreateUserDto extends User {
   @ApiProperty({ type: Array, default: [] })
   @IsOptional()
   products?: [];
+
+  organization: string;
 }

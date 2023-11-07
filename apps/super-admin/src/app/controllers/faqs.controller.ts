@@ -1,7 +1,13 @@
 import { Controller } from '@nestjs/common';
 import { MessagePattern, Payload } from '@nestjs/microservices';
 import { RMQ_MESSAGES } from '@shared/constants';
-import { CreateFaqDto, FilterFaqsDto, IdDTO, UpdateFaqDto } from '@shared/dto';
+import {
+  CreateFaqDto,
+  DeleteFaqsDto,
+  GetFaqsDto,
+  IdDto,
+  UpdateFaqDto,
+} from '@shared/dto';
 import { FaqsService } from '../services/faqs.service';
 
 @Controller()
@@ -14,12 +20,12 @@ export class FaqsController {
   }
 
   @MessagePattern({ cmd: RMQ_MESSAGES.FAQS.GET_FAQ })
-  async getFaq(@Payload() payload: IdDTO) {
+  async getFaq(@Payload() payload: IdDto) {
     return await this.faqsService.getFaq(payload);
   }
 
   @MessagePattern({ cmd: RMQ_MESSAGES.FAQS.GET_FAQS })
-  async getFaqs(@Payload() payload: FilterFaqsDto) {
+  async getFaqs(@Payload() payload: GetFaqsDto) {
     return await this.faqsService.getFaqs(payload);
   }
 
@@ -29,7 +35,7 @@ export class FaqsController {
   }
 
   @MessagePattern({ cmd: RMQ_MESSAGES.FAQS.DELETE_FAQ })
-  async deleteFaqs(@Payload() payload: IdDTO) {
+  async deleteFaqs(@Payload() payload: DeleteFaqsDto) {
     return await this.faqsService.deleteFaq(payload);
   }
 }

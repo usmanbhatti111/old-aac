@@ -7,6 +7,8 @@ import {
   IsBoolean,
   IsNumber,
   IsEnum,
+  IsArray,
+  IsMongoId,
 } from 'class-validator';
 import { EMongooseDateFilter } from '@shared/constants';
 export class WorkLoadFilterDto {
@@ -23,4 +25,12 @@ export class WorkLoadFilterDto {
   @IsOptional()
   countDayWise: boolean;
   //TODO NEDD THESE KEYS
+}
+
+export class UserTasksDto {
+  @ApiProperty({
+    type: [String],
+    required: false,
+  })
+  userIds: string[];
 }
