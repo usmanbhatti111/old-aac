@@ -48,4 +48,5 @@ export const CONTROLLERS = {
   CALLS: 'calls',
   DEALS: 'deals',
   DEAL_NOTE: 'deal-note',
+  ENQUIRIES: 'enquiries',
 };

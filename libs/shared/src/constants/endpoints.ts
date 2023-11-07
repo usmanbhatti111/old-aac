@@ -116,6 +116,15 @@ export const API_ENDPOINTS = {
       DELETE_QUICK_LINKS: '/:ids',
       EDIT_QUICK_LINK: '/:id',
     },
+
+    ENQUIRIES: {
+      ADD_ENQUIRY: '/',
+      GET_ENQUIRIES: '/',
+      GET_ENQUIRY: '/:id',
+      UPDATE_ENQUIRY: '/:id',
+      DELETE_ENQUIRY: ':ids',
+    },
+
     ADD_USER: 'add-user',
     USER_LIST: 'user-list',
     USER_PROFILE: 'user-profile/:userId',

@@ -32,4 +32,5 @@ export const MODEL = {
   LIFECYCLE_STAGE: 'lifecycleStages',
   CONTACT_STATUS: 'conatactStatus',
   DEAL: 'deals',
+  ENQUIRIES: 'enquiries',
 };

@@ -305,3 +305,8 @@ export enum EIsDeletedStatus {
   SOFT_DELETED = 'SOFT_DELETED',
   HARD_DELETED = 'HARD_DELETED',
 }
+
+export enum EEnquiriesStatus {
+  DONE = 'done',
+  PENDING = 'pending',
+}
