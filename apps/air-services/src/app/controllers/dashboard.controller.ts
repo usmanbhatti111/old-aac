@@ -32,4 +32,9 @@ export class DashboardController {
   public async getDashboardById(@Payload() payload: IdDto) {
     return this.dashboardService.getDashboardById(payload);
   }
+
+  @MessagePattern(RMQ_MESSAGES.AIR_SERVICES.DASHBOARD.UPDATE_DASHBOARD)
+  public async updateDashboard(@Payload() payload: CreateDashboardtDTO) {
+    return this.dashboardService.addDashboard(payload);
+  }
 }
