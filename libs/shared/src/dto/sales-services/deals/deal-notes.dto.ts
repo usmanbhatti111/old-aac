@@ -1,14 +1,15 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { AttachmentDTO, NoteDto, OrganizationDto, SalesProductDto } from '@shared/dto';
-import { Transform, Type } from 'class-transformer';
 import {
-  IsNotEmpty,
-  IsOptional,
-} from 'class-validator';
+  AttachmentDTO,
+  NoteDto,
+  OrganizationDto,
+  SalesProductDto,
+} from '@shared/dto';
+import { Transform, Type } from 'class-transformer';
+import { IsNotEmpty, IsOptional } from 'class-validator';
 import { toMongoObjectId } from 'libs/shared/src/functions';
 
 export class DealNoteDto {
-  
   @ApiProperty({
     type: String,
     required: false,
@@ -31,7 +32,6 @@ export class DealNoteDto {
 }
 
 export class DealNotesResponseDto {
-  
   @ApiProperty({ example: 200 })
   statusCode: number;
 
@@ -39,13 +39,10 @@ export class DealNotesResponseDto {
   message: string;
 
   @ApiProperty({
-    example: [NoteDto]
+    example: [NoteDto],
   })
   data: {};
 
   @ApiProperty({ example: null })
   errors: [];
-
-  
 }
-

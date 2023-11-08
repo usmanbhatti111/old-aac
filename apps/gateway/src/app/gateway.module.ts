@@ -58,6 +58,7 @@ import { ContactCallController } from './controllers/common-features/contact/con
 import { ContactMeetingController } from './controllers/common-features/contact/contact-meeting.controller';
 import { DealsController } from './controllers/sales/deals.controller';
 import { NoteController } from './controllers/sales/note.controller';
+import { ActivitylogsController } from './controllers/common-features/activitylogs.controller';
 
 @Module({
   imports: [
@@ -116,6 +117,7 @@ import { NoteController } from './controllers/sales/note.controller';
     // CallsController,
     DealsController,
     NoteController,
+    ActivitylogsController,
   ],
   providers: [
     // Exceptions Filter

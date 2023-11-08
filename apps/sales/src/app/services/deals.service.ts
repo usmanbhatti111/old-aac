@@ -9,7 +9,7 @@ import {
   SalesProductRepository,
   TicketRepository,
   NoteRepository,
-  TaskRepository
+  TaskRepository,
 } from '@shared';
 import {
   EDealProbabilityStage,
@@ -520,7 +520,7 @@ export class DealsService {
 
       const res = await this.dealsRepository.findOneAndUpdate(filter, {
         $push: {
-          tasksIds: payload?.taskId
+          tasksIds: payload?.taskId,
         },
       });
 
@@ -532,12 +532,11 @@ export class DealsService {
 
   async deleteTask(payload: DealTaskDto) {
     try {
-      
       const filter = { _id: payload?.dealId, isDeleted: false };
 
       const res = await this.dealsRepository.findOneAndUpdate(filter, {
         $pull: {
-          tasksIds: payload?.taskId
+          tasksIds: payload?.taskId,
         },
       });
 
@@ -553,7 +552,7 @@ export class DealsService {
 
       const res = await this.dealsRepository.findOneAndUpdate(filter, {
         $push: {
-          notesIds: payload?.noteId
+          notesIds: payload?.noteId,
         },
       });
 
@@ -569,7 +568,7 @@ export class DealsService {
 
       const res = await this.dealsRepository.findOneAndUpdate(filter, {
         $pull: {
-          notesIds: payload?.noteId
+          notesIds: payload?.noteId,
         },
       });
 
@@ -780,14 +779,14 @@ export class DealsService {
         },
         {
           $lookup: {
-            from: 'notes', 
+            from: 'notes',
             localField: 'notesIds',
             foreignField: '_id',
             as: 'notes',
           },
         },
       ];
-  
+
       const deal = await this.dealsRepository.aggregate(pipeline);
       return successResponse(HttpStatus.OK, ResponseMessage.SUCCESS, deal);
     } catch (error) {
@@ -806,16 +805,15 @@ export class DealsService {
         },
         {
           $lookup: {
-            from: 'tasks', 
+            from: 'tasks',
             localField: 'tasksIds',
             foreignField: '_id',
             as: 'tasks',
           },
         },
       ];
-  
+
       const deal = await this.dealsRepository.aggregate(pipeline);
-  
 
       return successResponse(HttpStatus.OK, ResponseMessage.SUCCESS, deal);
     } catch (error) {

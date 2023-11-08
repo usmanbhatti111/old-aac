@@ -80,10 +80,10 @@ export class OrganizationCompanyAccountService {
         },
         offset: skip,
         limit: perPage,
-        pipelines
+        pipelines,
       });
 
-      return successResponse(HttpStatus.OK, 'Success',res, {
+      return successResponse(HttpStatus.OK, 'Success', res, {
         count: totalCount,
         page: page,
         limit: perPage,

@@ -107,6 +107,8 @@ import {
 } from './schema/air-services/reports-widgets.schema';
 
 import {
+  Activitylogs,
+  ActivitylogsSchema,
   Contact,
   ContactCall,
   ContactCallSchema,
@@ -350,6 +352,10 @@ export const DbModels = [
   {
     name: Note.name,
     schema: NoteSchema,
+  },
+  {
+    name: Activitylogs.name,
+    schema: ActivitylogsSchema,
   },
   {
     name: PurchaseApproval.name,

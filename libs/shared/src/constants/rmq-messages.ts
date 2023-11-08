@@ -392,4 +392,9 @@ export const RMQ_MESSAGES = {
     UPDATE_DEAL_NOTE: 'update-deal-note',
     DELETE_DEAL_NOTE: 'delete-deal-note',
   },
+
+  ACTIVITY_LOG: {
+    GET_ALL_ACTIVITIES: 'get-all-activities',
+    ACTIVITY_LOG: 'activity-log',
+  },
 };
