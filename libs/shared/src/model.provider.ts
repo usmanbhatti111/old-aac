@@ -98,6 +98,8 @@ import {
   DealsSchema,
   Note,
   NoteSchema,
+  DealViews,
+  DealViewsSchema,
   PurchaseApproval,
   PurchaseApprovalSchema,
 } from './schema';
@@ -352,6 +354,11 @@ export const DbModels = [
   {
     name: Note.name,
     schema: NoteSchema,
+  },
+  {
+    name: DealViews.name,
+    schema: DealViewsSchema,
+    collection: MODEL.DEAL_VIEW,
   },
   {
     name: Activitylogs.name,

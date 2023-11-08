@@ -306,6 +306,12 @@ export enum EIsDeletedStatus {
   HARD_DELETED = 'HARD_DELETED',
 }
 
+export enum EDealViewSharedWith {
+  PRIVATE = 'PRIVATE',
+  MY_TEAM = 'MY_TEAM',
+  EVERYONE = 'EVERYONE',
+}
+
 export enum EActivityType {
   CREATED = 'CREATED',
   RETRIEVE = 'RETRIEVE',

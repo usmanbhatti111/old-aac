@@ -56,6 +56,7 @@ import {
   ContactMeetingRepository,
   DealsRepository,
   NoteRepository,
+  DealViewsRepository,
   ActivitylogsRepository,
 } from '../src/repositories/index';
 import { MongooseConfig } from './config/mongo.config';
@@ -128,6 +129,7 @@ import { DownloadService, EmailService, S3Service } from './services';
     ContactMeetingRepository,
     DealsRepository,
     NoteRepository,
+    DealViewsRepository,
     ActivitylogsRepository,
     {
       provide: 'S3',
@@ -213,6 +215,7 @@ import { DownloadService, EmailService, S3Service } from './services';
     ActivitylogsRepository,
     PurchaseApprovalRepository,
     EmailService,
+    DealViewsRepository,
   ],
 })
 export class SharedModule {}

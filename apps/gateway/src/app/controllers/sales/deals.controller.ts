@@ -48,7 +48,6 @@ import {
   UpdateDealDto,
   UpdateDealResponseDto,
 } from '@shared/dto';
-import { DownloadService } from '@shared/services';
 import { Response } from 'express';
 import { firstValueFrom } from 'rxjs';
 import { Auth } from '../../decorators/auth.decorator';
@@ -60,33 +59,32 @@ import { AppRequest } from '../../shared/interface/request.interface';
 export class DealsController {
   constructor(
     @Inject(SERVICES.SALES)
-    private orgAdminService: ClientProxy,
-    private readonly downloadService: DownloadService
+    private salesService: ClientProxy
   ) {}
 
   @Auth(true)
-  @Get(API_ENDPOINTS.SALES.DEALS.GET_NOTES)
+  @Get(API_ENDPOINTS.SALES.DEAL_VIEWS.GET_NOTES)
   @ApiOkResponse({ type: DealAssociationResponseDto })
   public async getNotes(
     @Req() request: AppRequest,
     @Param() payload: IdDto
   ): Promise<DealAssociationResponseDto> {
     const response = await firstValueFrom(
-      this.orgAdminService.send(RMQ_MESSAGES.SALES.DEALS.GET_NOTES, payload)
+      this.salesService.send(RMQ_MESSAGES.SALES.DEAL_VIEWS.GET_NOTES, payload)
     );
 
     return response;
   }
 
   @Auth(true)
-  @Get(API_ENDPOINTS.SALES.DEALS.GET_TASKS)
+  @Get(API_ENDPOINTS.SALES.DEAL_VIEWS.GET_TASKS)
   @ApiOkResponse({ type: DealAssociationResponseDto })
   public async getTasks(
     @Req() request: AppRequest,
     @Param() payload: IdDto
   ): Promise<DealAssociationResponseDto> {
     const response = await firstValueFrom(
-      this.orgAdminService.send(RMQ_MESSAGES.SALES.DEALS.GET_TASKS, payload)
+      this.salesService.send(RMQ_MESSAGES.SALES.DEAL_VIEWS.GET_TASKS, payload)
     );
 
     return response;
@@ -100,7 +98,7 @@ export class DealsController {
     @Body() payload: DealAssociationDto
   ): Promise<DealAssociationResponseDto> {
     const response = await firstValueFrom(
-      this.orgAdminService.send(
+      this.salesService.send(
         RMQ_MESSAGES.SALES.DEALS.CREATE_ASSOCIATION,
         payload
       )
@@ -116,7 +114,7 @@ export class DealsController {
     @Body() payload: DealAssociationDto
   ): Promise<DealAssociationResponseDto> {
     const response = await firstValueFrom(
-      this.orgAdminService.send(
+      this.salesService.send(
         RMQ_MESSAGES.SALES.DEALS.DELETE_ASSOCIATION,
         payload
       )
@@ -132,7 +130,7 @@ export class DealsController {
     @Body() payload: DealTaskDto
   ): Promise<DealTasksResponseDto> {
     const response = await firstValueFrom(
-      this.orgAdminService.send(RMQ_MESSAGES.SALES.DEALS.ADD_TASK, payload)
+      this.salesService.send(RMQ_MESSAGES.SALES.DEAL_VIEWS.ADD_TASK, payload)
     );
     return response;
   }
@@ -144,7 +142,7 @@ export class DealsController {
     @Body() payload: DealTaskDto
   ): Promise<DealTasksResponseDto> {
     const response = await firstValueFrom(
-      this.orgAdminService.send(RMQ_MESSAGES.SALES.DEALS.DELETE_TASK, payload)
+      this.salesService.send(RMQ_MESSAGES.SALES.DEAL_VIEWS.DELETE_TASK, payload)
     );
     return response;
   }
@@ -157,7 +155,7 @@ export class DealsController {
     @Body() payload: DealNoteDto
   ): Promise<DealNotesResponseDto> {
     const response = await firstValueFrom(
-      this.orgAdminService.send(RMQ_MESSAGES.SALES.DEALS.ADD_NOTE, payload)
+      this.salesService.send(RMQ_MESSAGES.SALES.DEAL_VIEWS.ADD_NOTE, payload)
     );
     return response;
   }
@@ -169,7 +167,7 @@ export class DealsController {
     @Body() payload: DealNoteDto
   ): Promise<DealNotesResponseDto> {
     const response = await firstValueFrom(
-      this.orgAdminService.send(RMQ_MESSAGES.SALES.DEALS.DELETE_NOTE, payload)
+      this.salesService.send(RMQ_MESSAGES.SALES.DEAL_VIEWS.DELETE_NOTE, payload)
     );
     return response;
   }
@@ -185,7 +183,7 @@ export class DealsController {
     payload.userId = request?.user?._id;
 
     const response = await firstValueFrom(
-      this.orgAdminService.send(
+      this.salesService.send(
         RMQ_MESSAGES.SALES.DEALS.GET_DEALS_LIST_VIEW,
         payload
       )
@@ -228,7 +226,7 @@ export class DealsController {
     payload.userId = request?.user?._id;
 
     const response = await firstValueFrom(
-      this.orgAdminService.send(
+      this.salesService.send(
         RMQ_MESSAGES.SALES.DEALS.GET_DEALS_GRID_VIEW,
         payload
       )
@@ -244,10 +242,7 @@ export class DealsController {
     @Param() payload: IdDto
   ): Promise<DealAssociationResponseDto> {
     const response = await firstValueFrom(
-      this.orgAdminService.send(
-        RMQ_MESSAGES.SALES.DEALS.GET_ASSOCIATIONS,
-        payload
-      )
+      this.salesService.send(RMQ_MESSAGES.SALES.DEALS.GET_ASSOCIATIONS, payload)
     );
 
     return response;
@@ -263,7 +258,7 @@ export class DealsController {
     payload.deletedBy = request?.user?._id;
 
     const response = await firstValueFrom(
-      this.orgAdminService.send(RMQ_MESSAGES.SALES.DEALS.DELTE_DEALS, payload)
+      this.salesService.send(RMQ_MESSAGES.SALES.DEALS.DELTE_DEALS, payload)
     );
 
     return response;
@@ -279,7 +274,7 @@ export class DealsController {
     payload.deletedBy = request?.user?._id;
 
     const response = await firstValueFrom(
-      this.orgAdminService.send(
+      this.salesService.send(
         RMQ_MESSAGES.SALES.DEALS.GET_SOFT_DELETED_DEALS,
         payload
       )
@@ -298,7 +293,7 @@ export class DealsController {
     payload.deletedBy = request?.user?._id;
 
     const response = await firstValueFrom(
-      this.orgAdminService.send(
+      this.salesService.send(
         RMQ_MESSAGES.SALES.DEALS.RESTORE_DEAL_ACTION,
         payload
       )
@@ -317,7 +312,7 @@ export class DealsController {
     payload.createdBy = request?.user?._id;
 
     const response = await firstValueFrom(
-      this.orgAdminService.send(RMQ_MESSAGES.SALES.DEALS.CREATE_DEAL, payload)
+      this.salesService.send(RMQ_MESSAGES.SALES.DEALS.CREATE_DEAL, payload)
     );
 
     return response;
@@ -335,7 +330,23 @@ export class DealsController {
     payload.id = params.id;
 
     const response = await firstValueFrom(
-      this.orgAdminService.send(RMQ_MESSAGES.SALES.DEALS.UPDATE_DEAL, payload)
+      this.salesService.send(RMQ_MESSAGES.SALES.DEALS.UPDATE_DEAL, payload)
+    );
+
+    return response;
+  }
+
+  @Auth(true)
+  @Get(API_ENDPOINTS.SALES.DEALS.DEAL_ACTION_PREVIEW)
+  @ApiOkResponse({ type: GetDealsListViewResponseDto })
+  public async dealPreview(
+    @Query() payload: IdDto
+  ): Promise<GetDealsListViewResponseDto> {
+    const response = await firstValueFrom(
+      this.salesService.send(
+        RMQ_MESSAGES.SALES.DEALS.DEAL_ACTION_PREVIEW,
+        payload
+      )
     );
 
     return response;

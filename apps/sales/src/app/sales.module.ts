@@ -9,6 +9,8 @@ import { DealsController } from './controllers/deals.controller';
 import { DealsService } from './services/deals.service';
 import { NoteController } from './controllers/note.controller';
 import { NoteService } from './services/note.service';
+import { DealViewsController } from './controllers/deal-views.controller';
+import { DealViewsService } from './services/deal-views.service';
 
 @Module({
   imports: [SharedModule],
@@ -17,12 +19,14 @@ import { NoteService } from './services/note.service';
     SalesProductController,
     DealsController,
     NoteController,
+    DealViewsController,
   ],
   providers: [
     DealPipelineService,
     SalesProductService,
     DealsService,
     NoteService,
+    DealViewsService,
   ],
 })
 export class SalesModule {}

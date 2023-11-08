@@ -376,6 +376,11 @@ export const RMQ_MESSAGES = {
       GET_ASSOCIATIONS: 'get-associations',
       CREATE_ASSOCIATION: 'create-association',
       DELETE_ASSOCIATION: 'delete-association',
+      DEAL_ACTION_PREVIEW: 'deal-action-preview',
+    },
+    DEAL_VIEWS: {
+      CREATE_DEAL_VIEW: 'create-deal-view',
+      GET_DEAL_VIEW: 'get-deal-view',
       ADD_TASK: 'add-task',
       DELETE_TASK: 'delete-task',
       ADD_NOTE: 'add-note',
