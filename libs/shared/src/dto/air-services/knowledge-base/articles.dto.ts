@@ -108,6 +108,15 @@ export class GetArticlesRequestDto extends paginationDTO {
 
   @ApiProperty({
     type: String,
+    example: '',
+    required: false,
+  })
+  @IsMongoId()
+  @IsOptional()
+  folderId: string;
+
+  @ApiProperty({
+    type: String,
     enum: EArticlesStatus,
     example: '',
     required: false,

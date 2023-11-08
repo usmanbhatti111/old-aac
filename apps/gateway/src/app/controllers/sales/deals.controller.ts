@@ -72,10 +72,7 @@ export class DealsController {
     @Param() payload: IdDto
   ): Promise<DealAssociationResponseDto> {
     const response = await firstValueFrom(
-      this.orgAdminService.send(
-        RMQ_MESSAGES.SALES.DEALS.GET_NOTES,
-        payload
-      )
+      this.orgAdminService.send(RMQ_MESSAGES.SALES.DEALS.GET_NOTES, payload)
     );
 
     return response;
@@ -89,10 +86,7 @@ export class DealsController {
     @Param() payload: IdDto
   ): Promise<DealAssociationResponseDto> {
     const response = await firstValueFrom(
-      this.orgAdminService.send(
-        RMQ_MESSAGES.SALES.DEALS.GET_TASKS,
-        payload
-      )
+      this.orgAdminService.send(RMQ_MESSAGES.SALES.DEALS.GET_TASKS, payload)
     );
 
     return response;
@@ -138,10 +132,7 @@ export class DealsController {
     @Body() payload: DealTaskDto
   ): Promise<DealTasksResponseDto> {
     const response = await firstValueFrom(
-      this.orgAdminService.send(
-        RMQ_MESSAGES.SALES.DEALS.ADD_TASK,
-        payload
-      )
+      this.orgAdminService.send(RMQ_MESSAGES.SALES.DEALS.ADD_TASK, payload)
     );
     return response;
   }
@@ -153,10 +144,7 @@ export class DealsController {
     @Body() payload: DealTaskDto
   ): Promise<DealTasksResponseDto> {
     const response = await firstValueFrom(
-      this.orgAdminService.send(
-        RMQ_MESSAGES.SALES.DEALS.DELETE_TASK,
-        payload
-      )
+      this.orgAdminService.send(RMQ_MESSAGES.SALES.DEALS.DELETE_TASK, payload)
     );
     return response;
   }
@@ -169,10 +157,7 @@ export class DealsController {
     @Body() payload: DealNoteDto
   ): Promise<DealNotesResponseDto> {
     const response = await firstValueFrom(
-      this.orgAdminService.send(
-        RMQ_MESSAGES.SALES.DEALS.ADD_NOTE,
-        payload
-      )
+      this.orgAdminService.send(RMQ_MESSAGES.SALES.DEALS.ADD_NOTE, payload)
     );
     return response;
   }
@@ -184,10 +169,7 @@ export class DealsController {
     @Body() payload: DealNoteDto
   ): Promise<DealNotesResponseDto> {
     const response = await firstValueFrom(
-      this.orgAdminService.send(
-        RMQ_MESSAGES.SALES.DEALS.DELETE_NOTE,
-        payload
-      )
+      this.orgAdminService.send(RMQ_MESSAGES.SALES.DEALS.DELETE_NOTE, payload)
     );
     return response;
   }
