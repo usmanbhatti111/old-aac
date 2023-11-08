@@ -4,14 +4,6 @@ RUN mkdir -p /var/www/sales
 WORKDIR /var/www/sales
 ADD . /var/www/sales
 
-RUN npm install -g pnpm
-
-RUN pnpm config set network-timeout 600000 -g
-
-RUN pnpm install 
-
-RUN pnpm nx reset
-
-RUN pnpm exec nx build sales
+RUN npx nx build sales
 
 CMD ["node", "./dist/apps/sales/main.js"]

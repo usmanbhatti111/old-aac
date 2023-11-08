@@ -10,7 +10,7 @@ export type OrganizationDocument = HydratedDocument<Organization>;
 })
 export class Organization extends AbstractSchema implements IOrganization {
   @Prop({ type: String, required: true })
-  registrationNumber: string;
+  crn: string;
 
   @Prop({ type: String, required: true })
   name: string;
@@ -21,8 +21,22 @@ export class Organization extends AbstractSchema implements IOrganization {
   @Prop({ type: String, required: false })
   phoneNo?: string;
 
-  @Prop({ type: String, required: false })
-  address?: string;
+  @Prop({
+    type: Object,
+    required: false,
+    address: {
+      street: { type: String, required: false },
+      city: { type: String, required: false },
+      state: { type: String, required: false },
+      postalCode: { type: String, required: false },
+    },
+  })
+  address?: {
+    street: string;
+    city: string;
+    state: string;
+    postalCode: string;
+  };
 
   @Prop({ type: String, required: false })
   postCode?: string;

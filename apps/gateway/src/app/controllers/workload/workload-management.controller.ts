@@ -1,6 +1,6 @@
 import { Controller, Get, Inject, Query } from '@nestjs/common';
-import { ClientProxy } from '@nestjs/microservices';
-import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { ClientProxy, RpcException } from '@nestjs/microservices';
+import { ApiBearerAuth, ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import {
   API_ENDPOINTS,
   API_TAGS,
@@ -8,7 +8,11 @@ import {
   RMQ_MESSAGES,
   SERVICES,
 } from '@shared/constants';
-import { WorkLoadFilterDto } from '@shared/dto';
+import {
+  GetUsersListResponseDto,
+  UserTasksDto,
+  WorkLoadFilterDto,
+} from '@shared/dto';
 import { firstValueFrom } from 'rxjs';
 import { Auth } from '../../decorators/auth.decorator';
 
@@ -29,5 +33,25 @@ export class WorkloadManagementController {
         { query }
       )
     );
+  }
+
+  @Auth(true)
+  @ApiOkResponse({ type: GetUsersListResponseDto })
+  @Get(API_ENDPOINTS.AIR_SERVICES.WORK_LOAD_MANAGEMENT.GET_USER_TASKS)
+  async getUsersTasks(
+    @Query('userIds') userIds: UserTasksDto
+  ): Promise<GetUsersListResponseDto> {
+    try {
+      const response = await firstValueFrom(
+        this.airServiceClient.send(
+          RMQ_MESSAGES.AIR_SERVICES.WORK_LOAD_MANAGEMENT.GET_USER_TASKS,
+          userIds
+        )
+      );
+
+      return response;
+    } catch (err) {
+      throw new RpcException(err);
+    }
   }
 }

@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsMongoId, IsNotEmpty, IsOptional } from 'class-validator';
-import { IdDto, PaginationDto } from '../common';
+import { IdDto, PaginationDto } from '../../common';
 
 export interface INote {
   title: string;

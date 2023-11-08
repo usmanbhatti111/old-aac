@@ -8,6 +8,7 @@ import {
   Post,
   Put,
   Query,
+  Req,
   Res,
 } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
@@ -22,6 +23,8 @@ import {
 import { AddTaskDto } from '@shared/dto';
 import { Response } from 'express';
 import { firstValueFrom } from 'rxjs';
+import { AppRequest } from '../../shared/interface/request.interface';
+import { Auth } from '../../decorators/auth.decorator';
 
 @ApiTags(API_TAGS.TASK)
 @Controller(CONTROLLERS.TASK)
@@ -31,9 +34,15 @@ export class TaskController {
     @Inject(SERVICES.AIR_SERVICES) private airServiceClient: ClientProxy
   ) {}
 
+  @Auth(true)
   @Post(API_ENDPOINTS.AIR_SERVICES.TASK.ADD_TASK)
-  public async addTask(@Body() dto: AddTaskDto, @Res() res: Response | any) {
+  public async addTask(
+    @Body() dto: AddTaskDto,
+    @Res() res: Response | any,
+    @Req() req: AppRequest
+  ) {
     try {
+      dto.createdBy = req?.user?._id;
       const response = await firstValueFrom(
         this.airServiceClient.send(RMQ_MESSAGES.AIR_SERVICES.TASK.ADD_TASK, dto)
       );
@@ -44,6 +53,7 @@ export class TaskController {
     }
   }
 
+  @Auth(true)
   @Get(API_ENDPOINTS.AIR_SERVICES.TASK.GET_TASK)
   @ApiQuery({
     name: 'ticketId',

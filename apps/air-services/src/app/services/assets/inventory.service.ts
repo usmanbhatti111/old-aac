@@ -173,6 +173,7 @@ export class InventoryService {
       return errorResponse(HttpStatus.BAD_REQUEST, 'Bad Request', error?.name);
     }
   }
+
   async deleteInventory(payload: { ids: string[] }) {
     try {
       const res = await this.inventoryRepository.deleteMany({}, payload.ids);

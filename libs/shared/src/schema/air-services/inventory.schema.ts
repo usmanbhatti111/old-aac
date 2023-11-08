@@ -66,6 +66,9 @@ export class Inventory extends AbstractSchema {
     required: false,
   })
   attachments: string[];
+
+  @Prop()
+  installationDate: Date;
 }
 
 export const InventorySchema = SchemaFactory.createForClass(Inventory);

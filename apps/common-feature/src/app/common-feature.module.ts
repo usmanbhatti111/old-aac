@@ -16,12 +16,14 @@ import { ActivityLogService } from './services/activityLog.service';
     DocumentsController,
     AttachmentController,
     ActivityLogController,
+    // CallsController,
   ],
   providers: [
     ContactService,
     DocumentsService,
     AttachmentService,
     ActivityLogService,
+    // CallsService,
   ],
 })
 export class CommonFeatureModule {}
