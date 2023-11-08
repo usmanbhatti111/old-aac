@@ -22,6 +22,8 @@ import { QuickLinksService } from './services/quick-links.service';
 import { NewsAndEventsController } from './controllers/news-and-event.controller';
 import { NewsAndEventsService } from './services/news-and-event.service';
 import { ScheduleModule } from '@nestjs/schedule';
+import { TaxCalculationController } from './controllers/tax-calculation.controller';
+import { TaxCalculationService } from './services/tax-calculation.service';
 @Module({
   imports: [SharedModule, ScheduleModule.forRoot()],
   controllers: [
@@ -35,6 +37,7 @@ import { ScheduleModule } from '@nestjs/schedule';
     QuickLinksController,
     PlanController,
     NewsAndEventsController,
+    TaxCalculationController,
   ],
   providers: [
     ExampleService,
@@ -48,6 +51,7 @@ import { ScheduleModule } from '@nestjs/schedule';
     QuickLinksService,
     PlanService,
     NewsAndEventsService,
+    TaxCalculationService,
   ],
 })
 export class SuperAdminModule {}

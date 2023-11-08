@@ -98,6 +98,10 @@ import {
   DealsSchema,
   Note,
   NoteSchema,
+  TaxCalculation,
+  TaxCalculationSchema,
+  DealViews,
+  DealViewsSchema,
   PurchaseApproval,
   PurchaseApprovalSchema,
 } from './schema';
@@ -107,6 +111,8 @@ import {
 } from './schema/air-services/reports-widgets.schema';
 
 import {
+  Activitylogs,
+  ActivitylogsSchema,
   Contact,
   ContactCall,
   ContactCallSchema,
@@ -350,6 +356,20 @@ export const DbModels = [
   {
     name: Note.name,
     schema: NoteSchema,
+  },
+  {
+    name: TaxCalculation.name,
+    schema: TaxCalculationSchema,
+    collection: MODEL.TAX_CALCULATION,
+  },
+  {
+    name: DealViews.name,
+    schema: DealViewsSchema,
+    collection: MODEL.DEAL_VIEW,
+  },
+  {
+    name: Activitylogs.name,
+    schema: ActivitylogsSchema,
   },
   {
     name: PurchaseApproval.name,

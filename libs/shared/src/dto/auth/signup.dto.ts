@@ -42,6 +42,18 @@ export class SignupDto {
   phoneNumber: string;
 
   @ApiProperty({
+    example: '100-200',
+  })
+  @IsNotEmpty()
+  numberOfEmployees: string;
+
+  @ApiProperty({
+    example: false,
+  })
+  @IsNotEmpty()
+  enableEmployeeVerification: boolean;
+
+  @ApiProperty({
     minLength: 8,
     example: 'Test111@',
   })

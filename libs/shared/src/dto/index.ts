@@ -31,3 +31,5 @@ export * from './sales-settings';
 export * from './air-services/knowledge-base';
 export * from './calls';
 export * from './sales-services';
+// export * from './deals';
+export * from './activitylog';

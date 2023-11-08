@@ -56,6 +56,9 @@ import {
   ContactMeetingRepository,
   DealsRepository,
   NoteRepository,
+  TaxCalculationRepository,
+  DealViewsRepository,
+  ActivitylogsRepository,
 } from '../src/repositories/index';
 import { MongooseConfig } from './config/mongo.config';
 import { SharedService } from './shared.service';
@@ -127,6 +130,9 @@ import { DownloadService, EmailService, S3Service } from './services';
     ContactMeetingRepository,
     DealsRepository,
     NoteRepository,
+    TaxCalculationRepository,
+    DealViewsRepository,
+    ActivitylogsRepository,
     {
       provide: 'S3',
       useFactory: (config: ConfigService) =>
@@ -208,8 +214,11 @@ import { DownloadService, EmailService, S3Service } from './services';
     SalesProductRepository,
     DealsRepository,
     NoteRepository,
+    ActivitylogsRepository,
     PurchaseApprovalRepository,
     EmailService,
+    TaxCalculationRepository,
+    DealViewsRepository,
   ],
 })
 export class SharedModule {}
