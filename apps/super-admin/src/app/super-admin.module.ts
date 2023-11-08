@@ -24,6 +24,8 @@ import { NewsAndEventsService } from './services/news-and-event.service';
 import { ScheduleModule } from '@nestjs/schedule';
 import { EnquiriesController } from './controllers/enquiries.controller';
 import { EnquiriesService } from './services/enquiries.service';
+import { TaxCalculationController } from './controllers/tax-calculation.controller';
+import { TaxCalculationService } from './services/tax-calculation.service';
 @Module({
   imports: [SharedModule, ScheduleModule.forRoot()],
   controllers: [
@@ -38,6 +40,7 @@ import { EnquiriesService } from './services/enquiries.service';
     PlanController,
     NewsAndEventsController,
     EnquiriesController,
+    TaxCalculationController,
   ],
   providers: [
     ExampleService,
@@ -52,6 +55,7 @@ import { EnquiriesService } from './services/enquiries.service';
     PlanService,
     NewsAndEventsService,
     EnquiriesService,
+    TaxCalculationService,
   ],
 })
 export class SuperAdminModule {}

@@ -84,6 +84,12 @@ export const RMQ_MESSAGES = {
       UPDATE_ENQUIRY: 'update-enquiry',
       DELETE_ENQUIRIES: 'delete-enquiries',
     },
+    TAX_CALCULATIONS: {
+      ADD_TAX: 'add-tax',
+      GET_TAXS: 'get-taxs',
+      UPDATE_TAX: 'update-tax',
+      DELETE_TAXS: 'delete-taxs',
+    },
 
     ADD_USER: 'add-user',
     USER_LIST: 'user-list',

@@ -124,6 +124,12 @@ export const API_ENDPOINTS = {
       UPDATE_ENQUIRY: '/:id',
       DELETE_ENQUIRY: ':ids',
     },
+    TAX_CALCULATION: {
+      ADD_TAX: '/',
+      GET_TAXS: '/',
+      UPDATE_TAX: '/:id',
+      DELETE_TAXS: '/:ids',
+    },
 
     ADD_USER: 'add-user',
     USER_LIST: 'user-list',
