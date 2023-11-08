@@ -33,4 +33,5 @@ export const MODEL = {
   CONTACT_STATUS: 'conatactStatus',
   DEAL: 'deals',
   ENQUIRIES: 'enquiries',
+  DEAL_VIEW: 'dealViews',
 };

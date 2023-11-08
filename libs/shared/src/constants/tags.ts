@@ -44,4 +44,6 @@ export const API_TAGS = {
   DEALS: 'Deals',
   DEAL_NOTE: 'Deal notes',
   ENQUIRIES: 'Enquiries',
+  DEAL_VIEWS: 'Deal Views',
+  ACTIVITY_LOG: 'Activity Log',
 };

@@ -59,6 +59,8 @@ import { ContactMeetingController } from './controllers/common-features/contact/
 import { DealsController } from './controllers/sales/deals.controller';
 import { NoteController } from './controllers/sales/note.controller';
 import { EnquiriesController } from './controllers/super-admin/enquiries.controller';
+import { DealViewsController } from './controllers/sales/deal-views.controller';
+import { ActivitylogsController } from './controllers/common-features/activitylogs.controller';
 
 @Module({
   imports: [
@@ -118,6 +120,8 @@ import { EnquiriesController } from './controllers/super-admin/enquiries.control
     DealsController,
     NoteController,
     EnquiriesController,
+    DealViewsController,
+    ActivitylogsController,
   ],
   providers: [
     // Exceptions Filter

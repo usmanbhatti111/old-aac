@@ -355,6 +355,11 @@ export const API_ENDPOINTS = {
       DELETE_TASK: 'delete-task',
       ADD_NOTE: 'add-note',
       DELETE_NOTE: 'delete-note',
+      DEAL_ACTION_PREVIEW: 'deal-action-preview/:id',
+    },
+    DEAL_VIEWS: {
+      CREATE_DEAL_VIEW: '/',
+      GET_DEAL_VIEW: '/',
       GET_NOTES: 'get-notes/:id',
       GET_TASKS: 'get-tasks/:id',
     },
