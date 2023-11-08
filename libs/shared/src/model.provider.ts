@@ -98,6 +98,8 @@ import {
   DealsSchema,
   Note,
   NoteSchema,
+  TaxCalculation,
+  TaxCalculationSchema,
   DealViews,
   DealViewsSchema,
   PurchaseApproval,
@@ -354,6 +356,11 @@ export const DbModels = [
   {
     name: Note.name,
     schema: NoteSchema,
+  },
+  {
+    name: TaxCalculation.name,
+    schema: TaxCalculationSchema,
+    collection: MODEL.TAX_CALCULATION,
   },
   {
     name: DealViews.name,

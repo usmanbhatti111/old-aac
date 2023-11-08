@@ -306,6 +306,13 @@ export enum EIsDeletedStatus {
   HARD_DELETED = 'HARD_DELETED',
 }
 
+export enum ETaxApplyOn {
+  INVOICE = 'invoice',
+  QUOTES = 'quotes',
+  SUBSCRIPTIONS = 'subscriptions',
+  PRODUCTS = 'products',
+}
+
 export enum EDealViewSharedWith {
   PRIVATE = 'PRIVATE',
   MY_TEAM = 'MY_TEAM',

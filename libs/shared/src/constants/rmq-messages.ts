@@ -77,6 +77,13 @@ export const RMQ_MESSAGES = {
       GET_QUICK_LINKS_GROUP_BY_PRODUCT: 'get-quick-links-group-by-product',
     },
 
+    TAX_CALCULATIONS: {
+      ADD_TAX: 'add-tax',
+      GET_TAXS: 'get-taxs',
+      UPDATE_TAX: 'update-tax',
+      DELETE_TAXS: 'delete-taxs',
+    },
+
     ADD_USER: 'add-user',
     USER_LIST: 'user-list',
     USER_PROFILE: 'user-profile',

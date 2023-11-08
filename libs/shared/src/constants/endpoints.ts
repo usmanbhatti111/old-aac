@@ -116,6 +116,14 @@ export const API_ENDPOINTS = {
       DELETE_QUICK_LINKS: '/:ids',
       EDIT_QUICK_LINK: '/:id',
     },
+
+    TAX_CALCULATION: {
+      ADD_TAX: '/',
+      GET_TAXS: '/',
+      UPDATE_TAX: '/:id',
+      DELETE_TAXS: '/:ids',
+    },
+
     ADD_USER: 'add-user',
     USER_LIST: 'user-list',
     USER_PROFILE: 'user-profile/:userId',

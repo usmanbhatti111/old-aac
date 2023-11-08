@@ -56,6 +56,7 @@ import {
   ContactMeetingRepository,
   DealsRepository,
   NoteRepository,
+  TaxCalculationRepository,
   DealViewsRepository,
   ActivitylogsRepository,
 } from '../src/repositories/index';
@@ -129,6 +130,7 @@ import { DownloadService, EmailService, S3Service } from './services';
     ContactMeetingRepository,
     DealsRepository,
     NoteRepository,
+    TaxCalculationRepository,
     DealViewsRepository,
     ActivitylogsRepository,
     {
@@ -215,6 +217,7 @@ import { DownloadService, EmailService, S3Service } from './services';
     ActivitylogsRepository,
     PurchaseApprovalRepository,
     EmailService,
+    TaxCalculationRepository,
     DealViewsRepository,
   ],
 })

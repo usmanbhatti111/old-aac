@@ -32,5 +32,6 @@ export const MODEL = {
   LIFECYCLE_STAGE: 'lifecycleStages',
   CONTACT_STATUS: 'conatactStatus',
   DEAL: 'deals',
+  TAX_CALCULATION: 'taxCalculations',
   DEAL_VIEW: 'dealViews',
 };
