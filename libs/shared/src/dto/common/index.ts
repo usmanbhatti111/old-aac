@@ -13,3 +13,6 @@ export * from './media.dto';
 export * from './activity-log.dto';
 export * from './activity-log.dto';
 export * from './media.dto';
+export * from './activity-log.dto';
+export * from './activity-log.dto';
+export * from './media.dto';

@@ -42,6 +42,7 @@ import {
   FilterPurchaseOrderRecievedDto,
   GetPurchasesAssociationResponseOrderDto,
   DeleteAssociatePurchaseOrderDto,
+  AddPurchaseOrderApprover,
   AssociatePurchaseOrderDto,
   AddPurchaseOrderApprover,
 } from '@shared/dto';
