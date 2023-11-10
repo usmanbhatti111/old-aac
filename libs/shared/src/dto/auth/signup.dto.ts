@@ -23,9 +23,9 @@ export class SignupDto {
   @IsOptional()
   products?: [];
 
-  @ApiProperty({ type: String })
+  @ApiProperty({ type: Number })
   @IsOptional()
-  organization?: string;
+  crn?: number;
 
   @ApiProperty({
     uniqueItems: true,
@@ -42,9 +42,33 @@ export class SignupDto {
   phoneNumber: string;
 
   @ApiProperty({
+    example: '100-200',
+  })
+  @IsNotEmpty()
+  numberOfEmployees: string;
+
+  @ApiProperty({
+    example: false,
+  })
+  @IsNotEmpty()
+  enableEmployeeVerification: boolean;
+
+  @ApiProperty({
     minLength: 8,
     example: 'Test111@',
   })
   @IsNotEmpty()
   password: string;
+
+  organization?: string;
+  cognitoId?: string;
+}
+
+export class ForceConfirmDto {
+  @ApiProperty({
+    uniqueItems: true,
+    example: 'test@example.com',
+  })
+  @IsNotEmpty()
+  email: string;
 }

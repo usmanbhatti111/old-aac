@@ -72,7 +72,6 @@ export class ProductsController {
     return response;
   }
 
-  @Auth(true)
   @Get(API_ENDPOINTS.PRODUCTS.GET_PRODUCTS)
   @ApiOkResponse({ type: GetProductsResponseDto })
   public async getProducts(

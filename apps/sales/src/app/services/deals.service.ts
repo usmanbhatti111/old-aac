@@ -8,9 +8,12 @@ import {
   OrganizationRepository,
   SalesProductRepository,
   TicketRepository,
+  NoteRepository,
+  TaskRepository,
 } from '@shared';
 import {
   EDealProbabilityStage,
+  EExportFile,
   EIsDeletedStatus,
   MODEL,
   ResponseMessage,
@@ -18,6 +21,8 @@ import {
 } from '@shared/constants';
 import {
   CreateDealDto,
+  DealNoteDto,
+  DealTaskDto,
   DeleteDealsDto,
   GetDealsGridtViewDto,
   GetDealsListViewDto,
@@ -27,6 +32,7 @@ import {
 } from '@shared/dto';
 
 import { DealAssociationDto, IdDto } from '@shared/dto';
+import { DownloadService } from '@shared/services';
 import dayjs from 'dayjs';
 
 @Injectable()
@@ -38,7 +44,10 @@ export class DealsService {
     private readonly contactRepository: ContactRepository,
     private readonly attachmentRepository: AttachmentRepository,
     private readonly ticketRepository: TicketRepository,
-    private readonly organizationRepository: OrganizationRepository
+    private readonly organizationRepository: OrganizationRepository,
+    private readonly noteRepository: NoteRepository,
+    private readonly taskRepository: TaskRepository,
+    private readonly downloadService: DownloadService
   ) {}
 
   async createDeal(payload: CreateDealDto) {
@@ -247,6 +256,57 @@ export class DealsService {
         pipelines,
       });
 
+      if (payload?.downloadType) {
+        if (!(payload?.downloadType in EExportFile))
+          throw new BadRequestException('Invaid download format');
+
+        const deals = res?.deals;
+        const response = [];
+
+        if (!deals?.length) {
+          throw new BadRequestException('No Data Available');
+        }
+
+        for (let i = 0; i < deals.length; i++) {
+          const data = deals[i];
+
+          const deal = {};
+
+          deal['S. No'] = i + 1;
+          deal['Name'] = data?.name;
+          deal['Owner Name'] = data?.dealOwner?.name;
+          deal['Owner Email'] = data?.dealOwner?.email;
+          deal['Close Date'] = dayjs(data?.closeDate).format('MMMM D, YYYY');
+          deal['Amount'] = data?.amount;
+          deal['Deal Pipeline'] = data?.dealPipeline;
+          deal['Deal Stage'] = data?.dealStage;
+
+          response.push(deal);
+        }
+
+        // excel response
+        if (payload?.downloadType === EExportFile.XLS) {
+          const xlsxBuffer = await this.downloadService.convertToXlsx(response);
+
+          return successResponse(
+            HttpStatus.OK,
+            ResponseMessage.SUCCESS,
+            xlsxBuffer
+          );
+        }
+
+        // csv response
+        if (payload?.downloadType === EExportFile.CSV) {
+          const csvStream = this.downloadService.convertToCsv(response);
+
+          return successResponse(
+            HttpStatus.OK,
+            ResponseMessage.SUCCESS,
+            csvStream
+          );
+        }
+      }
+
       const response = successResponse(
         HttpStatus.OK,
         ResponseMessage.SUCCESS,
@@ -414,16 +474,101 @@ export class DealsService {
 
   async associateDeal(payload: DealAssociationDto) {
     try {
-      const filter = { _id: payload.dealId, isDeleted: false };
+      const filter = { _id: payload?.dealId, isDeleted: false };
 
       const res = await this.dealsRepository.findOneAndUpdate(filter, {
         $push: {
-          productsIds: payload.productId,
-          contactsIds: payload.contactId,
-          quotesIds: payload.quoteId,
-          companiesIds: payload.companyId,
-          ticketsIds: payload.ticketId,
-          attachmentsIds: payload.attachmentId,
+          productsIds: payload?.productId,
+          contactsIds: payload?.contactId,
+          quotesIds: payload?.quoteId,
+          companiesIds: payload?.companyId,
+          ticketsIds: payload?.ticketId,
+          attachmentsIds: payload?.attachmentId,
+        },
+      });
+
+      return successResponse(HttpStatus.OK, ResponseMessage.SUCCESS, res);
+    } catch (error) {
+      throw new RpcException(error);
+    }
+  }
+
+  async disassociateDeal(payload: DealAssociationDto) {
+    try {
+      const filter = { _id: payload?.dealId, isDeleted: false };
+
+      const res = await this.dealsRepository.findOneAndUpdate(filter, {
+        $pull: {
+          productsIds: payload?.productId,
+          contactsIds: payload?.contactId,
+          quotesIds: payload?.quoteId,
+          companiesIds: payload?.companyId,
+          ticketsIds: payload?.ticketId,
+          attachmentsIds: payload?.attachmentId,
+        },
+      });
+
+      return successResponse(HttpStatus.OK, ResponseMessage.SUCCESS, res);
+    } catch (error) {
+      throw new RpcException(error);
+    }
+  }
+
+  async addTask(payload: DealTaskDto) {
+    try {
+      const filter = { _id: payload?.dealId, isDeleted: false };
+
+      const res = await this.dealsRepository.findOneAndUpdate(filter, {
+        $push: {
+          tasksIds: payload?.taskId,
+        },
+      });
+
+      return successResponse(HttpStatus.OK, ResponseMessage.SUCCESS, res);
+    } catch (error) {
+      throw new RpcException(error);
+    }
+  }
+
+  async deleteTask(payload: DealTaskDto) {
+    try {
+      const filter = { _id: payload?.dealId, isDeleted: false };
+
+      const res = await this.dealsRepository.findOneAndUpdate(filter, {
+        $pull: {
+          tasksIds: payload?.taskId,
+        },
+      });
+
+      return successResponse(HttpStatus.OK, ResponseMessage.SUCCESS, res);
+    } catch (error) {
+      throw new RpcException(error);
+    }
+  }
+
+  async addNote(payload: DealNoteDto) {
+    try {
+      const filter = { _id: payload?.dealId, isDeleted: false };
+
+      const res = await this.dealsRepository.findOneAndUpdate(filter, {
+        $push: {
+          notesIds: payload?.noteId,
+        },
+      });
+
+      return successResponse(HttpStatus.OK, ResponseMessage.SUCCESS, res);
+    } catch (error) {
+      throw new RpcException(error);
+    }
+  }
+
+  async deleteNote(payload: DealNoteDto) {
+    try {
+      const filter = { _id: payload?.dealId, isDeleted: false };
+
+      const res = await this.dealsRepository.findOneAndUpdate(filter, {
+        $pull: {
+          notesIds: payload?.noteId,
         },
       });
 
@@ -563,27 +708,6 @@ export class DealsService {
     }
   }
 
-  async disassociateDeal(payload: DealAssociationDto) {
-    try {
-      const filter = { _id: payload.dealId, isDeleted: false };
-
-      const res = await this.dealsRepository.findOneAndUpdate(filter, {
-        $pull: {
-          productsIds: payload.productId,
-          contactsIds: payload.contactId,
-          quotesIds: payload.quoteId,
-          companiesIds: payload.companyId,
-          ticketsIds: payload.ticketId,
-          attachmentsIds: payload.attachmentId,
-        },
-      });
-
-      return successResponse(HttpStatus.OK, ResponseMessage.SUCCESS, res);
-    } catch (error) {
-      throw new RpcException(error);
-    }
-  }
-
   async restoreDealAction(payload: RestoreDealActionDto) {
     try {
       const { id, deletedBy, action } = payload;
@@ -617,7 +741,7 @@ export class DealsService {
 
   async populateAssociations(payload: IdDto) {
     try {
-      const filter = { _id: payload.id, isDeleted: false };
+      const filter = { _id: payload.id, isDeleted: EIsDeletedStatus.ACTIVE };
       const deal = await this.dealsRepository.findOne(filter);
       const res = {};
       res['products'] = await this.salesProductRepository.find({
@@ -638,8 +762,104 @@ export class DealsService {
       res['tickets'] = await this.ticketRepository.find({
         _id: { $in: deal.ticketsIds },
       });
-
       return successResponse(HttpStatus.OK, ResponseMessage.SUCCESS, res);
+    } catch (error) {
+      throw new RpcException(error);
+    }
+  }
+
+  async dealPreview(payload: IdDto) {
+    try {
+      const { id } = payload;
+
+      const filter = { _id: id, isDeleted: EIsDeletedStatus.ACTIVE };
+
+      const res = await this.dealsRepository.findOne(filter);
+
+      res['contacts'] = await this.contactRepository.find({
+        _id: { $in: res.contactsIds },
+      });
+
+      res['companies'] = await this.organizationRepository.find({
+        _id: { $in: res.companiesIds },
+      });
+
+      res['tickets'] = await this.ticketRepository.find({
+        _id: { $in: res.ticketsIds },
+      });
+
+      res['products'] = await this.salesProductRepository.find({
+        _id: { $in: res.productsIds },
+      });
+
+      // res['quotes'] = await this..find({
+      // _id: { $in: res.quotesIds },
+      // });
+
+      res['attachments'] = await this.attachmentRepository.find({
+        _id: { $in: res.attachmentsIds },
+      });
+
+      const response = successResponse(
+        HttpStatus.OK,
+        ResponseMessage.SUCCESS,
+        res
+      );
+
+      return response;
+    } catch (error) {
+      throw new RpcException(error);
+    }
+  }
+
+  async getNotes(payload: IdDto) {
+    try {
+      const pipeline = [
+        {
+          $match: {
+            _id: payload?.id,
+            isDeleted: false,
+          },
+        },
+        {
+          $lookup: {
+            from: 'notes',
+            localField: 'notesIds',
+            foreignField: '_id',
+            as: 'notes',
+          },
+        },
+      ];
+
+      const deal = await this.dealsRepository.aggregate(pipeline);
+      return successResponse(HttpStatus.OK, ResponseMessage.SUCCESS, deal);
+    } catch (error) {
+      throw new RpcException(error);
+    }
+  }
+
+  async getTasks(payload: IdDto) {
+    try {
+      const pipeline = [
+        {
+          $match: {
+            _id: payload?.id,
+            isDeleted: false,
+          },
+        },
+        {
+          $lookup: {
+            from: 'tasks',
+            localField: 'tasksIds',
+            foreignField: '_id',
+            as: 'tasks',
+          },
+        },
+      ];
+
+      const deal = await this.dealsRepository.aggregate(pipeline);
+
+      return successResponse(HttpStatus.OK, ResponseMessage.SUCCESS, deal);
     } catch (error) {
       throw new RpcException(error);
     }

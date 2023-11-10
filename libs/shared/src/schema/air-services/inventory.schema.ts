@@ -19,6 +19,12 @@ export class Inventory extends AbstractSchema {
   deviceIds: [string];
 
   @Prop({
+    type: [SchemaTypes.ObjectId],
+    required: false,
+  })
+  contractIds: [string];
+
+  @Prop({
     type: SchemaTypes.ObjectId,
     required: false,
   })
@@ -60,6 +66,9 @@ export class Inventory extends AbstractSchema {
     required: false,
   })
   attachments: string[];
+
+  @Prop()
+  installationDate: Date;
 }
 
 export const InventorySchema = SchemaFactory.createForClass(Inventory);

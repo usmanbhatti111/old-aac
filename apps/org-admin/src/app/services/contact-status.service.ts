@@ -48,10 +48,8 @@ export class ContactStatusService {
         ];
       }
 
-      let { limit, page } = payload;
-      limit = limit ? limit : 10;
-      page = page ? page : 1;
-      const offset = limit * (page - 1);
+      const limit = payload?.limit || 10;
+      const offset = payload?.page || 1;
 
       const res = await this.contactStateRepository.paginate({
         filterQuery,

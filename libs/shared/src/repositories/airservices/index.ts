@@ -5,3 +5,8 @@ export * from './ticket.repository';
 export * from './task-management.repository';
 export * from './contract.repository';
 export * from './task-activity.repository';
+export * from './software-users-repository';
+export * from './dashboard.repository';
+export * from './report-widgets.repository';
+export * from './articles.repository';
+export * from './purchase-approval.repository';

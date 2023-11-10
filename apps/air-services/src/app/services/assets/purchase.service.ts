@@ -4,19 +4,29 @@ import {
   successResponse,
   ResponseMessage,
 } from '@shared/constants';
-import { PurchaseRepository, mongooseDateFilter } from '@shared';
+import {
+  PurchaseRepository,
+  mongooseDateFilter,
+  PurchaseApprovalRepository,
+} from '@shared';
 import {
   DeletePurchaseOrderDto,
   UpdatePurchaseOrderDto,
   IdDTO,
+  AddPurchaseOrderApprover,
+  FilterPurchaseOrderRecievedDto,
   FilterPurchaseOrderDto,
+  ApproverStatusDto,
 } from '@shared/dto';
 
 import { Types } from 'mongoose';
 import { RpcException } from '@nestjs/microservices';
 @Injectable()
 export class PurchaseOrderService {
-  constructor(private purchaseRepository: PurchaseRepository) {}
+  constructor(
+    private purchaseRepository: PurchaseRepository,
+    private purchaseApprovalRepository: PurchaseApprovalRepository
+  ) {}
   async addPurchaseOrder(payload: any) {
     try {
       if (Array.isArray(payload.purchaseDetails)) {
@@ -34,7 +44,6 @@ export class PurchaseOrderService {
       } else {
         payload.subTotal = 0;
       }
-
       const res = await this.purchaseRepository.create({ ...payload });
       return successResponse(HttpStatus.CREATED, 'Success', res);
     } catch (error) {
@@ -75,6 +84,7 @@ export class PurchaseOrderService {
       throw new RpcException(error);
     }
   }
+
   async getPurchaseOrderList(payload: FilterPurchaseOrderDto) {
     try {
       const {
@@ -147,6 +157,96 @@ export class PurchaseOrderService {
         }
       );
       return successResponse(HttpStatus.OK, ResponseMessage.SUCCESS, response);
+    } catch (error) {
+      throw new RpcException(error);
+    }
+  }
+  async updatePurchaseOrderStatus(payload: any) {
+    try {
+      const { id, status } = payload;
+      const data = await this.purchaseRepository.findOneAndUpdate(
+        { _id: id.id },
+        { status }
+      );
+      const response = successResponse(
+        HttpStatus.OK,
+        `PurchaseOrder Edit Successfully`,
+        data
+      );
+      return response;
+    } catch (error) {
+      throw new RpcException(error);
+    }
+  }
+
+  async addPurchaseOrderApprover(payload: {
+    id: IdDTO;
+    createdBy: string;
+    purchaseId: AddPurchaseOrderApprover;
+  }) {
+    try {
+      const { id } = payload.id;
+      const { createdBy } = payload;
+      const { purchaseId } = payload.purchaseId;
+      const orderexsit = await this.purchaseRepository.findOne({
+        _id: purchaseId,
+      });
+      if (orderexsit) {
+        const data = await this.purchaseApprovalRepository.create({
+          approverId: id,
+          createdBy: createdBy,
+          purchaseId: purchaseId,
+        });
+        const response = successResponse(
+          HttpStatus.CREATED,
+          `PurchaseOrder Approver sent seccessfully`,
+          data
+        );
+
+        return response;
+      } else {
+        throw new RpcException('purhchase order not found');
+      }
+    } catch (error) {
+      throw new RpcException(error);
+    }
+  }
+  async getPurchaseOrderRecived(payload: FilterPurchaseOrderRecievedDto) {
+    try {
+      const { page, limit, status } = payload;
+
+      const filterQuery = {};
+      const pipeline = [];
+      if (status) {
+        filterQuery['status'] = status;
+      }
+      const res = await this.purchaseRepository.newPaginate(
+        filterQuery,
+        pipeline,
+        {
+          page,
+          limit,
+        }
+      );
+      return successResponse(HttpStatus.OK, ResponseMessage.SUCCESS, res);
+    } catch (error) {
+      throw new RpcException(error);
+    }
+  }
+  async updatePurchaseOrderApprover(payload: ApproverStatusDto) {
+    try {
+      const { id } = payload;
+
+      const data = await this.purchaseApprovalRepository.findOneAndUpdate(
+        { _id: id },
+        payload
+      );
+      const response = successResponse(
+        HttpStatus.OK,
+        `PurchaseOrder Edit Successfully`,
+        data
+      );
+      return response;
     } catch (error) {
       throw new RpcException(error);
     }

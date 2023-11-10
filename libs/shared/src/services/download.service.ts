@@ -4,17 +4,20 @@ import {
   HttpStatus,
   Injectable,
 } from '@nestjs/common';
-import * as fastCsv from 'fast-csv';
 import * as xlsx from 'xlsx';
 import { EExportFile } from '../constants/enums';
 
 @Injectable()
 export class DownloadService {
   convertToCsv(data: any[]) {
-    const csvStream = fastCsv.format({ headers: true });
-    data.forEach((row) => csvStream.write(row));
-    csvStream.end();
-    return csvStream;
+    const worksheet = xlsx.utils.json_to_sheet(data);
+    const workbook = xlsx.utils.book_new();
+    xlsx.utils.book_append_sheet(workbook, worksheet, 'Data');
+    const csvBuffer = xlsx.write(workbook, {
+      bookType: 'csv',
+      type: 'buffer',
+    });
+    return csvBuffer;
   }
 
   convertToXlsx(data: any[]) {
@@ -87,9 +90,10 @@ export class DownloadService {
     }
     if (type === EExportFile.CSV) {
       const csvStream = this.convertToCsv(data);
-      res.setHeader('Content-Type', 'text/csv');
-      res.setHeader('Content-Disposition', 'attachment; filename="data.csv"');
-      csvStream.pipe(res);
+      res.setHeader('Content-Type', 'application/vnd.openxmlformats');
+      res.setHeader('Content-Disposition', 'attachment; filename=data.csv');
+      res.write(csvStream, 'binary');
+      res.end(null, 'binary');
     } else if (type === EExportFile.XLS) {
       const xlsxBuffer = this.convertToXlsx(data);
       res.setHeader(
@@ -97,7 +101,8 @@ export class DownloadService {
         'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
       );
       res.setHeader('Content-Disposition', 'attachment; filename="data.xlsx"');
-      res.send(xlsxBuffer);
+      res.write(xlsxBuffer, 'binary');
+      res.end(null, 'binary');
     } else {
       throw new HttpException('Invalid format', HttpStatus.BAD_REQUEST);
     }

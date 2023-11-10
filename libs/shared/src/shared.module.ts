@@ -26,6 +26,7 @@ import {
   PaymentRepository,
   PermissionRepository,
   PlanProductFeatureRepository,
+  PurchaseApprovalRepository,
   PlanProductModulePermissionRepository,
   PlanRepository,
   PlanTypeRepository,
@@ -47,13 +48,21 @@ import {
   UserRepository,
   AttachmentRepository,
   ContactCallRepository,
+  SoftwareUsersRepository,
+  ActivityLogRepository,
+  DashboardRepository,
+  ReportsWidgetRepository,
+  ArticlesRepository,
   ContactMeetingRepository,
   DealsRepository,
   NoteRepository,
+  TaxCalculationRepository,
+  DealViewsRepository,
+  ActivitylogsRepository,
 } from '../src/repositories/index';
 import { MongooseConfig } from './config/mongo.config';
 import { SharedService } from './shared.service';
-import { DownloadService, S3Service } from './services';
+import { DownloadService, EmailService, S3Service } from './services';
 
 @Module({
   imports: [
@@ -95,6 +104,7 @@ import { DownloadService, S3Service } from './services';
     PermissionRepository,
     UserORepository,
     TaskManagementRepository,
+    PurchaseApprovalRepository,
     UserORepository,
     ContactRepository,
     PlanTypeRepository,
@@ -114,9 +124,15 @@ import { DownloadService, S3Service } from './services';
     AttachmentRepository,
     ContactCallRepository,
     LifecycleStagesRepository,
+    SoftwareUsersRepository,
+    DashboardRepository,
+    ReportsWidgetRepository,
     ContactMeetingRepository,
     DealsRepository,
     NoteRepository,
+    TaxCalculationRepository,
+    DealViewsRepository,
+    ActivitylogsRepository,
     {
       provide: 'S3',
       useFactory: (config: ConfigService) =>
@@ -131,6 +147,9 @@ import { DownloadService, S3Service } from './services';
     },
     S3Service,
     DownloadService,
+    ActivityLogRepository,
+    ArticlesRepository,
+    EmailService,
   ],
   exports: [
     SharedService,
@@ -166,6 +185,7 @@ import { DownloadService, S3Service } from './services';
     PermissionRepository,
     UserORepository,
     TaskManagementRepository,
+    DashboardRepository,
     UserORepository,
     ContactRepository,
     PlanTypeRepository,
@@ -185,11 +205,20 @@ import { DownloadService, S3Service } from './services';
     ContactStateRepository,
     ContactCallRepository,
     LifecycleStagesRepository,
+    ReportsWidgetRepository,
+    SoftwareUsersRepository,
+    ActivityLogRepository,
+    ArticlesRepository,
     ContactMeetingRepository,
     DealPipelineRepository,
     SalesProductRepository,
     DealsRepository,
     NoteRepository,
+    ActivitylogsRepository,
+    PurchaseApprovalRepository,
+    EmailService,
+    TaxCalculationRepository,
+    DealViewsRepository,
   ],
 })
 export class SharedModule {}

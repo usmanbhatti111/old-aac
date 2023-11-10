@@ -35,18 +35,9 @@ export class ProductFeaturesService {
     try {
       const filterQuery = { isDeleted: false };
 
-      const { productId, search } = payload;
+      const { productId } = payload;
       if (productId) {
         filterQuery['productId'] = new mongoose.Types.ObjectId(productId);
-      }
-
-      if (search) {
-        filterQuery['$or'] = [
-          {
-            name: { $regex: search, $options: 'i' },
-            description: { $regex: search, $options: 'i' },
-          },
-        ];
       }
 
       const productPipline = [
@@ -71,22 +62,29 @@ export class ProductFeaturesService {
             product: 0,
           },
         },
-        {
-          $match: {
-            productName: {
-              $regex: payload?.search ? payload.search : '',
-              $options: 'i',
-            },
-          },
-        },
       ];
 
-      const pipelines = [...productPipline];
+      let searchPipline = [];
+      if (payload?.search) {
+        const search = { $regex: payload.search, $options: 'i' };
 
-      let { limit, page } = payload;
-      limit = limit ? limit : 10;
-      page = page ? page : 1;
-      const offset = limit * (page - 1);
+        searchPipline = [
+          {
+            $match: {
+              $or: [
+                { name: search },
+                { description: search },
+                { productName: search },
+              ],
+            },
+          },
+        ];
+      }
+
+      const pipelines = [...productPipline, ...searchPipline];
+
+      const limit = payload?.limit || 10;
+      const offset = payload?.page || 1;
 
       const res = await this.productFeaturesRepository.paginate({
         filterQuery,

@@ -41,6 +41,11 @@ export enum EPurchaseOrderStatus {
   CLOSED = 'CLOSED',
   REJECTED = 'REJECTED',
 }
+export enum EApprovalStatusStatus {
+  PENDING = 'PENDING',
+  APPROVE = 'APPROVE',
+  REJECT = 'REJECTED',
+}
 export enum EExtendRenewStatus {
   EXTEND = 'EXTEND',
   RENEW = 'RENEW',
@@ -95,6 +100,13 @@ export enum BillingCycleEnum {
   QUARTERLY = 'QUARTERLY',
   HALF_YEARLY = 'HALF_YEARLY',
   YEARLY = 'YEARLY',
+  ONE_TIME = 'ONE_TIME',
+}
+
+export enum LicenceTypeEnum {
+  VOLUME = 'VOLUME',
+  ENTERPRISE = 'ENTERPRISE',
+  TRAIL = 'TRAIL',
 }
 
 export enum ProductDropDown {
@@ -163,12 +175,12 @@ export enum ContactAssociationEnum {
 }
 
 export enum AssetSoftwareCreatedAtEnum {
-  NONE = 'None',
-  ALL_TIME = 'AllTime',
-  TODAY = 'Today',
-  YESTERDAY = 'Yesterday',
-  PREVIOUS_WEEK = 'PreviousWeek',
-  PREVIOUS_MONTH = 'PreviousMonth',
+  NONE = 'NONE',
+  ALL_TIME = 'ALL_TIME',
+  TODAY = 'TODAY',
+  YESTERDAY = 'YESTERDAY',
+  PREVIOUS_WEEK = 'PREVIOUS_WEEK',
+  PREVIOUS_MONTH = 'PREVIOUS_MONTH',
 }
 export enum ETaskType {
   CALL = 'Call',
@@ -185,6 +197,19 @@ export enum ETaskStatus {
   PENDING = 'Pending',
   INPROGRESS = 'Inprogress',
   COMPLETED = 'Complete',
+}
+
+export enum ETicketsTaskStatus {
+  TODO = 'Todo',
+  IN_PROGRESS = 'In-Progress',
+  DONE = 'Done',
+}
+
+export enum ETaskNotifyStatus {
+  FIVE_MINS = '5',
+  TEN_MINS = '10',
+  FIFTEEN_MINS = '15',
+  THIRTY_MINS = '30',
 }
 
 export enum ETaskAssociate {
@@ -211,7 +236,7 @@ export enum EContractStatus {
   TERMINATED = 'TERMINATED',
 }
 
-export enum EContractExpiry {
+export enum EMongooseDateFilter {
   NONE = 'NONE',
   ALL_TIME = 'ALL_TIME',
   TODAY = 'TODAY',
@@ -232,6 +257,14 @@ export enum ECardTypes {
   VISA = 'VISA',
 }
 
+export enum EFolderType {
+  KNOWLEDGE_BASE = 'KNOWLEDGE_BASE',
+}
+
+export enum EArticlesStatus {
+  DRAFT = 'DRAFT',
+  PUBLISHED = 'PUBLISHED',
+}
 export enum EBillingFrequency {
   MONTHLY = 'monthly',
   QUARTERLY = 'quarterly',
@@ -271,4 +304,59 @@ export enum EIsDeletedStatus {
   ACTIVE = 'ACTIVE',
   SOFT_DELETED = 'SOFT_DELETED',
   HARD_DELETED = 'HARD_DELETED',
+}
+
+export enum ETaxApplyOn {
+  INVOICE = 'invoice',
+  QUOTES = 'quotes',
+  SUBSCRIPTIONS = 'subscriptions',
+  PRODUCTS = 'products',
+}
+
+export enum EDealViewSharedWith {
+  PRIVATE = 'PRIVATE',
+  MY_TEAM = 'MY_TEAM',
+  EVERYONE = 'EVERYONE',
+}
+
+export enum EActivityType {
+  CREATED = 'CREATED',
+  RETRIEVE = 'RETRIEVE',
+  UPDATED = 'UPDATED',
+  DELETED = 'DELETED',
+  UPLOADED = 'UPLOADED',
+  ASSOCIATED = 'ASSOCIATED',
+}
+
+export enum EActivitylogModule {
+  USERS = 'USERS',
+  TICKETS = 'TICKETS',
+  PRODUCTS = 'PRODUCTS',
+  ORGANIZATION = 'ORGANIZATION',
+  PLANS = 'PLANS',
+  PLAN_TYPES = 'PLAN_TYPES',
+  ORGANIZATION_PLAN = 'ORGANIZATION_PLAN',
+  INVOICES = 'INVOICES',
+  INVENTORIES = 'INVENTORIES',
+  FILES = 'FILES',
+  FEATURES = 'FEATURES',
+  FAQS = 'FAQS',
+  EXPENSES = 'EXPENSES',
+  JOBS = 'JOBS',
+  PERMISSIONS = 'PERMISSIONS',
+  ROLES_RIGHTS = 'ROLES_RIGHTS',
+  PROPERTIES = 'PROPERTIES',
+  OPERATIONS = 'OPERATIONS',
+  DEALS = 'DEALS',
+  DEAL_PIPELINES = 'DEAL_PIPELINES',
+  FORECAST = 'FORECAST',
+  QUOTES = 'QUOTES',
+  ATTACHMENTS = 'ATTACHMENTS',
+  NOTES = 'NOTES',
+  TASKS = 'TASKS',
+  CONTACTS = 'CONTACTS',
+  CONTRACTS = 'CONTRACTS',
+  CALLS = 'CALLS',
+  MEETINGS = 'MEETINGS',
+  EMAILS = 'EMAILS',
 }

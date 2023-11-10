@@ -3,11 +3,16 @@ import { IsMongoId, IsNotEmpty } from 'class-validator';
 
 export interface IOrganization {
   logoUrl?: string;
-  registrationNumber?: string;
+  crn?: string;
   name: string;
   email?: string;
   phoneNo?: string;
-  address?: string;
+  address?: {
+    street: string;
+    city: string;
+    state: string;
+    postalCode: string;
+  };
   postCode?: string;
   createdAt?: Date;
   updatedAt?: Date;
@@ -21,7 +26,7 @@ export class CreateOrganizationDto {
   @ApiProperty({
     example: '8C68902',
   })
-  registrationNumber: string;
+  crn: string;
 
   @ApiProperty({
     example: 'Orcalo Holdings',
@@ -44,10 +49,15 @@ export class CreateOrganizationDto {
 
   @ApiProperty({
     required: true,
-    example: 'Street#234 ',
+    example: {
+      street: 'address',
+      city: 'city',
+      state: 'state',
+      postalCode: 'AN213',
+    },
   })
   @IsNotEmpty()
-  address: string;
+  address: object;
 
   @ApiProperty({
     required: true,
@@ -77,7 +87,7 @@ export class OrganizationDto {
   @ApiProperty({
     example: '8C68902',
   })
-  registrationNumber: string;
+  crn: string;
 
   @ApiProperty({
     example: 'Orcalo Holdings',

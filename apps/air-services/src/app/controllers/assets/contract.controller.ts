@@ -7,6 +7,9 @@ import {
   ExtendRenewContractDTO,
   GetContactsDto,
   CreateContractDTO,
+  IdDto,
+  AddAssetToContractDto,
+  DeleteAssetToContractDto,
 } from '@shared/dto';
 @Controller()
 export class ContractController {
@@ -25,6 +28,28 @@ export class ContractController {
   })
   async updateContract(@Payload() payload: UpdateContractDTO) {
     return await this.contractService.updateContract(payload);
+  }
+  @MessagePattern(RMQ_MESSAGES.AIR_SERVICES.CONTRACT.ADD_CONTRACTS_ASSET)
+  addContractsAsset(
+    @Payload() payload: { id: IdDto; contractIds: AddAssetToContractDto }
+  ) {
+    return this.contractService.addContractsAsset(payload);
+  }
+  @MessagePattern(
+    RMQ_MESSAGES.AIR_SERVICES.CONTRACT.UPDATE_CONTRACT_SUBMITTED_STATUS
+  )
+  updateSubmittedApproval(@Payload() payload: { id: IdDto }) {
+    return this.contractService.updateSubmittedApproval(payload);
+  }
+  @MessagePattern(RMQ_MESSAGES.AIR_SERVICES.CONTRACT.APPROVE_CONTRACT)
+  approveContract(@Payload() payload: { id: IdDto }) {
+    return this.contractService.approveContract(payload);
+  }
+  @MessagePattern(RMQ_MESSAGES.AIR_SERVICES.CONTRACT.DELETE_CONTRACTS_ASSET)
+  deleteContractsAsset(
+    @Payload() payload: { id: IdDto; assetsIds: DeleteAssetToContractDto }
+  ) {
+    return this.contractService.deleteContractsAsset(payload);
   }
   @MessagePattern({
     cmd: RMQ_MESSAGES.AIR_SERVICES.CONTRACT.RENEW_EXTEND_CONTRACT,

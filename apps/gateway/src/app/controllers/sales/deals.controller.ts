@@ -9,6 +9,7 @@ import {
   Post,
   Query,
   Req,
+  Res,
 } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
 import {
@@ -21,6 +22,7 @@ import {
   API_ENDPOINTS,
   API_TAGS,
   CONTROLLERS,
+  EExportFile,
   RMQ_MESSAGES,
   SERVICES,
 } from '@shared/constants';
@@ -29,6 +31,10 @@ import {
   CreateDealResponseDto,
   DealAssociationDto,
   DealAssociationResponseDto,
+  DealNoteDto,
+  DealNotesResponseDto,
+  DealTaskDto,
+  DealTasksResponseDto,
   DeleteDealsDto,
   DeleteDealsResponseDto,
   GetDealsGridtViewDto,
@@ -42,6 +48,7 @@ import {
   UpdateDealDto,
   UpdateDealResponseDto,
 } from '@shared/dto';
+import { Response } from 'express';
 import { firstValueFrom } from 'rxjs';
 import { Auth } from '../../decorators/auth.decorator';
 import { AppRequest } from '../../shared/interface/request.interface';
@@ -52,8 +59,36 @@ import { AppRequest } from '../../shared/interface/request.interface';
 export class DealsController {
   constructor(
     @Inject(SERVICES.SALES)
-    private orgAdminService: ClientProxy
+    private salesService: ClientProxy
   ) {}
+
+  @Auth(true)
+  @Get(API_ENDPOINTS.SALES.DEAL_VIEWS.GET_NOTES)
+  @ApiOkResponse({ type: DealAssociationResponseDto })
+  public async getNotes(
+    @Req() request: AppRequest,
+    @Param() payload: IdDto
+  ): Promise<DealAssociationResponseDto> {
+    const response = await firstValueFrom(
+      this.salesService.send(RMQ_MESSAGES.SALES.DEAL_VIEWS.GET_NOTES, payload)
+    );
+
+    return response;
+  }
+
+  @Auth(true)
+  @Get(API_ENDPOINTS.SALES.DEAL_VIEWS.GET_TASKS)
+  @ApiOkResponse({ type: DealAssociationResponseDto })
+  public async getTasks(
+    @Req() request: AppRequest,
+    @Param() payload: IdDto
+  ): Promise<DealAssociationResponseDto> {
+    const response = await firstValueFrom(
+      this.salesService.send(RMQ_MESSAGES.SALES.DEAL_VIEWS.GET_TASKS, payload)
+    );
+
+    return response;
+  }
 
   @Auth(true)
   @Patch(API_ENDPOINTS.SALES.DEALS.CREATE_ASSOCIATION)
@@ -63,13 +98,14 @@ export class DealsController {
     @Body() payload: DealAssociationDto
   ): Promise<DealAssociationResponseDto> {
     const response = await firstValueFrom(
-      this.orgAdminService.send(
+      this.salesService.send(
         RMQ_MESSAGES.SALES.DEALS.CREATE_ASSOCIATION,
         payload
       )
     );
     return response;
   }
+
   @Auth(true)
   @Patch(API_ENDPOINTS.SALES.DEALS.DELETE_ASSOCIATION)
   @ApiOkResponse({ type: DealAssociationResponseDto })
@@ -78,10 +114,60 @@ export class DealsController {
     @Body() payload: DealAssociationDto
   ): Promise<DealAssociationResponseDto> {
     const response = await firstValueFrom(
-      this.orgAdminService.send(
+      this.salesService.send(
         RMQ_MESSAGES.SALES.DEALS.DELETE_ASSOCIATION,
         payload
       )
+    );
+    return response;
+  }
+
+  @Auth(true)
+  @Patch(API_ENDPOINTS.SALES.DEALS.ADD_TASK)
+  @ApiOkResponse({ type: DealTasksResponseDto })
+  public async addTask(
+    @Req() request: AppRequest,
+    @Body() payload: DealTaskDto
+  ): Promise<DealTasksResponseDto> {
+    const response = await firstValueFrom(
+      this.salesService.send(RMQ_MESSAGES.SALES.DEAL_VIEWS.ADD_TASK, payload)
+    );
+    return response;
+  }
+  @Auth(true)
+  @Patch(API_ENDPOINTS.SALES.DEALS.DELETE_TASK)
+  @ApiOkResponse({ type: DealTasksResponseDto })
+  public async deleteTask(
+    @Req() request: AppRequest,
+    @Body() payload: DealTaskDto
+  ): Promise<DealTasksResponseDto> {
+    const response = await firstValueFrom(
+      this.salesService.send(RMQ_MESSAGES.SALES.DEAL_VIEWS.DELETE_TASK, payload)
+    );
+    return response;
+  }
+
+  @Auth(true)
+  @Patch(API_ENDPOINTS.SALES.DEALS.ADD_NOTE)
+  @ApiOkResponse({ type: DealNotesResponseDto })
+  public async addNote(
+    @Req() request: AppRequest,
+    @Body() payload: DealNoteDto
+  ): Promise<DealNotesResponseDto> {
+    const response = await firstValueFrom(
+      this.salesService.send(RMQ_MESSAGES.SALES.DEAL_VIEWS.ADD_NOTE, payload)
+    );
+    return response;
+  }
+  @Auth(true)
+  @Patch(API_ENDPOINTS.SALES.DEALS.DELETE_NOTE)
+  @ApiOkResponse({ type: DealNotesResponseDto })
+  public async deleteNote(
+    @Req() request: AppRequest,
+    @Body() payload: DealNoteDto
+  ): Promise<DealNotesResponseDto> {
+    const response = await firstValueFrom(
+      this.salesService.send(RMQ_MESSAGES.SALES.DEAL_VIEWS.DELETE_NOTE, payload)
     );
     return response;
   }
@@ -91,18 +177,43 @@ export class DealsController {
   @ApiOkResponse({ type: GetDealsListViewResponseDto })
   public async getDealsListVew(
     @Req() request: AppRequest,
-    @Query() payload: GetDealsListViewDto
-  ): Promise<GetDealsListViewResponseDto> {
+    @Query() payload: GetDealsListViewDto,
+    @Res() res: Response
+  ) {
     payload.userId = request?.user?._id;
 
     const response = await firstValueFrom(
-      this.orgAdminService.send(
+      this.salesService.send(
         RMQ_MESSAGES.SALES.DEALS.GET_DEALS_LIST_VIEW,
         payload
       )
     );
 
-    return response;
+    // excel response
+    if (payload?.downloadType === EExportFile.XLS) {
+      const data = Buffer.from(response?.data);
+
+      res.setHeader(
+        'Content-Type',
+        'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+      );
+      res.setHeader('Content-Disposition', 'attachment; filename="deals.xlsx"');
+
+      return res.send(data);
+    }
+
+    // csv response
+    if (payload?.downloadType === EExportFile.CSV) {
+      const data = Buffer.from(response?.data);
+
+      res.setHeader('Content-Type', 'text/csv');
+      res.setHeader('Content-Disposition', 'attachment; filename="deals.csv"');
+
+      return res.send(data);
+    }
+
+    // json response
+    return res.json(response);
   }
 
   @Auth(true)
@@ -115,7 +226,7 @@ export class DealsController {
     payload.userId = request?.user?._id;
 
     const response = await firstValueFrom(
-      this.orgAdminService.send(
+      this.salesService.send(
         RMQ_MESSAGES.SALES.DEALS.GET_DEALS_GRID_VIEW,
         payload
       )
@@ -131,10 +242,7 @@ export class DealsController {
     @Param() payload: IdDto
   ): Promise<DealAssociationResponseDto> {
     const response = await firstValueFrom(
-      this.orgAdminService.send(
-        RMQ_MESSAGES.SALES.DEALS.GET_ASSOCIATIONS,
-        payload
-      )
+      this.salesService.send(RMQ_MESSAGES.SALES.DEALS.GET_ASSOCIATIONS, payload)
     );
 
     return response;
@@ -150,7 +258,7 @@ export class DealsController {
     payload.deletedBy = request?.user?._id;
 
     const response = await firstValueFrom(
-      this.orgAdminService.send(RMQ_MESSAGES.SALES.DEALS.DELTE_DEALS, payload)
+      this.salesService.send(RMQ_MESSAGES.SALES.DEALS.DELTE_DEALS, payload)
     );
 
     return response;
@@ -166,7 +274,7 @@ export class DealsController {
     payload.deletedBy = request?.user?._id;
 
     const response = await firstValueFrom(
-      this.orgAdminService.send(
+      this.salesService.send(
         RMQ_MESSAGES.SALES.DEALS.GET_SOFT_DELETED_DEALS,
         payload
       )
@@ -176,7 +284,7 @@ export class DealsController {
   }
 
   @Auth(true)
-  @Delete(API_ENDPOINTS.SALES.DEALS.RESTORE_DEAL_ACTION)
+  @Patch(API_ENDPOINTS.SALES.DEALS.RESTORE_DEAL_ACTION)
   @ApiOkResponse({ type: RestoreDealActionResponseDto })
   public async restoreDealActionRestore(
     @Req() request: AppRequest,
@@ -185,7 +293,7 @@ export class DealsController {
     payload.deletedBy = request?.user?._id;
 
     const response = await firstValueFrom(
-      this.orgAdminService.send(
+      this.salesService.send(
         RMQ_MESSAGES.SALES.DEALS.RESTORE_DEAL_ACTION,
         payload
       )
@@ -193,6 +301,7 @@ export class DealsController {
 
     return response;
   }
+
   @Auth(true)
   @Post(API_ENDPOINTS.SALES.DEALS.CREATE_DEAL)
   @ApiCreatedResponse({ type: CreateDealResponseDto })
@@ -203,7 +312,7 @@ export class DealsController {
     payload.createdBy = request?.user?._id;
 
     const response = await firstValueFrom(
-      this.orgAdminService.send(RMQ_MESSAGES.SALES.DEALS.CREATE_DEAL, payload)
+      this.salesService.send(RMQ_MESSAGES.SALES.DEALS.CREATE_DEAL, payload)
     );
 
     return response;
@@ -221,7 +330,23 @@ export class DealsController {
     payload.id = params.id;
 
     const response = await firstValueFrom(
-      this.orgAdminService.send(RMQ_MESSAGES.SALES.DEALS.UPDATE_DEAL, payload)
+      this.salesService.send(RMQ_MESSAGES.SALES.DEALS.UPDATE_DEAL, payload)
+    );
+
+    return response;
+  }
+
+  @Auth(true)
+  @Get(API_ENDPOINTS.SALES.DEALS.DEAL_ACTION_PREVIEW)
+  @ApiOkResponse({ type: GetDealsListViewResponseDto })
+  public async dealPreview(
+    @Query() payload: IdDto
+  ): Promise<GetDealsListViewResponseDto> {
+    const response = await firstValueFrom(
+      this.salesService.send(
+        RMQ_MESSAGES.SALES.DEALS.DEAL_ACTION_PREVIEW,
+        payload
+      )
     );
 
     return response;

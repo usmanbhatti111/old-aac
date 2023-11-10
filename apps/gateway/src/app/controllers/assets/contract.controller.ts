@@ -8,9 +8,11 @@ import {
   Query,
   Get,
   Res,
+  Param,
+  UploadedFile,
 } from '@nestjs/common';
 import { ClientProxy, RpcException } from '@nestjs/microservices';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiTags, ApiBearerAuth, ApiOkResponse } from '@nestjs/swagger';
 import {
   API_ENDPOINTS,
   API_TAGS,
@@ -23,20 +25,38 @@ import {
   UpdateContractDTO,
   ExtendRenewContractDTO,
   GetContactsDto,
+  IdDto,
+  AddAssetToContractDto,
+  DeleteAssetToContractDto,
+  SubmittedContractRequestResponse,
+  ApprovedContractResponse,
 } from '@shared/dto';
 import { DownloadService } from '@shared/services';
 import { firstValueFrom } from 'rxjs';
-
+import { Auth } from '../../decorators/auth.decorator';
+import { ApiFormData } from '@shared';
+@ApiBearerAuth()
 @ApiTags(API_TAGS.CONTRACT)
 @Controller(CONTROLLERS.CONTRACT)
 export class ContractController {
   constructor(
     @Inject(SERVICES.AIR_SERVICES) private airServiceClient: ClientProxy,
+    @Inject(SERVICES.COMMON_FEATURE) private commonClient: ClientProxy,
     private readonly downloadService: DownloadService
   ) {}
 
+  @Auth(true)
   @Post(API_ENDPOINTS.AIR_SERVICES.CONTRACT.ADD_CONTRACT)
-  public async addContract(@Body() payload: CreateContractDTO) {
+  @ApiFormData({
+    single: true,
+    fieldName: 'fileUrl',
+    fileTypes: ['pdf', 'jpg', 'png'],
+    errorMessage: 'Invalid document file entered.',
+  })
+  public async addContract(
+    @Body() payload: CreateContractDTO,
+    @UploadedFile() fileUrl: any
+  ) {
     try {
       const response = await firstValueFrom(
         this.airServiceClient.send(
@@ -44,12 +64,21 @@ export class ContractController {
           payload
         )
       );
+      payload.recordId = response.data._id;
+      await firstValueFrom(
+        this.commonClient.send(RMQ_MESSAGES.ATTACHMENT.ADD_ATTACHMENT, {
+          fileUrl,
+          dto: payload,
+        })
+      );
 
-      return response;
+      return { response };
     } catch (err) {
       throw new RpcException(err);
     }
   }
+
+  @Auth(true)
   @Delete(API_ENDPOINTS.AIR_SERVICES.CONTRACT.DELETE_CONTRACT)
   public async deleteContract(@Query('ids') ids: string[]) {
     try {
@@ -65,6 +94,52 @@ export class ContractController {
       throw new RpcException(error);
     }
   }
+
+  @Auth(true)
+  @ApiOkResponse({ type: SubmittedContractRequestResponse })
+  @Patch(API_ENDPOINTS.AIR_SERVICES.CONTRACT.UPDATE_CONTRACT_SUBMITTED_STATUS)
+  public async UpdateSubmittedApproval(
+    @Param() { id }: IdDto
+  ): Promise<SubmittedContractRequestResponse> {
+    try {
+      const response = await firstValueFrom(
+        this.airServiceClient.send(
+          RMQ_MESSAGES.AIR_SERVICES.CONTRACT.UPDATE_CONTRACT_SUBMITTED_STATUS,
+          {
+            id,
+          }
+        )
+      );
+
+      return response;
+    } catch (error) {
+      throw new RpcException(error);
+    }
+  }
+
+  @Auth(true)
+  @ApiOkResponse({ type: ApprovedContractResponse })
+  @Patch(API_ENDPOINTS.AIR_SERVICES.CONTRACT.APPROVE_CONTRACT)
+  public async ApproveContract(
+    @Param() { id }: IdDto
+  ): Promise<ApprovedContractResponse> {
+    try {
+      const response = await firstValueFrom(
+        this.airServiceClient.send(
+          RMQ_MESSAGES.AIR_SERVICES.CONTRACT.APPROVE_CONTRACT,
+          {
+            id,
+          }
+        )
+      );
+
+      return response;
+    } catch (error) {
+      throw new RpcException(error);
+    }
+  }
+
+  @Auth(true)
   @Patch(API_ENDPOINTS.AIR_SERVICES.CONTRACT.UPDATE_CONTRACT)
   public async UpdateContract(@Body() payload: UpdateContractDTO) {
     try {
@@ -80,6 +155,8 @@ export class ContractController {
       throw new RpcException(error);
     }
   }
+
+  @Auth(true)
   @Patch(API_ENDPOINTS.AIR_SERVICES.CONTRACT.RENEW_EXTEND_CONTRACT)
   public async renewContract(@Body() payload: ExtendRenewContractDTO) {
     try {
@@ -95,6 +172,53 @@ export class ContractController {
       throw new RpcException(error);
     }
   }
+
+  @Auth(true)
+  @Patch(API_ENDPOINTS.AIR_SERVICES.CONTRACT.ADD_CONTRACT_ASSET)
+  public async addContractsAsset(
+    @Param() { id }: IdDto,
+    @Body() { contractIds }: AddAssetToContractDto
+  ) {
+    try {
+      const response = await firstValueFrom(
+        this.airServiceClient.send(
+          RMQ_MESSAGES.AIR_SERVICES.CONTRACT.ADD_CONTRACTS_ASSET,
+          {
+            id,
+            contractIds,
+          }
+        )
+      );
+      return response;
+    } catch (error) {
+      throw new RpcException(error);
+    }
+  }
+
+  @Auth(true)
+  @Patch(API_ENDPOINTS.AIR_SERVICES.CONTRACT.DELETE_CONTRACT_ASSET)
+  public async deleteContractsAsset(
+    @Param() { id }: IdDto,
+    @Body() { assetsIds }: DeleteAssetToContractDto
+  ) {
+    try {
+      const response = await firstValueFrom(
+        this.airServiceClient.send(
+          RMQ_MESSAGES.AIR_SERVICES.CONTRACT.DELETE_CONTRACTS_ASSET,
+          {
+            id,
+            assetsIds,
+          }
+        )
+      );
+
+      return response;
+    } catch (error) {
+      throw new RpcException(error);
+    }
+  }
+
+  @Auth(true)
   @Get(API_ENDPOINTS.AIR_SERVICES.CONTRACT.GET_CONTRACTS)
   public async getContracts(
     @Query() queryParams: GetContactsDto,

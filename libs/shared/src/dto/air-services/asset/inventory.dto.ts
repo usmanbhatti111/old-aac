@@ -9,7 +9,7 @@ import {
   ArrayNotEmpty,
 } from 'class-validator';
 import { paginationDTO } from '../../pagination/pagination.dto';
-import { EContractExpiry, EExportFile } from '@shared/constants';
+import { EMongooseDateFilter, EExportFile } from '@shared/constants';
 export class AddInventoryDto {
   @IsNotEmpty()
   @IsString()
@@ -66,12 +66,20 @@ export class AddInventoryDto {
     example: '651bdf53beeb02bc627d6804',
   })
   locationId: string;
+
   @IsOptional()
   @IsMongoId()
   @ApiProperty({
     example: '651bdf53beeb02bc627d6804',
   })
   departmentId: string;
+
+  @IsOptional()
+  @IsMongoId()
+  @ApiProperty({
+    example: '651bdf53beeb02bc627d6805',
+  })
+  usedBy: string;
 
   @IsOptional()
   @IsISO8601()
@@ -88,19 +96,19 @@ export class AddInventoryDto {
 }
 export class GetInventoryDto extends paginationDTO {
   @ApiProperty({
-    enum: EContractExpiry,
+    enum: EMongooseDateFilter,
     example: '',
     required: false,
   })
-  @IsEnum(EContractExpiry)
+  @IsEnum(EMongooseDateFilter)
   @IsOptional()
   createdAt: string;
   @ApiProperty({
-    enum: EContractExpiry,
+    enum: EMongooseDateFilter,
     example: '',
     required: false,
   })
-  @IsEnum(EContractExpiry)
+  @IsEnum(EMongooseDateFilter)
   @IsOptional()
   updatedAt: string;
   @IsEnum(['services', 'hardware', 'software'])
@@ -176,7 +184,7 @@ export class GetInventoryAssociateDto extends paginationDTO {
     required: false,
     example: '651bdf53beeb02bc627d6804',
   })
-  deviceId: string;
+  deviceId: string; // this is actually software Id
 
   @ApiProperty({
     type: String,

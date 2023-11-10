@@ -33,6 +33,7 @@ import { UserController } from './controllers/user-account/user.controller';
 import { AuthGuard } from './shared/guards/auth.guard';
 import { SoftwareController } from './controllers/assets/software.controller';
 import { TaskManagementController } from './controllers/tasks/task-management.controller';
+import { WorkloadManagementController } from './controllers/workload/workload-management.controller';
 // import { ActivityLogMiddleware } from './middleware/activity-log.middleware';
 import { RequestLogController } from './controllers/log/request-log.controller';
 import { SubscriptionController } from './controllers/org-admin/subscription.controller';
@@ -44,15 +45,22 @@ import { ColumnPipe } from './pipes/column.pipe';
 import { SharedModule } from '@shared';
 import { ContactStatusController } from './controllers/org-admin/contact-status.controller';
 import { LifecycleStagesController } from './controllers/org-admin/lifecycle-stages.controller';
+import { AirServicesDashboardController } from './controllers/airservices-dashboard.controller';
 import { DealPipelineController } from './controllers/sales-settings/deal-pipeline.controller';
 import { SalesProductController } from './controllers/sales-settings/sales-product.controller';
 import { AttachmentController } from './controllers/common-features/attachment.controller';
-import { CallsController } from './controllers/common-features/calls.controller';
+import { ReportsWidgetController } from './controllers/reports-widgets.controller';
+import { ActivityLogController } from './controllers/common-features/activity-log.controller';
+import { ArticlesController } from './controllers/knowledge-base/articles.controller';
+// import { CallsController } from './controllers/common-features/calls.controller';
 import { ContactNoteController } from './controllers/common-features/contact/contact-note.controller';
 import { ContactCallController } from './controllers/common-features/contact/contact-call.controller';
 import { ContactMeetingController } from './controllers/common-features/contact/contact-meeting.controller';
 import { DealsController } from './controllers/sales/deals.controller';
 import { NoteController } from './controllers/sales/note.controller';
+import { TaxCalculationController } from './controllers/super-admin/tax-calculation.controller';
+import { DealViewsController } from './controllers/sales/deal-views.controller';
+import { ActivitylogsController } from './controllers/common-features/activitylogs.controller';
 
 @Module({
   imports: [
@@ -99,13 +107,21 @@ import { NoteController } from './controllers/sales/note.controller';
     DocumentsController,
     ContractController,
     ProductCategoriesController,
+    WorkloadManagementController,
     LifecycleStagesController,
+    AirServicesDashboardController,
     DealPipelineController,
     SalesProductController,
     AttachmentController,
-    CallsController,
+    ReportsWidgetController,
+    ActivityLogController,
+    ArticlesController,
+    // CallsController,
     DealsController,
     NoteController,
+    TaxCalculationController,
+    DealViewsController,
+    ActivitylogsController,
   ],
   providers: [
     // Exceptions Filter

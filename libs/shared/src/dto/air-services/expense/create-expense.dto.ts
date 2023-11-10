@@ -1,11 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import {
-  TicketInternalTypeEnum,
-  TicketPirorityEnum,
-  TicketStatusEnum,
-  TicketTypeEnum,
-} from '@shared/constants';
-import { IsNotEmpty, IsObject, IsString } from 'class-validator';
+import { IsNotEmpty, IsString } from 'class-validator';
 
 export class CreateExpenseDTO {
   @ApiProperty({ example: 'Purchase Cost' })

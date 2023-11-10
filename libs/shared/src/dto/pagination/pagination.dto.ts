@@ -2,13 +2,13 @@ import { ApiProperty } from '@nestjs/swagger';
 import { IsNumber, IsOptional } from 'class-validator';
 import { Type } from 'class-transformer';
 export class paginationDTO {
-  @ApiProperty({ default: 1, required: false })
+  @ApiProperty({ required: false })
   @IsOptional()
   @Type(() => Number)
   @IsNumber()
   page: number;
 
-  @ApiProperty({ default: 10, required: false })
+  @ApiProperty({ required: false })
   @IsOptional()
   @Type(() => Number)
   @IsNumber()

@@ -29,6 +29,9 @@ export class Attachment extends AbstractSchema {
 
   @Prop({ type: mongoose.Types.ObjectId, required: true })
   recordId: string;
+
+  @Prop({ type: mongoose.Types.ObjectId, required: true })
+  moduleId: string;
 }
 
 export const AttachmentSchema = SchemaFactory.createForClass(Attachment);

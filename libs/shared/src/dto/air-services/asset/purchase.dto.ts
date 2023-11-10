@@ -10,9 +10,12 @@ import {
   IsArray,
   ArrayNotEmpty,
 } from 'class-validator';
-import { EPurchaseOrderStatus } from '../../../constants/enums';
+import {
+  EPurchaseOrderStatus,
+  EApprovalStatusStatus,
+} from '../../../constants/enums';
 import { paginationDTO } from '../../pagination/pagination.dto';
-import { EContractExpiry, EExportFile } from '@shared/constants';
+import { EMongooseDateFilter, EExportFile } from '@shared/constants';
 export class PurchaseDetailDto {
   @IsNotEmpty()
   @IsNumber()
@@ -143,6 +146,7 @@ export class addPurchaseOrderDto {
     required: false,
   })
   purchaseDetails: PurchaseDetailDto[];
+
   @IsOptional()
   @IsNumber()
   @ApiProperty({
@@ -159,6 +163,11 @@ export class addPurchaseOrderDto {
   status: string;
 }
 export class UpdatePurchaseOrderDto {
+  @ApiProperty({ example: 200 })
+  statusCode: number;
+  @ApiProperty({
+    example: 'Purchase Edit Successfully',
+  })
   @ApiProperty({
     required: true,
     example: '65152939f50394f42cee2db4',
@@ -334,6 +343,30 @@ export class GetPurchasesResponseOrderDto {
   @ApiProperty({ example: null })
   errors: [];
 }
+export class GetPurchasesAssociationResponseOrderDto {
+  @ApiProperty({ example: 200 })
+  statusCode: number;
+
+  @ApiProperty({ example: 'Success' })
+  message: string;
+
+  @ApiProperty({
+    example: [
+      {
+        _id: '65154bdc3064871640f8ce14',
+        ticketId: '65154bdc3064871640f8ce14',
+        createdAt: '2023-09-27T12:00:00Z',
+        updatedAt: '2023-09-27T12:00:00Z',
+        status: 'NEW',
+      },
+    ],
+  })
+  data: object[];
+
+  @ApiProperty({ example: null })
+  errors: [];
+}
+
 export class FilterPurchaseOrderDto extends paginationDTO {
   @IsOptional()
   @ApiProperty({
@@ -352,20 +385,20 @@ export class FilterPurchaseOrderDto extends paginationDTO {
   vendorId: string;
 
   @ApiProperty({
-    enum: EContractExpiry,
+    enum: EMongooseDateFilter,
     example: '',
     required: false,
   })
-  @IsEnum(EContractExpiry)
+  @IsEnum(EMongooseDateFilter)
   @IsOptional()
   expectedDeliveryDate: string;
 
   @ApiProperty({
-    enum: EContractExpiry,
+    enum: EMongooseDateFilter,
     example: '',
     required: false,
   })
-  @IsEnum(EContractExpiry)
+  @IsEnum(EMongooseDateFilter)
   @IsOptional()
   createdAt: string;
 
@@ -414,4 +447,43 @@ export class DeleteAssociatePurchaseOrderDto {
     required: false,
   })
   associateOrderId: string;
+}
+export class ApproverStatusDto {
+  @ApiProperty({
+    required: true,
+    example: '65152939f50394f42cee2db4',
+  })
+  @IsMongoId()
+  id: string;
+  @ApiProperty({
+    enum: EApprovalStatusStatus,
+    required: false,
+  })
+  @IsEnum(EApprovalStatusStatus)
+  approvalStatus: string;
+  @ApiProperty({
+    example: 'dev',
+    required: false,
+  })
+  @IsOptional()
+  @IsString()
+  reasons: string;
+}
+export class AddPurchaseOrderApprover {
+  @ApiProperty({
+    required: true,
+    example: '65152939f50394f42cee2db4',
+  })
+  @IsMongoId()
+  @IsNotEmpty()
+  purchaseId: string;
+}
+
+export class FilterPurchaseOrderRecievedDto extends paginationDTO {
+  @IsOptional()
+  @ApiProperty({
+    required: true,
+    example: 'RECIEVED',
+  })
+  status: string;
 }
