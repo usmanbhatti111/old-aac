@@ -141,7 +141,6 @@ export class AirServicesDashboardController {
           dashboardannoucementDTO
         )
       );
-
       return dashboardAnnouncement;
     } catch (err) {
       throw new RpcException(err);

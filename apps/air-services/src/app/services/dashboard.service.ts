@@ -26,7 +26,8 @@ export class DashboardService {
   async createDashboardAnnoucement(payload: CreateAnnouncementDTO) {
     try {
       const res = await this.annoucementRepository.create(payload);
-      return res;
+      const response = successResponse(HttpStatus.CREATED, `Success`, res);
+      return response;
     } catch (error) {
       return new RpcException(error);
     }
