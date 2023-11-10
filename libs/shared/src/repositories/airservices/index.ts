@@ -11,3 +11,4 @@ export * from './emailed-dashboards.repository';
 export * from './report-widgets.repository';
 export * from './articles.repository';
 export * from './purchase-approval.repository';
+export * from './annoucement.repository';

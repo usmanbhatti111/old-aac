@@ -55,6 +55,7 @@ import {
   ArticlesRepository,
   ContactMeetingRepository,
   DealsRepository,
+  AnnoucementRepository,
   NoteRepository,
   EmailedDashboardsRepository,
 } from '../src/repositories/index';
@@ -128,6 +129,7 @@ import { DownloadService, EmailService, S3Service } from './services';
     ReportsWidgetRepository,
     ContactMeetingRepository,
     DealsRepository,
+    AnnoucementRepository,
     NoteRepository,
     {
       provide: 'S3',
@@ -168,6 +170,7 @@ import { DownloadService, EmailService, S3Service } from './services';
     NewsAndEventRepository,
     InvoiceRepository,
     OrganizationPlanRepository,
+    AnnoucementRepository,
     ProductFeaturesRepository,
     OrganizationRepository,
     OrganizationCompanyAccountRepository,

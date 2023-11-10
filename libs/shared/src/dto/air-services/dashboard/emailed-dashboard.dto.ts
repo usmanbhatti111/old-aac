@@ -107,6 +107,7 @@ export class EmailedDashboardResponseDTO {
       time: '1:00 AM',
       fileType: 'PDF',
       createdAt: '2023-11-03T15:54:32.650Z',
+
       updatedAt: '2023-11-03T15:54:32.650Z',
     },
   })

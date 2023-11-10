@@ -3,6 +3,7 @@ import {
   DashboardRepository,
   EmailedDashboardsRepository,
   TicketRepository,
+  AnnoucementRepository,
 } from '@shared';
 import { RpcException } from '@nestjs/microservices';
 import {
@@ -10,6 +11,7 @@ import {
   IdDto,
   ListDashboardDTO,
   FilterTicketDto,
+  CreateAnnouncementDTO,
 } from '@shared/dto';
 import { successResponse } from '@shared/constants';
 
@@ -18,9 +20,17 @@ export class DashboardService {
   constructor(
     private readonly dashboardRepository: DashboardRepository,
     private readonly emailedDashboardsRepository: EmailedDashboardsRepository,
-    private readonly ticketRepository: TicketRepository
+    private readonly ticketRepository: TicketRepository,
+    private readonly annoucementRepository: AnnoucementRepository
   ) {}
-
+  async createDashboardAnnoucement(payload: CreateAnnouncementDTO) {
+    try {
+      const res = await this.annoucementRepository.create(payload);
+      return res;
+    } catch (error) {
+      return new RpcException(error);
+    }
+  }
   async addDashboard(payload: CreateDashboardtDTO) {
     try {
       const res = await this.dashboardRepository.create(payload);
@@ -29,7 +39,6 @@ export class DashboardService {
       return new RpcException(error);
     }
   }
-
   async sendDashboard(payload) {
     try {
       const res = await this.emailedDashboardsRepository.create(payload);
