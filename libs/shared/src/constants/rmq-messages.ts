@@ -167,6 +167,7 @@ export const RMQ_MESSAGES = {
       CREATE_DASHBOARD: 'create-dashboard',
       GET_DASHBOARD_LIST: 'get-dashboard-list',
       GET_DASHBOARD: 'get-dashboard',
+      GET_DASHBOARD_Tickets: 'get-dashboard-tickets',
       UPDATE_DASHBOARD: 'update-dashboard',
       DELETE_DASHBOARD: 'delete-dashboard',
       EMAILED_DASHBOARD: 'emailed-dashboards',
