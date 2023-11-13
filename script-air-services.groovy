@@ -11,7 +11,9 @@ def deployImg(){
                   git config --global credential.helper "store --file=/home/ubuntu/.git-credentials"
                   echo -e "https://$USERNAME:$PASSWORD@git-codecommit.eu-west-2.amazonaws.com/v1/repos/AAC-BE" > /home/ubuntu/.git-credentials
                   cd AAC-BE
+                  echo "Before git pull"
                   git pull origin dev
+                  echo "After git pull"
                   docker compose -f docker-compose2.yml up -d --build air-services
                   docker system prune -a -f
                 '
