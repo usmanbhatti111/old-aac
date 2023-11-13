@@ -4,6 +4,7 @@ import { JobApplicationsRepository } from '@shared';
 import { MODEL, ResponseMessage, successResponse } from '@shared/constants';
 import {
   CreateJobApplicationDto,
+  EditJobApplicationsDto,
   GetJobApplicationsDto,
   MediaObject,
 } from '@shared/dto';
@@ -188,6 +189,29 @@ export class JobApplicationsService {
       });
 
       return successResponse(HttpStatus.OK, ResponseMessage.SUCCESS, response);
+    } catch (error) {
+      throw new RpcException(error);
+    }
+  }
+
+  async editJobApplication(payload: EditJobApplicationsDto) {
+    try {
+      const { id } = payload;
+
+      const filter = { _id: id, isDeleted: false };
+
+      const res = await this.jobApplicationRepository.findOneAndUpdate(
+        filter,
+        payload
+      );
+
+      const response = successResponse(
+        HttpStatus.OK,
+        ResponseMessage.SUCCESS,
+        res
+      );
+
+      return response;
     } catch (error) {
       throw new RpcException(error);
     }

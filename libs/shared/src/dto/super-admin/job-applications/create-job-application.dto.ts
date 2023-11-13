@@ -1,9 +1,8 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Transform } from 'class-transformer';
-import { IsDateString, IsNotEmpty, IsOptional } from 'class-validator';
-import { ApiMultipleFiles, ApiSingleFile } from 'libs/shared/src/custom';
+import { IsNotEmpty, IsOptional } from 'class-validator';
+import { ApiSingleFile } from 'libs/shared/src/custom';
 import { toMongoObjectId } from 'libs/shared/src/functions';
-import { MediaObject } from '../../common';
 
 export class CreateJobApplicationDto {
   @ApiProperty({

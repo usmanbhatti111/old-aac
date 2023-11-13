@@ -3,6 +3,8 @@ import {
   Controller,
   Get,
   Inject,
+  Param,
+  Patch,
   Post,
   Query,
   Req,
@@ -26,8 +28,11 @@ import {
 import {
   CreateJobApplicationDto,
   CreateJobApplicationResponseDto,
+  EditJobApplicationResponseDto,
+  EditJobApplicationsDto,
   GetJobApplicationsDto,
   GetJobApplicationsResponseDto,
+  IdDto,
 } from '@shared/dto';
 import { firstValueFrom } from 'rxjs';
 import { Auth } from '../../decorators/auth.decorator';
@@ -57,7 +62,7 @@ export class JobApplicationsController {
     @Req() request: AppRequest,
     @Body() payload: CreateJobApplicationDto,
     @UploadedFiles() files: any
-  ): Promise<any> {
+  ): Promise<CreateJobApplicationResponseDto> {
     payload.createdBy = request?.user?._id;
     payload.files = files;
 
@@ -72,14 +77,35 @@ export class JobApplicationsController {
   }
 
   @Auth(true)
-  @Get(API_ENDPOINTS.SUPER_ADMIN.JOB_APPLICATIONS.GET_JOB_APPLICATION)
+  @Get(API_ENDPOINTS.SUPER_ADMIN.JOB_APPLICATIONS.GET_JOB_APPLICATIONS)
   @ApiOkResponse({ type: GetJobApplicationsResponseDto })
   public async getJobApplications(
     @Query() payload: GetJobApplicationsDto
-  ): Promise<any> {
+  ): Promise<GetJobApplicationsResponseDto> {
     const response = await firstValueFrom(
       this.superAdminService.send(
-        RMQ_MESSAGES.SUPER_ADMIN.JOB_APPLICATIONS.GET_JOB_APPLICATION,
+        RMQ_MESSAGES.SUPER_ADMIN.JOB_APPLICATIONS.GET_JOB_APPLICATIONS,
+        payload
+      )
+    );
+
+    return response;
+  }
+
+  @Auth(true)
+  @Patch(API_ENDPOINTS.SUPER_ADMIN.JOB_APPLICATIONS.EDIT_JOB_APPLICATION)
+  @ApiOkResponse({ type: EditJobApplicationResponseDto })
+  public async editJobApplication(
+    @Req() request: AppRequest,
+    @Param() params: IdDto,
+    @Body() payload: EditJobApplicationsDto
+  ): Promise<EditJobApplicationResponseDto> {
+    payload.updatedBy = request?.user?._id;
+    payload.id = params.id;
+
+    const response = await firstValueFrom(
+      this.superAdminService.send(
+        RMQ_MESSAGES.SUPER_ADMIN.JOB_APPLICATIONS.EDIT_JOB_APPLICATION,
         payload
       )
     );

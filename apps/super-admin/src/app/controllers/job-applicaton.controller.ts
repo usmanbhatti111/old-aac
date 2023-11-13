@@ -2,7 +2,11 @@ import { Controller } from '@nestjs/common';
 import { MessagePattern, Payload } from '@nestjs/microservices';
 import { RMQ_MESSAGES } from '@shared/constants';
 import { JobApplicationsService } from '../services/job-application.service';
-import { CreateJobApplicationDto, GetJobApplicationsDto } from '@shared/dto';
+import {
+  CreateJobApplicationDto,
+  EditJobApplicationsDto,
+  GetJobApplicationsDto,
+} from '@shared/dto';
 
 @Controller()
 export class JobApplicationsController {
@@ -17,8 +21,17 @@ export class JobApplicationsController {
     return await this.jobApplicatoinsService.createJobApplication(payload);
   }
 
-  @MessagePattern(RMQ_MESSAGES.SUPER_ADMIN.JOB_APPLICATIONS.GET_JOB_APPLICATION)
+  @MessagePattern(
+    RMQ_MESSAGES.SUPER_ADMIN.JOB_APPLICATIONS.GET_JOB_APPLICATIONS
+  )
   async getJobApplications(@Payload() payload: GetJobApplicationsDto) {
     return await this.jobApplicatoinsService.getJobApplications(payload);
+  }
+
+  @MessagePattern(
+    RMQ_MESSAGES.SUPER_ADMIN.JOB_APPLICATIONS.EDIT_JOB_APPLICATION
+  )
+  async editJobApplication(@Payload() payload: EditJobApplicationsDto) {
+    return await this.jobApplicatoinsService.editJobApplication(payload);
   }
 }
