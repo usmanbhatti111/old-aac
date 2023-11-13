@@ -21,8 +21,8 @@ export class JobApplicationsService {
   async createJobApplication(payload: CreateJobApplicationDto) {
     try {
       const filterQuery = {
-        createdBy: payload.createdBy,
-        jobId: payload.jobId,
+        createdBy: payload?.createdBy,
+        jobId: payload?.jobId,
       };
 
       const alreadyApplied =
@@ -43,8 +43,8 @@ export class JobApplicationsService {
 
         const resume: MediaObject = {
           ...s3Response,
-          size: file.size,
-          mimetype: file.mimetype,
+          size: file?.size,
+          mimetype: file?.mimetype,
         };
 
         payload.resume = resume;
@@ -60,8 +60,8 @@ export class JobApplicationsService {
 
         const coverLetter: MediaObject = {
           ...s3Response,
-          size: file.size,
-          mimetype: file.mimetype,
+          size: file?.size,
+          mimetype: file?.mimetype,
         };
 
         payload.coverLetter = coverLetter;
@@ -83,16 +83,16 @@ export class JobApplicationsService {
       const filterQuery = { isDeleted: false };
 
       if (payload?.candidateId) {
-        filterQuery['createdBy'] = payload.candidateId;
+        filterQuery['createdBy'] = payload?.candidateId;
       }
 
       if (payload?.status) {
-        filterQuery['status'] = payload.status;
+        filterQuery['status'] = payload?.status;
       }
 
       if (payload?.dateStart && payload?.dateEnd) {
-        const startDate = dayjs(payload.dateStart).startOf('day').toDate();
-        const endDate = dayjs(payload.dateEnd).endOf('day').toDate();
+        const startDate = dayjs(payload?.dateStart).startOf('day').toDate();
+        const endDate = dayjs(payload?.dateEnd).endOf('day').toDate();
 
         filterQuery['createdAt'] = {
           $gte: startDate,
@@ -112,11 +112,17 @@ export class JobApplicationsService {
                 $project: {
                   _id: 1,
                   name: {
-                    $concat: [
-                      { $ifNull: ['$firstName', ''] },
-                      ' ',
-                      { $ifNull: ['$lastName', ''] },
-                    ],
+                    $reduce: {
+                      input: ['$firstName', '$middleName', '$lastName'],
+                      initialValue: '',
+                      in: {
+                        $cond: {
+                          if: { $ne: ['$$this', null] },
+                          then: { $concat: ['$$value', ' ', '$$this'] },
+                          else: '$$value',
+                        },
+                      },
+                    },
                   },
                   // replace log with user field when profile image add in user model
                   profileImage: { $ifNull: ['$logo', ''] },
@@ -164,7 +170,7 @@ export class JobApplicationsService {
       let searchPipeline = [];
 
       if (payload?.search) {
-        const search = { $regex: payload.search, $options: 'i' };
+        const search = { $regex: payload?.search, $options: 'i' };
 
         searchPipeline = [
           {
@@ -220,11 +226,21 @@ export class JobApplicationsService {
         {
           $addFields: {
             name: {
-              $concat: [
-                { $ifNull: ['$candidates.firstName', ''] },
-                ' ',
-                { $ifNull: ['$candidates.lastName', ''] },
-              ],
+              $reduce: {
+                input: [
+                  '$candidates.firstName',
+                  '$candidates.middleName',
+                  '$candidates.lastName',
+                ],
+                initialValue: '',
+                in: {
+                  $cond: {
+                    if: { $ne: ['$$this', null] },
+                    then: { $concat: ['$$value', ' ', '$$this'] },
+                    else: '$$value',
+                  },
+                },
+              },
             },
           },
         },

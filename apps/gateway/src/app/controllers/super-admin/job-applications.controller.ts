@@ -116,7 +116,7 @@ export class JobApplicationsController {
     @Body() payload: EditJobApplicationsDto
   ): Promise<EditJobApplicationResponseDto> {
     payload.updatedBy = request?.user?._id;
-    payload.id = params.id;
+    payload.id = params?.id;
 
     const response = await firstValueFrom(
       this.superAdminService.send(
