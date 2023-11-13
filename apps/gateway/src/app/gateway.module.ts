@@ -49,9 +49,9 @@ import { AirServicesDashboardController } from './controllers/airservices-dashbo
 import { DealPipelineController } from './controllers/sales-settings/deal-pipeline.controller';
 import { SalesProductController } from './controllers/sales-settings/sales-product.controller';
 import { AttachmentController } from './controllers/common-features/attachment.controller';
-import { ReportsWidgetController } from './controllers/reports-widgets.controller';
 import { ActivityLogController } from './controllers/common-features/activity-log.controller';
 import { ArticlesController } from './controllers/knowledge-base/articles.controller';
+import { ReportsWidgetController } from './controllers/reports-widgets.controller';
 // import { CallsController } from './controllers/common-features/calls.controller';
 import { ContactNoteController } from './controllers/common-features/contact/contact-note.controller';
 import { ContactCallController } from './controllers/common-features/contact/contact-call.controller';
@@ -110,6 +110,8 @@ import { NoteController } from './controllers/sales/note.controller';
     DealPipelineController,
     SalesProductController,
     AttachmentController,
+    ActivityLogController,
+    ArticlesController,
     ReportsWidgetController,
     ActivityLogController,
     ArticlesController,

@@ -158,7 +158,7 @@ export const API_ENDPOINTS = {
       ticket: 'ticket',
       ADD_CHILD_TICKET: 'add-child-ticket',
       GET_CHILD_TICKETS: 'get-child-tickets/:id',
-      DELETE_CHILD_TICKETS: 'delete-child-tickets/:id',
+      DELETE_CHILD_TICKETS: 'delete-child-tickets',
       EDIT_CHILD_TICKETS: 'edit-child-tickets/:id',
       ASSOCIATE_ASSETS: 'associate-assets',
       DETACH_ASSETS: 'detach-assets',
@@ -197,6 +197,7 @@ export const API_ENDPOINTS = {
       SOFTWARE_ALLOCATE_CONTRACT: 'software-allocate-contract',
       SOFTWARE_DEALLOCATE_CONTRACT: 'software-deallocate-contract',
       SOFTWARE_USERS_REMOVE: 'software-users-remove/:id',
+      SOFTWARE_OVERVIEW: 'software_overview/:id',
       GET_SOFTWARE_DEVICES: 'software-devices',
     },
     TASK: {

@@ -378,4 +378,29 @@ export class SoftwareController {
       throw new RpcException(err);
     }
   }
+  @Get(API_ENDPOINTS.AIR_SERVICES.ASSETS.SOFTWARE_OVERVIEW)
+  @Auth(true)
+  @ApiParam({
+    type: String,
+    name: 'id',
+    description: 'id should be Assets softwareId',
+  })
+  @ApiOkResponse({ type: SoftwareUsersDetailsResponse })
+  async getSoftwareOverview(
+    @Param() id: IdDto,
+    @Req() { user: { _id } },
+    @Res() res: Response | any
+  ) {
+    try {
+      const response = await firstValueFrom(
+        this.airServiceClient.send(
+          RMQ_MESSAGES.AIR_SERVICES.ASSETS.SOFTWARE_OVERVIEW,
+          { id, userId: _id }
+        )
+      );
+      return res.status(response.statusCode).json(response);
+    } catch (err) {
+      throw new RpcException(err);
+    }
+  }
 }

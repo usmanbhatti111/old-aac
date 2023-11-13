@@ -1,5 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { HydratedDocument } from 'mongoose';
+import { HydratedDocument, SchemaTypes } from 'mongoose';
 import { AbstractSchema } from './../abstract-repo/abstract.schema';
 
 export type ExpenseDocument = HydratedDocument<Expense>;
@@ -18,7 +18,7 @@ export class Expense extends AbstractSchema {
   @Prop({ type: String, required: true })
   date: string;
 
-  @Prop({ type: String, required: true })
+  @Prop({ type: SchemaTypes.ObjectId, required: true })
   assetId: string;
 }
 
