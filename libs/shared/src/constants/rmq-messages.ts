@@ -86,6 +86,7 @@ export const RMQ_MESSAGES = {
 
     JOB_APPLICATIONS: {
       CREATE_JOB_APPLICATION: 'create-job-application',
+      GET_JOB_APPLICATION: 'get-job-application',
     },
 
     ADD_USER: 'add-user',

@@ -126,6 +126,7 @@ export const API_ENDPOINTS = {
 
     JOB_APPLICATIONS: {
       CREATE_JOB_APPLICATION: '/',
+      GET_JOB_APPLICATION: '/',
     },
 
     ADD_USER: 'add-user',

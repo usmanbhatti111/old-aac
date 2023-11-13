@@ -15,15 +15,6 @@ export class CreateJobApplicationDto {
   @IsNotEmpty()
   jobId: string;
 
-  @ApiProperty({
-    type: Date,
-    required: true,
-    example: new Date(),
-  })
-  @IsNotEmpty()
-  @IsDateString()
-  applyDate: Date;
-
   @ApiSingleFile({ required: false })
   @IsOptional()
   resume: any;

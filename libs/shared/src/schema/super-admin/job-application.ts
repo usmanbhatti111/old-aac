@@ -13,9 +13,6 @@ export class JobApplications extends AbstractSchema {
   })
   jobId: string;
 
-  @Prop({ type: Date, default: Date.now, required: false })
-  applyDate?: Date;
-
   @Prop({ type: SchemaTypes.Mixed })
   resume?: MediaObject;
 

@@ -1,9 +1,14 @@
 import { BadRequestException, HttpStatus, Injectable } from '@nestjs/common';
 import { RpcException } from '@nestjs/microservices';
 import { JobApplicationsRepository } from '@shared';
-import { ResponseMessage, successResponse } from '@shared/constants';
-import { CreateJobApplicationDto, MediaObject } from '@shared/dto';
+import { MODEL, ResponseMessage, successResponse } from '@shared/constants';
+import {
+  CreateJobApplicationDto,
+  GetJobApplicationsDto,
+  MediaObject,
+} from '@shared/dto';
 import { S3Service } from '@shared/services';
+import dayjs from 'dayjs';
 
 @Injectable()
 export class JobApplicationsService {
@@ -64,6 +69,125 @@ export class JobApplicationsService {
       const res = await this.jobApplicationRepository.create(payload);
 
       return successResponse(HttpStatus.CREATED, ResponseMessage.CREATED, res);
+    } catch (error) {
+      throw new RpcException(error);
+    }
+  }
+
+  async getJobApplications(payload: GetJobApplicationsDto) {
+    try {
+      const limit = payload?.limit;
+      const offset = payload?.page;
+
+      const filterQuery = { isDeleted: false };
+
+      if (payload?.candidateId) {
+        filterQuery['createdBy'] = payload.candidateId;
+      }
+
+      if (payload?.status) {
+        filterQuery['status'] = payload.status;
+      }
+
+      if (payload?.dateStart && payload?.dateEnd) {
+        const startDate = dayjs(payload.dateStart).startOf('day').toDate();
+        const endDate = dayjs(payload.dateEnd).endOf('day').toDate();
+
+        filterQuery['createdAt'] = {
+          $gte: startDate,
+          $lte: endDate,
+        };
+      }
+
+      const candidatePipline = [
+        {
+          $lookup: {
+            from: MODEL.USER,
+            localField: 'createdBy',
+            foreignField: '_id',
+            as: 'candidate',
+            pipeline: [
+              {
+                $project: {
+                  _id: 1,
+                  name: {
+                    $concat: [
+                      { $ifNull: ['$firstName', ''] },
+                      ' ',
+                      { $ifNull: ['$lastName', ''] },
+                    ],
+                  },
+                  // replace log with user field when profile image add in user model
+                  profileImage: { $ifNull: ['$logo', ''] },
+                },
+              },
+            ],
+          },
+        },
+        {
+          $unwind: {
+            path: '$candidate',
+            preserveNullAndEmptyArrays: true,
+          },
+        },
+      ];
+
+      const jobPipeline = [
+        {
+          $lookup: {
+            from: MODEL.JOBS,
+            localField: 'jobId',
+            foreignField: '_id',
+            as: 'job',
+          },
+        },
+        {
+          $unwind: {
+            path: '$job',
+            preserveNullAndEmptyArrays: true,
+          },
+        },
+        {
+          $addFields: {
+            jobTitle: { $ifNull: ['$job.title', ''] },
+            jobPostedDate: { $ifNull: ['$job.createdAt', ''] },
+          },
+        },
+        {
+          $project: {
+            job: 0,
+          },
+        },
+      ];
+
+      let searchPipeline = [];
+
+      if (payload?.search) {
+        const search = { $regex: payload.search, $options: 'i' };
+
+        searchPipeline = [
+          {
+            $match: {
+              $or: [{ jobTitle: search }, { 'candidate.name': search }],
+            },
+          },
+        ];
+      }
+
+      const pipelines = [
+        ...candidatePipline,
+        ...jobPipeline,
+        ...searchPipeline,
+      ];
+
+      const response = await this.jobApplicationRepository.paginate({
+        filterQuery,
+        limit,
+        offset,
+        pipelines,
+      });
+
+      return successResponse(HttpStatus.OK, ResponseMessage.SUCCESS, response);
     } catch (error) {
       throw new RpcException(error);
     }

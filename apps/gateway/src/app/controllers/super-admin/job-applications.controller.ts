@@ -1,13 +1,20 @@
 import {
   Body,
   Controller,
+  Get,
   Inject,
   Post,
+  Query,
   Req,
   UploadedFiles,
 } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
-import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiCreatedResponse,
+  ApiOkResponse,
+  ApiTags,
+} from '@nestjs/swagger';
 import { ApiFormData } from '@shared';
 import {
   API_ENDPOINTS,
@@ -16,7 +23,12 @@ import {
   RMQ_MESSAGES,
   SERVICES,
 } from '@shared/constants';
-import { CreateJobApplicationDto } from '@shared/dto';
+import {
+  CreateJobApplicationDto,
+  CreateJobApplicationResponseDto,
+  GetJobApplicationsDto,
+  GetJobApplicationsResponseDto,
+} from '@shared/dto';
 import { firstValueFrom } from 'rxjs';
 import { Auth } from '../../decorators/auth.decorator';
 import { AppRequest } from '../../shared/interface/request.interface';
@@ -40,7 +52,7 @@ export class JobApplicationsController {
     maxCount: 1,
     errorMessage: 'Invalid document file entered.',
   })
-  // @ApiCreatedResponse({ type: AddNewsOrEventResponseDto })
+  @ApiCreatedResponse({ type: CreateJobApplicationResponseDto })
   public async createJobApplication(
     @Req() request: AppRequest,
     @Body() payload: CreateJobApplicationDto,
@@ -52,6 +64,22 @@ export class JobApplicationsController {
     const response = await firstValueFrom(
       this.superAdminService.send(
         RMQ_MESSAGES.SUPER_ADMIN.JOB_APPLICATIONS.CREATE_JOB_APPLICATION,
+        payload
+      )
+    );
+
+    return response;
+  }
+
+  @Auth(true)
+  @Get(API_ENDPOINTS.SUPER_ADMIN.JOB_APPLICATIONS.GET_JOB_APPLICATION)
+  @ApiOkResponse({ type: GetJobApplicationsResponseDto })
+  public async getJobApplications(
+    @Query() payload: GetJobApplicationsDto
+  ): Promise<any> {
+    const response = await firstValueFrom(
+      this.superAdminService.send(
+        RMQ_MESSAGES.SUPER_ADMIN.JOB_APPLICATIONS.GET_JOB_APPLICATION,
         payload
       )
     );
