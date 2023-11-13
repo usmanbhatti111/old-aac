@@ -22,6 +22,13 @@ export class JobApplicationsController {
   }
 
   @MessagePattern(
+    RMQ_MESSAGES.SUPER_ADMIN.JOB_APPLICATIONS.GET_UNIQUE_CANDIDATE
+  )
+  async getUniqueCandidate() {
+    return await this.jobApplicatoinsService.getUniqueCandidate();
+  }
+
+  @MessagePattern(
     RMQ_MESSAGES.SUPER_ADMIN.JOB_APPLICATIONS.GET_JOB_APPLICATIONS
   )
   async getJobApplications(@Payload() payload: GetJobApplicationsDto) {

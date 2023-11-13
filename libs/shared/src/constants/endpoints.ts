@@ -127,6 +127,7 @@ export const API_ENDPOINTS = {
     JOB_APPLICATIONS: {
       CREATE_JOB_APPLICATION: '/',
       GET_JOB_APPLICATIONS: '/',
+      GET_UNIQUE_CANDIDATE: '/get-unique-candidate',
       EDIT_JOB_APPLICATION: '/:id',
     },
 

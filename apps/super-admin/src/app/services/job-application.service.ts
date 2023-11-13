@@ -194,6 +194,61 @@ export class JobApplicationsService {
     }
   }
 
+  async getUniqueCandidate() {
+    try {
+      const res = await this.jobApplicationRepository.aggregate([
+        {
+          $lookup: {
+            from: MODEL.USER,
+            localField: 'createdBy',
+            foreignField: '_id',
+            as: 'candidates',
+          },
+        },
+        {
+          $unwind: {
+            path: '$candidates',
+            preserveNullAndEmptyArrays: true,
+          },
+        },
+        {
+          $group: {
+            _id: '$createdBy',
+            candidates: { $first: '$candidates' },
+          },
+        },
+        {
+          $addFields: {
+            name: {
+              $concat: [
+                { $ifNull: ['$candidates.firstName', ''] },
+                ' ',
+                { $ifNull: ['$candidates.lastName', ''] },
+              ],
+            },
+          },
+        },
+        {
+          $replaceRoot: {
+            newRoot: {
+              $mergeObjects: [{ _id: '$candidates._id' }, { name: '$name' }],
+            },
+          },
+        },
+      ]);
+
+      const response = successResponse(
+        HttpStatus.OK,
+        ResponseMessage.SUCCESS,
+        res
+      );
+
+      return response;
+    } catch (error) {
+      throw new RpcException(error);
+    }
+  }
+
   async editJobApplication(payload: EditJobApplicationsDto) {
     try {
       const { id } = payload;

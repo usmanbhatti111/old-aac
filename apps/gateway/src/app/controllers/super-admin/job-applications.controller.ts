@@ -32,6 +32,7 @@ import {
   EditJobApplicationsDto,
   GetJobApplicationsDto,
   GetJobApplicationsResponseDto,
+  GetUniqueCandidateResponseDto,
   IdDto,
 } from '@shared/dto';
 import { firstValueFrom } from 'rxjs';
@@ -86,6 +87,20 @@ export class JobApplicationsController {
       this.superAdminService.send(
         RMQ_MESSAGES.SUPER_ADMIN.JOB_APPLICATIONS.GET_JOB_APPLICATIONS,
         payload
+      )
+    );
+
+    return response;
+  }
+
+  @Auth(true)
+  @Get(API_ENDPOINTS.SUPER_ADMIN.JOB_APPLICATIONS.GET_UNIQUE_CANDIDATE)
+  @ApiOkResponse({ type: GetUniqueCandidateResponseDto })
+  public async getUniqueCandidate(): Promise<GetUniqueCandidateResponseDto> {
+    const response = await firstValueFrom(
+      this.superAdminService.send(
+        RMQ_MESSAGES.SUPER_ADMIN.JOB_APPLICATIONS.GET_UNIQUE_CANDIDATE,
+        {}
       )
     );
 
