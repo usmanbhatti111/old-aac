@@ -104,6 +104,8 @@ import {
   DealViewsSchema,
   PurchaseApproval,
   PurchaseApprovalSchema,
+  JobApplications,
+  JobApplicationsSchema,
 } from './schema';
 import {
   ReportsWidget,
@@ -374,5 +376,10 @@ export const DbModels = [
   {
     name: PurchaseApproval.name,
     schema: PurchaseApprovalSchema,
+  },
+  {
+    name: JobApplications.name,
+    schema: JobApplicationsSchema,
+    collection: MODEL.JOB_APPLICATIONS,
   },
 ];

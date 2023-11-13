@@ -84,6 +84,10 @@ export const RMQ_MESSAGES = {
       DELETE_TAXS: 'delete-taxs',
     },
 
+    JOB_APPLICATIONS: {
+      CREATE_JOB_APPLICATION: 'create-job-application',
+    },
+
     ADD_USER: 'add-user',
     USER_LIST: 'user-list',
     USER_PROFILE: 'user-profile',

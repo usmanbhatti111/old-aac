@@ -61,6 +61,7 @@ import { NoteController } from './controllers/sales/note.controller';
 import { TaxCalculationController } from './controllers/super-admin/tax-calculation.controller';
 import { DealViewsController } from './controllers/sales/deal-views.controller';
 import { ActivitylogsController } from './controllers/common-features/activitylogs.controller';
+import { JobApplicationsController } from './controllers/super-admin/job-applications.controller';
 
 @Module({
   imports: [
@@ -122,6 +123,7 @@ import { ActivitylogsController } from './controllers/common-features/activitylo
     TaxCalculationController,
     DealViewsController,
     ActivitylogsController,
+    JobApplicationsController,
   ],
   providers: [
     // Exceptions Filter
