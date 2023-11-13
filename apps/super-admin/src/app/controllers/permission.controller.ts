@@ -21,4 +21,9 @@ export class PermissionController {
   getCompanyAccountRoles(payload) {
     return this.permssionService.getCompanyAccountRoles(payload);
   }
+
+  @MessagePattern(RMQ_MESSAGES.PERMISSION.EDIT_COMPANY_ACCOUNT_ROLE)
+  updateCompanyAccountRoles(payload) {
+    return this.permssionService.updateCompanyAccountRole(payload);
+  }
 }

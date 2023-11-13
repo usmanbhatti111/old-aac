@@ -1,37 +1,37 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsMongoId, IsNotEmpty, IsOptional, IsString } from 'class-validator';
+import { IsNotEmpty, IsOptional, IsString } from 'class-validator';
 
-export class AddCompanyAccountRoleDto {
+export class EditCompanyAccountRoleDto {
   @ApiProperty({ example: '56cb91bdc3464f14678934ca' })
-  @IsMongoId()
   @IsNotEmpty()
-  organizationId: string;
-
-  @ApiProperty({ example: '56cb91bdc3464f14678934ca' })
-  @IsMongoId()
-  @IsNotEmpty()
-  organizationCompanyAccountId: string;
+  companyAccountRoleId: string;
 
   @ApiProperty({ example: '56cb91bdc3464f14678934ca' })
-  @IsMongoId()
-  @IsNotEmpty()
+  @IsOptional()
   productId: string;
 
   @ApiProperty({
     example: 'this is description of role',
   })
-  @IsNotEmpty()
+  @IsOptional()
   @IsString()
   description: string;
 
   @ApiProperty({
     example: 'admin',
   })
-  @IsNotEmpty()
+  @IsOptional()
   @IsString()
   name: string;
 
+  @IsOptional()
   @ApiProperty({ example: ['add-user', 'view-dashboard', 'add-deals'] })
-  @IsNotEmpty()
   permissions: [];
+
+  @ApiProperty({
+    example: 'ACTIVE',
+  })
+  @IsOptional()
+  @IsString()
+  status: string;
 }

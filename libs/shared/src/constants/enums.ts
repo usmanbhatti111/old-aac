@@ -310,3 +310,8 @@ export enum EIsDeletedStatus {
   SOFT_DELETED = 'SOFT_DELETED',
   HARD_DELETED = 'HARD_DELETED',
 }
+
+export enum CompanyAccountRoleStatusEnum {
+  ACTIVE = 'ACTIVE',
+  INACTIVE = 'INACTIVE',
+}

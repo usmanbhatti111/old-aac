@@ -168,6 +168,21 @@ export class PermissionService {
     }
   }
 
+  async updateCompanyAccountRole(payload: any) {
+    try {
+      const filter = { _id: payload?.companyAccountRoleId };
+      delete payload.companyAccountRoleId;
+      const res = await this.companyAccountRoleRepository.findByIdAndUpdate(
+        filter,
+        payload
+      );
+
+      return successResponse(HttpStatus.OK, ResponseMessage.SUCCESS, res);
+    } catch (error) {
+      throw new RpcException(error);
+    }
+  }
+
   // async getCompanyAccountRoles(payload: any) {
   //   try {
 

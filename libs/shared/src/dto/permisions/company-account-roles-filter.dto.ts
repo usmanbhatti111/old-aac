@@ -14,7 +14,7 @@ export class CompanyAccountRoleFilterDto extends paginationDTO {
   organizationCompanyAccountId: string;
 
   @ApiProperty({
-    example: 'dev',
+    example: 'admin',
     required: false,
   })
   @IsOptional()

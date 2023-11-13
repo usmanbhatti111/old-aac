@@ -8,6 +8,7 @@ export const RMQ_MESSAGES = {
     ADD_ALL_PERMISSIONS: 'add-all-permissions',
     ADD_COMPNAY_ACCOUNT_ROLE: 'add-company-account-role',
     GET_COMPNAY_ACCOUNT_ROLES: 'get-company-account-roles',
+    EDIT_COMPANY_ACCOUNT_ROLE: 'edit-company-account-role',
   },
   AUTHENTICATION: {
     FORCE_CONFIRM: 'force-confirm-user',
