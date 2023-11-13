@@ -100,6 +100,8 @@ import {
   NoteSchema,
   PurchaseApproval,
   PurchaseApprovalSchema,
+  CompanyAccountRole,
+  CompanyAccountRoleSchema,
 } from './schema';
 import {
   ReportsWidget,
@@ -354,5 +356,9 @@ export const DbModels = [
   {
     name: PurchaseApproval.name,
     schema: PurchaseApprovalSchema,
+  },
+  {
+    name: CompanyAccountRole.name,
+    schema: CompanyAccountRoleSchema,
   },
 ];

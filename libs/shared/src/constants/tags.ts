@@ -20,6 +20,7 @@ export const API_TAGS = {
   PRODUCTS: 'Products',
   PRODUCT_FEATURES: 'Product Features',
   AIR_SERVICES_DASHBOARD: 'Air Services Dashboard',
+  PERMISSIONS: 'Permissions',
   NEWS_AND_EVENTS: 'News and Events',
   REPORTS_WIDGETS: 'Reports',
   PAYMENTS: 'Payments',

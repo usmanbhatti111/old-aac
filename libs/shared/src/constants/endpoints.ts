@@ -152,7 +152,11 @@ export const API_ENDPOINTS = {
     GET_PRODUCTS: '/',
     EDIT_PRODUCT: '/:id',
   },
-
+  PERMISSION: {
+    ADD_ALL_PERMISSIONS: '/',
+    ADD_COMPANY_ACCOUNT_ROLE: '/role',
+    GET_COMPNAY_ACCOUNT_ROLES: '/role',
+  },
   AIR_SERVICES: {
     TICKETS: {
       ticket: 'ticket',

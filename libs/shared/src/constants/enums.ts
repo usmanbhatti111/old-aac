@@ -16,6 +16,11 @@ export enum UserAccountStatus {
   INACTIVE = 'INACTIVE',
 }
 
+export enum PermissionStatus {
+  ACTIVE = 'ACTIVE',
+  INACTIVE = 'INACTIVE',
+}
+
 export enum EJobType {
   FULL_TIME = 'FULL_TIME',
   PART_TIME = 'PART_TIME',
