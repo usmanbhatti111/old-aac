@@ -209,6 +209,7 @@ export const API_ENDPOINTS = {
       ADD_DASHBOARD: '/',
       GET_DASHBOARDS: '/',
       GET_DASHBOARD: '/:id',
+      GET_DASHBOARD_TICKETS: 'tickets',
       UPDATE_DASHBOARD: '/:id',
       DELETE_DASHBOARD: '/:id',
       EMAILED_DASHBOARD: 'emailed-dashboards',

@@ -7,6 +7,7 @@ import {
   EmailedDashboardDTO,
   IdDto,
   ListDashboardDTO,
+  FilterTicketDto,
 } from '@shared/dto';
 
 @Controller()
@@ -36,5 +37,9 @@ export class DashboardController {
   @MessagePattern(RMQ_MESSAGES.AIR_SERVICES.DASHBOARD.UPDATE_DASHBOARD)
   public async updateDashboard(@Payload() payload: CreateDashboardtDTO) {
     return this.dashboardService.addDashboard(payload);
+  }
+  @MessagePattern(RMQ_MESSAGES.AIR_SERVICES.DASHBOARD.GET_DASHBOARD_Tickets)
+  public async getDashboardTickets(@Payload() payload: FilterTicketDto) {
+    return this.dashboardService.getDashboardTickets(payload);
   }
 }

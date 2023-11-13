@@ -28,6 +28,7 @@ import {
   EmailedDashboardResponseDTO,
   IdDto,
   ListDashboardDTO,
+  FilterTicketDto,
 } from '@shared/dto';
 import { Auth } from '../decorators/auth.decorator';
 @ApiBearerAuth()
@@ -87,7 +88,23 @@ export class AirServicesDashboardController {
       throw new RpcException(err);
     }
   }
+  @Get(API_ENDPOINTS.AIR_SERVICES.DASHBOARD.GET_DASHBOARD_TICKETS)
+  public async getDashboardTickets(@Query() payload: FilterTicketDto) {
+    try {
+      const dashboardtTicketList = await firstValueFrom(
+        this.ariServiceClient.send(
+          RMQ_MESSAGES.AIR_SERVICES.DASHBOARD.GET_DASHBOARD_Tickets,
+          {
+            ...payload,
+          }
+        )
+      );
 
+      return dashboardtTicketList;
+    } catch (err) {
+      throw new RpcException(err);
+    }
+  }
   @Get(API_ENDPOINTS.AIR_SERVICES.DASHBOARD.GET_DASHBOARD)
   @ApiParam({
     type: String,
