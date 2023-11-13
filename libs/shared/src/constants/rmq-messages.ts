@@ -169,6 +169,7 @@ export const RMQ_MESSAGES = {
       GET_DASHBOARD: 'get-dashboard',
       UPDATE_DASHBOARD: 'update-dashboard',
       DELETE_DASHBOARD: 'delete-dashboard',
+      EMAILED_DASHBOARD: 'emailed-dashboards',
     },
     WIDGETS: {
       CREATE_WIDGETS: 'create-widgets',

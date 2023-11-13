@@ -100,6 +100,8 @@ import {
   NoteSchema,
   PurchaseApproval,
   PurchaseApprovalSchema,
+  EmailedDashboards,
+  EmailedDashboardsSchema,
 } from './schema';
 import {
   ReportsWidget,
@@ -313,6 +315,10 @@ export const DbModels = [
   {
     name: Dashboard.name,
     schema: DashboardSchema,
+  },
+  {
+    name: EmailedDashboards.name,
+    schema: EmailedDashboardsSchema,
   },
   {
     name: OrganizationCompanyAccount.name,

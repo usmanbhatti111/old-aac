@@ -29,32 +29,6 @@ export const PurchaseApprovalSchema =
   SchemaFactory.createForClass(PurchaseApproval);
 
 @Schema()
-@Schema()
-export class PurchaseApproval {
-  @Prop({
-    type: String,
-    required: false,
-    default: EApprovalStatusStatus.PENDING,
-    enum: EApprovalStatusStatus,
-  })
-  approvalStatus: string;
-
-  @Prop({ type: SchemaTypes.ObjectId, required: false, ref: 'users' })
-  requestedapprId: string;
-
-  @Prop({ type: SchemaTypes.ObjectId, required: false, ref: 'users' })
-  userId: string;
-
-  @Prop({ type: Object, required: false })
-  details: object;
-
-  @Prop({ type: Object, required: false })
-  reminderDetails: object;
-}
-
-const PurchaseApprovalSchema = SchemaFactory.createForClass(PurchaseApproval);
-
-@Schema()
 export class PurchaseDetail {
   @Prop({ type: String, required: true })
   itemName: string;
@@ -133,8 +107,6 @@ export class Purchase extends AbstractSchema {
 
   @Prop({ type: [PurchaseDetailSchema], required: false })
   purchaseDetails: PurchaseDetail[];
-  @Prop({ type: [PurchaseApprovalSchema], required: false })
-  PurchaseApprovals: PurchaseApproval[];
   @Prop({ type: String, required: true })
   status: string;
 }

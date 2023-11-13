@@ -211,6 +211,7 @@ export const API_ENDPOINTS = {
       GET_DASHBOARD: '/:id',
       UPDATE_DASHBOARD: '/:id',
       DELETE_DASHBOARD: '/:id',
+      EMAILED_DASHBOARD: 'emailed-dashboards',
     },
     REPORT_WIDGETS: {
       ADD_REPORT_WIDGET: '/',
