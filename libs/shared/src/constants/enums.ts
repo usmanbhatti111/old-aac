@@ -211,6 +211,12 @@ export enum ETaskNotifyStatus {
   FIFTEEN_MINS = '15',
   THIRTY_MINS = '30',
 }
+export enum EManageWorloadStatus {
+  ALL = 'ALL',
+  PLANNED = 'PLANNED',
+  UNPLANNED = 'UNPLANNED',
+  DELAYED = 'DELAYED',
+}
 
 export enum ETaskAssociate {
   COMPANIES = 'Companies',

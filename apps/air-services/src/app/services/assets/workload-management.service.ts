@@ -14,15 +14,73 @@ export class WorkloadManagementService {
 
   async getWorkload(query: WorkLoadFilterDto) {
     try {
-      const { startDate, countDayWise, countDayWiseHours } = query;
+      const { startDate, countDayWise, countDayWiseHours, manage } = query;
       const startOfCustomRange = startDate
         ? dayjs(startDate).startOf('day')
         : null;
       const endOfCustomRange = startDate
         ? startOfCustomRange.add(1, 'week').endOf('day')
         : null;
-
       const pipeline: any[] = [];
+
+      const matchConditions = [];
+
+      if (manage && manage.toUpperCase() !== 'ALL') {
+        if (startDate) {
+          matchConditions.push({
+            $or: [
+              {
+                startDate: {
+                  $gte: startOfCustomRange.toDate(),
+                  $lte: endOfCustomRange.toDate(),
+                },
+              },
+              {
+                endDate: {
+                  $gte: startOfCustomRange.toDate(),
+                  $lte: endOfCustomRange.toDate(),
+                },
+              },
+            ],
+          });
+        }
+
+        if (
+          manage === 'in-progress' ||
+          manage === 'DELAYED' ||
+          manage === 'open'
+        ) {
+          matchConditions.push({
+            $or: [
+              { status: 'in-progress', endDate: { $lte: new Date() } },
+              { status: 'open', endDate: { $lte: new Date() } },
+              { status: 'DELAYED', endDate: { $lte: new Date() } },
+            ],
+          });
+        } else if (manage === 'PLANNED') {
+          matchConditions.push({ startDate: { $exists: true, $ne: null } });
+          matchConditions.push({ endDate: { $exists: true, $ne: null } });
+        } else if (manage === 'UNPLANNED') {
+          matchConditions.push({
+            $or: [
+              { startDate: { $exists: false } },
+              { endDate: { $exists: false } },
+            ],
+          });
+        } else {
+          matchConditions.push({ status: manage });
+        }
+
+        if (matchConditions.length > 0) {
+          pipeline.push({
+            $match: { $and: matchConditions },
+          });
+        }
+      }
+
+      pipeline.push({
+        $sort: { startDate: 1 },
+      });
 
       if (startDate) {
         pipeline.push({
