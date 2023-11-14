@@ -165,6 +165,7 @@ export const RMQ_MESSAGES = {
   AIR_SERVICES: {
     DASHBOARD: {
       CREATE_DASHBOARD: 'create-dashboard',
+      CREATE_DASHBOARD_ANNOUCEMENT: 'create-dashboard-annoucement',
       GET_DASHBOARD_LIST: 'get-dashboard-list',
       GET_DASHBOARD: 'get-dashboard',
       GET_DASHBOARD_Tickets: 'get-dashboard-tickets',

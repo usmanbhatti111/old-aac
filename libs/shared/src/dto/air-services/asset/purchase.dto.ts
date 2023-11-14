@@ -448,33 +448,7 @@ export class DeleteAssociatePurchaseOrderDto {
   })
   associateOrderId: string;
 }
-export class ApproverDto {
-  @IsMongoId()
-  @ApiProperty({
-    type: String,
-    example: '652ffb62436eb52662f9752e',
-    required: true,
-  })
-  requestedapprId: string;
-  @IsMongoId()
-  @ApiProperty({
-    type: String,
-    example: '652ffb62436eb52662f9752e',
-    required: false,
-  })
-  userId: string;
-
-  @ApiProperty({
-    enum: EApprovalStatusStatus,
-    required: false,
-    example: 'PENDING',
-  })
-  @IsOptional()
-  approvalStatus: string;
-}
-export class AddPurchaseOrderApprover {
-  @ApiProperty({ example: 200 })
-  statusCode: number;
+export class ApproverStatusDto {
   @ApiProperty({
     required: true,
     example: '65152939f50394f42cee2db4',
@@ -494,6 +468,15 @@ export class AddPurchaseOrderApprover {
   @IsOptional()
   @IsString()
   reasons: string;
+}
+export class AddPurchaseOrderApprover {
+  @ApiProperty({
+    required: true,
+    example: '65152939f50394f42cee2db4',
+  })
+  @IsMongoId()
+  @IsNotEmpty()
+  purchaseId: string;
 }
 
 export class FilterPurchaseOrderRecievedDto extends paginationDTO {

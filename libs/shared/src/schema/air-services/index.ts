@@ -12,3 +12,4 @@ export * from './software-users.schema';
 export * from './dashboard.schema';
 export * from './emailed-dashboards.schema';
 export * from './articles.schema';
+export * from './annoucement.scehma';

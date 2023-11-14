@@ -94,10 +94,12 @@ import {
   ActivityLogSchema,
   Articles,
   ArticlesSchema,
+  AnnoucementSchema,
   Deals,
   DealsSchema,
   Note,
   NoteSchema,
+  Annoucement,
   PurchaseApproval,
   PurchaseApprovalSchema,
   EmailedDashboards,
@@ -356,6 +358,10 @@ export const DbModels = [
   {
     name: Note.name,
     schema: NoteSchema,
+  },
+  {
+    name: Annoucement.name,
+    schema: AnnoucementSchema,
   },
   {
     name: PurchaseApproval.name,

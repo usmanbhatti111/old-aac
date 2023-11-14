@@ -16,7 +16,7 @@ import {
   AddPurchaseOrderApprover,
   FilterPurchaseOrderRecievedDto,
   FilterPurchaseOrderDto,
-  // ApproverStatusDto,
+  ApproverStatusDto,
 } from '@shared/dto';
 
 import { Types } from 'mongoose';
@@ -187,7 +187,7 @@ export class PurchaseOrderService {
     try {
       const { id } = payload.id;
       const { createdBy } = payload;
-      const { purchaseId } = payload;
+      const { purchaseId } = payload.purchaseId;
       const orderexsit = await this.purchaseRepository.findOne({
         _id: purchaseId,
       });
@@ -195,13 +195,14 @@ export class PurchaseOrderService {
         const data = await this.purchaseApprovalRepository.create({
           approverId: id,
           createdBy: createdBy,
-          // purchaseId: purchaseId,
+          purchaseId: purchaseId,
         });
         const response = successResponse(
           HttpStatus.CREATED,
           `PurchaseOrder Approver sent seccessfully`,
           data
         );
+
         return response;
       } else {
         throw new RpcException('purhchase order not found');
@@ -232,22 +233,22 @@ export class PurchaseOrderService {
       throw new RpcException(error);
     }
   }
-  async updatePurchaseOrderApprover() {
-    // payload: ApproverStatusDto
-    // try {
-    //   const { id } = payload;
-    //   const data = await this.purchaseApprovalRepository.findOneAndUpdate(
-    //     { _id: id },
-    //     payload
-    //   );
-    //   const response = successResponse(
-    //     HttpStatus.OK,
-    //     `PurchaseOrder Edit Successfully`,
-    //     data
-    //   );
-    //   return response;
-    // } catch (error) {
-    //   throw new RpcException(error);
-    // }
+  async updatePurchaseOrderApprover(payload: ApproverStatusDto) {
+    try {
+      const { id } = payload;
+
+      const data = await this.purchaseApprovalRepository.findOneAndUpdate(
+        { _id: id },
+        payload
+      );
+      const response = successResponse(
+        HttpStatus.OK,
+        `PurchaseOrder Edit Successfully`,
+        data
+      );
+      return response;
+    } catch (error) {
+      throw new RpcException(error);
+    }
   }
 }

@@ -38,11 +38,12 @@ import {
   GetPurchasesResponseOrderDto,
   IdDto,
   IdDTO,
-  // ApproverStatusDto,
+  ApproverStatusDto,
   FilterPurchaseOrderRecievedDto,
   GetPurchasesAssociationResponseOrderDto,
   DeleteAssociatePurchaseOrderDto,
   AssociatePurchaseOrderDto,
+  AddPurchaseOrderApprover,
 } from '@shared/dto';
 import { DownloadService } from '@shared/services';
 import { Auth } from '../../decorators/auth.decorator';
@@ -303,16 +304,16 @@ export class PurchaseOrderController {
   }
   @Auth(true)
   @Patch(API_ENDPOINTS.AIR_SERVICES.ASSETS.APPROVER_ORDER_STATUS)
-  public async updatePurchaseOrderApprover() {
-    // @Req() request: AppRequest // @Body() dto: ApproverStatusDto,
+  public async updatePurchaseOrderApprover(
+    @Body() dto: ApproverStatusDto,
+    @Req() request: AppRequest
+  ) {
     try {
-      // const { user } = request;
+      const { user } = request;
       const response = await firstValueFrom(
         this.airServiceClient.send(
           { cmd: RMQ_MESSAGES.AIR_SERVICES.ASSETS.APPROVER_ORDER_STATUS },
-          {
-            //  ...dto, user
-          }
+          { ...dto, user }
         )
       );
       return response;

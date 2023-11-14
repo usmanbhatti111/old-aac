@@ -28,7 +28,9 @@ import {
   EmailedDashboardResponseDTO,
   IdDto,
   ListDashboardDTO,
+  CreateAnnouncementDTO,
   FilterTicketDto,
+  AnnoucementDashboardResponseDTO,
 } from '@shared/dto';
 import { Auth } from '../decorators/auth.decorator';
 @ApiBearerAuth()
@@ -122,6 +124,24 @@ export class AirServicesDashboardController {
         )
       );
       return dashboardList;
+    } catch (err) {
+      throw new RpcException(err);
+    }
+  }
+  @Auth(true)
+  @ApiOkResponse({ type: AnnoucementDashboardResponseDTO })
+  @Post(API_ENDPOINTS.AIR_SERVICES.DASHBOARD.CREATE_DASHBOARD_ANNOUCEMENT)
+  public async createDashboardAnnoucement(
+    @Body() dashboardannoucementDTO: CreateAnnouncementDTO
+  ): Promise<AnnoucementDashboardResponseDTO> {
+    try {
+      const dashboardAnnouncement = await firstValueFrom(
+        this.ariServiceClient.send(
+          RMQ_MESSAGES.AIR_SERVICES.DASHBOARD.CREATE_DASHBOARD_ANNOUCEMENT,
+          dashboardannoucementDTO
+        )
+      );
+      return dashboardAnnouncement;
     } catch (err) {
       throw new RpcException(err);
     }
