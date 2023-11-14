@@ -365,3 +365,10 @@ export enum EActivitylogModule {
   MEETINGS = 'MEETINGS',
   EMAILS = 'EMAILS',
 }
+
+export enum EApplicationStatus {
+  PENDING = 'pending',
+  REJECTED = 'rejected',
+  SHORTLISTED = 'shortlisted',
+  INTERVIEWED = 'interviewed',
+}

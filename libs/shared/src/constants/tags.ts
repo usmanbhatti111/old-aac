@@ -47,4 +47,5 @@ export const API_TAGS = {
   TAX_CALCULATION: 'Tax Calculation',
   DEAL_VIEWS: 'Deal Views',
   ACTIVITY_LOG: 'Activity Log',
+  JOB_APPLICATIONS: 'Job Applications',
 };

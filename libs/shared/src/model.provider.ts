@@ -106,6 +106,8 @@ import {
   PurchaseApprovalSchema,
   Enquiries,
   EnquiriesSchema,
+  JobApplications,
+  JobApplicationsSchema,
 } from './schema';
 import {
   ReportsWidget,
@@ -381,5 +383,10 @@ export const DbModels = [
     name: Enquiries.name,
     schema: EnquiriesSchema,
     collection: MODEL.ENQUIRIES,
+  },
+  {
+    name: JobApplications.name,
+    schema: JobApplicationsSchema,
+    collection: MODEL.JOB_APPLICATIONS,
   },
 ];

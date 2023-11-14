@@ -131,6 +131,13 @@ export const API_ENDPOINTS = {
       DELETE_TAXS: '/:ids',
     },
 
+    JOB_APPLICATIONS: {
+      CREATE_JOB_APPLICATION: '/',
+      GET_JOB_APPLICATIONS: '/',
+      GET_UNIQUE_CANDIDATE: '/get-unique-candidate',
+      EDIT_JOB_APPLICATION: '/:id',
+    },
+
     ADD_USER: 'add-user',
     USER_LIST: 'user-list',
     USER_PROFILE: 'user-profile/:userId',
