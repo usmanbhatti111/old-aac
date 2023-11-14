@@ -106,6 +106,8 @@ import {
   PurchaseApprovalSchema,
   CompanyAccountRole,
   CompanyAccountRoleSchema,
+  Enquiries,
+  EnquiriesSchema,
   JobApplications,
   JobApplicationsSchema,
 } from './schema';
@@ -382,6 +384,11 @@ export const DbModels = [
   {
     name: CompanyAccountRole.name,
     schema: CompanyAccountRoleSchema,
+  },
+  {
+    name: Enquiries.name,
+    schema: EnquiriesSchema,
+    collection: MODEL.ENQUIRIES,
   },
   {
     name: JobApplications.name,

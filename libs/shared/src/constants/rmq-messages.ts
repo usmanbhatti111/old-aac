@@ -83,6 +83,13 @@ export const RMQ_MESSAGES = {
       GET_QUICK_LINKS_GROUP_BY_PRODUCT: 'get-quick-links-group-by-product',
     },
 
+    ENQUIRIES: {
+      ADD_ENQUIRY: 'add-enquiry',
+      GET_ENQUIRIES: 'get-enquiries',
+      GET_ENQUIRY: 'get-enquiry',
+      UPDATE_ENQUIRY: 'update-enquiry',
+      DELETE_ENQUIRIES: 'delete-enquiries',
+    },
     TAX_CALCULATIONS: {
       ADD_TAX: 'add-tax',
       GET_TAXS: 'get-taxs',

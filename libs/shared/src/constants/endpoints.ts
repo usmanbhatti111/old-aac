@@ -117,6 +117,13 @@ export const API_ENDPOINTS = {
       EDIT_QUICK_LINK: '/:id',
     },
 
+    ENQUIRIES: {
+      ADD_ENQUIRY: '/',
+      GET_ENQUIRIES: '/',
+      GET_ENQUIRY: '/:id',
+      UPDATE_ENQUIRY: '/:id',
+      DELETE_ENQUIRY: ':ids',
+    },
     TAX_CALCULATION: {
       ADD_TAX: '/',
       GET_TAXS: '/',

@@ -315,6 +315,11 @@ export enum CompanyAccountRoleStatusEnum {
   ACTIVE = 'ACTIVE',
   INACTIVE = 'INACTIVE',
 }
+export enum EEnquiriesStatus {
+  DONE = 'done',
+  PENDING = 'pending',
+}
+
 export enum ETaxApplyOn {
   INVOICE = 'invoice',
   QUOTES = 'quotes',

@@ -10,6 +10,8 @@ import { SuperAdminService } from './services/super-admin.service';
 import { ScheduleModule } from '@nestjs/schedule';
 import { PermissionController } from './controllers/permission.controller';
 import { PermissionService } from './services/permission.service';
+import { EnquiriesController } from './controllers/enquiries.controller';
+import { EnquiriesService } from './services/enquiries.service';
 import { FaqsController } from './controllers/faqs.controller';
 import { InvoiceController } from './controllers/invoice.controller';
 import { JobApplicationsController } from './controllers/job-applicaton.controller';
@@ -42,6 +44,7 @@ import { TaxCalculationService } from './services/tax-calculation.service';
     PlanController,
     NewsAndEventsController,
     PermissionController,
+    EnquiriesController,
     TaxCalculationController,
     JobApplicationsController,
   ],
@@ -58,6 +61,7 @@ import { TaxCalculationService } from './services/tax-calculation.service';
     PlanService,
     NewsAndEventsService,
     PermissionService,
+    EnquiriesService,
     TaxCalculationService,
     JobApplicationsService,
   ],
