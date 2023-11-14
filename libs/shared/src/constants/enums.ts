@@ -364,6 +364,7 @@ export enum EActivitylogModule {
   CALLS = 'CALLS',
   MEETINGS = 'MEETINGS',
   EMAILS = 'EMAILS',
+  OTHERS = 'OTHERS',
 }
 
 export enum EApplicationStatus {

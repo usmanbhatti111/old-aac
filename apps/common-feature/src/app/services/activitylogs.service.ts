@@ -12,10 +12,17 @@ export class ActivitylogsService {
 
   async activityLog(payload: ActivityLogParams) {
     try {
-      const { performedBy, activityType, module, moduleId, moduleName } =
-        payload;
+      const {
+        performedBy,
+        activityType,
+        module,
+        moduleId,
+        moduleName,
+        organizationId,
+      } = payload;
 
       const params: ActivityLogParams = {
+        organizationId,
         performedBy, // userId
         activityType, // CREATED, UPDATED
         module, // PLANS, DEALS, INVOICES
@@ -158,10 +165,9 @@ export class ActivitylogsService {
           $match: filterQuery,
         },
       ];
-
       const params = {
         pipelines,
-        offset,
+        offset: isNaN(offset) ? null : offset,
         limit,
       };
 

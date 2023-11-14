@@ -88,6 +88,7 @@ export class ActivitylogDto {
 }
 
 export interface ActivityLogParams {
+  organizationId?: string;
   performedBy: string; // userId
   activityType: EActivityType; // CREATED, UPDATED
   module: EActivitylogModule; // module e.g PLANS

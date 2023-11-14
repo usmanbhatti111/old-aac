@@ -5,6 +5,14 @@ import { EActivityType, EActivitylogModule } from '../../../constants';
 
 @Schema({ versionKey: false, timestamps: true })
 export class Activitylogs extends AbstractSchema {
+  //organization Id
+  @Prop({
+    type: SchemaTypes.ObjectId,
+    required: false,
+    ref: 'organizations',
+  })
+  organizationId?: string;
+
   // example @Auth() => performedBy : user._id
   @Prop({
     type: SchemaTypes.ObjectId,
