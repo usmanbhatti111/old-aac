@@ -47,6 +47,9 @@ export class CompanyAccountRole extends AbstractSchema {
     required: false,
   })
   status?: string;
+
+  @Prop({ type: Boolean, default: false })
+  isDeleted?: boolean;
 }
 export const CompanyAccountRoleSchema =
   SchemaFactory.createForClass(CompanyAccountRole);

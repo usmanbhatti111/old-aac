@@ -1,27 +1,66 @@
 import { ApiProperty } from '@nestjs/swagger';
+import {
+  IsDateString,
+  IsISO8601,
+  IsNotEmpty,
+  IsOptional,
+  IsString,
+} from 'class-validator';
+import {
+  EJobCategories,
+  EJobStatus,
+  PermissionStatus,
+} from '../../constants/enums';
+import { PaginationDto } from '../common';
+import { toMongoObjectId } from '../../functions';
+import { Transform } from 'class-transformer';
 
-export class GetCompanyAccountRolesResponseDto {
-  @ApiProperty({ example: 201 })
-  statusCode: number;
-
-  @ApiProperty({ example: 'Success' })
-  message: string;
+export class GetCompanyAccountRolesDto extends PaginationDto {
+  @ApiProperty({
+    required: false,
+    example: '5f8b14d073bce3c5f404f78r',
+  })
+  @IsOptional()
+  @Transform(toMongoObjectId, { toClassOnly: true })
+  organizationCompanyAccountId: string;
 
   @ApiProperty({
-    example: {
-      id: '654b1f6916ba44785de24cc3',
-      organizationId: '56cb91bdc3464f14678934ca',
-      organizationCompanyAccountId: '56cb91bdc3464f14678934ca',
-      productId: '56cb91bdc3464f14678934ca',
-      name: 'name of role',
-      description: 'description of role',
-      permissions: ['add-list', 'view-user'],
-      createdAt: '2023-11-08T05:40:57.041Z',
-      updatedAt: '2023-11-08T05:40:57.041Z',
-    },
+    required: false,
+    example: '5f8b14d073bce3c5f404f78r',
   })
-  data: {};
+  @IsOptional()
+  @Transform(toMongoObjectId, { toClassOnly: true })
+  productId: string;
 
-  @ApiProperty({ example: null })
-  errors: [];
+  @ApiProperty({
+    required: false,
+    example: '2023-10-02',
+  })
+  @IsOptional()
+  @IsDateString()
+  dateStart: string;
+
+  @ApiProperty({
+    required: false,
+    example: '2023-10-03',
+  })
+  @IsOptional()
+  @IsDateString()
+  dateEnd: string;
+
+  @ApiProperty({
+    enum: PermissionStatus,
+    required: false,
+  })
+  @IsOptional()
+  @IsString()
+  status: string;
+
+  @ApiProperty({
+    example: 'admin',
+    required: false,
+  })
+  @IsOptional()
+  @IsString()
+  search: string;
 }

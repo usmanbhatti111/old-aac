@@ -29,8 +29,8 @@ import { firstValueFrom } from 'rxjs';
 import {
   AddCompanyAccountRoleDto,
   AddCompanyAccountRoleResponseDto,
-  CompanyAccountRoleFilterDto,
   EditCompanyAccountRoleDto,
+  GetCompanyAccountRolesDto,
   GetCompanyAccountRolesResponseDto,
 } from '@shared/dto';
 import { Auth } from '../../decorators/auth.decorator';
@@ -44,6 +44,7 @@ export class PermissionController {
     private superAdminService: ClientProxy
   ) {}
 
+  @Auth(true)
   @Post(API_ENDPOINTS.PERMISSION.ADD_ALL_PERMISSIONS)
   public async addAllPermissions(): Promise<any> {
     const response = await firstValueFrom(
@@ -70,10 +71,11 @@ export class PermissionController {
     return response;
   }
 
+  @Auth(true)
   @Get(API_ENDPOINTS.PERMISSION.GET_COMPNAY_ACCOUNT_ROLES)
   @ApiOkResponse({ type: GetCompanyAccountRolesResponseDto })
   public async getCompanyAccountRoles(
-    @Query() payload: CompanyAccountRoleFilterDto
+    @Query() payload: GetCompanyAccountRolesDto
   ) {
     const response = await firstValueFrom(
       this.superAdminService.send(

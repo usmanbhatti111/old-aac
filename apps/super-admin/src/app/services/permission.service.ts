@@ -2,10 +2,15 @@ import { BadRequestException, HttpStatus, Injectable } from '@nestjs/common';
 import { RpcException } from '@nestjs/microservices';
 import { PermissionRepository, CompanyAccountRoleRepository } from '@shared';
 import { ResponseMessage, successResponse } from '@shared/constants';
-import { EditCompanyAccountRoleDto } from '@shared/dto';
+import {
+  AddCompanyAccountRoleDto,
+  EditCompanyAccountRoleDto,
+  GetCompanyAccountRolesDto,
+} from '@shared/dto';
 
 import * as fs from 'fs';
 import mongoose from 'mongoose';
+import dayjs from 'dayjs';
 
 @Injectable()
 export class PermissionService {
@@ -71,7 +76,7 @@ export class PermissionService {
     }
   }
 
-  async addCompanyAccountRole(payload: any) {
+  async addCompanyAccountRole(payload: AddCompanyAccountRoleDto) {
     try {
       const res = await this.companyAccountRoleRepository.create(payload);
 
@@ -86,37 +91,55 @@ export class PermissionService {
     }
   }
 
-  async getCompanyAccountRoles(payload: any) {
+  async getCompanyAccountRoles(payload: GetCompanyAccountRolesDto) {
     try {
-      const { limit, page, search, organizationCompanyAccountId } = payload;
+      const {
+        limit,
+        page,
+        search,
+        status,
+        dateStart,
+        dateEnd,
+        productId,
+        organizationCompanyAccountId,
+      } = payload;
       const offset = limit * (page - 1);
       delete payload.page;
       delete payload.limit;
       delete payload.search;
 
       const pipelines = [];
+      const filterQuery = { isDeleted: false };
 
-      pipelines.push({
-        $match: {
-          organizationCompanyAccountId: new mongoose.Types.ObjectId(
-            organizationCompanyAccountId
-          ),
-        },
-      });
+      filterQuery['organizationCompanyAccountId'] = new mongoose.Types.ObjectId(
+        organizationCompanyAccountId
+      );
 
-      let searchFilter;
-      if (search) {
-        searchFilter = {
-          name: {
-            $regex: search,
-            $options: 'i',
-          },
+      if (dateStart && dateEnd) {
+        const startDate = dayjs(payload.dateStart).startOf('day').toDate();
+        const endDate = dayjs(payload.dateEnd).endOf('day').toDate();
+
+        filterQuery['createdAt'] = {
+          $gte: startDate,
+          $lte: endDate,
         };
       }
 
-      const filterQuery = {
-        ...searchFilter,
-      };
+      if (productId) {
+        filterQuery['productId'] = new mongoose.Types.ObjectId(productId);
+      }
+
+      if (status) {
+        filterQuery['status'] = status;
+      }
+
+      if (search) {
+        filterQuery['$or'] = [
+          {
+            name: { $regex: search, $options: 'i' },
+          },
+        ];
+      }
 
       pipelines.push(
         {
