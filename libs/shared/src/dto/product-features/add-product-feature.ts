@@ -1,11 +1,16 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsMongoId, IsNotEmpty, IsOptional } from 'class-validator';
+import { IsArray, IsNotEmpty, IsOptional } from 'class-validator';
 
 export class AddProductFeatureDto {
-  @ApiProperty({ example: '56cb91bdc3464f14678934ca' })
-  @IsMongoId()
+  @ApiProperty({
+    type: [String],
+    isArray: true,
+    example: ['56cb91bdc3464f14678934ca', '56cb91bdc3464f14678934ca'],
+    required: true,
+  })
   @IsNotEmpty()
-  productId: string;
+  @IsArray()
+  productIds: string[];
 
   @ApiProperty({
     type: String,

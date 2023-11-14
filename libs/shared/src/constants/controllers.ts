@@ -49,4 +49,8 @@ export const CONTROLLERS = {
   DEALS: 'deals',
   DEAL_NOTE: 'deal-note',
   PERMISSIONS: 'permissions',
+  TAX_CALCULATION: 'tax-calculation',
+  DEAL_VIEWS: 'deal-views',
+  ACTIVITY_LOG: 'activity-log',
+  JOB_APPLICATIONS: 'job-applications',
 };

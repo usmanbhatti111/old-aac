@@ -116,6 +116,21 @@ export const API_ENDPOINTS = {
       DELETE_QUICK_LINKS: '/:ids',
       EDIT_QUICK_LINK: '/:id',
     },
+
+    TAX_CALCULATION: {
+      ADD_TAX: '/',
+      GET_TAXS: '/',
+      UPDATE_TAX: '/:id',
+      DELETE_TAXS: '/:ids',
+    },
+
+    JOB_APPLICATIONS: {
+      CREATE_JOB_APPLICATION: '/',
+      GET_JOB_APPLICATIONS: '/',
+      GET_UNIQUE_CANDIDATE: '/get-unique-candidate',
+      EDIT_JOB_APPLICATION: '/:id',
+    },
+
     ADD_USER: 'add-user',
     USER_LIST: 'user-list',
     USER_PROFILE: 'user-profile/:userId',
@@ -351,6 +366,11 @@ export const API_ENDPOINTS = {
       DELETE_TASK: 'delete-task',
       ADD_NOTE: 'add-note',
       DELETE_NOTE: 'delete-note',
+      DEAL_ACTION_PREVIEW: 'deal-action-preview/:id',
+    },
+    DEAL_VIEWS: {
+      CREATE_DEAL_VIEW: '/',
+      GET_DEAL_VIEW: '/',
       GET_NOTES: 'get-notes/:id',
       GET_TASKS: 'get-tasks/:id',
     },

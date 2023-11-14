@@ -19,10 +19,13 @@ import {
   API_ENDPOINTS,
   API_TAGS,
   CONTROLLERS,
+  EActivityType,
+  EActivitylogModule,
   RMQ_MESSAGES,
   SERVICES,
 } from '@shared/constants';
 import {
+  ActivityLogParams,
   AssignOrgPlanDto,
   AssignOrgPlanResponseDto,
   BillingDetailsDto,
@@ -51,7 +54,8 @@ import { AppRequest } from '../../shared/interface/request.interface';
 @ApiBearerAuth()
 export class InvoiceController {
   constructor(
-    @Inject(SERVICES.SUPER_ADMIN) private superAdminServiceClient: ClientProxy
+    @Inject(SERVICES.SUPER_ADMIN) private superAdminServiceClient: ClientProxy,
+    @Inject(SERVICES.COMMON_FEATURE) private commonFeatureClient: ClientProxy
   ) {}
 
   @Get(API_ENDPOINTS.SUPER_ADMIN.BILLING_INVOICES.ORG_PLANS)
@@ -64,6 +68,7 @@ export class InvoiceController {
         { ...query }
       )
     );
+
     return response;
   }
 
@@ -79,6 +84,7 @@ export class InvoiceController {
         { organizationPlanId }
       )
     );
+
     return response;
   }
 
@@ -111,6 +117,27 @@ export class InvoiceController {
           { ...payload, assignedBy }
         )
       );
+
+      //ActivityLog
+      if (response?.data) {
+        const params: ActivityLogParams = {
+          performedBy: user?._id, // userId
+          activityType: EActivityType.CREATED, // UPDATED
+          module: EActivitylogModule.ORGANIZATION_PLAN, // module
+          moduleId: response?.data?._id, // module._id
+          moduleName: response?.data?.name || 'Subscription', //module.name
+        };
+        await firstValueFrom(
+          this.commonFeatureClient.emit(
+            RMQ_MESSAGES.ACTIVITY_LOG.ACTIVITY_LOG,
+            {
+              ...params,
+            }
+          )
+        );
+        response.data.activity = true;
+      }
+
       return response;
     } catch (error) {
       throw new RpcException(error);
@@ -136,6 +163,24 @@ export class InvoiceController {
         }
       )
     );
+
+    //ActivityLog
+    if (response?.data) {
+      const params: ActivityLogParams = {
+        performedBy: user?._id, // userId
+        activityType: EActivityType.UPDATED, // UPDATED
+        module: EActivitylogModule.ORGANIZATION_PLAN, // module
+        moduleId: response?.data?._id, // module._id
+        moduleName: response?.data?.name || 'Subscription', //module.name
+      };
+      await firstValueFrom(
+        this.commonFeatureClient.emit(RMQ_MESSAGES.ACTIVITY_LOG.ACTIVITY_LOG, {
+          ...params,
+        })
+      );
+      response.data.activity = true;
+    }
+
     return response;
   }
 
@@ -168,6 +213,27 @@ export class InvoiceController {
           { ...payload, createdBy }
         )
       );
+
+      //ActivityLog
+      if (response?.data) {
+        const params: ActivityLogParams = {
+          performedBy: user?._id, // userId
+          activityType: EActivityType.CREATED, // UPDATED
+          module: EActivitylogModule.INVOICES, // module
+          moduleId: response?.data?._id, // module._id
+          moduleName: response?.data?.name || 'Invoice', //module.name
+        };
+        await firstValueFrom(
+          this.commonFeatureClient.emit(
+            RMQ_MESSAGES.ACTIVITY_LOG.ACTIVITY_LOG,
+            {
+              ...params,
+            }
+          )
+        );
+        response.data.activity = true;
+      }
+
       return response;
     } catch (error) {
       throw new RpcException(error);
@@ -192,6 +258,27 @@ export class InvoiceController {
           { ...payload, updatedBy, invoiceId }
         )
       );
+
+      //ActivityLog
+      if (response?.data) {
+        const params: ActivityLogParams = {
+          performedBy: user?._id, // userId
+          activityType: EActivityType.UPDATED, // UPDATED
+          module: EActivitylogModule.INVOICES, // module
+          moduleId: response?.data?._id, // module._id
+          moduleName: response?.data?.name || 'Invoice', //module.name
+        };
+        await firstValueFrom(
+          this.commonFeatureClient.emit(
+            RMQ_MESSAGES.ACTIVITY_LOG.ACTIVITY_LOG,
+            {
+              ...params,
+            }
+          )
+        );
+        response.data.activity = true;
+      }
+
       return response;
     } catch (error) {
       throw new RpcException(error);

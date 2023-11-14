@@ -59,6 +59,10 @@ import { ContactCallController } from './controllers/common-features/contact/con
 import { ContactMeetingController } from './controllers/common-features/contact/contact-meeting.controller';
 import { DealsController } from './controllers/sales/deals.controller';
 import { NoteController } from './controllers/sales/note.controller';
+import { TaxCalculationController } from './controllers/super-admin/tax-calculation.controller';
+import { DealViewsController } from './controllers/sales/deal-views.controller';
+import { ActivitylogsController } from './controllers/common-features/activitylogs.controller';
+import { JobApplicationsController } from './controllers/super-admin/job-applications.controller';
 
 @Module({
   imports: [
@@ -118,6 +122,10 @@ import { NoteController } from './controllers/sales/note.controller';
     DealsController,
     NoteController,
     PermissionController,
+    TaxCalculationController,
+    DealViewsController,
+    ActivitylogsController,
+    JobApplicationsController,
   ],
   providers: [
     // Exceptions Filter

@@ -65,22 +65,22 @@ export class DealsController {
     return this.dealsService.disassociateDeal(payload);
   }
 
-  @MessagePattern(RMQ_MESSAGES.SALES.DEALS.DELETE_TASK)
+  @MessagePattern(RMQ_MESSAGES.SALES.DEAL_VIEWS.DELETE_TASK)
   async deleteTask(@Payload() payload: DealTaskDto) {
     return this.dealsService.deleteTask(payload);
   }
 
-  @MessagePattern(RMQ_MESSAGES.SALES.DEALS.ADD_TASK)
+  @MessagePattern(RMQ_MESSAGES.SALES.DEAL_VIEWS.ADD_TASK)
   async addTask(@Payload() payload: DealTaskDto) {
     return this.dealsService.addTask(payload);
   }
 
-  @MessagePattern(RMQ_MESSAGES.SALES.DEALS.DELETE_NOTE)
+  @MessagePattern(RMQ_MESSAGES.SALES.DEAL_VIEWS.DELETE_NOTE)
   async deleteNote(@Payload() payload: DealNoteDto) {
     return this.dealsService.deleteNote(payload);
   }
 
-  @MessagePattern(RMQ_MESSAGES.SALES.DEALS.ADD_NOTE)
+  @MessagePattern(RMQ_MESSAGES.SALES.DEAL_VIEWS.ADD_NOTE)
   async addNote(@Payload() payload: DealNoteDto) {
     return this.dealsService.addNote(payload);
   }
@@ -90,12 +90,17 @@ export class DealsController {
     return this.dealsService.populateAssociations(payload);
   }
 
-  @MessagePattern(RMQ_MESSAGES.SALES.DEALS.GET_TASKS)
+  @MessagePattern(RMQ_MESSAGES.SALES.DEALS.DEAL_ACTION_PREVIEW)
+  async dealPreview(@Payload() payload: IdDto) {
+    return this.dealsService.dealPreview(payload);
+  }
+
+  @MessagePattern(RMQ_MESSAGES.SALES.DEAL_VIEWS.GET_TASKS)
   async getTasks(@Payload() payload: IdDto) {
     return this.dealsService.getTasks(payload);
   }
 
-  @MessagePattern(RMQ_MESSAGES.SALES.DEALS.GET_NOTES)
+  @MessagePattern(RMQ_MESSAGES.SALES.DEAL_VIEWS.GET_NOTES)
   async getNotes(@Payload() payload: IdDto) {
     return this.dealsService.getNotes(payload);
   }

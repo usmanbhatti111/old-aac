@@ -98,10 +98,16 @@ import {
   DealsSchema,
   Note,
   NoteSchema,
+  TaxCalculation,
+  TaxCalculationSchema,
+  DealViews,
+  DealViewsSchema,
   PurchaseApproval,
   PurchaseApprovalSchema,
   CompanyAccountRole,
   CompanyAccountRoleSchema,
+  JobApplications,
+  JobApplicationsSchema,
 } from './schema';
 import {
   ReportsWidget,
@@ -109,6 +115,8 @@ import {
 } from './schema/air-services/reports-widgets.schema';
 
 import {
+  Activitylogs,
+  ActivitylogsSchema,
   Contact,
   ContactCall,
   ContactCallSchema,
@@ -354,11 +362,30 @@ export const DbModels = [
     schema: NoteSchema,
   },
   {
+    name: TaxCalculation.name,
+    schema: TaxCalculationSchema,
+    collection: MODEL.TAX_CALCULATION,
+  },
+  {
+    name: DealViews.name,
+    schema: DealViewsSchema,
+    collection: MODEL.DEAL_VIEW,
+  },
+  {
+    name: Activitylogs.name,
+    schema: ActivitylogsSchema,
+  },
+  {
     name: PurchaseApproval.name,
     schema: PurchaseApprovalSchema,
   },
   {
     name: CompanyAccountRole.name,
     schema: CompanyAccountRoleSchema,
+  },
+  {
+    name: JobApplications.name,
+    schema: JobApplicationsSchema,
+    collection: MODEL.JOB_APPLICATIONS,
   },
 ];

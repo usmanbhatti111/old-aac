@@ -455,4 +455,18 @@ export abstract class AbstractRepository<TDocument extends AbstractSchema> {
       }
     );
   }
+
+  async findOneWithoutException(
+    filterQuery: FilterQuery<TDocument>,
+    projection?: ProjectionType<TDocument>,
+    options?: {}
+  ): Promise<TDocument> {
+    const document = await this.model.findOne(
+      filterQuery,
+      projection || {},
+      options || { lean: true }
+    );
+
+    return document;
+  }
 }

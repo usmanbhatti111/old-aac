@@ -34,4 +34,10 @@ export class AddCompanyAccountRoleDto {
   @ApiProperty({ example: ['add-user', 'view-dashboard', 'add-deals'] })
   @IsNotEmpty()
   permissions: [];
+  @ApiProperty({
+    example: 'ACTIVE',
+  })
+  @IsNotEmpty()
+  @IsString()
+  status: string;
 }

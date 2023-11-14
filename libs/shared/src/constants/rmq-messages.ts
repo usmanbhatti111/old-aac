@@ -83,6 +83,20 @@ export const RMQ_MESSAGES = {
       GET_QUICK_LINKS_GROUP_BY_PRODUCT: 'get-quick-links-group-by-product',
     },
 
+    TAX_CALCULATIONS: {
+      ADD_TAX: 'add-tax',
+      GET_TAXS: 'get-taxs',
+      UPDATE_TAX: 'update-tax',
+      DELETE_TAXS: 'delete-taxs',
+    },
+
+    JOB_APPLICATIONS: {
+      CREATE_JOB_APPLICATION: 'create-job-application',
+      GET_UNIQUE_CANDIDATE: 'get-unique-candidate',
+      GET_JOB_APPLICATIONS: 'get-job-applications',
+      EDIT_JOB_APPLICATION: 'edit-job-application',
+    },
+
     ADD_USER: 'add-user',
     USER_LIST: 'user-list',
     USER_PROFILE: 'user-profile',
@@ -382,6 +396,11 @@ export const RMQ_MESSAGES = {
       GET_ASSOCIATIONS: 'get-associations',
       CREATE_ASSOCIATION: 'create-association',
       DELETE_ASSOCIATION: 'delete-association',
+      DEAL_ACTION_PREVIEW: 'deal-action-preview',
+    },
+    DEAL_VIEWS: {
+      CREATE_DEAL_VIEW: 'create-deal-view',
+      GET_DEAL_VIEW: 'get-deal-view',
       ADD_TASK: 'add-task',
       DELETE_TASK: 'delete-task',
       ADD_NOTE: 'add-note',
@@ -397,5 +416,10 @@ export const RMQ_MESSAGES = {
     GET_DEAL_NOTE: 'get-deal-note',
     UPDATE_DEAL_NOTE: 'update-deal-note',
     DELETE_DEAL_NOTE: 'delete-deal-note',
+  },
+
+  ACTIVITY_LOG: {
+    GET_ALL_ACTIVITIES: 'get-all-activities',
+    ACTIVITY_LOG: 'activity-log',
   },
 };

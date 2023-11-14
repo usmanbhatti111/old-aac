@@ -2,6 +2,7 @@ import { BadRequestException, HttpStatus, Injectable } from '@nestjs/common';
 import { RpcException } from '@nestjs/microservices';
 import { PermissionRepository, CompanyAccountRoleRepository } from '@shared';
 import { ResponseMessage, successResponse } from '@shared/constants';
+import { EditCompanyAccountRoleDto } from '@shared/dto';
 
 import * as fs from 'fs';
 import mongoose from 'mongoose';
@@ -140,11 +141,14 @@ export class PermissionService {
           $project: {
             _id: 0,
             name: 1,
+            description: 1,
+            productId: 1,
             organizationId: 1,
             organizationCompanyAccountId: 1,
             createdAt: 1,
             updatedAt: 1,
             permissions: 1,
+            status: 1,
           },
         }
       );
@@ -168,7 +172,7 @@ export class PermissionService {
     }
   }
 
-  async updateCompanyAccountRole(payload: any) {
+  async updateCompanyAccountRole(payload: EditCompanyAccountRoleDto) {
     try {
       const filter = { _id: payload?.companyAccountRoleId };
       delete payload.companyAccountRoleId;
@@ -182,102 +186,4 @@ export class PermissionService {
       throw new RpcException(error);
     }
   }
-
-  // async getCompanyAccountRoles(payload: any) {
-  //   try {
-
-  //     const { limit, page, search,organizationCompanyAccountId} = payload;
-
-  //     const filterQuery = {};
-  //     const searchFilter = {};
-
-  //     if (search) {
-  //       searchFilter['$or'] = [
-  //         { name: { $regex: search, $options: 'i' } },
-  //         { contractNumber: { $regex: search, $options: 'i' } },
-  //         { status: { $regex: search, $options: 'i' } },
-  //         { cost: { $regex: search, $options: 'i' } },
-  //       ];
-  //       pipeline.push({ $match: searchFilter });
-  //     }
-
-  //     const offset = limit * (page - 1);
-  //     const filterQuery = {};
-  //     const pipeline: any = [];
-
-  //     if (search) {
-  //       pipeline.push({
-  //         $match: {
-  //           name: { $regex: search, $options: 'i' },
-  //         },
-  //       });
-  //     }
-  //     const res = await this.dashboardRepository.paginate({
-  //       filterQuery,
-  //       offset,
-  //       limit,
-  //       pipelines: pipeline,
-  //     });
-
-  //   const pipelines= [
-  //       {
-  //         $match: {
-  //           organizationCompanyAccountId: new mongoose.Types.ObjectId(payload.organizationCompanyAccountId),
-  //         },
-  //       },
-  //       {
-  //         $lookup: {
-  //           from: 'permissions',
-  //           localField: 'permissions',
-  //           foreignField: 'slug',
-  //           as: 'populatedPermissions',
-  //         },
-  //       },
-  //     ]
-  //     const data = await this.companyAccountRoleRepository.aggregate(pipelines)
-
-  //     const paginateRes = await this.companyAccountRoleRepository.paginate({
-  //       filterQuery: {},
-  //       pipelines,
-  //     });
-
-  //     if (data[0]) {
-  //       return successResponse(HttpStatus.OK, 'Plan Get Successfully', data);
-  //     } else {
-  //       return errorResponse(
-  //         HttpStatus.BAD_REQUEST,
-  //         ResponseMessage.NOT_FOUND,
-  //         []
-  //       );
-  //     }
-  //   } catch (error) {
-  //     throw new RpcException(error);
-  //   }
-  // }
 }
-
-// async getDashboardList(payload: ListDashboardDTO) {
-//   try {
-//     const { limit, page, search } = payload;
-//     const offset = limit * (page - 1);
-//     const filterQuery = {};
-//     const pipeline: any = [];
-
-//     if (search) {
-//       pipeline.push({
-//         $match: {
-//           name: { $regex: search, $options: 'i' },
-//         },
-//       });
-//     }
-//     const res = await this.dashboardRepository.paginate({
-//       filterQuery,
-//       offset,
-//       limit,
-//       pipelines: pipeline,
-//     });
-//     return res;
-//   } catch (error) {
-//     return new RpcException(error);
-//   }
-// }

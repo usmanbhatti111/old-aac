@@ -33,6 +33,7 @@ import {
   EditCompanyAccountRoleDto,
   GetCompanyAccountRolesResponseDto,
 } from '@shared/dto';
+import { Auth } from '../../decorators/auth.decorator';
 
 @ApiBearerAuth()
 @ApiTags(API_TAGS.PERMISSIONS)
@@ -54,12 +55,8 @@ export class PermissionController {
 
     return response;
   }
-  //
-  //
-  // todo need to add Auth guard
-  //
-  //
 
+  @Auth(true)
   @Post(API_ENDPOINTS.PERMISSION.ADD_COMPANY_ACCOUNT_ROLE)
   @ApiCreatedResponse({ type: AddCompanyAccountRoleResponseDto })
   public async addUserPermissions(@Body() payload: AddCompanyAccountRoleDto) {
@@ -77,7 +74,7 @@ export class PermissionController {
   @ApiOkResponse({ type: GetCompanyAccountRolesResponseDto })
   public async getCompanyAccountRoles(
     @Query() payload: CompanyAccountRoleFilterDto
-  ): Promise<GetCompanyAccountRolesResponseDto> {
+  ) {
     const response = await firstValueFrom(
       this.superAdminService.send(
         RMQ_MESSAGES.PERMISSION.GET_COMPNAY_ACCOUNT_ROLES,
@@ -87,6 +84,7 @@ export class PermissionController {
     return response;
   }
 
+  @Auth(true)
   @Patch(API_ENDPOINTS.PERMISSION.UPDATE_COMPANY_ACCOUNT_ROLE)
   @ApiOkResponse({ type: AddCompanyAccountRoleResponseDto })
   @ApiParam({
