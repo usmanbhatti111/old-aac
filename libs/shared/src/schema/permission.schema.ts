@@ -1,8 +1,9 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 
-import { HydratedDocument } from 'mongoose';
+import mongoose, { HydratedDocument } from 'mongoose';
 import { AbstractSchema } from './abstract-repo/abstract.schema';
 import { PermissionStatus } from '../constants/enums';
+import { MODEL } from '../constants/models';
 
 export type PermissionDocument = HydratedDocument<Permission>;
 
@@ -15,8 +16,11 @@ export class Permission extends AbstractSchema {
   })
   status?: string;
 
-  @Prop({ type: String, required: true })
-  product: string;
+  @Prop({ required: true, type: mongoose.Types.ObjectId, ref: MODEL.PRODUCT })
+  productId: string | mongoose.Types.ObjectId;
+
+  // @Prop({ type: String, required: true })
+  // product: string;
 
   @Prop({ type: String, required: true })
   slug: string;

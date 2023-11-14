@@ -1,9 +1,9 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Transform } from 'class-transformer';
-import { IsNotEmpty, IsOptional, IsString } from 'class-validator';
+import { IsArray, IsNotEmpty, IsOptional, IsString } from 'class-validator';
 import { toMongoObjectId } from '../../functions';
 
-export class ProductFeatureDto {
+class FeatureDto {
   @ApiProperty()
   @IsString()
   @IsOptional()
@@ -14,6 +14,13 @@ export class ProductFeatureDto {
   @IsString()
   @Transform(toMongoObjectId, { toClassOnly: true })
   featureId: string;
+}
+
+export class ProductFeatureDto {
+  @ApiProperty({ type: FeatureDto, isArray: true })
+  @IsNotEmpty()
+  @IsArray()
+  features: FeatureDto[];
 
   @ApiProperty()
   @IsNotEmpty()

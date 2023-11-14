@@ -1,41 +1,27 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { MODEL } from '@shared/constants';
-import mongoose, { Document, HydratedDocument } from 'mongoose';
+import mongoose, { HydratedDocument, SchemaTypes } from 'mongoose';
 import { AbstractSchema } from './abstract-repo/abstract.schema';
+import { Permission } from './permission.schema';
 
-export type ProductModulePermissionDocument =
-  HydratedDocument<PlanProductModulePermission>;
+export type PlanProductPermissionDocument =
+  HydratedDocument<PlanProductPermission>;
 
 @Schema()
-export class PlanProductModulePermission extends AbstractSchema {
-  @Prop({
-    type: [
-      { required: true, type: mongoose.Types.ObjectId, ref: MODEL.PRODUCT },
-    ],
-  })
+export class PlanProductPermission extends AbstractSchema {
+  @Prop({ required: true, type: mongoose.Types.ObjectId, ref: MODEL.PRODUCT })
   productId: string | mongoose.Types.ObjectId; // Reference to Product _id
 
   @Prop({
     type: [
-      { required: true, type: mongoose.Types.ObjectId, ref: MODEL.MODULE },
+      { required: true, type: SchemaTypes.ObjectId, ref: MODEL.PERMISSION },
     ],
   })
-  moduleId: string | mongoose.Types.ObjectId; // Reference to Module _id
-
-  @Prop({
-    type: [
-      {
-        required: true,
-        type: mongoose.Types.ObjectId,
-        ref: MODEL.MODULE_PERMISSION,
-      },
-    ],
-  })
-  modulePermissionId: string | mongoose.Types.ObjectId; // Reference to ModulePermission _id
+  permissionSlugs?: string[];
 
   // Add other fields as needed
 }
 
-export const ProductModulePermissionSchema = SchemaFactory.createForClass(
-  PlanProductModulePermission
+export const PlanProductPermissionSchema = SchemaFactory.createForClass(
+  PlanProductPermission
 );

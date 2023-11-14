@@ -1,6 +1,10 @@
 import { BadRequestException, HttpStatus, Injectable } from '@nestjs/common';
 import { RpcException } from '@nestjs/microservices';
-import { PermissionRepository, CompanyAccountRoleRepository } from '@shared';
+import {
+  PermissionRepository,
+  CompanyAccountRoleRepository,
+  ProductsRepository,
+} from '@shared';
 import { ResponseMessage, successResponse } from '@shared/constants';
 import {
   AddCompanyAccountRoleDto,
@@ -16,7 +20,8 @@ import dayjs from 'dayjs';
 export class PermissionService {
   constructor(
     private permissionRepository: PermissionRepository,
-    private companyAccountRoleRepository: CompanyAccountRoleRepository
+    private companyAccountRoleRepository: CompanyAccountRoleRepository,
+    private productsRepository: ProductsRepository
   ) {}
 
   notDeletedFilter = {
@@ -39,6 +44,11 @@ export class PermissionService {
       let permissionSubModule = '';
       let permissionProduct = '';
       for (const permission of allPermissions) {
+        const res = await this.permissionRepository.findOneWithoutException({
+          slug: permission['Slugs'],
+        });
+        if (res) continue;
+
         if (permission['Modules']) permissionModule = permission['Modules'];
 
         if (permission['Sub Modules'])
@@ -54,12 +64,23 @@ export class PermissionService {
           continue;
         }
 
+        const allProducts = await this.productsRepository.find();
+
+        for (const product of allProducts) {
+          if (
+            permissionProduct
+              ?.toLowerCase()
+              .includes(product?.name?.toLowerCase())
+          )
+            permissionProduct = product?.id;
+        }
+
         await this.permissionRepository.create({
           module: permissionModule,
           subModule: permissionSubModule
             ? permissionSubModule
             : permissionModule,
-          product: permissionProduct,
+          productId: permissionProduct,
           slug: permission['Slugs'],
           name: permission['Permissions'],
         });
