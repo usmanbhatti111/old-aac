@@ -7,4 +7,6 @@ export * from './products.repository';
 export * from './product-features.reposity';
 export * from './news-and-events.resposity';
 export * from './product.repository';
+export * from './enquiries.repository';
 export * from './tax-calculation.repository';
+export * from './job-application-repository';

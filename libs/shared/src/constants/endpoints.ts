@@ -117,11 +117,25 @@ export const API_ENDPOINTS = {
       EDIT_QUICK_LINK: '/:id',
     },
 
+    ENQUIRIES: {
+      ADD_ENQUIRY: '/',
+      GET_ENQUIRIES: '/',
+      GET_ENQUIRY: '/:id',
+      UPDATE_ENQUIRY: '/:id',
+      DELETE_ENQUIRY: ':ids',
+    },
     TAX_CALCULATION: {
       ADD_TAX: '/',
       GET_TAXS: '/',
       UPDATE_TAX: '/:id',
       DELETE_TAXS: '/:ids',
+    },
+
+    JOB_APPLICATIONS: {
+      CREATE_JOB_APPLICATION: '/',
+      GET_JOB_APPLICATIONS: '/',
+      GET_UNIQUE_CANDIDATE: '/get-unique-candidate',
+      EDIT_JOB_APPLICATION: '/:id',
     },
 
     ADD_USER: 'add-user',

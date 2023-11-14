@@ -77,11 +77,25 @@ export const RMQ_MESSAGES = {
       GET_QUICK_LINKS_GROUP_BY_PRODUCT: 'get-quick-links-group-by-product',
     },
 
+    ENQUIRIES: {
+      ADD_ENQUIRY: 'add-enquiry',
+      GET_ENQUIRIES: 'get-enquiries',
+      GET_ENQUIRY: 'get-enquiry',
+      UPDATE_ENQUIRY: 'update-enquiry',
+      DELETE_ENQUIRIES: 'delete-enquiries',
+    },
     TAX_CALCULATIONS: {
       ADD_TAX: 'add-tax',
       GET_TAXS: 'get-taxs',
       UPDATE_TAX: 'update-tax',
       DELETE_TAXS: 'delete-taxs',
+    },
+
+    JOB_APPLICATIONS: {
+      CREATE_JOB_APPLICATION: 'create-job-application',
+      GET_UNIQUE_CANDIDATE: 'get-unique-candidate',
+      GET_JOB_APPLICATIONS: 'get-job-applications',
+      EDIT_JOB_APPLICATION: 'edit-job-application',
     },
 
     ADD_USER: 'add-user',

@@ -10,7 +10,7 @@ export const MODEL = {
   ORGANIZATION_COMPANY_ACCOUNT: 'OrganizationCompanyAccount',
   INVOICE: 'Invoice',
   TASK: 'Task',
-  JOBS: 'Jobs',
+  JOBS: 'jobs',
   FAQS: 'Faqs',
   FOLDER: 'folders',
   FILE: 'files',
@@ -32,6 +32,8 @@ export const MODEL = {
   LIFECYCLE_STAGE: 'lifecycleStages',
   CONTACT_STATUS: 'conatactStatus',
   DEAL: 'deals',
+  ENQUIRIES: 'enquiries',
   TAX_CALCULATION: 'taxCalculations',
   DEAL_VIEW: 'dealViews',
+  JOB_APPLICATIONS: 'jobApplications',
 };

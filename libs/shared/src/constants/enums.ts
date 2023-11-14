@@ -306,6 +306,11 @@ export enum EIsDeletedStatus {
   HARD_DELETED = 'HARD_DELETED',
 }
 
+export enum EEnquiriesStatus {
+  DONE = 'done',
+  PENDING = 'pending',
+}
+
 export enum ETaxApplyOn {
   INVOICE = 'invoice',
   QUOTES = 'quotes',
@@ -359,4 +364,11 @@ export enum EActivitylogModule {
   CALLS = 'CALLS',
   MEETINGS = 'MEETINGS',
   EMAILS = 'EMAILS',
+}
+
+export enum EApplicationStatus {
+  PENDING = 'pending',
+  REJECTED = 'rejected',
+  SHORTLISTED = 'shortlisted',
+  INTERVIEWED = 'interviewed',
 }
