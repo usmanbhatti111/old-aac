@@ -13,15 +13,12 @@ import {
   ApiBearerAuth,
   ApiCreatedResponse,
   ApiOkResponse,
-  ApiParam,
-  ApiQuery,
   ApiTags,
 } from '@nestjs/swagger';
 import {
   API_ENDPOINTS,
   API_TAGS,
   CONTROLLERS,
-  CompanyAccountRoleStatusEnum,
   RMQ_MESSAGES,
   SERVICES,
 } from '@shared/constants';
@@ -32,6 +29,7 @@ import {
   EditCompanyAccountRoleDto,
   GetCompanyAccountRolesDto,
   GetCompanyAccountRolesResponseDto,
+  IdDto,
 } from '@shared/dto';
 import { Auth } from '../../decorators/auth.decorator';
 
@@ -60,7 +58,9 @@ export class PermissionController {
   @Auth(true)
   @Post(API_ENDPOINTS.PERMISSION.ADD_COMPANY_ACCOUNT_ROLE)
   @ApiCreatedResponse({ type: AddCompanyAccountRoleResponseDto })
-  public async addUserPermissions(@Body() payload: AddCompanyAccountRoleDto) {
+  public async addUserPermissions(
+    @Body() payload: AddCompanyAccountRoleDto
+  ): Promise<AddCompanyAccountRoleResponseDto> {
     const response = await firstValueFrom(
       this.superAdminService.send(
         RMQ_MESSAGES.PERMISSION.ADD_COMPNAY_ACCOUNT_ROLE,
@@ -71,12 +71,12 @@ export class PermissionController {
     return response;
   }
 
-  @Auth(true)
+  // @Auth(true)
   @Get(API_ENDPOINTS.PERMISSION.GET_COMPNAY_ACCOUNT_ROLES)
   @ApiOkResponse({ type: GetCompanyAccountRolesResponseDto })
   public async getCompanyAccountRoles(
     @Query() payload: GetCompanyAccountRolesDto
-  ) {
+  ): Promise<GetCompanyAccountRolesResponseDto> {
     const response = await firstValueFrom(
       this.superAdminService.send(
         RMQ_MESSAGES.PERMISSION.GET_COMPNAY_ACCOUNT_ROLES,
@@ -86,30 +86,14 @@ export class PermissionController {
     return response;
   }
 
-  @Auth(true)
+  // @Auth(true)
   @Patch(API_ENDPOINTS.PERMISSION.UPDATE_COMPANY_ACCOUNT_ROLE)
   @ApiOkResponse({ type: AddCompanyAccountRoleResponseDto })
-  @ApiParam({
-    type: String,
-    name: 'id',
-    example: '654dcb1717626bdc860bda38',
-    description: 'compnay account role id',
-  })
-  @ApiQuery({
-    name: 'status',
-    enum: CompanyAccountRoleStatusEnum,
-    example: CompanyAccountRoleStatusEnum.ACTIVE,
-    required: false,
-  })
   public async updateCompanyAccountRole(
     @Body() payload: EditCompanyAccountRoleDto,
-    @Param('id') id: string,
-    @Query('status') status: string
-  ) {
+    @Param() { id }: IdDto
+  ): Promise<AddCompanyAccountRoleResponseDto> {
     payload.companyAccountRoleId = id;
-    if (status) {
-      payload.status = status;
-    }
     const response = await firstValueFrom(
       this.superAdminService.send(
         RMQ_MESSAGES.PERMISSION.EDIT_COMPANY_ACCOUNT_ROLE,

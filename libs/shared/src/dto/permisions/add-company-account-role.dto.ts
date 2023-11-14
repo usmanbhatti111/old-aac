@@ -1,20 +1,22 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { Transform } from 'class-transformer';
 import { IsMongoId, IsNotEmpty, IsOptional, IsString } from 'class-validator';
+import { toMongoObjectId } from '../../functions';
 
 export class AddCompanyAccountRoleDto {
   @ApiProperty({ example: '56cb91bdc3464f14678934ca' })
-  @IsMongoId()
   @IsNotEmpty()
+  @Transform(toMongoObjectId)
   organizationId: string;
 
   @ApiProperty({ example: '56cb91bdc3464f14678934ca' })
-  @IsMongoId()
+  @Transform(toMongoObjectId)
   @IsNotEmpty()
   organizationCompanyAccountId: string;
 
   @ApiProperty({ example: '56cb91bdc3464f14678934ca' })
-  @IsMongoId()
   @IsNotEmpty()
+  @Transform(toMongoObjectId)
   productId: string;
 
   @ApiProperty({

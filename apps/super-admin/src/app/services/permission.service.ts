@@ -1,4 +1,4 @@
-import { BadRequestException, HttpStatus, Injectable } from '@nestjs/common';
+import { HttpStatus, Injectable } from '@nestjs/common';
 import { RpcException } from '@nestjs/microservices';
 import {
   PermissionRepository,
@@ -13,7 +13,6 @@ import {
 } from '@shared/dto';
 
 import * as fs from 'fs';
-import mongoose from 'mongoose';
 import dayjs from 'dayjs';
 
 @Injectable()
@@ -31,9 +30,6 @@ export class PermissionService {
   async addAllPermissions() {
     try {
       const res = await this.permissionRepository.find();
-
-      if (res && res[0])
-        throw new BadRequestException(`Permissions already added.`);
 
       const permissiosJson = `${process.cwd()}/rolesAndRights.json`;
       const allPermissions = JSON.parse(
@@ -132,13 +128,12 @@ export class PermissionService {
       const pipelines = [];
       const filterQuery = { isDeleted: false };
 
-      filterQuery['organizationCompanyAccountId'] = new mongoose.Types.ObjectId(
-        organizationCompanyAccountId
-      );
+      filterQuery['organizationCompanyAccountId'] =
+        organizationCompanyAccountId;
 
       if (dateStart && dateEnd) {
-        const startDate = dayjs(payload.dateStart).startOf('day').toDate();
-        const endDate = dayjs(payload.dateEnd).endOf('day').toDate();
+        const startDate = dayjs(dateStart).startOf('day').toDate();
+        const endDate = dayjs(dateEnd).endOf('day').toDate();
 
         filterQuery['createdAt'] = {
           $gte: startDate,
@@ -147,7 +142,7 @@ export class PermissionService {
       }
 
       if (productId) {
-        filterQuery['productId'] = new mongoose.Types.ObjectId(productId);
+        filterQuery['productId'] = productId;
       }
 
       if (status) {
