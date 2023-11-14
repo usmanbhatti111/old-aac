@@ -39,3 +39,11 @@ export class UserTasksDto {
   })
   userIds: string[];
 }
+
+export class UserTasksDto {
+  @ApiProperty({
+    type: [String],
+    required: false,
+  })
+  userIds: string[];
+}

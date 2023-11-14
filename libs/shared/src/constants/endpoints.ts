@@ -223,6 +223,7 @@ export const API_ENDPOINTS = {
       UPDATE_REPORT_WIDGET: '/:id',
       DELETE_REPORT_WIDGET: '/:id',
     },
+
     TASK_MANAGEMENT: {
       CREATE_TASK: 'management',
       TASK_LIST: 'management',

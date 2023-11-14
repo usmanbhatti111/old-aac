@@ -9,7 +9,7 @@ import {
   FilterPurchaseOrderRecievedDto,
   IdDTO,
   AddPurchaseOrderApprover,
-  // ApproverStatusDto,
+  ApproverStatusDto,
 } from '@shared/dto';
 import { PurchaseOrderService } from '../../services/assets/purchase.service';
 
@@ -69,8 +69,7 @@ export class PurchaseOrderController {
   @MessagePattern({
     cmd: RMQ_MESSAGES.AIR_SERVICES.ASSETS.APPROVER_ORDER_STATUS,
   })
-  async updatePurchaseOrderApprover() {
-    // @Payload() payload: ApproverStatusDto
-    // return await this.purchaseService.updatePurchaseOrderApprover(payload);
+  async updatePurchaseOrderApprover(@Payload() payload: ApproverStatusDto) {
+    return await this.purchaseService.updatePurchaseOrderApprover(payload);
   }
 }
