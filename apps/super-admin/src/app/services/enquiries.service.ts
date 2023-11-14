@@ -32,7 +32,7 @@ export class EnquiriesService {
       const filterQuery = { isDeleted: false };
 
       if (payload?.status) {
-        filterQuery['status'] = payload.status;
+        filterQuery['status'] = payload?.status;
       }
 
       const createdByPipeline = [
@@ -47,11 +47,21 @@ export class EnquiriesService {
                 $project: {
                   _id: 1,
                   name: {
-                    $concat: [
-                      { $ifNull: ['$firstName', ''] },
-                      ' ',
-                      { $ifNull: ['$lastName', ''] },
-                    ],
+                    $reduce: {
+                      input: [
+                        '$candidates.firstName',
+                        '$candidates.middleName',
+                        '$candidates.lastName',
+                      ],
+                      initialValue: '',
+                      in: {
+                        $cond: {
+                          if: { $ne: ['$$this', null] },
+                          then: { $concat: ['$$value', ' ', '$$this'] },
+                          else: '$$value',
+                        },
+                      },
+                    },
                   },
                   companyName: { $ifNull: ['$companyName', ''] },
                   email: { $ifNull: ['$email', ''] },
@@ -71,7 +81,7 @@ export class EnquiriesService {
 
       let searchPipeline = [];
       if (payload?.search) {
-        const search = { $regex: payload.search, $options: 'i' };
+        const search = { $regex: payload?.search, $options: 'i' };
 
         searchPipeline = [
           {
@@ -132,10 +142,10 @@ export class EnquiriesService {
 
   async deleteEnquiries(payload: DeleteEnquiriesDto) {
     try {
-      const ids = payload.ids.split(',');
+      const ids = payload?.ids?.split(',');
 
       const filter = { _id: { $in: ids }, isDeleted: false };
-      const data = { isDeleted: true, deletedBy: payload.deletedBy };
+      const data = { isDeleted: true, deletedBy: payload?.deletedBy };
 
       const res = await this.enquiriesRepository.updateMany(filter, data);
 

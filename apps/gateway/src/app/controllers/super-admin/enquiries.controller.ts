@@ -55,7 +55,7 @@ export class EnquiriesController {
     @Body() payload: AddEnquiryDto,
     @Req() req: AppRequest
   ): Promise<AddEnquiryResponseDto> {
-    payload.createdBy = req.user._id;
+    payload.createdBy = req?.user?._id;
 
     const response = await firstValueFrom(
       this.superAdminServiceClient.send(
@@ -108,7 +108,7 @@ export class EnquiriesController {
     @Body() payload: UpdateEnquiryDto
   ): Promise<UpdateEnquiryResponseDto> {
     payload.updatedBy = request?.user?._id;
-    payload.id = params.id;
+    payload.id = params?.id;
 
     const response = await firstValueFrom(
       this.superAdminServiceClient.send(
