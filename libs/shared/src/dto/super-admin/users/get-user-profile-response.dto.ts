@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 
-export class UserProfileResponseDtoOne {
+export class UserProfileResponsev2Dto {
   @ApiProperty({ example: 201 })
   statusCode: number;
 
