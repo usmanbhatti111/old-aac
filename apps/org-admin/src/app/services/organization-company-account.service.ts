@@ -37,6 +37,7 @@ export class OrganizationCompanyAccountService {
       const res = await this.organizationCompanyAccountRepository.create({
         ...payload,
       });
+
       return successResponse(
         HttpStatus.OK,
         'Company account added successfully',

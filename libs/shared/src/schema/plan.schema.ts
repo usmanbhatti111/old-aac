@@ -3,7 +3,7 @@ import { MODEL } from '@shared/constants';
 import { HydratedDocument, SchemaTypes } from 'mongoose';
 import { AbstractSchema } from './abstract-repo/abstract.schema';
 import { PlanProductFeature } from './plan-product-feature.schema';
-import { PlanProductModulePermission } from './plan-product-module-permission.schema';
+import { PlanProductPermission } from './plan-product-module-permission.schema';
 import { Products } from './super-admin';
 
 export type PlanDocument = HydratedDocument<Plan>;
@@ -34,11 +34,9 @@ export class Plan extends AbstractSchema {
   planProductFeatures?: PlanProductFeature[];
 
   @Prop({
-    type: [
-      { type: SchemaTypes.ObjectId, ref: MODEL.PLAN_PRODUCT_MODULE_PERMISSION },
-    ],
+    type: [{ type: SchemaTypes.ObjectId, ref: MODEL.PLAN_PRODUCT_PERMISSION }],
   })
-  planProductModulePermissions?: PlanProductModulePermission[];
+  planProductPermissions?: PlanProductPermission[];
 
   @Prop()
   additionalStoragePrice?: number;
@@ -46,10 +44,10 @@ export class Plan extends AbstractSchema {
   @Prop({ required: true, type: SchemaTypes.ObjectId, ref: MODEL.PLAN_TYPE })
   planTypeId: string;
 
-  @Prop({ required: true, type: SchemaTypes.ObjectId })
+  @Prop({ required: true, type: SchemaTypes.ObjectId, ref: MODEL.USER })
   createdBy?: string;
 
-  @Prop({ required: false, type: SchemaTypes.ObjectId })
+  @Prop({ required: false, type: SchemaTypes.ObjectId, ref: MODEL.USER })
   updatedBy?: string;
 
   @Prop({ default: Date.now })

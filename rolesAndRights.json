@@ -1,0 +1,3368 @@
+[
+  {
+    "Modules": "Super-Admin Roles & Right",
+    "Sub Modules": "",
+    "Permissions": "",
+    "Slugs": ""
+  },
+  {
+    "Modules": "Dashboard ",
+    "Sub Modules": "",
+    "Permissions": "View Dashboard",
+    "Slugs": "view-dashboard"
+  },
+  {
+    "Modules": "User Management",
+    "Sub Modules": "User",
+    "Permissions": "User list ",
+    "Slugs": "user-list"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Add User",
+    "Slugs": "add-user"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Search and Filter ",
+    "Slugs": "user-search-and-filter"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Edit User ",
+    "Slugs": "edit-user"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Delete User",
+    "Slugs": "delete-user"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "View User list ",
+    "Slugs": "view-user-list"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Add Company ",
+    "Slugs": "add-company"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Add Sub user ",
+    "Slugs": "add-sub-user"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "view company accounts",
+    "Slugs": "view-company-accounts"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Add Company account",
+    "Slugs": "add-company-account"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "View sub user Profile",
+    "Slugs": "view-sub-user-profile"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Update sub user profile",
+    "Slugs": "update-sub-user-profile"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "View Delegates",
+    "Slugs": "view-delegates"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "active/inactive users",
+    "Slugs": "active-inactive-users"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "active/inactive accounts",
+    "Slugs": "active-inactive-accounts"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "Roles and Right ",
+    "Permissions": "roles and right list ",
+    "Slugs": "roles-right-list"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Add roles ",
+    "Slugs": "add-role"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Search and Filter ",
+    "Slugs": "role-search-and-filter"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "edit role",
+    "Slugs": "edit-role"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "view role",
+    "Slugs": "view-role"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "active/inactive roles",
+    "Slugs": "active-inactive-roles"
+  },
+  {
+    "Modules": "Plan & Management",
+    "Sub Modules": "",
+    "Permissions": "Plan List",
+    "Slugs": "plan-list"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Search and Filter ",
+    "Slugs": "plan-search-and-filter"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Add plan ",
+    "Slugs": "add-plan"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "active/inactive Plan ",
+    "Slugs": "active-inactive-plans"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Edit Plan ",
+    "Slugs": "edit-plan"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "View Plan ",
+    "Slugs": "view-plan"
+  },
+  {
+    "Modules": "Billing & Invoices",
+    "Sub Modules": "",
+    "Permissions": "Billing and invoice list ",
+    "Slugs": "billing-and-invoice-list"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Search and Filter ",
+    "Slugs": "billing-search-and-filter"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Assign Plan ",
+    "Slugs": "assign-plan"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Edit Plan ",
+    "Slugs": "billing-edit-plan"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Generate Invoice",
+    "Slugs": "generate-invoice"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "View Billing Details",
+    "Slugs": "view-billing-details"
+  },
+  {
+    "Modules": "Reports ",
+    "Sub Modules": "",
+    "Permissions": "View Invoice report ",
+    "Slugs": "view-invoice-report"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "View User Report",
+    "Slugs": "view-user-report"
+  },
+  {
+    "Modules": "Settings",
+    "Sub Modules": "Job Posting",
+    "Permissions": "Job List ",
+    "Slugs": "job-list"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Search and Filter ",
+    "Slugs": "job-search-and-filter"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Refresh Record",
+    "Slugs": "refresh-record"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Post a job",
+    "Slugs": "post-job"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Edit job",
+    "Slugs": "edit-job"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "View job",
+    "Slugs": "view-job"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Delete job",
+    "Slugs": "delete-job"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "Job Application",
+    "Permissions": "Search and Filter ",
+    "Slugs": "job-application-search-and-filter"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Application list ",
+    "Slugs": "application-list"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Update Job Status",
+    "Slugs": "update-job-status"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "FAQ's",
+    "Permissions": "FAQ's List",
+    "Slugs": "faqs-list"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Search and Filter ",
+    "Slugs": "faqs-search-and-list"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Add FAQ",
+    "Slugs": "add-faq"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Edit FAQ",
+    "Slugs": "edit-faq"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "View FAQ",
+    "Slugs": "view-faq"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Delete FAQ",
+    "Slugs": "delete-faq"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Refresh record",
+    "Slugs": "faqs-refresh-record"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "Enquiries",
+    "Permissions": "Enquiries List",
+    "Slugs": "enquiries-list"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Search and Filter ",
+    "Slugs": "enquiries-search-and-filter"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Update Status",
+    "Slugs": "enquiries-update-status"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Reply  Enquiry",
+    "Slugs": "reply-enquiry"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "View Enquiry",
+    "Slugs": "view-enquiry"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Delete Enquiry",
+    "Slugs": "delete-enquiry"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Refresh record",
+    "Slugs": "enquiry-refresh"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "Tax Calculation",
+    "Permissions": "Tax List",
+    "Slugs": "tax-list"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Search and Filter ",
+    "Slugs": "tax-search-and-filter"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Active/inactive Tax",
+    "Slugs": "active-inactive-tax"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Add Tax",
+    "Slugs": "add-tax"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Edit Tax",
+    "Slugs": "edi-tax"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Delete Tax",
+    "Slugs": "delete-tax"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Refresh record",
+    "Slugs": "tax-refresh-record"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "Quick links",
+    "Permissions": "Links List ",
+    "Slugs": "link-list"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Search and Filter ",
+    "Slugs": "links-search-and-filter"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Manage links",
+    "Slugs": "manage-links"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Delete link",
+    "Slugs": "delete-link"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Refresh record",
+    "Slugs": "link-refresh-record"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "News and Events",
+    "Permissions": "News and Events List",
+    "Slugs": "news-and-events-list"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Search and Filter ",
+    "Slugs": "news-search-and-filter"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Active/inactive Events",
+    "Slugs": "active-inactive-events"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Add ",
+    "Slugs": "add-news"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Edit ",
+    "Slugs": "edit-news"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Delete ",
+    "Slugs": "delete-news"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Refresh record",
+    "Slugs": "news-refresh-record"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "Modules Creation ",
+    "Permissions": "Select Products",
+    "Slugs": "select-module-products"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Add Module ",
+    "Slugs": "add-module"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Delete Module",
+    "Slugs": "delete-module"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Add Submodule ",
+    "Slugs": "add-sub-module"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Delete sub module ",
+    "Slugs": "delete-sub-module"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Add rights",
+    "Slugs": "add-rights"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "delete right",
+    "Slugs": "delete-rights"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "Product list ",
+    "Permissions": "View Product list",
+    "Slugs": "view-product-list"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Search and Filter ",
+    "Slugs": "product-list-search-and-filter"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Refresh Record",
+    "Slugs": "product-list-refresh-record"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Active/inactive Products",
+    "Slugs": "active-inactive-products"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "Product Features",
+    "Permissions": "Select Products",
+    "Slugs": "select-feature-products"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Product list ",
+    "Slugs": "product-list"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Search",
+    "Slugs": "feature-serach-and-filters"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Edit Featues",
+    "Slugs": "edit-feature"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Add Features",
+    "Slugs": "add-feature"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Active/inactive Features",
+    "Slugs": "active-inactive-feature"
+  },
+  {
+    "Modules": "Org-Admin Roles & Right",
+    "Sub Modules": "",
+    "Permissions": "",
+    "Slugs": ""
+  },
+  {
+    "Modules": "Users ",
+    "Sub Modules": "Manage Users",
+    "Permissions": "Add Users ",
+    "Slugs": "org-add-user"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Search and filter",
+    "Slugs": "org-user-search-and-filter"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "view users",
+    "Slugs": "org-view-users"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "View Compony Accounts",
+    "Slugs": "view-company"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "View User Profile ",
+    "Slugs": "org-view-user-profile"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Add Accounts",
+    "Slugs": "org-add-accounts"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Edit Profile",
+    "Slugs": "org-edit-profile"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Active/in active Users ",
+    "Slugs": "org-active-inactive-users"
+  },
+  {
+    "Modules": "Organization ",
+    "Sub Modules": "Manage Accounts",
+    "Permissions": "Company account list",
+    "Slugs": "org-view-account-list"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Add Company Account ",
+    "Slugs": "org-add-company-account"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Edit Account",
+    "Slugs": "org-edit-account"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "View Account ",
+    "Slugs": "org-view-account"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Edit Info ",
+    "Slugs": "org-edit-info"
+  },
+  {
+    "Modules": "Subscription & Invoice",
+    "Sub Modules": "Subscription",
+    "Permissions": "View Products & Plans",
+    "Slugs": "org-view-product-and-plans"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "VIew Billing Details",
+    "Slugs": "org-view-billing-detail"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Manage Plan ",
+    "Slugs": "org-manage-plan"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Change Plan ",
+    "Slugs": "org-change-plan"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "UPdate Subscription",
+    "Slugs": "org-update-subscription"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Buy Plan ",
+    "Slugs": "org-buy-plan"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Add Additional user",
+    "Slugs": "org-add-additional-user"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Add Additional Storage",
+    "Slugs": "org-add-additional-storage"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "Invoices",
+    "Permissions": "List view",
+    "Slugs": "org-view-invoice-list"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Pay Invoice",
+    "Slugs": "org-pay-invoice"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "VIew Invoice",
+    "Slugs": "org-view-invoice"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Search Invoice",
+    "Slugs": "org-search-and-filter"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "Payment methods",
+    "Permissions": "Add a card",
+    "Slugs": "org-add-card"
+  },
+  {
+    "Modules": "Properties ",
+    "Sub Modules": "",
+    "Permissions": "Select Product ",
+    "Slugs": "org-select-product"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Search and filter",
+    "Slugs": "org-properties-search-and-filter"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Company account list",
+    "Slugs": "org-properties-company-account-list"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Module list ",
+    "Slugs": "org-properties-module-list"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Create property ",
+    "Slugs": "org-create-property"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Edit property",
+    "Slugs": "org-edit-property"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Delete Property",
+    "Slugs": "org-delete-property"
+  },
+  {
+    "Modules": "Air Sales Roles & Right",
+    "Sub Modules": "",
+    "Permissions": "",
+    "Slugs": ""
+  },
+  {
+    "Modules": "Modules",
+    "Sub Modules": "Sub Modules",
+    "Permissions": "Permissions",
+    "Slugs": "Comments"
+  },
+  {
+    "Modules": "Dashboard",
+    "Sub Modules": "Manage Dashboards",
+    "Permissions": "Dashboard list",
+    "Slugs": "sales-dashboard-list"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Create Dashboard ",
+    "Slugs": "sales-create-dashboard"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Edit Dashboard ",
+    "Slugs": "sales-edit-dashboard"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Share via Eamil ",
+    "Slugs": "sales-share-dashboard-via-email"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Set Default ",
+    "Slugs": "sales-dashboard-set-default"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "view Dashboard",
+    "Slugs": "sales-view-dashboard"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Delete Dashboard ",
+    "Slugs": "sales-delete-dashboard"
+  },
+  {
+    "Modules": "Deals",
+    "Sub Modules": "Deals List",
+    "Permissions": "Column Customization ",
+    "Slugs": "sales-column-customization"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Create Deals",
+    "Slugs": "sales-create-deals"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Restore",
+    "Slugs": "sale-restore-deal"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Search & Filter ",
+    "Slugs": "sale-deal-search-and-filter"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Export Deals",
+    "Slugs": "sale-export-deals"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Import",
+    "Slugs": "sale-import-deals"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Add Tab view",
+    "Slugs": "sale-deal-tab-view"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "board view",
+    "Slugs": "sale-deal-board-view"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Deal Preview ",
+    "Slugs": "sale-deal-preview"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Delete",
+    "Slugs": "sale-delete-deal"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Reassign",
+    "Slugs": "sale-deal-reassign"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "Deal Details",
+    "Permissions": "update info",
+    "Slugs": "sale-update-info"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "view activity log",
+    "Slugs": "sale-deal-activity-log"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "add/associate contacts ",
+    "Slugs": "sale-deal-add-associate-contact"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "edit contacts ",
+    "Slugs": "sale-deal-edit-contact"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "View contacts ",
+    "Slugs": "sale-deal-view-contact"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Remove contacts ",
+    "Slugs": "sale-deal-remove-conatct"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "add/associate Tickets ",
+    "Slugs": "sale-deal-add-associate-ticket"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Edit Tickets ",
+    "Slugs": "sale-deal-edit-ticket"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "View Tickets ",
+    "Slugs": "sale-deal-view-ticket"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Remove Tickets ",
+    "Slugs": "sale-deal-remove-ticket"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "add/associate Companies  ",
+    "Slugs": "sale-deal-add-associate-company"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Edit Companies ",
+    "Slugs": "sale-deal-edit-comapny"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "View Companies ",
+    "Slugs": "sale-deal-view-company"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Remove Companies ",
+    "Slugs": "sale-deal-remove-company"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "add/associate Products ",
+    "Slugs": "view-deal-add-associate-product"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Edit Products ",
+    "Slugs": "sale-deal-edit-product"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "View Products ",
+    "Slugs": "sale-deal-view-product"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Remove Products ",
+    "Slugs": "sale-deal-remove-product"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "add/associate Quotes ",
+    "Slugs": "sale-deal-add-associate-quote"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Edit Quotes ",
+    "Slugs": "sale-deal-edit-quote"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "View Quotes ",
+    "Slugs": "sale-deal-view-quote"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Remove Quotes ",
+    "Slugs": "sale-deal-remove-quote"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "add/associate Attachments",
+    "Slugs": "sale-deal-add-associate-attachment"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Edit Attachments ",
+    "Slugs": "sale-deal-edit-attachment"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "View Attachments ",
+    "Slugs": "sale-deal-view-attachment"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Remove Attachments ",
+    "Slugs": "sale-deal-remove-attachment"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Add Tasks",
+    "Slugs": "sale-deal-add-task"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "View Task",
+    "Slugs": "sale-deal-view-task"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Edit Task ",
+    "Slugs": "sale-deal-edit-task"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Re-assign Task",
+    "Slugs": "sale-deal-re-assign-task"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Delete Task",
+    "Slugs": "sale-deal-delete-task"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Add Notes",
+    "Slugs": "sale-deal-add-note"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "View Notes",
+    "Slugs": "sale-deal-view-note"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Edit Notes ",
+    "Slugs": "sale-deal-edit-note"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Delete Notes ",
+    "Slugs": "sale-deal-delete-note"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Add Calls ",
+    "Slugs": "sale-deal-add-call"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "View Calls",
+    "Slugs": "sale-deal-view-call "
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Edit Calls",
+    "Slugs": "sale-deal-edit-call"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Reschedule Calls",
+    "Slugs": "sale-deal-reschedule-call"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Add Calls Outcome ",
+    "Slugs": "sale-deal-call-outcome"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Delete Calls",
+    "Slugs": "sale-deal-delete-call"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Create Meetings",
+    "Slugs": "sale-deal-create-meeting"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Meeting list",
+    "Slugs": "sale-deal-meeting-list"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "View Meeting",
+    "Slugs": "sale-deal-view-meeting"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Edit Meeting",
+    "Slugs": "sale-deal-edit-meeting"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Re-assign Meeting",
+    "Slugs": "sale-deal-re-assign-meeting"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Delete Meeting",
+    "Slugs": "sale-deal-delete-meeting"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Send Emails",
+    "Slugs": "sale-deal-send-email"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Create Email Templates",
+    "Slugs": "sale-deal-create-email-template"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Schedule Email ",
+    "Slugs": "sale-deal-schedule-email"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "View Thread",
+    "Slugs": "sale-deal-view-thread"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Forward email",
+    "Slugs": "sale-deal-forward-email"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Reply Email",
+    "Slugs": "sale-deal-reply-email"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Delete Email",
+    "Slugs": "sale-deal-delete-email"
+  },
+  {
+    "Modules": "Forecast",
+    "Sub Modules": "Deal Stage",
+    "Permissions": "Search & Filter ",
+    "Slugs": "sale-deal-stage-search-and-filter"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Refresh ",
+    "Slugs": "sale-deal-stage-refresh"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "View Deal",
+    "Slugs": "sale-deal-stage-view-deal"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "View in Deal ",
+    "Slugs": "sale-deal-stage-view-in-deal"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "Forecast Caegory",
+    "Permissions": "search and filter",
+    "Slugs": "sale-forecast-search-and-filter"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Refresh ",
+    "Slugs": "sale-forecast-refresh"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "View Deal",
+    "Slugs": "sale-forecast-view-deal"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "View in Deal ",
+    "Slugs": "sale-forecast-view-in-deal"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Create goal (From Template)",
+    "Slugs": "sale-forecast-create-goal-from-template"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Create goal (From Scratch)",
+    "Slugs": "sale-forecast-create-goal-from-scratch"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Search and filter",
+    "Slugs": "sale-foreacst-goal-search-and-filter"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Refresh ",
+    "Slugs": "sale-forecast-goal-refresh"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "View Details ",
+    "Slugs": "sale-forecast-goal-view-detail"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Edit Goals",
+    "Slugs": "sale-forecast-edit-goal"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Delete ",
+    "Slugs": "sale-forecast-delete-goal"
+  },
+  {
+    "Modules": "Quotes",
+    "Sub Modules": "Manage Quotes",
+    "Permissions": "Create Quotes",
+    "Slugs": "sale-create-quote"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Download ",
+    "Slugs": "sale-download-quote"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "search and filter",
+    "Slugs": "sale-quote-search-and-filter"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Customize",
+    "Slugs": "sale-quote-customize-fields"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Refresh Filters",
+    "Slugs": "sale-quote-refresh"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Add Discount",
+    "Slugs": "sale-quote-add-discount"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Edit Quote",
+    "Slugs": "sale-edit-quote"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "View Quote",
+    "Slugs": "sale-view-quote"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Delete Quote",
+    "Slugs": "sale-delete-quote"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Add Product",
+    "Slugs": "sale-quote-add-product"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Edit Product",
+    "Slugs": "sale-quote-edit-product"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Delete Product",
+    "Slugs": "sale-quote-delete-product"
+  },
+  {
+    "Modules": "Tasks",
+    "Sub Modules": "Manage Tasks",
+    "Permissions": "Create Task",
+    "Slugs": "sale-create-task"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "search and filter",
+    "Slugs": "sale-task-serach-and-filter"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "import task",
+    "Slugs": "sale-import-tasks"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "list view",
+    "Slugs": "sale-task-list-view"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "board view",
+    "Slugs": "sale-task-board-view"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Edit columns",
+    "Slugs": "sale-task-customize"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Edit Task ",
+    "Slugs": "sale-edit-task"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "View Activity",
+    "Slugs": "sale-task-view-activity"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "View Insight",
+    "Slugs": "sale-task-view-insight"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "View Feeds",
+    "Slugs": "sale-task-view-feed"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Change Status",
+    "Slugs": "sale-task-change-status"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Delete",
+    "Slugs": "sale-delete-task"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Task View ",
+    "Slugs": "sale-task-view"
+  },
+  {
+    "Modules": "Invoices",
+    "Sub Modules": "Manage Invoices",
+    "Permissions": "Create Invoice",
+    "Slugs": "sale-create-invoice"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "search and filter",
+    "Slugs": "sale-invoice-search-and-filter"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Edit Action",
+    "Slugs": "sale-invoice-edit-action"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "View ",
+    "Slugs": "sale-view-invoice"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Download ",
+    "Slugs": "sale-invoice-download"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Delete",
+    "Slugs": "sale-delete-invoice"
+  },
+  {
+    "Modules": "Settings",
+    "Sub Modules": "Deal Pipeline",
+    "Permissions": "Search",
+    "Slugs": "sale-deal-pipeline-search-and-filter"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Create Pipeline",
+    "Slugs": "sale-create-deal-pipeline"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Pipeline list",
+    "Slugs": "sale-deal-pipeline-list"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Edit Pipeline",
+    "Slugs": "sale-edit-deal-pipeline"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Delete Pipeline",
+    "Slugs": "sale-delete-deal-pipeline"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "Products",
+    "Permissions": "Product list",
+    "Slugs": "sale-setting-product-list"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Seach ",
+    "Slugs": "sale-setting-product-search-and-filter"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Create ptoduct",
+    "Slugs": "sale-setting-create-product"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "active/inactive product",
+    "Slugs": "sale-setting-active-inactive-product"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Edit ",
+    "Slugs": "sale-setting-edit-product"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Delete",
+    "Slugs": "sale-setting-delete-product"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "Roles and Rights",
+    "Permissions": "Search ",
+    "Slugs": "sale-setting-roles-and-right-search-and-filter"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Add new role",
+    "Slugs": "sale-setting-add-new-role"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Edit ",
+    "Slugs": "sale-setting-edit-role"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "View",
+    "Slugs": "sale-setting-view-role"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Delete",
+    "Slugs": "sale-setting-delete-role"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "User Management ",
+    "Permissions": "user list",
+    "Slugs": "sale-setting-user-list"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Add user ",
+    "Slugs": "sale-setting-add-user"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "search user",
+    "Slugs": "sale-setting-search-and-filter"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "active/inactive users",
+    "Slugs": "sale-setting-active-inactive-user"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Team list ",
+    "Slugs": "sale-setting-team-list"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Search Teams",
+    "Slugs": "sale-setting-teams-search-and-filter"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "create teams",
+    "Slugs": "sale-setting-create-team"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Edit Team ",
+    "Slugs": "sale-setting-edit-team"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Delete Team ",
+    "Slugs": "sale-setting-delete-team"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "View Team",
+    "Slugs": "sale-setting-view-team"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "Notifications",
+    "Permissions": "Active/Inactive Email Notifications",
+    "Slugs": "sale-setting-active-inactive-email-notification"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Active/Inactive Deals Notifications",
+    "Slugs": "sale-setting-active-inactive-deals-notification"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Active/Inactive Quotes Notifications",
+    "Slugs": "sale-setting-active-inactive-quote-notification"
+  },
+  {
+    "Modules": "Air Services Roles & Right",
+    "Sub Modules": "",
+    "Permissions": "",
+    "Slugs": ""
+  },
+  {
+    "Modules": "Modules",
+    "Sub Modules": "Sub Modules",
+    "Permissions": "Permissions",
+    "Slugs": "Comments"
+  },
+  {
+    "Modules": "Dashboard",
+    "Sub Modules": "Manage Dashboards",
+    "Permissions": "Dashboard list",
+    "Slugs": "service-dashboard-list"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Create Dashboard ",
+    "Slugs": "service-create-dashboard"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Edit Dashboard ",
+    "Slugs": "service-edit-dashboard"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Share via Eamil ",
+    "Slugs": "service-share-via-email"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Set Default ",
+    "Slugs": "service-set-default-dashboard"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "view Dashboard",
+    "Slugs": "service-view-dashboard"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Delete Dashboard ",
+    "Slugs": "service-delete-dashboard"
+  },
+  {
+    "Modules": "Tickets",
+    "Sub Modules": "Tickets List",
+    "Permissions": "Create Ticket",
+    "Slugs": "service-create-ticket"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Search & Filter ",
+    "Slugs": "service-ticket-search-and-filter"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Export Tickets",
+    "Slugs": "service-ticket-export"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Column Customization ",
+    "Slugs": "service-ticket-customize-columns"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Reset",
+    "Slugs": "service-ticket-reset"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "board view",
+    "Slugs": "service-ticket-board-view"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "VIew Tickets Details ",
+    "Slugs": "service-ticket-view-details"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Actions ",
+    "Slugs": "service-ticket-actions"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "Ticket Details",
+    "Permissions": "View Requester Details",
+    "Slugs": "service-view-requester-detail"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "update info/edit ticket details",
+    "Slugs": "service-ticket-edit-detail"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Add Time entries details",
+    "Slugs": "service-add-time-entries-detail"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "View Time entries details",
+    "Slugs": "service-ticket-view-time-entries-detail"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Add Task",
+    "Slugs": "service-add-task"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Task List View",
+    "Slugs": "service-task-list-view"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "view Task details",
+    "Slugs": "service-view-task-details"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Edit Task ",
+    "Slugs": "service-edit-task"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Delete Task",
+    "Slugs": "service-delete-task"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Export Task",
+    "Slugs": "service-export-task"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Add Child Ticket",
+    "Slugs": "service-add-child-ticket"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Child ticket list view",
+    "Slugs": "service-child-ticket-list-view"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "View Child Tickets details",
+    "Slugs": "service-view-child-tickets-details"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Delete Child Tickets",
+    "Slugs": "service-delete-child-tickets"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Edit Child Tickets",
+    "Slugs": "service-edit-child-tickets"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Export Tickets",
+    "Slugs": "service-export-tickets"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Add Associate Assets",
+    "Slugs": "service-add-associate-assets"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Asset List view",
+    "Slugs": "service-asset-list-view"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "View Assets details",
+    "Slugs": "service-view-assets-details"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Delete Assets",
+    "Slugs": "service-delete-asstes"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Add Meeting",
+    "Slugs": "service-add-meeting"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Meeting details",
+    "Slugs": "service-meeting-details"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Rescheduled meeting",
+    "Slugs": "service-rescheduled-meeting"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Add Meeting Outcomes",
+    "Slugs": "service-add-meeting-outcomes"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Delete Meeting",
+    "Slugs": "service-delete-meeting"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Meeting list",
+    "Slugs": "service-meeting-list"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "View Activities details",
+    "Slugs": "service-view-activities"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Add Conversation note",
+    "Slugs": "service-add-conversation-note"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Add Conversation Reply",
+    "Slugs": "service-add-conversation-reply"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Add Conversation Farward",
+    "Slugs": "service-add-conversation-forward"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Add Conversation Discussions",
+    "Slugs": "service-add-conversation-discussions"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Add Conversation Delete note",
+    "Slugs": "service-add-conversation-delete-note"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Add Conversation Delete Reply",
+    "Slugs": "service-add-conversation-delete-reply"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Add Conversation Delete Farward",
+    "Slugs": "service-add-conversation-delete-forward"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Sent Email",
+    "Slugs": "service-ticket-sent-email"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Time track (Play/Pause)",
+    "Slugs": "service-ticket-time-track-play-and-pause"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Calls",
+    "Slugs": "service-ticket-call"
+  },
+  {
+    "Modules": "Assets",
+    "Sub Modules": "Inventory",
+    "Permissions": "Add Assets",
+    "Slugs": "service-add-assets"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Assets List view",
+    "Slugs": "service-inventory-asset-list-view"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "import",
+    "Slugs": "service-inventory-import"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Export ",
+    "Slugs": "service-inventory-export"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Customized column",
+    "Slugs": "service-inventory-customized-columns"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Search & Filter ",
+    "Slugs": "service-inventory-search-and-filter"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Delete Assets",
+    "Slugs": "service-inventory-delete-assets"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Pagination",
+    "Slugs": "service-inventory-pagination"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "View Detalis",
+    "Slugs": "service-inventory-view-details"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Over view",
+    "Slugs": "service-inventory-overview"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "View Association",
+    "Slugs": "service-inventory-view-association"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Add Association",
+    "Slugs": "service-inventory-add-association"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "VIew Repective Purchase oder",
+    "Slugs": "service-inventory-view-repective-purchase-order"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "View Respective Contracts",
+    "Slugs": "service-inventory-view-respective-contracts"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Add new expense",
+    "Slugs": "service-inventory-add-new-expense"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Expense list view",
+    "Slugs": "service-inventory-expense-list-view"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "View Expense",
+    "Slugs": "service-inventory-view-expense"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Edit Expense",
+    "Slugs": "service-inventory-edit-expense"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Delete Expense",
+    "Slugs": "service-inventory-delete-expense"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "View Activities ",
+    "Slugs": "service-inventory-view-activities"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Export activities",
+    "Slugs": "service-inventory-export-activities"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "View Related softwares",
+    "Slugs": "service-inventory-view-related-softwares"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Delete Attachments",
+    "Slugs": "service-inventory-delete-attachments"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "view Attachments",
+    "Slugs": "service-inventory-view-attachments"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "                Software",
+    "Permissions": "New Software",
+    "Slugs": "service-assets-new-software"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Software list view",
+    "Slugs": "service-assets-software-list-view"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Search & Filter ",
+    "Slugs": "service-assets-software-search-and-filter"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "View Details",
+    "Slugs": "service-assets-sotware-view-details"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Overview",
+    "Slugs": "service-assets-software-overview"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Installations",
+    "Slugs": "service-assets-software-insatalltions"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Users",
+    "Slugs": "service-assets-software-users"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Contracts",
+    "Slugs": "service-assets-software-contracts"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "Contracts",
+    "Permissions": "Add contract",
+    "Slugs": "service-assets-add-contract"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Contracts list view",
+    "Slugs": "service-assets-contract-list-view"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Search & Filter ",
+    "Slugs": "service-assets-contract-search-and-filter"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Export contracts",
+    "Slugs": "service-assets-export-contract"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Delete contracts",
+    "Slugs": "service-assets-delete-contracts"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "view Task details",
+    "Slugs": "service-assets-contracts-view-task-details"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "Purchase order",
+    "Permissions": "New purchase order",
+    "Slugs": "service-assets-new-purchase-order"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Purchase order list view",
+    "Slugs": "service-assets-purchase-order-list-view"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Search & Filter ",
+    "Slugs": "service-assets-purchase-order-search-and-filter"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Export purchase order",
+    "Slugs": "service-assets-export-purchase-order"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "view purchase order details",
+    "Slugs": "service-assets-view-purchase-order-detail"
+  },
+  {
+    "Modules": "Knowledge base",
+    "Sub Modules": "Articles Folders list",
+    "Permissions": "Create Article",
+    "Slugs": "service-knowlegde-base-create-article"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Create Folder",
+    "Slugs": "service-knowlegde-base-create-folder"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Attachment",
+    "Slugs": "service-knowlegde-base-create-attachment"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "save as draft",
+    "Slugs": "service-knowlegde-base-save-as-draft"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Publish Now",
+    "Slugs": "service-knowlegde-base-publish-now"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "Articles List",
+    "Permissions": "Search & Filter ",
+    "Slugs": "service-knowlegde-base-article-serach-and-filter"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Article list view",
+    "Slugs": "service-knowlegde-base-article-list-view"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Edit Article",
+    "Slugs": "service-knowlegde-base-edit-article"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Delete",
+    "Slugs": "service-knowlegde-base-delete-article"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Move folder",
+    "Slugs": "service-knowlegdebase-move-folder"
+  },
+  {
+    "Modules": "Workload",
+    "Sub Modules": "Calender View",
+    "Permissions": "View Workload",
+    "Slugs": "service-workload-view-work-load"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Manage workload",
+    "Slugs": "service-workload-manage-work-load"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Unassigned worload",
+    "Slugs": "service-workload-unassigned-work-load"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Filters",
+    "Slugs": "service-workload-filters"
+  },
+  {
+    "Modules": "Customer Portal",
+    "Sub Modules": "Dashboard",
+    "Permissions": "Report an issues",
+    "Slugs": "service-customer-portal-report-an-issues"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Sent Services Request",
+    "Slugs": "service-customer-sent-services-request"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Review Tickets status",
+    "Slugs": "service-customer-review-tickets-status"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "Tickets",
+    "Permissions": "Ticket list",
+    "Slugs": "service-customer-ticket-list"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Filters",
+    "Slugs": "service-customer-filtters"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "Knowledge base",
+    "Permissions": "View Ariticles of different category",
+    "Slugs": "service-customer-view-articles-different-category"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "View Articles Details",
+    "Slugs": "service-customer-view-articles-different-category"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "Catalog",
+    "Permissions": "View all Catalog services",
+    "Slugs": "service-customer-view-all-catalog-services"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "View catolog services of different types",
+    "Slugs": "service-customer-view-catalog-services-different-types"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Request for catalog services",
+    "Slugs": "service-customer-request-for-catalog-services"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "VIew details of specific services",
+    "Slugs": "service-customer-view-details-of-specific-services"
+  },
+  {
+    "Modules": "Settings",
+    "Sub Modules": "Account Settings",
+    "Permissions": "Vew Account details",
+    "Slugs": "service-settings-view-account-details"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Edit Account details",
+    "Slugs": "service-settings-edit-account-details"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "View/enable tickets Email notification",
+    "Slugs": "service-settings-view-enable-tickets-email-notification"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "View/enable Assets Email notification",
+    "Slugs": "service-settings-view-enable-assets-email-notification"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "View/enable Contracts Email notification",
+    "Slugs": "service-settings-view-enable-contracts-email-notification"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "View/enable Tasks Email notification",
+    "Slugs": "service-settings-view-enable-tasks-email-notification"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "View/enable Purchase Order Email notification",
+    "Slugs": "service-settings-view-enable-purchase-order-email-notification"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "View and manage customer portal personalization",
+    "Slugs": "service-settings-view-and-manage-customer-portal-personalization"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Set customer portal permissions",
+    "Slugs": "service-settings-set-customer-portal-permissions"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Set customer portal settings",
+    "Slugs": "service-settings-set-customer-portal-settings"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "User Management ",
+    "Permissions": "View Departments",
+    "Slugs": "service-settings-view-departments"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Add departments",
+    "Slugs": "service-settings-add-departments"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Edit department",
+    "Slugs": "service-settings-edit-department"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Delete Department",
+    "Slugs": "service-settings-delete-department"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Add memebers in departments",
+    "Slugs": "service-settings-add-memebers-in-departments"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "View Agents List",
+    "Slugs": "service-settings-view-agents-list"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Add new agent(Invite agent)",
+    "Slugs": "service-settings-add-new-agent"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Approve/reject Agent Request",
+    "Slugs": "service-settings-approve-reject-agent-request"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Edit /delete Agents",
+    "Slugs": "service-settings-edit-delete-agents"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Filters/search",
+    "Slugs": "service-settings-filters-search"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Add requester",
+    "Slugs": "service-settings-add-requester"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "View requesters list",
+    "Slugs": "service-settings-view-requesters-list"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Delete Requester",
+    "Slugs": "service-settings-delete-requester"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Convert to agent requester",
+    "Slugs": "service-settings-convert-to-agent-requester"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Add new department fields",
+    "Slugs": "service-settings-add-new-department-fields"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Add new fields for adding users",
+    "Slugs": "service-settings-add-new-fields-for-adding-users"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Add new role",
+    "Slugs": "service-settings-add-new-role"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Edit Role",
+    "Slugs": "service-settings-edit-role"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Delete Role",
+    "Slugs": "service-settings-delete-role"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Search roles",
+    "Slugs": "service-settings-search-roles"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "Assets Management",
+    "Permissions": "Add Asset types",
+    "Slugs": "service-settings-addasset-types"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Add new fields for Asset form",
+    "Slugs": "service-settings-add-new-fields-for-asset-form"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Add product categories",
+    "Slugs": "service-settings-add-product-categories"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "View list of product categories",
+    "Slugs": "service-settings-view-list-of-product-categories"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Search/Import/Export categories",
+    "Slugs": "service-settings-search-import-export-categories"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "View Product details",
+    "Slugs": "service-settings-view-product-details"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "VIew Product Vendors",
+    "Slugs": "service-settings-vIew-product-vendors"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "View Product Association Assets",
+    "Slugs": "service-settings-view-product-association-assets"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Edit/Delete Products",
+    "Slugs": "service-settings-edit-delete-Products"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Add new vendor",
+    "Slugs": "service-settings-add-new-vendor"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Search/import/Export vendors",
+    "Slugs": "service-settings-search-import-export-vendors"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "View Vendors list",
+    "Slugs": "service-settings-view-vendors-list"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "View vendor details (related products and contracts)",
+    "Slugs": "service-settings-view-vendor-details"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Edit/Delete vendors",
+    "Slugs": "service-settings-edit-delete-vendors"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Add new vendors fields",
+    "Slugs": "service-settings-add-new-vendors-fields"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Add new softer fields",
+    "Slugs": "service-settings-add-new-softer-fields"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Add contract types",
+    "Slugs": "service-settings-add-contract-types"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Add new contracts fields",
+    "Slugs": "service-settings-add-new-contracts-fields"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Add new purchase oder fields",
+    "Slugs": "service-settings-add-new-purchase-oder-fields"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Add location",
+    "Slugs": "service-settings-add-location"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "View/ edit/ delete locations",
+    "Slugs": "service-settings-view-edit-delete-locations"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "Agent Productivity & workload Management",
+    "Permissions": "View default canned responses Folders",
+    "Slugs": "service-settings-view-default-canned-responses-folders"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Add canned responses Folders",
+    "Slugs": "service-settings-add-canned-responses-folders"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Edit/Delete Custom folders",
+    "Slugs": "service-settings-edit-delete-custom-folders"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "View Responses list",
+    "Slugs": "service-settings-view-responses-list"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Add new responses in different  folders",
+    "Slugs": "service-settings-add-new-responses-in-different-folders"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Search / Edit/ Delete Canned responses",
+    "Slugs": "service-settings-search-edit-delete-canned-responses"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "View and set award points",
+    "Slugs": "service-settings-view-and-set-award-points"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "View and manage Agent Levels points",
+    "Slugs": "service-settings-view-and-manage-agent-levels-points"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "View workload levels (set percentage)",
+    "Slugs": "service-settings-view-workload-levels"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "View roles and permissions",
+    "Slugs": "service-settings-view-roles-and-permissions"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "View/Create/Edit/ Delete Work Scheduled for agents",
+    "Slugs": "service-settings-view-create-edit-delete-work-scheduled-for-agents"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "Service Mnagement",
+    "Permissions": "View services catalog",
+    "Slugs": "service-settings-view-services-catalog"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Add new service",
+    "Slugs": "service-settings-add-new-service"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Add services category",
+    "Slugs": "service-settings-add-services-category"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Delete/move catalog service",
+    "Slugs": "service-settings-delete-move-catalog-service"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Change status of catalog services",
+    "Slugs": "service-settings-change-status-of-catalog-services"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Set visibility of catalog services",
+    "Slugs": "service-settings-set-visibility-of-catalog-services"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "View details of catalog service",
+    "Slugs": "service-settings-view-details-of-catalog-service"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "VIew Business hours",
+    "Slugs": "service-settings-vIew-business-hours"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Add new business hours",
+    "Slugs": "service-settings-addnew-business-hours"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Edit/delete Business Hour",
+    "Slugs": "service-settings-edit-delete-business-hour"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Add new fields for ticket and their tasks",
+    "Slugs": "service-settings-add-new-fields-for-ticket-and-their-tasks"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Add new fields for time entries",
+    "Slugs": "service-settings-add-new-fields-for-time-entries"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Set closure Rules against Tickets",
+    "Slugs": "service-settings-set-closure-rules-against-tickets"
+  },
+  {
+    "Modules": "Air Operations Roles & Right",
+    "Sub Modules": "",
+    "Permissions": "",
+    "Slugs": ""
+  },
+  {
+    "Modules": "Modules",
+    "Sub Modules": "Sub Modules",
+    "Permissions": "Permissions",
+    "Slugs": "Comments"
+  },
+  {
+    "Modules": "Dashboard",
+    "Sub Modules": "Dashboard",
+    "Permissions": "View Dashboard",
+    "Slugs": "operation-dashboard-view-dashboard"
+  },
+  {
+    "Modules": "Data Managem ent",
+    "Sub Modules": "Import List",
+    "Permissions": "Search Record",
+    "Slugs": "operation-data-management-search-record"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Filter Record",
+    "Slugs": "operation-data-management-filter-record"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Download Record",
+    "Slugs": "operation-data-management-download-record"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "Export list",
+    "Permissions": "Search Record",
+    "Slugs": "operation-data-management-search-record"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Filter Record",
+    "Slugs": "operation-data-management-filter-record"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Download Record",
+    "Slugs": "operation-export-list-data-management-download-record"
+  },
+  {
+    "Modules": "Integration ",
+    "Sub Modules": "Sales/services/Marketing",
+    "Permissions": "Apply filters",
+    "Slugs": "operation-integration-apply-filters"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Market Place",
+    "Slugs": "operation-integration-market-place"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "View Details",
+    "Slugs": "operation-integration-view-details"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Install ",
+    "Slugs": "operation-integration-install"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "View Install Guide",
+    "Slugs": "operation-integration-view-install-guide"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Setup Sync",
+    "Slugs": "operation-integration-setup-sync"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Delete Sync",
+    "Slugs": "operation-integration-delete-sync"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Turn off Sync",
+    "Slugs": "operation-integration-turn-off-sync"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Enable /Disable Map",
+    "Slugs": "operation-integration-enable-Disable-map"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "View Integration Details",
+    "Slugs": "operation-integration-view-integration-details"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Uninstall",
+    "Slugs": "operation-integration-uninstall"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Disconnect",
+    "Slugs": "operation-integration-disconnect"
+  },
+  {
+    "Modules": "Workflows ",
+    "Sub Modules": "Sales workflow",
+    "Permissions": "Search Record",
+    "Slugs": "operation-workflows-sales-search-record"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Filter Record",
+    "Slugs": "operation-workflows-sales-filter-record"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Active/Inactive Workflow",
+    "Slugs": "operation-workflows-sales-active-inactive-workflow"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Test Workflow",
+    "Slugs": "operation-workflows-sales-test-workflow"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Delete Group",
+    "Slugs": "operation-workflows-sales-delete-group"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Add Condition",
+    "Slugs": "operation-workflows-sales-add-condition"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Edit Workflow",
+    "Slugs": "operation-workflows-sales-edit-workflow"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Clone",
+    "Slugs": "operation-workflows-sales-clone"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Delete",
+    "Slugs": "operation-workflows-sales-delete"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Enable Now",
+    "Slugs": "operation-workflows-sales-enable-now"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Schedule",
+    "Slugs": "operation-workflows-sales-schedule"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "Marketing Workflow",
+    "Permissions": "Search Record",
+    "Slugs": "operation-workflows-marketing-search-record"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Filter Record",
+    "Slugs": "operation-workflows-marketing-filter-record"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Active/Inactive Workflow",
+    "Slugs": "operation-workflows-marketing-active-inactive-workflow"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Test Workflow",
+    "Slugs": "operation-workflows-marketing-test-workflow"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Delete Group",
+    "Slugs": "operation-workflows-marketing-delete-group"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Add Condition",
+    "Slugs": "operation-workflows-marketing-add-condition"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Edit Workflow",
+    "Slugs": "operation-workflows-marketing-edit-workflow"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Clone",
+    "Slugs": "operation-workflows-marketing-clone"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Delete",
+    "Slugs": "operation-workflows-marketing-delete"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Enable Now",
+    "Slugs": "operation-workflows-marketing-enable-now"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Schedule",
+    "Slugs": "operation-workflows-marketing-schedule"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "Services Workflow",
+    "Permissions": "Search Record",
+    "Slugs": "operation-workflows-service-search-record"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Filter Record",
+    "Slugs": "operation-workflows-service-filter-record"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Enable /Disable",
+    "Slugs": "operation-workflows-service-enable-disable"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Delete",
+    "Slugs": "operation-workflows-service-delete"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Edit Workflow",
+    "Slugs": "operation-workflows-service-edit-workflow"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Clone workflow",
+    "Slugs": "operation-workflows-service-clone-workflow"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Create Eventbase Workflow",
+    "Slugs": "operation-workflows-service-create-eventbase-workflow"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Create Schedule workflows",
+    "Slugs": "operation-workflows-service-create-schedule-workflows"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Create Supervisor Rules",
+    "Slugs": "operation-workflows-service-create-supervisor-rules"
+  },
+  {
+    "Modules": "Reports",
+    "Sub Modules": "Sales/Services/Marketing",
+    "Permissions": "Tab View  (All reports, Favourite , System Report, Dashboard Reports, Custom Reports)",
+    "Slugs": "operation-reports-tab-view"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Search Record",
+    "Slugs": "operation-reports-search-record"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Filter Record",
+    "Slugs": "operation-reports-filter-record"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Restore Record",
+    "Slugs": "operation-reports-restore-record"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Export Record",
+    "Slugs": "operation-reports-export-record"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Change Owner",
+    "Slugs": "operation-reports-change-owner"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Add to Dashboard",
+    "Slugs": "operation-reports-add-to-dashboard"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Delete",
+    "Slugs": "operation-reports-delete"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Manage Access",
+    "Slugs": "operations-reports-manage-access"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Customize ",
+    "Slugs": "operations-reports-customize"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Rename",
+    "Slugs": "operations-reports-rename"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Clone ",
+    "Slugs": "operations-reports-clone"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Email this Report",
+    "Slugs": "operations-reports-email-this-report"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Create Report From Scratch",
+    "Slugs": "operations-reports-create-report-from-scratch"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Create Report from template",
+    "Slugs": "operations-reports-create-report-from-template"
+  },
+  {
+    "Modules": "Roles & Right",
+    "Sub Modules": "Roles List ",
+    "Permissions": "Search Record",
+    "Slugs": "operation-roles-and-right-search-record"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Edit Role",
+    "Slugs": "operation-roles-and-right-edit-role"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "View Role",
+    "Slugs": "operation-roles-and-right-view-role"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Delete Role",
+    "Slugs": "operation-roles-and-right-delete-role"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Add Role",
+    "Slugs": "operation-roles-and-right-add-role"
+  },
+  {
+    "Modules": "User Management ",
+    "Sub Modules": "Users",
+    "Permissions": "User list",
+    "Slugs": "operation-user-managment-user-list"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Search Record",
+    "Slugs": "operation-user-managment-search-record"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Active/Inactive user",
+    "Slugs": "operation-user-managment-active-inactive-user"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "View User Detail",
+    "Slugs": "operation-user-managment-view-user-detail"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Edit User",
+    "Slugs": "operation-user-managment-edit-user"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Delete User",
+    "Slugs": "operation-user-managment-delete-user"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "Teams",
+    "Permissions": "Team list",
+    "Slugs": "operation-user-managment-team-list"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Search Record",
+    "Slugs": "operation-user-managment-search-record"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "view ",
+    "Slugs": "operation-user-managment-view"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "edit",
+    "Slugs": "operation-user-managment-edit"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Delete",
+    "Slugs": "operation-user-managment-delete"
+  },
+  {
+    "Modules": "",
+    "Sub Modules": "",
+    "Permissions": "Create Team",
+    "Slugs": "operation-user-managment-create-team"
+  }
+]

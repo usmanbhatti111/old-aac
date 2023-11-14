@@ -41,7 +41,6 @@ import {
   Plan,
   PlanProductFeature,
   PlanProductFeatureSchema,
-  PlanProductModulePermission,
   PlanSchema,
   PlanType,
   PlanTypeSchema,
@@ -49,7 +48,6 @@ import {
   ProductCategoriesSchema,
   ProductFeatures,
   ProductFeaturesSchema,
-  ProductModulePermissionSchema,
   Products,
   ProductsSchema,
   Purchase,
@@ -98,6 +96,8 @@ import {
   DealsSchema,
   Note,
   NoteSchema,
+  PlanProductPermissionSchema,
+  PlanProductPermission,
   TaxCalculation,
   TaxCalculationSchema,
   DealViews,
@@ -159,10 +159,6 @@ export const DbModels = [
   {
     name: PlanProductFeature.name,
     schema: PlanProductFeatureSchema,
-  },
-  {
-    name: PlanProductModulePermission.name,
-    schema: ProductModulePermissionSchema,
   },
   {
     name: PlanType.name,
@@ -360,6 +356,10 @@ export const DbModels = [
   {
     name: Note.name,
     schema: NoteSchema,
+  },
+  {
+    name: PlanProductPermission.name,
+    schema: PlanProductPermissionSchema,
   },
   {
     name: TaxCalculation.name,

@@ -48,6 +48,7 @@ export const CONTROLLERS = {
   CALLS: 'calls',
   DEALS: 'deals',
   DEAL_NOTE: 'deal-note',
+  PERMISSIONS: 'permissions',
   ENQUIRIES: 'enquiries',
   TAX_CALCULATION: 'tax-calculation',
   DEAL_VIEWS: 'deal-views',

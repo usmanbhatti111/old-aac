@@ -4,6 +4,9 @@ export const RMQ_MESSAGES = {
     GET_EXAMPLES: 'get-examples',
     EDIT_EXAMPLE: 'edit-example',
   },
+  PERMISSION: {
+    ADD_ALL_PERMISSIONS: 'add-all-permissions',
+  },
   AUTHENTICATION: {
     FORCE_CONFIRM: 'force-confirm-user',
     SIGNUP: 'auth-signup',

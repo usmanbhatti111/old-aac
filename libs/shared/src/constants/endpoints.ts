@@ -174,7 +174,9 @@ export const API_ENDPOINTS = {
     GET_PRODUCTS: '/',
     EDIT_PRODUCT: '/:id',
   },
-
+  PERMISSION: {
+    ADD_ALL_PERMISSIONS: '/',
+  },
   AIR_SERVICES: {
     TICKETS: {
       ticket: 'ticket',
