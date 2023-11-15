@@ -24,7 +24,6 @@ export class WorkloadManagementController {
     @Inject(SERVICES.AIR_SERVICES) private airServiceClient: ClientProxy
   ) {}
 
-  @Auth(true)
   @Get(API_ENDPOINTS.AIR_SERVICES.WORK_LOAD_MANAGEMENT.WORK_LOAD_LIST)
   getWorkLoad(@Query() query: WorkLoadFilterDto) {
     return firstValueFrom(
