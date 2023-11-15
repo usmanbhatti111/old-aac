@@ -350,10 +350,10 @@ export class PlanService {
     plan: Plan = null
   ) {
     const featureProduct = featureProducts.find(
-      (val) => val.productId == productId
+      (val) => val.productId.toString() == productId.toString()
     );
     const productPermission = productPermissions.find(
-      (val) => val.productId == productId
+      (val) => val.productId.toString() == productId.toString()
     );
 
     const product = await this.productRepository.findOne({
@@ -377,8 +377,10 @@ export class PlanService {
       ); // inserting plan product features data
     }
 
+    const slugIds = [];
+
     for (const slug of productPermission.permissionSlugs) {
-      this.permissionRepository.findOne({ slug });
+      slugIds.push((await this.permissionRepository.findOne({ slug }))._id);
     }
 
     const planProductPermission =
@@ -386,11 +388,11 @@ export class PlanService {
         { productId: productPermission?.productId },
         {
           productId: productPermission?.productId,
-          permissionSlugs: productPermission?.permissionSlugs,
+          permissionSlugs: slugIds,
         }
       ); // inserting plan product module permission data
 
-    if (plan)
+    if (plan) {
       plan = await this.planRepository.findOneAndUpdate(
         { _id: plan._id },
         {
@@ -405,7 +407,7 @@ export class PlanService {
             : [planProductPermission],
         }
       );
-    else {
+    } else {
       plan = await this.planRepository.create({
         ...payload,
         planProducts: [product],
