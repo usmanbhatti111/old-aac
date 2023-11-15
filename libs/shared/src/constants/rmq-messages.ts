@@ -192,10 +192,18 @@ export const RMQ_MESSAGES = {
   AIR_SERVICES: {
     DASHBOARD: {
       CREATE_DASHBOARD: 'create-dashboard',
+      CREATE_DASHBOARD_ANNOUCEMENT: 'create-dashboard-annoucement',
       GET_DASHBOARD_LIST: 'get-dashboard-list',
       GET_DASHBOARD: 'get-dashboard',
+      GET_DASHBOARD_Tickets: 'get-dashboard-tickets',
       UPDATE_DASHBOARD: 'update-dashboard',
       DELETE_DASHBOARD: 'delete-dashboard',
+      EMAILED_DASHBOARD: 'emailed-dashboards',
+    },
+    WIDGETS: {
+      CREATE_WIDGETS: 'create-widgets',
+      GET_WIDGETS_LIST: 'get-widgets-list',
+      GET_WIDGETS: 'get-widgets',
     },
     WIDGETS: {
       CREATE_WIDGETS: 'create-widgets',
@@ -250,6 +258,7 @@ export const RMQ_MESSAGES = {
       SOFTWARE_ALLOCATE_CONTRACT: 'software-allocate-contract',
       SOFTWARE_DEALLOCATE_CONTRACT: 'software-deallocate-contract',
       SOFTWARE_USERS_REMOVE: 'software-users-remove',
+      SOFTWARE_OVERVIEW: 'software-overview',
       GET_SOFTWARE_DEVICES: 'software-devices',
     },
     TASK: {

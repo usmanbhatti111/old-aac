@@ -54,7 +54,7 @@ export class TicketController {
     return this.ticketService.getChildTicket(payload);
   }
   @MessagePattern(RMQ_MESSAGES.AIR_SERVICES.TICKETS.DELETE_CHILD_TICKETS)
-  public async deleteChildTicket(@Payload() payload: IdDto) {
+  public async deleteChildTicket(@Payload() payload: { ids: string[] }) {
     return this.ticketService.deleteChildTicket(payload);
   }
   @MessagePattern(RMQ_MESSAGES.AIR_SERVICES.TICKETS.EDIT_TICKETS)

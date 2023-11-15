@@ -185,7 +185,7 @@ export const API_ENDPOINTS = {
       ticket: 'ticket',
       ADD_CHILD_TICKET: 'add-child-ticket',
       GET_CHILD_TICKETS: 'get-child-tickets/:id',
-      DELETE_CHILD_TICKETS: 'delete-child-tickets/:id',
+      DELETE_CHILD_TICKETS: 'delete-child-tickets',
       EDIT_CHILD_TICKETS: 'edit-child-tickets/:id',
       ASSOCIATE_ASSETS: 'associate-assets',
       DETACH_ASSETS: 'detach-assets',
@@ -224,6 +224,7 @@ export const API_ENDPOINTS = {
       SOFTWARE_ALLOCATE_CONTRACT: 'software-allocate-contract',
       SOFTWARE_DEALLOCATE_CONTRACT: 'software-deallocate-contract',
       SOFTWARE_USERS_REMOVE: 'software-users-remove/:id',
+      SOFTWARE_OVERVIEW: 'software_overview/:id',
       GET_SOFTWARE_DEVICES: 'software-devices',
     },
     TASK: {
@@ -236,8 +237,11 @@ export const API_ENDPOINTS = {
       ADD_DASHBOARD: '/',
       GET_DASHBOARDS: '/',
       GET_DASHBOARD: '/:id',
+      CREATE_DASHBOARD_ANNOUCEMENT: 'dashboard-annoucement',
+      GET_DASHBOARD_TICKETS: 'tickets',
       UPDATE_DASHBOARD: '/:id',
       DELETE_DASHBOARD: '/:id',
+      EMAILED_DASHBOARD: 'emailed-dashboards',
     },
     REPORT_WIDGETS: {
       ADD_REPORT_WIDGET: '/',
@@ -246,6 +250,7 @@ export const API_ENDPOINTS = {
       UPDATE_REPORT_WIDGET: '/:id',
       DELETE_REPORT_WIDGET: '/:id',
     },
+
     TASK_MANAGEMENT: {
       CREATE_TASK: 'management',
       TASK_LIST: 'management',

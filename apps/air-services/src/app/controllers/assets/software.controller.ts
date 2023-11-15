@@ -73,4 +73,8 @@ export class SoftwareController {
   async softwareUsersRemove(@Payload() payload: { id: IdDto }) {
     return this.softwareService.softwareUserRemove(payload);
   }
+  @MessagePattern(RMQ_MESSAGES.AIR_SERVICES.ASSETS.SOFTWARE_OVERVIEW)
+  async softwareOverview(@Payload() payload: { id: IdDto }) {
+    return this.softwareService.softwareOverview(payload);
+  }
 }

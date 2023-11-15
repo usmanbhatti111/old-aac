@@ -2,7 +2,14 @@ import { Controller } from '@nestjs/common';
 import { MessagePattern, Payload } from '@nestjs/microservices';
 import { RMQ_MESSAGES } from '@shared/constants';
 import { DashboardService } from '../services/dashboard.service';
-import { CreateDashboardtDTO, IdDto, ListDashboardDTO } from '@shared/dto';
+import {
+  CreateDashboardtDTO,
+  EmailedDashboardDTO,
+  IdDto,
+  ListDashboardDTO,
+  FilterTicketDto,
+  CreateAnnouncementDTO,
+} from '@shared/dto';
 
 @Controller()
 export class DashboardController {
@@ -11,6 +18,11 @@ export class DashboardController {
   @MessagePattern(RMQ_MESSAGES.AIR_SERVICES.DASHBOARD.CREATE_DASHBOARD)
   public async addDashboard(@Payload() payload: CreateDashboardtDTO) {
     return this.dashboardService.addDashboard(payload);
+  }
+
+  @MessagePattern(RMQ_MESSAGES.AIR_SERVICES.DASHBOARD.EMAILED_DASHBOARD)
+  public async sendDashboard(@Payload() payload: EmailedDashboardDTO) {
+    return this.dashboardService.sendDashboard(payload);
   }
 
   @MessagePattern(RMQ_MESSAGES.AIR_SERVICES.DASHBOARD.GET_DASHBOARD_LIST)
@@ -26,5 +38,17 @@ export class DashboardController {
   @MessagePattern(RMQ_MESSAGES.AIR_SERVICES.DASHBOARD.UPDATE_DASHBOARD)
   public async updateDashboard(@Payload() payload: CreateDashboardtDTO) {
     return this.dashboardService.addDashboard(payload);
+  }
+  @MessagePattern(RMQ_MESSAGES.AIR_SERVICES.DASHBOARD.GET_DASHBOARD_Tickets)
+  public async getDashboardTickets(@Payload() payload: FilterTicketDto) {
+    return this.dashboardService.getDashboardTickets(payload);
+  }
+  @MessagePattern(
+    RMQ_MESSAGES.AIR_SERVICES.DASHBOARD.CREATE_DASHBOARD_ANNOUCEMENT
+  )
+  public async createDashboardAnnoucement(
+    @Payload() payload: CreateAnnouncementDTO
+  ) {
+    return this.dashboardService.createDashboardAnnoucement(payload);
   }
 }

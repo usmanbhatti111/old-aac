@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsMongoId, IsNotEmpty, IsOptional } from 'class-validator';
+import { IsEnum, IsMongoId, IsNotEmpty, IsOptional } from 'class-validator';
 import { PaginationDto } from '../../common';
 
 export class GetDashboardByIdDto {

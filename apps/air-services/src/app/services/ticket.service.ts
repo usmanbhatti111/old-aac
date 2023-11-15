@@ -255,14 +255,11 @@ export class TicketService {
     }
   }
 
-  async deleteChildTicket(payload: any) {
+  async deleteChildTicket(payload: { ids: string[] }) {
     try {
-      const { id } = payload.id;
-
-      const data = await this.ticketRepository.delete({
-        _id: id.id,
-        isChildTicket: true,
-      });
+      const { ids } = payload;
+      const filterQuery = { isChildTicket: true };
+      const data = await this.ticketRepository.deleteMany(filterQuery, ids);
       //should also remove  from parent ticket
       const response = successResponse(
         HttpStatus.OK,
