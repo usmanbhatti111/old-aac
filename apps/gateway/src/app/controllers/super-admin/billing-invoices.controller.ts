@@ -268,7 +268,7 @@ export class InvoiceController {
           moduleId: response?.data?._id, // module._id
           moduleName: response?.data?.name || 'Invoice', //module.name
         };
-        await firstValueFrom(
+        firstValueFrom(
           this.commonFeatureClient.emit(
             RMQ_MESSAGES.ACTIVITY_LOG.ACTIVITY_LOG,
             {

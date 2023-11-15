@@ -31,13 +31,14 @@ export class ActivitylogsController {
     @Req() request: AppRequest
   ) {
     const { user } = request;
+    const organizationId = user?.organization;
     const response = await firstValueFrom(
       this.commonFeatureClient.send(
         { cmd: RMQ_MESSAGES.ACTIVITY_LOG.GET_ALL_ACTIVITIES },
         {
           ...payload,
           userId: user?._id,
-          userRole: user?.role,
+          organizationId,
         }
       )
     );

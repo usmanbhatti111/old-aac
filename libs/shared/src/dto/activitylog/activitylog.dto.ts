@@ -100,11 +100,21 @@ export class GetallActivitylogDTO extends PaginationDto {
   @ApiProperty({
     type: String,
     required: false,
-    description: 'filter on user',
+    description: 'perform by Id',
   })
   @IsOptional()
   @Transform(toMongoObjectId)
   performedBy: string;
+
+  @ApiProperty({
+    type: String,
+    required: false,
+    description:
+      'only SYSTEM ADMIN use this,for organization activities filter',
+  })
+  @IsOptional()
+  @Transform(toMongoObjectId)
+  orgId: string;
 
   @ApiProperty({
     type: String,
@@ -159,6 +169,8 @@ export class GetallActivitylogDTO extends PaginationDto {
   @IsISO8601()
   @IsOptional()
   endDate?: string;
+
+  organizationId?: string;
 }
 
 export class GetallActivitylogResponseDTO {
@@ -173,6 +185,7 @@ export class GetallActivitylogResponseDTO {
       activitylogs: [
         {
           _id: '6549d436e0feed28d5506fd1',
+          organizationId: '652e0304169f73fd01fd4956',
           performedBy: '6541f00578a1579d65d9bc7e',
           activityType: 'UPDATED',
           moduleId: '6549d338e9a9d68f1aa42f69',
