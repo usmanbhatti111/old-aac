@@ -50,13 +50,15 @@ import {
   UpdateManyTicketResponse,
 } from '@shared/dto';
 import { ColumnPipe } from '../../pipes/column.pipe';
+import { DownloadService } from '@shared/services';
 
 @ApiTags(API_TAGS.TICKETS)
 @Controller(CONTROLLERS.TICKET)
 @ApiBearerAuth()
 export class TicketController {
   constructor(
-    @Inject(SERVICES.AIR_SERVICES) private ariServiceClient: ClientProxy
+    @Inject(SERVICES.AIR_SERVICES) private ariServiceClient: ClientProxy,
+    private readonly downloadService: DownloadService
   ) {}
 
   @Auth(true)
@@ -324,6 +326,14 @@ export class TicketController {
           { listTicketDTO, columnNames }
         )
       );
+      if (listTicketDTO.exportType) {
+        const data = response?.data?.tickets || [];
+        return this.downloadService.downloadFile(
+          listTicketDTO.exportType,
+          data,
+          res
+        );
+      }
       return res.status(response.statusCode).json(response);
     } catch (err) {
       throw new RpcException(err);
