@@ -16,6 +16,11 @@ export enum UserAccountStatus {
   INACTIVE = 'INACTIVE',
 }
 
+export enum PermissionStatus {
+  ACTIVE = 'ACTIVE',
+  INACTIVE = 'INACTIVE',
+}
+
 export enum EJobType {
   FULL_TIME = 'FULL_TIME',
   PART_TIME = 'PART_TIME',
@@ -306,6 +311,10 @@ export enum EIsDeletedStatus {
   HARD_DELETED = 'HARD_DELETED',
 }
 
+export enum CompanyAccountRoleStatusEnum {
+  ACTIVE = 'ACTIVE',
+  INACTIVE = 'INACTIVE',
+}
 export enum EEnquiriesStatus {
   DONE = 'done',
   PENDING = 'pending',

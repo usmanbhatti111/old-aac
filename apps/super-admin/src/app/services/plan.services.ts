@@ -1,5 +1,6 @@
 import { HttpStatus, Injectable } from '@nestjs/common';
 import {
+  EStatusToggle,
   MODEL,
   ResponseMessage,
   errorResponse,
@@ -12,17 +13,16 @@ import {
   PlanDeleteDto,
   PlanFilterDto,
   ProductFeatureDto,
-  ProductModuleDto,
+  ProductPermissionDto,
 } from '@shared/dto';
 import {
-  FeatureRepository,
-  ModuleRepository,
   PermissionRepository,
   Plan,
   PlanProductFeatureRepository,
-  PlanProductModulePermissionRepository,
+  PlanProductPermissionRepository,
   PlanRepository,
   PlanTypeRepository,
+  ProductFeaturesRepository,
   ProductsRepository,
 } from '@shared';
 import mongoose from 'mongoose';
@@ -35,11 +35,10 @@ export class PlanService {
     private planRepository: PlanRepository,
     private planTypeRepository: PlanTypeRepository,
     private productRepository: ProductsRepository,
-    private moduleRepository: ModuleRepository,
-    private featureRepository: FeatureRepository,
+    private featureRepository: ProductFeaturesRepository,
     private permissionRepository: PermissionRepository,
     private productFeatureRepository: PlanProductFeatureRepository,
-    private productModulePermissionRepository: PlanProductModulePermissionRepository
+    private planProductPermissionRepository: PlanProductPermissionRepository
   ) {}
 
   notDeletedFilter = {
@@ -55,6 +54,59 @@ export class PlanService {
             localField: 'planTypeId',
             foreignField: '_id',
             as: 'planType',
+          },
+        },
+        {
+          $lookup: {
+            from: MODEL.PRODUCT,
+            localField: 'planProducts',
+            foreignField: '_id',
+            as: 'planProducts',
+          },
+        },
+        {
+          $lookup: {
+            from: MODEL.PLAN_PRODUCT_PERMISSION,
+            localField: 'planProductPermissions',
+            foreignField: '_id',
+            as: 'planProductPermissions',
+            // pipeline: [
+            //   {
+            //     $lookup: {
+            //       from: MODEL.PERMISSION,
+            //       localField: 'permissions',
+            //       foreignField: '_id',
+            //       as: 'permissions',
+            //     },
+            //   },
+            // ],
+          },
+        },
+        {
+          $lookup: {
+            from: MODEL.PLAN_PRODUCT_FEATURE,
+            localField: 'planProductFeatures',
+            foreignField: '_id',
+            as: 'planProductFeatures',
+          },
+        },
+        {
+          $lookup: {
+            from: MODEL.USER,
+            localField: 'createdBy',
+            foreignField: '_id',
+            as: 'createdBy',
+          },
+        },
+        {
+          $unwind: {
+            path: '$planType',
+            preserveNullAndEmptyArrays: true,
+          },
+        },
+        {
+          $project: {
+            planTypeId: 0,
           },
         },
         {
@@ -105,8 +157,8 @@ export class PlanService {
 
   async getPlans(payload: PlanFilterDto) {
     try {
-      const take = payload.limit || 10;
-      const page = payload.page || 1;
+      const take = payload?.limit || 10;
+      const page = payload?.page || 1;
       const skip = (page - 1) * take;
 
       const { search } = payload;
@@ -115,9 +167,9 @@ export class PlanService {
       delete payload.limit;
       delete payload.search;
       const createdAtFilter = {};
-      if (payload.createdAt) {
-        const startDate = dayjs(payload.createdAt).startOf('day');
-        const endDate = dayjs(payload.createdAt).endOf('day');
+      if (payload?.createdAt) {
+        const startDate = dayjs(payload?.createdAt).startOf('day');
+        const endDate = dayjs(payload?.createdAt).endOf('day');
 
         createdAtFilter['createdAt'] = {
           gte: startDate.toDate(),
@@ -140,22 +192,11 @@ export class PlanService {
         };
       }
 
-      let planProductFilter = {};
-
-      if (payload.productId) {
-        planProductFilter = {
-          $elemMatch: {
-            productId: { $eq: { $toObjectId: payload.productId } },
-          },
-        };
-      }
-
       const filterQuery = {
         ...createdAtFilter,
         ...payload,
         ...this.notDeletedFilter,
         ...searchFilter,
-        ...planProductFilter,
       };
 
       delete payload.productId;
@@ -169,13 +210,32 @@ export class PlanService {
             as: 'planType',
           },
         },
+        {
+          $lookup: {
+            from: MODEL.PRODUCT,
+            localField: 'planProducts',
+            foreignField: '_id',
+            as: 'planProducts',
+          },
+        },
+        {
+          $unwind: {
+            path: '$planType',
+            preserveNullAndEmptyArrays: true,
+          },
+        },
+        {
+          $project: {
+            planTypeId: 0,
+          },
+        },
         { $match: filterQuery },
       ];
 
       const paginateRes = await this.planRepository.paginate({
         filterQuery: {},
         offset: skip,
-        limit: payload.limit,
+        limit: payload?.limit,
         pipelines,
       });
 
@@ -227,16 +287,16 @@ export class PlanService {
         payloadPlan
       );
 
-      if (payload.suite && payload.suite[0]) {
+      if (payload?.suite && payload?.suite[0]) {
         planRes = await this.planRepository.findOneAndUpdate(
           { _id: planId },
           {
             planProducts: [],
-            planProductFeatures: payload.planFeature[0]
-              ? payload.planFeature
+            planProductFeatures: payload?.planFeature[0]
+              ? payload?.planFeature
               : [],
-            planProductModulePermissions: payload.planModule[0]
-              ? payload.planModule
+            planProductPermissions: payload?.planPermission[0]
+              ? payload?.planPermission
               : [],
           }
         );
@@ -245,30 +305,30 @@ export class PlanService {
           await this.savePlan(
             payloadPlan,
             productId,
-            payload.planFeature,
-            payload.planModule,
+            payload?.planFeature,
+            payload?.planPermission,
             planRes
           );
         }
         // if single product then using product id, insert plan data
-      } else if (payload.productId) {
+      } else if (payload?.productId) {
         planRes = await this.planRepository.findOneAndUpdate(
           { _id: planId },
           {
             planProducts: [],
-            planProductFeatures: payload.planFeature[0]
+            planProductFeatures: payload?.planFeature[0]
               ? []
-              : payload.planFeature,
-            planProductModulePermissions: payload.planModule[0]
+              : payload?.planFeature,
+            planProductPermissions: payload?.planPermission[0]
               ? []
-              : payload.planModule,
+              : payload?.planPermission,
           }
         );
         await this.savePlan(
           payloadPlan,
-          payload.productId,
-          payload.planFeature,
-          payload.planModule,
+          payload?.productId,
+          payload?.planFeature,
+          payload?.planPermission,
           planRes
         );
       }
@@ -286,56 +346,49 @@ export class PlanService {
     payload: any = null,
     productId: string,
     featureProducts: ProductFeatureDto[],
-    moduleProducts: ProductModuleDto[],
+    productPermissions: ProductPermissionDto[],
     plan: Plan = null
   ) {
     const featureProduct = featureProducts.find(
       (val) => val.productId == productId
     );
-    const moduleProduct = moduleProducts.find(
+    const productPermission = productPermissions.find(
       (val) => val.productId == productId
     );
 
     const product = await this.productRepository.findOne({
       _id: productId,
+      status: EStatusToggle.ACTIVE,
     });
 
-    await this.moduleRepository.findOne({
-      _id: moduleProduct.moduleId,
-    });
+    const productFeatureResResList = [];
+    for (const feature of featureProduct.features) {
+      await this.featureRepository.findOne({
+        _id: feature?.featureId,
+      });
+      productFeatureResResList.push(
+        await this.productFeatureRepository.upsert(
+          {
+            productId,
+            featureId: feature?.featureId,
+          },
+          { dealsAssociationsDetail: feature?.dealsAssociationsDetail }
+        )
+      ); // inserting plan product features data
+    }
 
-    await this.permissionRepository.findOne({
-      _id: moduleProduct.modulePermissionId,
-    });
+    for (const slug of productPermission.permissionSlugs) {
+      this.permissionRepository.findOne({ slug });
+    }
 
-    await this.featureRepository.findOne({
-      _id: featureProduct.featureId,
-    });
-
-    const productFeatureRes = this.productFeatureRepository.upsert(
-      {
-        productId,
-        featureId: featureProduct.featureId,
-      },
-      { dealsAssociationsDetail: featureProduct?.dealsAssociationsDetail }
-    ); // inserting plan product features data
-
-    const productsModulePermissionRes =
-      await this.productModulePermissionRepository.upsert(
+    const planProductPermission =
+      await this.planProductPermissionRepository.upsert(
+        { productId: productPermission?.productId },
         {
-          productId,
-          moduleId: moduleProduct.moduleId,
-          modulePermissionId: moduleProduct.modulePermissionId,
-        },
-        {
-          productId,
-          moduleId: moduleProduct.moduleId,
-          modulePermissionId: moduleProduct.modulePermissionId,
+          productId: productPermission?.productId,
+          permissionSlugs: productPermission?.permissionSlugs,
         }
       ); // inserting plan product module permission data
-
-    const productFeature = await productFeatureRes;
-    const productsModulePermission = await productsModulePermissionRes;
 
     if (plan)
       plan = await this.planRepository.findOneAndUpdate(
@@ -345,19 +398,19 @@ export class PlanService {
             ? [...plan.planProducts, product]
             : [product],
           planProductFeatures: plan?.planProductFeatures?.[0]
-            ? [...plan.planProductFeatures, productFeature]
-            : [productFeature],
-          planProductModulePermissions: plan?.planProductModulePermissions?.[0]
-            ? [...plan.planProductModulePermissions, productsModulePermission]
-            : [productsModulePermission],
+            ? [...plan.planProductFeatures, ...productFeatureResResList]
+            : productFeatureResResList,
+          planProductPermissions: plan?.planProductPermissions?.[0]
+            ? [...plan.planProductPermissions, planProductPermission]
+            : [planProductPermission],
         }
       );
     else {
       plan = await this.planRepository.create({
         ...payload,
         planProducts: [product],
-        planProductFeatures: [productFeature],
-        planProductModulePermissions: [productsModulePermission],
+        planProductFeatures: productFeatureResResList,
+        planProductPermissions: [planProductPermission],
       });
     }
 
@@ -377,14 +430,14 @@ export class PlanService {
 
       let planRes = null;
 
-      if (payload.suite) {
+      if (payload?.suite) {
         // if suites then looping through the suits consist of multiple product ids and inserting plan data
         for (const productId of payload.suite) {
           planRes = await this.savePlan(
             payloadPlan,
             productId,
-            payload.planFeature,
-            payload.planModule,
+            payload?.planFeature,
+            payload?.planPermission,
             planRes
           );
         }
@@ -392,9 +445,9 @@ export class PlanService {
         // if single product then using product id, insert plan data
         planRes = await this.savePlan(
           payloadPlan,
-          payload.productId,
-          payload.planFeature,
-          payload.planModule,
+          payload?.productId,
+          payload?.planFeature,
+          payload?.planPermission,
           planRes
         );
       }

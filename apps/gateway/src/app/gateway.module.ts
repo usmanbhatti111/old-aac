@@ -10,6 +10,7 @@ import { AuthController } from './controllers/user-account/auth.controller';
 import { RoleController } from './controllers/user-account/role.controller';
 import { HealthController } from './controllers/healthcheck.controller';
 import { PlanController } from './controllers/super-admin/plan.controller';
+import { PermissionController } from './controllers/super-admin/permission.controller';
 import { OrganizationController } from './controllers/organization/organization.controller';
 import { OrganizationCompanyAccountController } from './controllers/organization/organization-company-account.controller';
 import { TaskController } from './controllers/tasks/task.controller';
@@ -121,6 +122,7 @@ import { JobApplicationsController } from './controllers/super-admin/job-applica
     // CallsController,
     DealsController,
     NoteController,
+    PermissionController,
     EnquiriesController,
     TaxCalculationController,
     DealViewsController,

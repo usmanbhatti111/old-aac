@@ -228,7 +228,7 @@ export abstract class AbstractRepository<TDocument extends AbstractSchema> {
     filterQuery: FilterQuery<TDocument>,
     document: Partial<TDocument>
   ) {
-    return this.model.findOneAndUpdate(filterQuery, document, {
+    return await this.model.findOneAndUpdate(filterQuery, document, {
       lean: true,
       upsert: true,
       new: true,

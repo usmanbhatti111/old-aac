@@ -19,6 +19,7 @@ export const API_TAGS = {
   BILLING_INVOICES: 'Billing & Invoices',
   PRODUCTS: 'Products',
   PRODUCT_FEATURES: 'Product Features',
+  PERMISSIONS: 'Permissions',
   AIR_SERVICES_DASHBOARD: 'Air Services Dashboard',
   NEWS_AND_EVENTS: 'News and Events',
   REPORTS_WIDGETS: 'Reports',
