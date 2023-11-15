@@ -10,7 +10,6 @@ def deployImg(){
                   npm i -f
                   git pull origin dev
                   docker compose -f docker-compose2.yml up -d --build common-feature
-                  docker system prune -a -f
                 '
               """
             }
