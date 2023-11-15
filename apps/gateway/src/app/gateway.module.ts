@@ -51,7 +51,7 @@ import { DealPipelineController } from './controllers/sales-settings/deal-pipeli
 import { SalesProductController } from './controllers/sales-settings/sales-product.controller';
 import { AttachmentController } from './controllers/common-features/attachment.controller';
 import { ReportsWidgetController } from './controllers/reports-widgets.controller';
-import { ActivityLogController } from './controllers/common-features/activity-log.controller';
+// import { ActivityLogController } from './controllers/common-features/activity-log.controller';
 import { ArticlesController } from './controllers/knowledge-base/articles.controller';
 // import { CallsController } from './controllers/common-features/calls.controller';
 import { ContactNoteController } from './controllers/common-features/contact/contact-note.controller';
@@ -118,7 +118,7 @@ import { DropdownController } from './controllers/common-features/dropdown.contr
     SalesProductController,
     AttachmentController,
     ReportsWidgetController,
-    ActivityLogController,
+    // ActivityLogController,
     ArticlesController,
     // CallsController,
     DealsController,
