@@ -218,21 +218,16 @@ export class TicketController {
   @Auth(true)
   @Delete(API_ENDPOINTS.AIR_SERVICES.TICKETS.DELETE_CHILD_TICKETS)
   @ApiOkResponse({ type: DeleteTicketResponse })
-  @ApiParam({
-    type: String,
-    name: 'id',
-    description: 'id should be childTicketId',
-  })
   public async deleteChildTicket(
     @Res() res: Response | any,
-    @Param() id: IdDto
+    @Query('ids') ids: string[]
   ): Promise<DeleteTicketResponse> {
     try {
       const response = await firstValueFrom(
         this.ariServiceClient.send(
           RMQ_MESSAGES.AIR_SERVICES.TICKETS.DELETE_CHILD_TICKETS,
           {
-            id,
+            ids,
           }
         )
       );

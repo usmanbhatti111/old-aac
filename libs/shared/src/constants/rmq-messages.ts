@@ -226,6 +226,7 @@ export const RMQ_MESSAGES = {
       SOFTWARE_ALLOCATE_CONTRACT: 'software-allocate-contract',
       SOFTWARE_DEALLOCATE_CONTRACT: 'software-deallocate-contract',
       SOFTWARE_USERS_REMOVE: 'software-users-remove',
+      SOFTWARE_OVERVIEW: 'software-overview',
       GET_SOFTWARE_DEVICES: 'software-devices',
     },
     TASK: {
