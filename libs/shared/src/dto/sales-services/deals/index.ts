@@ -15,3 +15,4 @@ export * from './deal-associations.dto';
 export * from './note.dto';
 export * from './deal-notes.dto';
 export * from './deal-tasks.dto';
+export * from './create-customize-column.dto';

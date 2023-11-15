@@ -367,3 +367,7 @@ export enum EApplicationStatus {
   SHORTLISTED = 'shortlisted',
   INTERVIEWED = 'interviewed',
 }
+
+export enum ECustomizeColumnType {
+  DEALS = 'deals',
+}

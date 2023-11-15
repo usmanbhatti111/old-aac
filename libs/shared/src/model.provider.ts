@@ -123,6 +123,8 @@ import {
   ContactNote,
   ContactNoteSchema,
   ContactSchema,
+  CustomizeColumns,
+  CustomizeColumnsSchema,
 } from './schema/common-feature';
 
 export const DbModels = [
@@ -381,5 +383,10 @@ export const DbModels = [
     name: JobApplications.name,
     schema: JobApplicationsSchema,
     collection: MODEL.JOB_APPLICATIONS,
+  },
+  {
+    name: CustomizeColumns.name,
+    schema: CustomizeColumnsSchema,
+    collection: MODEL.CUSTOMIZE_COLUMNS,
   },
 ];

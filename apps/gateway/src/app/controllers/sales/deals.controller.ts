@@ -27,6 +27,7 @@ import {
   SERVICES,
 } from '@shared/constants';
 import {
+  CreateDealCuztomizeColumnDto,
   CreateDealDto,
   CreateDealResponseDto,
   DealAssociationDto,
@@ -345,6 +346,25 @@ export class DealsController {
     const response = await firstValueFrom(
       this.salesService.send(
         RMQ_MESSAGES.SALES.DEALS.DEAL_ACTION_PREVIEW,
+        payload
+      )
+    );
+
+    return response;
+  }
+
+  @Auth(true)
+  @Post(API_ENDPOINTS.SALES.DEALS.CREATE_OR_UPDATE_CUSTOMIZE_COLUMN)
+  // @ApiCreatedResponse({ type: CreateDealResponseDto })
+  public async createOrUpdateCustomizeColumn(
+    @Req() request: AppRequest,
+    @Body() payload: CreateDealCuztomizeColumnDto
+  ): Promise<any> {
+    payload.userId = request?.user?._id;
+
+    const response = await firstValueFrom(
+      this.salesService.send(
+        RMQ_MESSAGES.SALES.DEALS.CREATE_OR_UPDATE_CUSTOMIZE_COLUMN,
         payload
       )
     );

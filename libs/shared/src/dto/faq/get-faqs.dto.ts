@@ -12,6 +12,8 @@ import {
   EJobCategories,
   EJobStatus,
 } from '../../constants/enums';
+import { toMongoObjectId } from '../../functions';
+import { Transform } from 'class-transformer';
 
 export class GetFaqsDto extends paginationDTO {
   @ApiProperty({
@@ -28,6 +30,7 @@ export class GetFaqsDto extends paginationDTO {
     example: '5f8b14d073bce3c5f404f78c',
   })
   @IsOptional()
+  @Transform(toMongoObjectId)
   createdBy: string;
 
   @ApiProperty({
