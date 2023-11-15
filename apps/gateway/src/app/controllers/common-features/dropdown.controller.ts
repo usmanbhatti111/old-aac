@@ -21,9 +21,10 @@ export class DropdownController {
   ) {}
 
   @Get(API_ENDPOINTS.DROPDOWNS.ORGANIZATION_DROPDOWN)
-  // @Auth(true)
   @ApiCreatedResponse({ type: GetAllDropdownResponseDto })
-  public async getallOrganizations(@Req() request: AppRequest) {
+  public async getallOrganizations(
+    @Req() request: AppRequest
+  ): Promise<GetAllDropdownResponseDto> {
     const { user } = request;
     const response = await firstValueFrom(
       this.commonFeatureClient.send(
@@ -37,9 +38,10 @@ export class DropdownController {
   }
 
   @Get(API_ENDPOINTS.DROPDOWNS.PRODUCTS_DROPDOWN)
-  // @Auth(true)
   @ApiCreatedResponse({ type: GetAllDropdownResponseDto })
-  public async getallProducts(@Req() request: AppRequest) {
+  public async getallProducts(
+    @Req() request: AppRequest
+  ): Promise<GetAllDropdownResponseDto> {
     const { user } = request;
     const response = await firstValueFrom(
       this.commonFeatureClient.send(
