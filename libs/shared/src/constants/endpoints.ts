@@ -392,4 +392,7 @@ export const API_ENDPOINTS = {
       GET_UNAPPROVED_ARTICLES: 'unapproved-articles',
     },
   },
+  CUSTOMIZED_COLUMNS: {
+    GET_CUSTOMIZE_COLUMN: '/',
+  },
 };

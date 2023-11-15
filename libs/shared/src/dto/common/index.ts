@@ -14,3 +14,5 @@ export * from './activity-log.dto';
 export * from './activity-log.dto';
 export * from './media.dto';
 export * from './create-customize-column.dto';
+export * from './get-customize-column.dto';
+export * from './get-customize-column-reponse.dto';

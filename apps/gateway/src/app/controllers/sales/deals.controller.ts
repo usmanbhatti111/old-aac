@@ -7,6 +7,7 @@ import {
   Param,
   Patch,
   Post,
+  Put,
   Query,
   Req,
   Res,
@@ -28,6 +29,7 @@ import {
 } from '@shared/constants';
 import {
   CreateDealCuztomizeColumnDto,
+  CreateDealCuztomizeColumnResponseDto,
   CreateDealDto,
   CreateDealResponseDto,
   DealAssociationDto,
@@ -354,13 +356,17 @@ export class DealsController {
   }
 
   @Auth(true)
-  @Post(API_ENDPOINTS.SALES.DEALS.CREATE_OR_UPDATE_CUSTOMIZE_COLUMN)
-  // @ApiCreatedResponse({ type: CreateDealResponseDto })
+  @Put(API_ENDPOINTS.SALES.DEALS.CREATE_OR_UPDATE_CUSTOMIZE_COLUMN)
+  @ApiOkResponse({ type: CreateDealCuztomizeColumnResponseDto })
   public async createOrUpdateCustomizeColumn(
     @Req() request: AppRequest,
     @Body() payload: CreateDealCuztomizeColumnDto
-  ): Promise<any> {
-    payload.userId = request?.user?._id;
+  ): Promise<CreateDealCuztomizeColumnResponseDto> {
+    if (payload?.userId === request?.user?._id) {
+      payload.userId = request?.user?._id;
+    } else {
+      delete payload?.userId;
+    }
 
     const response = await firstValueFrom(
       this.salesService.send(

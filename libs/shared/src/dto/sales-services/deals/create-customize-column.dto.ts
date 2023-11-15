@@ -1,11 +1,27 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { ECustomizeColumnType } from '@shared/constants';
 import { Transform } from 'class-transformer';
-import { IsArray, IsNotEmpty, IsOptional, IsString } from 'class-validator';
+import {
+  IsArray,
+  IsMongoId,
+  IsNotEmpty,
+  IsOptional,
+  IsString,
+} from 'class-validator';
 import { toMongoObjectId } from 'libs/shared/src/functions';
 import { CustomizeColumnsObject } from '../../common';
 
 export class CreateDealCuztomizeColumnDto {
+  @ApiProperty({
+    type: String,
+    required: false,
+    example: '56cb91bdc3464f14678934ca',
+  })
+  @IsNotEmpty()
+  @IsOptional()
+  @IsMongoId()
+  userId?: string;
+
   @ApiProperty({
     type: String,
     enum: ECustomizeColumnType,
@@ -80,7 +96,4 @@ export class CreateDealCuztomizeColumnDto {
   @IsNotEmpty()
   @IsArray()
   columns: CustomizeColumnsObject[];
-
-  @Transform(toMongoObjectId)
-  userId?: string;
 }

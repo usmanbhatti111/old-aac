@@ -16,3 +16,4 @@ export * from './note.dto';
 export * from './deal-notes.dto';
 export * from './deal-tasks.dto';
 export * from './create-customize-column.dto';
+export * from './create-customize-column-response.dto';

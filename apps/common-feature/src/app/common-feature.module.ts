@@ -13,6 +13,7 @@ import { ActivitylogsController } from './controllers/activitylogs.controller';
 // import { TwilioModule } from 'nestjs-twilio';
 import { ActivityLogController } from './controllers/activity-log.controller';
 import { ActivityLogService } from './services/activityLog.service';
+import { CustomizedColumnsController } from './controllers/customize-columns.controller';
 
 @Module({
   imports: [SharedModule],
@@ -23,6 +24,7 @@ import { ActivityLogService } from './services/activityLog.service';
     ActivitylogsController,
     ActivityLogController,
     // CallsController,
+    CustomizedColumnsController,
   ],
   providers: [
     ContactService,
