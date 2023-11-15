@@ -205,11 +205,6 @@ export const RMQ_MESSAGES = {
       GET_WIDGETS_LIST: 'get-widgets-list',
       GET_WIDGETS: 'get-widgets',
     },
-    WIDGETS: {
-      CREATE_WIDGETS: 'create-widgets',
-      GET_WIDGETS_LIST: 'get-widgets-list',
-      GET_WIDGETS: 'get-widgets',
-    },
     TICKETS: {
       CREATE_TICKET: 'create-ticket',
       GET_TICKET_DETAILS: 'get-ticket-details',
