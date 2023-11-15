@@ -4,7 +4,6 @@ import { ActivitylogsRepository } from '@shared';
 import { ResponseMessage, successResponse } from '@shared/constants';
 import { ActivityLogParams, GetallActivitylogDTO } from '@shared/dto';
 import dayjs from 'dayjs';
-import { Types } from 'mongoose';
 
 @Injectable()
 export class ActivitylogsService {
@@ -55,34 +54,32 @@ export class ActivitylogsService {
       const offset = (page - 1) * limit;
       let filterQuery = {};
 
-      if (startDate || endDate) {
-        if (startDate) {
-          const filterStartDate = dayjs(startDate).startOf('day').toDate();
-          filterQuery['createdAt'] = {
-            ...filterQuery['createdAt'],
-            $gte: filterStartDate,
-          };
-        }
+      if (startDate) {
+        const filterStartDate = dayjs(startDate).startOf('day').toDate();
+        filterQuery['createdAt'] = {
+          ...filterQuery['createdAt'],
+          $gte: filterStartDate,
+        };
+      }
 
-        if (endDate) {
-          const filterEndDate = dayjs(endDate).endOf('day').toDate();
-          filterQuery['createdAt'] = {
-            ...filterQuery['createdAt'],
-            $lte: filterEndDate,
-          };
-        }
+      if (endDate) {
+        const filterEndDate = dayjs(endDate).endOf('day').toDate();
+        filterQuery['createdAt'] = {
+          ...filterQuery['createdAt'],
+          $lte: filterEndDate,
+        };
       }
 
       if (organizationId) {
-        filterQuery['organizationId'] = new Types.ObjectId(organizationId); // from Auth for Org Admin (organization filter)
+        filterQuery['organizationId'] = organizationId; // from Auth for Org Admin (organization filter)
       }
 
       if (orgId) {
-        filterQuery['organizationId'] = new Types.ObjectId(orgId); // from payload for system admin (organization filter)
+        filterQuery['organizationId'] = orgId; // from payload for system admin (organization filter)
       }
 
       if (performedBy) {
-        filterQuery['performedBy'] = new Types.ObjectId(performedBy);
+        filterQuery['performedBy'] = performedBy;
       }
 
       if (activityType) {

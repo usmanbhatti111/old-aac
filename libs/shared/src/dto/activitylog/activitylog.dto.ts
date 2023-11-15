@@ -170,6 +170,7 @@ export class GetallActivitylogDTO extends PaginationDto {
   @IsOptional()
   endDate?: string;
 
+  @Transform(toMongoObjectId)
   organizationId?: string;
 }
 
