@@ -13,6 +13,8 @@ import { ApiBearerAuth, ApiCreatedResponse, ApiTags } from '@nestjs/swagger';
 import {
   API_TAGS,
   CONTROLLERS,
+  EActivityType,
+  EActivitylogModule,
   RMQ_MESSAGES,
   SERVICES,
 } from '@shared/constants';
@@ -20,6 +22,7 @@ import { firstValueFrom } from 'rxjs';
 import { Auth } from '../../decorators/auth.decorator';
 import { AppRequest } from '../../shared/interface/request.interface';
 import {
+  ActivityLogParams,
   AssignOrgPlanOrgAdminDto,
   AssignOrgPlanResponseDto,
   GetAllAssignPlanResponseDto,
@@ -33,7 +36,8 @@ import {
 @ApiBearerAuth()
 export class SubscriptionController {
   constructor(
-    @Inject(SERVICES.ORG_ADMIN) private orgAdminServiceClient: ClientProxy
+    @Inject(SERVICES.ORG_ADMIN) private orgAdminServiceClient: ClientProxy,
+    @Inject(SERVICES.COMMON_FEATURE) private commonFeatureClient: ClientProxy
   ) {}
 
   @Get()
@@ -67,6 +71,24 @@ export class SubscriptionController {
         { ...payload, organizationId: organizationId, assignedBy: user._id }
       )
     );
+
+    //ActivityLog
+    if (response?.data) {
+      const params: ActivityLogParams = {
+        organizationId: organizationId,
+        performedBy: user?._id, // userId
+        activityType: EActivityType.CREATED, // UPDATED
+        module: EActivitylogModule.ORGANIZATION_PLAN, // module
+        moduleId: response?.data?._id, // module._id
+        moduleName: response?.data?.name || 'Subscription', //module.name
+      };
+      firstValueFrom(
+        this.commonFeatureClient.emit(RMQ_MESSAGES.ACTIVITY_LOG.ACTIVITY_LOG, {
+          ...params,
+        })
+      );
+      response.data.activity = true;
+    }
     return response;
   }
 
@@ -91,6 +113,24 @@ export class SubscriptionController {
         }
       )
     );
+
+    //ActivityLog
+    if (response?.data) {
+      const params: ActivityLogParams = {
+        organizationId: organizationId,
+        performedBy: user?._id, // userId
+        activityType: EActivityType.UPDATED, // UPDATED
+        module: EActivitylogModule.ORGANIZATION_PLAN, // module
+        moduleId: response?.data?._id, // module._id
+        moduleName: response?.data?.name || 'Subscription', //module.name
+      };
+      firstValueFrom(
+        this.commonFeatureClient.emit(RMQ_MESSAGES.ACTIVITY_LOG.ACTIVITY_LOG, {
+          ...params,
+        })
+      );
+      response.data.activity = true;
+    }
     return response;
   }
 }

@@ -22,3 +22,4 @@ export * from './sales-settings';
 export * from './activity-log.schema';
 export * from './sales-services';
 export * from './deals';
+export * from './company-account-role.schema';

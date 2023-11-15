@@ -75,7 +75,7 @@ export class TicketController {
   @MessagePattern(RMQ_MESSAGES.AIR_SERVICES.TICKETS.GET_TICKET_LIST)
   public async getTicketList(payload: {
     listTicketDTO: ListTicketDTO;
-    columnNames: string[];
+    columnNames: object;
   }) {
     return this.ticketService.getTicketList(payload);
   }

@@ -741,7 +741,7 @@ export class DealsService {
 
   async populateAssociations(payload: IdDto) {
     try {
-      const filter = { _id: payload.id, isDeleted: false };
+      const filter = { _id: payload.id, isDeleted: EIsDeletedStatus.ACTIVE };
       const deal = await this.dealsRepository.findOne(filter);
       const res = {};
       res['products'] = await this.salesProductRepository.find({
@@ -763,6 +763,50 @@ export class DealsService {
         _id: { $in: deal.ticketsIds },
       });
       return successResponse(HttpStatus.OK, ResponseMessage.SUCCESS, res);
+    } catch (error) {
+      throw new RpcException(error);
+    }
+  }
+
+  async dealPreview(payload: IdDto) {
+    try {
+      const { id } = payload;
+
+      const filter = { _id: id, isDeleted: EIsDeletedStatus.ACTIVE };
+
+      const res = await this.dealsRepository.findOne(filter);
+
+      res['contacts'] = await this.contactRepository.find({
+        _id: { $in: res.contactsIds },
+      });
+
+      res['companies'] = await this.organizationRepository.find({
+        _id: { $in: res.companiesIds },
+      });
+
+      res['tickets'] = await this.ticketRepository.find({
+        _id: { $in: res.ticketsIds },
+      });
+
+      res['products'] = await this.salesProductRepository.find({
+        _id: { $in: res.productsIds },
+      });
+
+      // res['quotes'] = await this..find({
+      // _id: { $in: res.quotesIds },
+      // });
+
+      res['attachments'] = await this.attachmentRepository.find({
+        _id: { $in: res.attachmentsIds },
+      });
+
+      const response = successResponse(
+        HttpStatus.OK,
+        ResponseMessage.SUCCESS,
+        res
+      );
+
+      return response;
     } catch (error) {
       throw new RpcException(error);
     }

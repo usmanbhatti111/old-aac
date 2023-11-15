@@ -1,37 +1,44 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsOptional } from 'class-validator';
-import { paginationDTO } from '../pagination/pagination.dto';
 
-// userType organizationName product createAt
-export class AdminUserGetResponseDto extends paginationDTO {
-  @ApiProperty({
-    type: String,
-    required: false,
-    example: '6524d3ae6f15299414a47bea',
-  })
-  @IsOptional()
-  products: string;
+export class GetAdminUserListResponseDto {
+  @ApiProperty({ example: 200 })
+  statusCode: number;
+
+  @ApiProperty({ example: 'Data Fetched Successfully' })
+  message: string;
 
   @ApiProperty({
-    type: String,
-    required: false,
-    example: '',
+    example: [
+      {
+        _id: '6544c532ec1548e3f94c9f4d',
+        firstName: 'BP  INC',
+        middleName: 'ESTATES',
+        lastName: 'INC',
+        role: 'ORG_ADMIN',
+        status: 'INACTIVE',
+        products: ['6544c532ec1548e3f94c9f4d', '6544c532ec1548e3f94c9f4d'],
+        organization: [
+          {
+            _id: '6544c532ec1548e3f94c9f4b',
+            crn: 'OE017951',
+            name: 'BP ESTATES INC',
+            address: {
+              street:
+                'Ave. Aquilino De La Guardia 50th Street, Plaza Banco General Building, 24th Floor',
+              city: 'Panama',
+              state: 'Panama',
+            },
+            isDeleted: false,
+            createdAt: '2023-11-03T10:02:26.860Z',
+            updatedAt: '2023-11-03T10:02:26.860Z',
+          },
+        ],
+        createdAt: '2023-11-03T10:02:26.870Z',
+      },
+    ],
   })
-  @IsOptional()
-  organization: string;
+  data: {};
 
-  @ApiProperty({
-    type: String,
-    required: false,
-    example: '',
-  })
-  @IsOptional()
-  role: string;
-
-  @ApiProperty({
-    example: '',
-    required: false,
-  })
-  @IsOptional()
-  search: string;
+  @ApiProperty({ example: null })
+  errors: [];
 }

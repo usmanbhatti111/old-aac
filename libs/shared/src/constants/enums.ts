@@ -16,6 +16,11 @@ export enum UserAccountStatus {
   INACTIVE = 'INACTIVE',
 }
 
+export enum PermissionStatus {
+  ACTIVE = 'ACTIVE',
+  INACTIVE = 'INACTIVE',
+}
+
 export enum EJobType {
   FULL_TIME = 'FULL_TIME',
   PART_TIME = 'PART_TIME',
@@ -319,4 +324,76 @@ export enum EIsDeletedStatus {
   ACTIVE = 'ACTIVE',
   SOFT_DELETED = 'SOFT_DELETED',
   HARD_DELETED = 'HARD_DELETED',
+}
+
+export enum CompanyAccountRoleStatusEnum {
+  ACTIVE = 'ACTIVE',
+  INACTIVE = 'INACTIVE',
+}
+export enum EEnquiriesStatus {
+  DONE = 'done',
+  PENDING = 'pending',
+}
+
+export enum ETaxApplyOn {
+  INVOICE = 'invoice',
+  QUOTES = 'quotes',
+  SUBSCRIPTIONS = 'subscriptions',
+  PRODUCTS = 'products',
+}
+
+export enum EDealViewSharedWith {
+  PRIVATE = 'PRIVATE',
+  MY_TEAM = 'MY_TEAM',
+  EVERYONE = 'EVERYONE',
+}
+
+export enum EActivityType {
+  CREATED = 'CREATED',
+  RETRIEVE = 'RETRIEVE',
+  UPDATED = 'UPDATED',
+  DELETED = 'DELETED',
+  UPLOADED = 'UPLOADED',
+  ASSOCIATED = 'ASSOCIATED',
+}
+
+export enum EActivitylogModule {
+  USERS = 'USERS',
+  TICKETS = 'TICKETS',
+  PRODUCTS = 'PRODUCTS',
+  ORGANIZATION = 'ORGANIZATION',
+  PLANS = 'PLANS',
+  PLAN_TYPES = 'PLAN_TYPES',
+  ORGANIZATION_PLAN = 'ORGANIZATION_PLAN',
+  INVOICES = 'INVOICES',
+  INVENTORIES = 'INVENTORIES',
+  FILES = 'FILES',
+  FEATURES = 'FEATURES',
+  FAQS = 'FAQS',
+  EXPENSES = 'EXPENSES',
+  JOBS = 'JOBS',
+  PERMISSIONS = 'PERMISSIONS',
+  ROLES_RIGHTS = 'ROLES_RIGHTS',
+  PROPERTIES = 'PROPERTIES',
+  OPERATIONS = 'OPERATIONS',
+  DEALS = 'DEALS',
+  DEAL_PIPELINES = 'DEAL_PIPELINES',
+  FORECAST = 'FORECAST',
+  QUOTES = 'QUOTES',
+  ATTACHMENTS = 'ATTACHMENTS',
+  NOTES = 'NOTES',
+  TASKS = 'TASKS',
+  CONTACTS = 'CONTACTS',
+  CONTRACTS = 'CONTRACTS',
+  CALLS = 'CALLS',
+  MEETINGS = 'MEETINGS',
+  EMAILS = 'EMAILS',
+  OTHERS = 'OTHERS',
+}
+
+export enum EApplicationStatus {
+  PENDING = 'pending',
+  REJECTED = 'rejected',
+  SHORTLISTED = 'shortlisted',
+  INTERVIEWED = 'interviewed',
 }

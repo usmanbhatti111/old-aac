@@ -7,3 +7,5 @@ export * from './update-profile.dto';
 export * from './edit-user-byadmin.dto';
 export * from './get-admin-user-response.dto';
 export * from './ig-verification';
+export * from './add-admin-response.dto';
+export * from './profile-response.dto';
