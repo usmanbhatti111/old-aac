@@ -403,4 +403,8 @@ export const API_ENDPOINTS = {
       GET_UNAPPROVED_ARTICLES: 'unapproved-articles',
     },
   },
+  DROPDOWNS: {
+    ORGANIZATION_DROPDOWN: 'organizations',
+    PRODUCTS_DROPDOWN: 'products',
+  },
 };

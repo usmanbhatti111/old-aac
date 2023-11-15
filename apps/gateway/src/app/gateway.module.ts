@@ -64,6 +64,7 @@ import { TaxCalculationController } from './controllers/super-admin/tax-calculat
 import { DealViewsController } from './controllers/sales/deal-views.controller';
 import { ActivitylogsController } from './controllers/common-features/activitylogs.controller';
 import { JobApplicationsController } from './controllers/super-admin/job-applications.controller';
+import { DropdownController } from './controllers/common-features/dropdown.controller';
 
 @Module({
   imports: [
@@ -128,6 +129,7 @@ import { JobApplicationsController } from './controllers/super-admin/job-applica
     DealViewsController,
     ActivitylogsController,
     JobApplicationsController,
+    DropdownController,
   ],
   providers: [
     // Exceptions Filter

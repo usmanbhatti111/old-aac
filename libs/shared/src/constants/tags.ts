@@ -49,4 +49,5 @@ export const API_TAGS = {
   DEAL_VIEWS: 'Deal Views',
   ACTIVITY_LOG: 'Activity Log',
   JOB_APPLICATIONS: 'Job Applications',
+  DROPDOWNS: 'Dropdowns',
 };

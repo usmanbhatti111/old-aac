@@ -429,4 +429,8 @@ export const RMQ_MESSAGES = {
     GET_ALL_ACTIVITIES: 'get-all-activities',
     ACTIVITY_LOG: 'activity-log',
   },
+  DROPDOWNS: {
+    ORGANIZATIONS_DROPDOWN: 'organization-dropdown',
+    PRODUCTS_DROPDOWN: 'products-dropdown',
+  },
 };
