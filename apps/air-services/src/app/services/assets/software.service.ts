@@ -390,7 +390,7 @@ export class SoftwareService {
 
       const response = successResponse(
         HttpStatus.OK,
-        `User Remove Successfully`,
+        `Software recieved`,
         overview
       );
 
