@@ -5,6 +5,9 @@ import {
   Inject,
   Param,
   Post,
+  Patch,
+  Res,
+  Delete,
   Query,
 } from '@nestjs/common';
 import { ClientProxy, RpcException } from '@nestjs/microservices';
@@ -31,6 +34,8 @@ import {
   CreateAnnouncementDTO,
   FilterTicketDto,
   AnnoucementDashboardResponseDTO,
+  DeleteDashboardDto,
+  EditDashboardtDTO,
 } from '@shared/dto';
 import { Auth } from '../decorators/auth.decorator';
 @ApiBearerAuth()
@@ -60,7 +65,7 @@ export class AirServicesDashboardController {
   @ApiOkResponse({ type: EmailedDashboardResponseDTO })
   @Post(API_ENDPOINTS.AIR_SERVICES.DASHBOARD.EMAILED_DASHBOARD)
   public async sendDashboardUrl(
-    @Query() dashboardEmailDTO: EmailedDashboardDTO
+    @Body() dashboardEmailDTO: EmailedDashboardDTO
   ): Promise<EmailedDashboardResponseDTO> {
     try {
       const dashboard = await firstValueFrom(
@@ -144,6 +149,44 @@ export class AirServicesDashboardController {
       return dashboardAnnouncement;
     } catch (err) {
       throw new RpcException(err);
+    }
+  }
+  @Auth(true)
+  @Delete(API_ENDPOINTS.AIR_SERVICES.DASHBOARD.DELETE_DASHBOARD)
+  public async deleteDashboard(@Param() payload: DeleteDashboardDto) {
+    try {
+      const response = await firstValueFrom(
+        this.ariServiceClient.send(
+          RMQ_MESSAGES.AIR_SERVICES.DASHBOARD.DELETE_DASHBOARD,
+          { ...payload }
+        )
+      );
+
+      return response;
+    } catch (error) {
+      throw new RpcException(error);
+    }
+  }
+  @Auth(true)
+  @Patch(API_ENDPOINTS.AIR_SERVICES.DASHBOARD.UPDATE_DASHBOARD)
+  async editDashboard(
+    @Param() { id }: IdDto,
+    @Body() updateDataDto: EditDashboardtDTO,
+    @Res() res: Response | any
+  ) {
+    try {
+      const response = await firstValueFrom(
+        this.ariServiceClient.send(
+          RMQ_MESSAGES.AIR_SERVICES.DASHBOARD.UPDATE_DASHBOARD,
+          {
+            id,
+            updateDataDto,
+          }
+        )
+      );
+      return res.status(response.statusCode).json(response);
+    } catch (error) {
+      return res.status(error.statusCode).json(error);
     }
   }
 }

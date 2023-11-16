@@ -86,3 +86,11 @@ export class AnnoucementDashboardResponseDTO {
   @ApiProperty({ example: null })
   errors: [];
 }
+export class DeleteDashboardDto {
+  @ApiProperty({
+    example: '651e6368a3a6baf2f193efb0',
+  })
+  @IsMongoId()
+  @IsNotEmpty()
+  id: string;
+}
