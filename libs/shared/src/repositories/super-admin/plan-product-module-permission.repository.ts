@@ -1,18 +1,16 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { InjectModel, InjectConnection } from '@nestjs/mongoose';
 import { Model, Connection } from 'mongoose';
-import { PlanProductModulePermission } from '../../schema';
+import { PlanProductPermission } from '../../schema';
 import { AbstractRepository } from '../../schema/abstract-repo/abstract.repository';
 
 @Injectable()
-export class PlanProductModulePermissionRepository extends AbstractRepository<PlanProductModulePermission> {
-  protected readonly logger = new Logger(
-    PlanProductModulePermissionRepository.name
-  );
+export class PlanProductPermissionRepository extends AbstractRepository<PlanProductPermission> {
+  protected readonly logger = new Logger(PlanProductPermissionRepository.name);
 
   constructor(
-    @InjectModel(PlanProductModulePermission.name)
-    productModulePermissionModel: Model<PlanProductModulePermission>,
+    @InjectModel(PlanProductPermission.name)
+    productModulePermissionModel: Model<PlanProductPermission>,
     @InjectConnection() connection: Connection
   ) {
     super(productModulePermissionModel, connection);

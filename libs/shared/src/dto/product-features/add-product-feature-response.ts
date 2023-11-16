@@ -8,17 +8,28 @@ export class AddProductFeatureResponseDto {
   message: string;
 
   @ApiProperty({
-    example: {
-      _id: '6531f2b367cff9f7975ee5d5',
-      productId: '6531f2a267cff9f7975ee5d3',
-      name: 'Create Deals 2',
-      description: 'Create Deals Description',
-      status: 'inactive',
-      createdBy: '56cb91bdc3464f14678934ca',
-      isDeleted: false,
-      createdAt: '2023-10-20T03:23:31.249Z',
-      updatedAt: '2023-10-20T03:23:31.249Z',
-    },
+    example: [
+      {
+        productId: '56cb91bdc3464f14678934ca',
+        name: 'Create Deals',
+        description: 'Create Deals Description',
+        status: 'inactive',
+        createdBy: '65488ce0ff900ee743130657',
+        isDeleted: false,
+        createdAt: '2023-11-10T04:12:02.305Z',
+        updatedAt: '2023-11-10T04:12:02.305Z',
+      },
+      {
+        productId: '56cb91bdc3464f14678934ca',
+        name: 'Create Deals',
+        description: 'Create Deals Description',
+        status: 'inactive',
+        createdBy: '65488ce0ff900ee743130657',
+        isDeleted: false,
+        createdAt: '2023-11-10T04:12:02.306Z',
+        updatedAt: '2023-11-10T04:12:02.306Z',
+      },
+    ],
   })
   data: {};
 

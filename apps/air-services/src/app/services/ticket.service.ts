@@ -325,13 +325,15 @@ export class TicketService {
 
   async getTicketList(payload: {
     listTicketDTO: ListTicketDTO;
-    columnNames: string[];
+    columnNames: object;
   }) {
     try {
       const { limit, page, search } = payload.listTicketDTO;
       const offset = limit * (page - 1);
-      const pipeline: any = [{ $project: payload.columnNames }];
-
+      const pipeline: any = [];
+      if (typeof payload.columnNames === 'object') {
+        pipeline.push({ $project: payload.columnNames });
+      }
       if (search) {
         pipeline.push({
           $match: {

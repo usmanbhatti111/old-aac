@@ -1,6 +1,13 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsMongoId, IsNotEmpty, IsOptional, IsString } from 'class-validator';
+import {
+  IsEnum,
+  IsMongoId,
+  IsNotEmpty,
+  IsOptional,
+  IsString,
+} from 'class-validator';
 import { PaginationDto } from '../../common';
+import { EExportFile } from '@shared/constants';
 
 export class GetTicketByIdDto {
   @ApiProperty({
@@ -31,4 +38,13 @@ export class ListTicketDTO extends PaginationDto {
   })
   @IsOptional()
   search: string;
+
+  @ApiProperty({
+    type: String,
+    required: false,
+    enum: EExportFile,
+  })
+  @IsEnum(EExportFile)
+  @IsOptional()
+  exportType: string;
 }

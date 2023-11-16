@@ -116,6 +116,28 @@ export const API_ENDPOINTS = {
       DELETE_QUICK_LINKS: '/:ids',
       EDIT_QUICK_LINK: '/:id',
     },
+
+    ENQUIRIES: {
+      ADD_ENQUIRY: '/',
+      GET_ENQUIRIES: '/',
+      GET_ENQUIRY: '/:id',
+      UPDATE_ENQUIRY: '/:id',
+      DELETE_ENQUIRY: ':ids',
+    },
+    TAX_CALCULATION: {
+      ADD_TAX: '/',
+      GET_TAXS: '/',
+      UPDATE_TAX: '/:id',
+      DELETE_TAXS: '/:ids',
+    },
+
+    JOB_APPLICATIONS: {
+      CREATE_JOB_APPLICATION: '/',
+      GET_JOB_APPLICATIONS: '/',
+      GET_UNIQUE_CANDIDATE: '/get-unique-candidate',
+      EDIT_JOB_APPLICATION: '/:id',
+    },
+
     ADD_USER: 'add-user',
     USER_LIST: 'user-list',
     USER_PROFILE: 'user-profile/:userId',
@@ -152,7 +174,12 @@ export const API_ENDPOINTS = {
     GET_PRODUCTS: '/',
     EDIT_PRODUCT: '/:id',
   },
-
+  PERMISSION: {
+    ADD_ALL_PERMISSIONS: '/',
+    ADD_COMPANY_ACCOUNT_ROLE: '/role',
+    UPDATE_COMPANY_ACCOUNT_ROLE: '/role/:id',
+    GET_COMPNAY_ACCOUNT_ROLES: '/role',
+  },
   AIR_SERVICES: {
     TICKETS: {
       ticket: 'ticket',
@@ -351,6 +378,11 @@ export const API_ENDPOINTS = {
       DELETE_TASK: 'delete-task',
       ADD_NOTE: 'add-note',
       DELETE_NOTE: 'delete-note',
+      DEAL_ACTION_PREVIEW: 'deal-action-preview/:id',
+    },
+    DEAL_VIEWS: {
+      CREATE_DEAL_VIEW: '/',
+      GET_DEAL_VIEW: '/',
       GET_NOTES: 'get-notes/:id',
       GET_TASKS: 'get-tasks/:id',
     },
@@ -375,5 +407,9 @@ export const API_ENDPOINTS = {
     ARTICLES: {
       GET_UNAPPROVED_ARTICLES: 'unapproved-articles',
     },
+  },
+  DROPDOWNS: {
+    ORGANIZATION_DROPDOWN: 'organizations',
+    PRODUCTS_DROPDOWN: 'products',
   },
 };

@@ -4,6 +4,12 @@ export const RMQ_MESSAGES = {
     GET_EXAMPLES: 'get-examples',
     EDIT_EXAMPLE: 'edit-example',
   },
+  PERMISSION: {
+    ADD_ALL_PERMISSIONS: 'add-all-permissions',
+    ADD_COMPNAY_ACCOUNT_ROLE: 'add-company-account-role',
+    GET_COMPNAY_ACCOUNT_ROLES: 'get-company-account-roles',
+    EDIT_COMPANY_ACCOUNT_ROLE: 'edit-company-account-role',
+  },
   AUTHENTICATION: {
     FORCE_CONFIRM: 'force-confirm-user',
     SIGNUP: 'auth-signup',
@@ -75,6 +81,27 @@ export const RMQ_MESSAGES = {
       DELETE_QUICK_LINKS: 'delete-quick-links',
       EDIT_QUICK_LINK: 'edit-quick-link',
       GET_QUICK_LINKS_GROUP_BY_PRODUCT: 'get-quick-links-group-by-product',
+    },
+
+    ENQUIRIES: {
+      ADD_ENQUIRY: 'add-enquiry',
+      GET_ENQUIRIES: 'get-enquiries',
+      GET_ENQUIRY: 'get-enquiry',
+      UPDATE_ENQUIRY: 'update-enquiry',
+      DELETE_ENQUIRIES: 'delete-enquiries',
+    },
+    TAX_CALCULATIONS: {
+      ADD_TAX: 'add-tax',
+      GET_TAXS: 'get-taxs',
+      UPDATE_TAX: 'update-tax',
+      DELETE_TAXS: 'delete-taxs',
+    },
+
+    JOB_APPLICATIONS: {
+      CREATE_JOB_APPLICATION: 'create-job-application',
+      GET_UNIQUE_CANDIDATE: 'get-unique-candidate',
+      GET_JOB_APPLICATIONS: 'get-job-applications',
+      EDIT_JOB_APPLICATION: 'edit-job-application',
     },
 
     ADD_USER: 'add-user',
@@ -380,6 +407,11 @@ export const RMQ_MESSAGES = {
       GET_ASSOCIATIONS: 'get-associations',
       CREATE_ASSOCIATION: 'create-association',
       DELETE_ASSOCIATION: 'delete-association',
+      DEAL_ACTION_PREVIEW: 'deal-action-preview',
+    },
+    DEAL_VIEWS: {
+      CREATE_DEAL_VIEW: 'create-deal-view',
+      GET_DEAL_VIEW: 'get-deal-view',
       ADD_TASK: 'add-task',
       DELETE_TASK: 'delete-task',
       ADD_NOTE: 'add-note',
@@ -395,5 +427,14 @@ export const RMQ_MESSAGES = {
     GET_DEAL_NOTE: 'get-deal-note',
     UPDATE_DEAL_NOTE: 'update-deal-note',
     DELETE_DEAL_NOTE: 'delete-deal-note',
+  },
+
+  ACTIVITY_LOG: {
+    GET_ALL_ACTIVITIES: 'get-all-activities',
+    ACTIVITY_LOG: 'activity-log',
+  },
+  DROPDOWNS: {
+    ORGANIZATIONS_DROPDOWN: 'organization-dropdown',
+    PRODUCTS_DROPDOWN: 'products-dropdown',
   },
 };

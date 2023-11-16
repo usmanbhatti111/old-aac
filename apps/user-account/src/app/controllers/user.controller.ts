@@ -45,7 +45,7 @@ export class UserController {
     return this.userService.updateProfile(payload);
   }
 
-  @MessagePattern(RMQ_MESSAGES.USER.UPDATE_PROFILE)
+  @MessagePattern(RMQ_MESSAGES.USER.EDIT_USER)
   editUser(@Payload() payload: EditUserByAdminDto) {
     return this.userService.editUserByAdmin(payload);
   }

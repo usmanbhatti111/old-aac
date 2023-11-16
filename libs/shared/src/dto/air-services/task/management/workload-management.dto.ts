@@ -47,11 +47,3 @@ export class WorkLoadFilterDto {
   @IsOptional()
   manage: string;
 }
-
-export class UserTasksDto {
-  @ApiProperty({
-    type: [String],
-    required: false,
-  })
-  userIds: string[];
-}

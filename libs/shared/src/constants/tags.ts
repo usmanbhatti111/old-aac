@@ -19,6 +19,7 @@ export const API_TAGS = {
   BILLING_INVOICES: 'Billing & Invoices',
   PRODUCTS: 'Products',
   PRODUCT_FEATURES: 'Product Features',
+  PERMISSIONS: 'Permissions',
   AIR_SERVICES_DASHBOARD: 'Air Services Dashboard',
   NEWS_AND_EVENTS: 'News and Events',
   REPORTS_WIDGETS: 'Reports',
@@ -43,4 +44,10 @@ export const API_TAGS = {
   CALLS: 'Calls',
   DEALS: 'Deals',
   DEAL_NOTE: 'Deal notes',
+  ENQUIRIES: 'Enquiries',
+  TAX_CALCULATION: 'Tax Calculation',
+  DEAL_VIEWS: 'Deal Views',
+  ACTIVITY_LOG: 'Activity Log',
+  JOB_APPLICATIONS: 'Job Applications',
+  DROPDOWNS: 'Dropdowns',
 };

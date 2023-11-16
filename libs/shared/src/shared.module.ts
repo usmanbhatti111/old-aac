@@ -27,7 +27,6 @@ import {
   PermissionRepository,
   PlanProductFeatureRepository,
   PurchaseApprovalRepository,
-  PlanProductModulePermissionRepository,
   PlanRepository,
   PlanTypeRepository,
   ProductCategoriesRepository,
@@ -58,6 +57,13 @@ import {
   AnnoucementRepository,
   NoteRepository,
   EmailedDashboardsRepository,
+  CompanyAccountRoleRepository,
+  PlanProductPermissionRepository,
+  EnquiriesRepository,
+  DealViewsRepository,
+  ActivitylogsRepository,
+  TaxCalculationRepository,
+  JobApplicationsRepository,
 } from '../src/repositories/index';
 import { MongooseConfig } from './config/mongo.config';
 import { SharedService } from './shared.service';
@@ -80,7 +86,7 @@ import { DownloadService, EmailService, S3Service } from './services';
     ProductsRepository,
     PlanRepository,
     PlanProductFeatureRepository,
-    PlanProductModulePermissionRepository,
+    PlanProductPermissionRepository,
     NewsAndEventRepository,
     InvoiceRepository,
     OrganizationPlanRepository,
@@ -131,6 +137,11 @@ import { DownloadService, EmailService, S3Service } from './services';
     DealsRepository,
     AnnoucementRepository,
     NoteRepository,
+    EnquiriesRepository,
+    TaxCalculationRepository,
+    DealViewsRepository,
+    ActivitylogsRepository,
+    JobApplicationsRepository,
     {
       provide: 'S3',
       useFactory: (config: ConfigService) =>
@@ -148,6 +159,7 @@ import { DownloadService, EmailService, S3Service } from './services';
     ActivityLogRepository,
     ArticlesRepository,
     EmailService,
+    CompanyAccountRoleRepository,
   ],
   exports: [
     SharedService,
@@ -159,7 +171,7 @@ import { DownloadService, EmailService, S3Service } from './services';
     ProductsRepository,
     PlanRepository,
     PlanProductFeatureRepository,
-    PlanProductModulePermissionRepository,
+    PlanProductPermissionRepository,
     NewsAndEventRepository,
     InvoiceRepository,
     OrganizationPlanRepository,
@@ -214,8 +226,14 @@ import { DownloadService, EmailService, S3Service } from './services';
     SalesProductRepository,
     DealsRepository,
     NoteRepository,
+    ActivitylogsRepository,
     PurchaseApprovalRepository,
     EmailService,
+    CompanyAccountRoleRepository,
+    EnquiriesRepository,
+    TaxCalculationRepository,
+    DealViewsRepository,
+    JobApplicationsRepository,
   ],
 })
 export class SharedModule {}

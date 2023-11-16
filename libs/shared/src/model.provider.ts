@@ -41,7 +41,6 @@ import {
   Plan,
   PlanProductFeature,
   PlanProductFeatureSchema,
-  PlanProductModulePermission,
   PlanSchema,
   PlanType,
   PlanTypeSchema,
@@ -49,7 +48,6 @@ import {
   ProductCategoriesSchema,
   ProductFeatures,
   ProductFeaturesSchema,
-  ProductModulePermissionSchema,
   Products,
   ProductsSchema,
   Purchase,
@@ -104,6 +102,18 @@ import {
   PurchaseApprovalSchema,
   EmailedDashboards,
   EmailedDashboardsSchema,
+  PlanProductPermissionSchema,
+  PlanProductPermission,
+  TaxCalculation,
+  TaxCalculationSchema,
+  DealViews,
+  DealViewsSchema,
+  CompanyAccountRole,
+  CompanyAccountRoleSchema,
+  Enquiries,
+  EnquiriesSchema,
+  JobApplications,
+  JobApplicationsSchema,
 } from './schema';
 import {
   ReportsWidget,
@@ -111,6 +121,8 @@ import {
 } from './schema/air-services/reports-widgets.schema';
 
 import {
+  Activitylogs,
+  ActivitylogsSchema,
   Contact,
   ContactCall,
   ContactCallSchema,
@@ -153,10 +165,6 @@ export const DbModels = [
   {
     name: PlanProductFeature.name,
     schema: PlanProductFeatureSchema,
-  },
-  {
-    name: PlanProductModulePermission.name,
-    schema: ProductModulePermissionSchema,
   },
   {
     name: PlanType.name,
@@ -364,7 +372,39 @@ export const DbModels = [
     schema: AnnoucementSchema,
   },
   {
+    name: PlanProductPermission.name,
+    schema: PlanProductPermissionSchema,
+  },
+  {
+    name: TaxCalculation.name,
+    schema: TaxCalculationSchema,
+    collection: MODEL.TAX_CALCULATION,
+  },
+  {
+    name: DealViews.name,
+    schema: DealViewsSchema,
+    collection: MODEL.DEAL_VIEW,
+  },
+  {
+    name: Activitylogs.name,
+    schema: ActivitylogsSchema,
+  },
+  {
     name: PurchaseApproval.name,
     schema: PurchaseApprovalSchema,
+  },
+  {
+    name: CompanyAccountRole.name,
+    schema: CompanyAccountRoleSchema,
+  },
+  {
+    name: Enquiries.name,
+    schema: EnquiriesSchema,
+    collection: MODEL.ENQUIRIES,
+  },
+  {
+    name: JobApplications.name,
+    schema: JobApplicationsSchema,
+    collection: MODEL.JOB_APPLICATIONS,
   },
 ];

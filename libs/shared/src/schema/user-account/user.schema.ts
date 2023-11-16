@@ -105,6 +105,12 @@ export class User extends AbstractSchema {
   @Prop()
   timezone?: string;
 
+  @Prop()
+  numberOfEmployees?: string;
+
+  @Prop({ type: Boolean })
+  enableEmployeeVerification?: boolean;
+
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'users', default: null })
   createdBy?: string;
 }

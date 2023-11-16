@@ -61,8 +61,8 @@ export class JobsService {
         const endDate = dayjs(payload.dateEnd).endOf('day').toDate();
 
         filterQuery['createdAt'] = {
-          gte: startDate,
-          lte: endDate,
+          $gte: startDate,
+          $lte: endDate,
         };
       }
 

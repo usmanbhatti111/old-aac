@@ -17,7 +17,15 @@ export class ProductFeaturesService {
 
   async addProductFeature(payload: AddProductFeatureDto) {
     try {
-      const res = await this.productFeaturesRepository.create(payload);
+      const { productIds } = payload;
+
+      delete payload.productIds;
+
+      const data = productIds.map((productId) => {
+        return { ...payload, productId };
+      });
+
+      const res = await this.productFeaturesRepository.createMany(data);
 
       const response = successResponse(
         HttpStatus.CREATED,
@@ -35,18 +43,9 @@ export class ProductFeaturesService {
     try {
       const filterQuery = { isDeleted: false };
 
-      const { productId, search } = payload;
+      const { productId } = payload;
       if (productId) {
         filterQuery['productId'] = new mongoose.Types.ObjectId(productId);
-      }
-
-      if (search) {
-        filterQuery['$or'] = [
-          {
-            name: { $regex: search, $options: 'i' },
-            description: { $regex: search, $options: 'i' },
-          },
-        ];
       }
 
       const productPipline = [
@@ -71,17 +70,26 @@ export class ProductFeaturesService {
             product: 0,
           },
         },
-        {
-          $match: {
-            productName: {
-              $regex: payload?.search ? payload.search : '',
-              $options: 'i',
-            },
-          },
-        },
       ];
 
-      const pipelines = [...productPipline];
+      let searchPipline = [];
+      if (payload?.search) {
+        const search = { $regex: payload.search, $options: 'i' };
+
+        searchPipline = [
+          {
+            $match: {
+              $or: [
+                { name: search },
+                { description: search },
+                { productName: search },
+              ],
+            },
+          },
+        ];
+      }
+
+      const pipelines = [...productPipline, ...searchPipline];
 
       const limit = payload?.limit || 10;
       const offset = payload?.page || 1;

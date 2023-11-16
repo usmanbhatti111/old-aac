@@ -228,7 +228,7 @@ export abstract class AbstractRepository<TDocument extends AbstractSchema> {
     filterQuery: FilterQuery<TDocument>,
     document: Partial<TDocument>
   ) {
-    return this.model.findOneAndUpdate(filterQuery, document, {
+    return await this.model.findOneAndUpdate(filterQuery, document, {
       lean: true,
       upsert: true,
       new: true,
@@ -454,5 +454,19 @@ export abstract class AbstractRepository<TDocument extends AbstractSchema> {
         },
       }
     );
+  }
+
+  async findOneWithoutException(
+    filterQuery: FilterQuery<TDocument>,
+    projection?: ProjectionType<TDocument>,
+    options?: {}
+  ): Promise<TDocument> {
+    const document = await this.model.findOne(
+      filterQuery,
+      projection || {},
+      options || { lean: true }
+    );
+
+    return document;
   }
 }
