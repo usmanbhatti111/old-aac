@@ -31,8 +31,8 @@ import {
   CreateDealResponseDto,
   DealAssociationDto,
   DealAssociationResponseDto,
-  DealNoteDto,
-  DealNotesResponseDto,
+  // DealNoteDto,
+  // DealNotesResponseDto,
   DealTaskDto,
   DealTasksResponseDto,
   DeleteDealsDto,
@@ -62,19 +62,19 @@ export class DealsController {
     private salesService: ClientProxy
   ) {}
 
-  @Auth(true)
-  @Get(API_ENDPOINTS.SALES.DEAL_VIEWS.GET_NOTES)
-  @ApiOkResponse({ type: DealAssociationResponseDto })
-  public async getNotes(
-    @Req() request: AppRequest,
-    @Param() payload: IdDto
-  ): Promise<DealAssociationResponseDto> {
-    const response = await firstValueFrom(
-      this.salesService.send(RMQ_MESSAGES.SALES.DEAL_VIEWS.GET_NOTES, payload)
-    );
+  // @Auth(true)
+  // @Get(API_ENDPOINTS.SALES.DEAL_VIEWS.GET_NOTES)
+  // @ApiOkResponse({ type: DealAssociationResponseDto })
+  // public async getNotes(
+  //   @Req() request: AppRequest,
+  //   @Param() payload: IdDto
+  // ): Promise<DealAssociationResponseDto> {
+  //   const response = await firstValueFrom(
+  //     this.salesService.send(RMQ_MESSAGES.SALES.DEAL_VIEWS.GET_NOTES, payload)
+  //   );
 
-    return response;
-  }
+  //   return response;
+  // }
 
   @Auth(true)
   @Get(API_ENDPOINTS.SALES.DEAL_VIEWS.GET_TASKS)
@@ -147,30 +147,30 @@ export class DealsController {
     return response;
   }
 
-  @Auth(true)
-  @Patch(API_ENDPOINTS.SALES.DEALS.ADD_NOTE)
-  @ApiOkResponse({ type: DealNotesResponseDto })
-  public async addNote(
-    @Req() request: AppRequest,
-    @Body() payload: DealNoteDto
-  ): Promise<DealNotesResponseDto> {
-    const response = await firstValueFrom(
-      this.salesService.send(RMQ_MESSAGES.SALES.DEAL_VIEWS.ADD_NOTE, payload)
-    );
-    return response;
-  }
-  @Auth(true)
-  @Patch(API_ENDPOINTS.SALES.DEALS.DELETE_NOTE)
-  @ApiOkResponse({ type: DealNotesResponseDto })
-  public async deleteNote(
-    @Req() request: AppRequest,
-    @Body() payload: DealNoteDto
-  ): Promise<DealNotesResponseDto> {
-    const response = await firstValueFrom(
-      this.salesService.send(RMQ_MESSAGES.SALES.DEAL_VIEWS.DELETE_NOTE, payload)
-    );
-    return response;
-  }
+  // @Auth(true)
+  // @Patch(API_ENDPOINTS.SALES.DEALS.ADD_NOTE)
+  // @ApiOkResponse({ type: DealNotesResponseDto })
+  // public async addNote(
+  //   @Req() request: AppRequest,
+  //   @Body() payload: DealNoteDto
+  // ): Promise<DealNotesResponseDto> {
+  //   const response = await firstValueFrom(
+  //     this.salesService.send(RMQ_MESSAGES.SALES.DEAL_VIEWS.ADD_NOTE, payload)
+  //   );
+  //   return response;
+  // }
+  // @Auth(true)
+  // @Patch(API_ENDPOINTS.SALES.DEALS.DELETE_NOTE)
+  // @ApiOkResponse({ type: DealNotesResponseDto })
+  // public async deleteNote(
+  //   @Req() request: AppRequest,
+  //   @Body() payload: DealNoteDto
+  // ): Promise<DealNotesResponseDto> {
+  //   const response = await firstValueFrom(
+  //     this.salesService.send(RMQ_MESSAGES.SALES.DEAL_VIEWS.DELETE_NOTE, payload)
+  //   );
+  //   return response;
+  // }
 
   @Auth(true)
   @Get(API_ENDPOINTS.SALES.DEALS.GET_DEALS_LIST_VIEW)
