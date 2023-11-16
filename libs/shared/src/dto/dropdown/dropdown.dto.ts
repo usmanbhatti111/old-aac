@@ -30,5 +30,5 @@ export class GetAllSearchDTO {
   })
   @IsOptional()
   @IsNotEmpty()
-  q?: string;
+  search?: string;
 }

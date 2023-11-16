@@ -12,10 +12,10 @@ export class DropdownService {
   ) {}
   async getallOrganizations(payload: GetAllSearchDTO) {
     try {
-      const { q } = payload;
+      const { search } = payload;
       const filterQuery = {};
-      if (q) {
-        filterQuery['name'] = { $regex: q, $options: 'i' };
+      if (search) {
+        filterQuery['name'] = { $regex: search, $options: 'i' };
       }
       const pipelines = [
         {
@@ -44,10 +44,10 @@ export class DropdownService {
 
   async getallProducts(payload: GetAllSearchDTO) {
     try {
-      const { q } = payload;
+      const { search } = payload;
       const filterQuery = {};
-      if (q) {
-        filterQuery['name'] = { $regex: q, $options: 'i' };
+      if (search) {
+        filterQuery['name'] = { $regex: search, $options: 'i' };
       }
       const pipelines = [
         {

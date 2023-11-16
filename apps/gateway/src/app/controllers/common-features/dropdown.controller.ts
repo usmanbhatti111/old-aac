@@ -23,18 +23,14 @@ export class DropdownController {
   @Get(API_ENDPOINTS.DROPDOWNS.ORGANIZATION_DROPDOWN)
   @ApiCreatedResponse({ type: GetAllDropdownResponseDto })
   public async getallOrganizations(
-    @Query() q: GetAllSearchDTO,
+    @Query() search: GetAllSearchDTO,
     @Req() request: AppRequest
   ): Promise<GetAllDropdownResponseDto> {
     const { user } = request;
     const response = await firstValueFrom(
       this.commonFeatureClient.send(
         { cmd: RMQ_MESSAGES.DROPDOWNS.ORGANIZATIONS_DROPDOWN },
-        {
-          q: q?.q,
-
-          userId: user?._id,
-        }
+        { search: search?.search, userId: user?._id }
       )
     );
     return response;
@@ -43,14 +39,14 @@ export class DropdownController {
   @Get(API_ENDPOINTS.DROPDOWNS.PRODUCTS_DROPDOWN)
   @ApiCreatedResponse({ type: GetAllDropdownResponseDto })
   public async getallProducts(
-    @Query() q: GetAllSearchDTO,
+    @Query() search: GetAllSearchDTO,
     @Req() request: AppRequest
   ): Promise<GetAllDropdownResponseDto> {
     const { user } = request;
     const response = await firstValueFrom(
       this.commonFeatureClient.send(
         { cmd: RMQ_MESSAGES.DROPDOWNS.PRODUCTS_DROPDOWN },
-        { q: q?.q, userId: user?._id }
+        { search: search?.search, userId: user?._id }
       )
     );
     return response;
