@@ -2,6 +2,7 @@ import { HttpStatus, Injectable } from '@nestjs/common';
 import { RpcException } from '@nestjs/microservices';
 import { OrganizationRepository, ProductsRepository } from '@shared';
 import { ResponseMessage, successResponse } from '@shared/constants';
+import { GetAllSearchDTO } from '@shared/dto';
 
 @Injectable()
 export class DropdownService {
@@ -9,8 +10,13 @@ export class DropdownService {
     private organizationRepository: OrganizationRepository,
     private productsRepository: ProductsRepository
   ) {}
-  async getallOrganizations() {
+  async getallOrganizations(payload: GetAllSearchDTO) {
     try {
+      const { search } = payload;
+      const filterQuery = {};
+      if (search) {
+        filterQuery['name'] = { $regex: search, $options: 'i' };
+      }
       const pipelines = [
         {
           $match: {
@@ -22,6 +28,9 @@ export class DropdownService {
             _id: 1,
             name: 1,
           },
+        },
+        {
+          $match: filterQuery,
         },
       ];
 
@@ -33,8 +42,13 @@ export class DropdownService {
     }
   }
 
-  async getallProducts() {
+  async getallProducts(payload: GetAllSearchDTO) {
     try {
+      const { search } = payload;
+      const filterQuery = {};
+      if (search) {
+        filterQuery['name'] = { $regex: search, $options: 'i' };
+      }
       const pipelines = [
         {
           $match: {
@@ -46,6 +60,9 @@ export class DropdownService {
             _id: 1,
             name: 1,
           },
+        },
+        {
+          $match: filterQuery,
         },
       ];
 

@@ -1,20 +1,21 @@
 import { Controller } from '@nestjs/common';
-import { MessagePattern } from '@nestjs/microservices';
+import { MessagePattern, Payload } from '@nestjs/microservices';
 import { RMQ_MESSAGES } from '@shared/constants';
 
 import { DropdownService } from '../services/dropdown.service';
+import { GetAllSearchDTO } from '@shared/dto';
 
 @Controller()
 export class DropdownController {
   constructor(private readonly dropdownService: DropdownService) {}
 
   @MessagePattern({ cmd: RMQ_MESSAGES.DROPDOWNS.ORGANIZATIONS_DROPDOWN })
-  async getallOrganizations() {
-    return this.dropdownService.getallOrganizations();
+  async getallOrganizations(@Payload() payload: GetAllSearchDTO) {
+    return this.dropdownService.getallOrganizations(payload);
   }
 
   @MessagePattern({ cmd: RMQ_MESSAGES.DROPDOWNS.PRODUCTS_DROPDOWN })
-  async getallProducts() {
-    return this.dropdownService.getallProducts();
+  async getallProducts(@Payload() payload: GetAllSearchDTO) {
+    return this.dropdownService.getallProducts(payload);
   }
 }

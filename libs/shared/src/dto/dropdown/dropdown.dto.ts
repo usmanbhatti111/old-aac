@@ -1,4 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { IsNotEmpty, IsOptional } from 'class-validator';
 
 export class GetAllDropdownResponseDto {
   @ApiProperty({ example: 200 })
@@ -19,4 +20,15 @@ export class GetAllDropdownResponseDto {
 
   @ApiProperty({ example: null })
   error: string;
+}
+
+export class GetAllSearchDTO {
+  @ApiProperty({
+    type: String,
+    required: false,
+    description: 'search by name',
+  })
+  @IsOptional()
+  @IsNotEmpty()
+  search?: string;
 }
