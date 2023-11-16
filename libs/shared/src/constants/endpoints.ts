@@ -195,7 +195,7 @@ export const API_ENDPOINTS = {
     ASSETS: {
       INVENTORY: 'inventory',
       EDIT_INVENTORY: 'inventory/:id',
-      DELETE_INVENTORY: '/:id',
+      DELETE_INVENTORY: 'inventory/:id',
       PURCHASEORDER: 'purchaseorder',
       GET_PURCHASEORDER: 'purchaseorder/:id',
       GET_PURCHASEORDER_RECIEVED: 'purchaseorder-recieved',
