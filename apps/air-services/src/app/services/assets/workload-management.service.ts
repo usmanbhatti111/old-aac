@@ -124,10 +124,16 @@ export class WorkloadManagementService {
                           $add: [
                             1,
                             {
-                              $divide: [
-                                { $subtract: ['$endDate', '$startDate'] },
-                                1000 * 60 * 60 * 24,
-                              ],
+                              $cond: {
+                                if: { $ifNull: ['$endDate', false] },
+                                then: {
+                                  $divide: [
+                                    { $subtract: ['$endDate', '$startDate'] },
+                                    1000 * 60 * 60 * 24,
+                                  ],
+                                },
+                                else: 0,
+                              },
                             },
                           ],
                         },
@@ -233,10 +239,16 @@ export class WorkloadManagementService {
                       $add: [
                         1,
                         {
-                          $divide: [
-                            { $subtract: ['$endDate', '$startDate'] },
-                            1000 * 60 * 60 * 24,
-                          ],
+                          $cond: {
+                            if: { $ifNull: ['$endDate', false] },
+                            then: {
+                              $divide: [
+                                { $subtract: ['$endDate', '$startDate'] },
+                                1000 * 60 * 60 * 24,
+                              ],
+                            },
+                            else: 0,
+                          },
                         },
                       ],
                     },
