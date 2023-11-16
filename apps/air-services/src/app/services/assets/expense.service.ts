@@ -1,17 +1,14 @@
 import { HttpStatus, Injectable } from '@nestjs/common';
-import { MODEL, errorResponse, successResponse } from '@shared/constants';
-import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import { errorResponse, successResponse } from '@shared/constants';
+import { ExpenseRepository } from '@shared';
 
 @Injectable()
 export class ExpenseService {
-  constructor(
-    @InjectModel(MODEL.EXPENSE) private readonly expenseModel: Model<any>
-  ) {}
+  constructor(private expenseRepository: ExpenseRepository) {}
 
   async addExpense(payload: any) {
     try {
-      const res = await this.expenseModel.create({ ...payload });
+      const res = await this.expenseRepository.create({ ...payload });
       return successResponse(HttpStatus.CREATED, 'Success', res);
     } catch (error) {
       return errorResponse(HttpStatus.BAD_REQUEST, 'Bad Request', error?.name);
@@ -19,7 +16,7 @@ export class ExpenseService {
   }
   async getExpense() {
     try {
-      const res = await this.expenseModel.find();
+      const res = await this.expenseRepository.find();
       return successResponse(HttpStatus.CREATED, 'Success', res);
     } catch (error) {
       return errorResponse(HttpStatus.BAD_REQUEST, 'Bad Request', error?.name);

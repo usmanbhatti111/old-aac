@@ -155,7 +155,6 @@ export class AuthService {
     await this.userService.findUserByUniqueFields({ email });
 
     const secretKey = this.createSecretHash(email);
-
     const params: InitiateAuthRequest = {
       AuthFlow: 'USER_PASSWORD_AUTH',
       ClientId: this.clientId,
