@@ -421,14 +421,6 @@ export const RMQ_MESSAGES = {
     },
   },
 
-  DEAL_NOTE: {
-    CREATE_DEAL_NOTE: 'create-deal-note',
-    GET_DEAL_NOTES: 'get-deal-notes',
-    GET_DEAL_NOTE: 'get-deal-note',
-    UPDATE_DEAL_NOTE: 'update-deal-note',
-    DELETE_DEAL_NOTE: 'delete-deal-note',
-  },
-
   ACTIVITY_LOG: {
     GET_ALL_ACTIVITIES: 'get-all-activities',
     ACTIVITY_LOG: 'activity-log',
@@ -436,5 +428,14 @@ export const RMQ_MESSAGES = {
   DROPDOWNS: {
     ORGANIZATIONS_DROPDOWN: 'organization-dropdown',
     PRODUCTS_DROPDOWN: 'products-dropdown',
+  },
+  COMMON_FEATURES: {
+    NOTES: {
+      CREATE_NOTE: 'create-deal-note',
+      GET_NOTES: 'get-deal-notes',
+      GET_NOTE: 'get-deal-note',
+      UPDATE_NOTE: 'update-deal-note',
+      DELETE_NOTE: 'delete-deal-note',
+    },
   },
 };

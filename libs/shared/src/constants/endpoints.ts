@@ -395,13 +395,6 @@ export const API_ENDPOINTS = {
     SEND_VERIFICATION_TOKEN: 'send-verification-token',
     VERIFY_NUMBER_TOKEN: 'verify_number_token',
   },
-  DEAL_NOTE: {
-    CREATE_DEAL_NOTE: '/',
-    GET_DEAL_NOTES: '/',
-    GET_DEAL_NOTE: '/:id',
-    UPDATE_DEAL_NOTE: '/:id',
-    DELETE_DEAL_NOTE: '/:id',
-  },
 
   KNOWLEDGE_BASE: {
     ARTICLES: {
@@ -411,5 +404,14 @@ export const API_ENDPOINTS = {
   DROPDOWNS: {
     ORGANIZATION_DROPDOWN: 'organizations',
     PRODUCTS_DROPDOWN: 'products',
+  },
+  COMMON_FEATURES: {
+    NOTES: {
+      CREATE_NOTE: '/',
+      GET_NOTES: '/',
+      GET_NOTE: '/:id',
+      UPDATE_NOTE: '/:id',
+      DELETE_NOTE: '/:id',
+    },
   },
 };

@@ -59,13 +59,13 @@ import { ContactNoteController } from './controllers/common-features/contact/con
 import { ContactCallController } from './controllers/common-features/contact/contact-call.controller';
 import { ContactMeetingController } from './controllers/common-features/contact/contact-meeting.controller';
 import { DealsController } from './controllers/sales/deals.controller';
-import { NoteController } from './controllers/sales/note.controller';
 import { EnquiriesController } from './controllers/super-admin/enquiries.controller';
 import { TaxCalculationController } from './controllers/super-admin/tax-calculation.controller';
 import { DealViewsController } from './controllers/sales/deal-views.controller';
 import { ActivitylogsController } from './controllers/common-features/activitylogs.controller';
 import { JobApplicationsController } from './controllers/super-admin/job-applications.controller';
 import { DropdownController } from './controllers/common-features/dropdown.controller';
+import { NoteController } from './controllers/common-features/note.controller';
 
 @Module({
   imports: [
