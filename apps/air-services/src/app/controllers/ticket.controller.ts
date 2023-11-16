@@ -54,7 +54,7 @@ export class TicketController {
     return this.ticketService.getChildTicket(payload);
   }
   @MessagePattern(RMQ_MESSAGES.AIR_SERVICES.TICKETS.DELETE_CHILD_TICKETS)
-  public async deleteChildTicket(@Payload() payload: IdDto) {
+  public async deleteChildTicket(@Payload() payload: { ids: string[] }) {
     return this.ticketService.deleteChildTicket(payload);
   }
   @MessagePattern(RMQ_MESSAGES.AIR_SERVICES.TICKETS.EDIT_TICKETS)
@@ -75,7 +75,7 @@ export class TicketController {
   @MessagePattern(RMQ_MESSAGES.AIR_SERVICES.TICKETS.GET_TICKET_LIST)
   public async getTicketList(payload: {
     listTicketDTO: ListTicketDTO;
-    columnNames: string[];
+    columnNames: object;
   }) {
     return this.ticketService.getTicketList(payload);
   }

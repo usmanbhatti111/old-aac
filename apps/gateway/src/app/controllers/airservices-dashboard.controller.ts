@@ -8,7 +8,12 @@ import {
   Query,
 } from '@nestjs/common';
 import { ClientProxy, RpcException } from '@nestjs/microservices';
-import { ApiParam, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiOkResponse,
+  ApiParam,
+  ApiTags,
+} from '@nestjs/swagger';
 import {
   API_ENDPOINTS,
   API_TAGS,
@@ -17,8 +22,18 @@ import {
   SERVICES,
 } from '@shared/constants';
 import { firstValueFrom } from 'rxjs';
-import { CreateDashboardtDTO, IdDto, ListDashboardDTO } from '@shared/dto';
-
+import {
+  CreateDashboardtDTO,
+  EmailedDashboardDTO,
+  EmailedDashboardResponseDTO,
+  IdDto,
+  ListDashboardDTO,
+  CreateAnnouncementDTO,
+  FilterTicketDto,
+  AnnoucementDashboardResponseDTO,
+} from '@shared/dto';
+import { Auth } from '../decorators/auth.decorator';
+@ApiBearerAuth()
 @ApiTags(API_TAGS.AIR_SERVICES_DASHBOARD)
 @Controller(CONTROLLERS.AIR_SERVICES_DASHBOARD)
 export class AirServicesDashboardController {
@@ -41,6 +56,26 @@ export class AirServicesDashboardController {
     }
   }
 
+  @Auth(true)
+  @ApiOkResponse({ type: EmailedDashboardResponseDTO })
+  @Post(API_ENDPOINTS.AIR_SERVICES.DASHBOARD.EMAILED_DASHBOARD)
+  public async sendDashboardUrl(
+    @Query() dashboardEmailDTO: EmailedDashboardDTO
+  ): Promise<EmailedDashboardResponseDTO> {
+    try {
+      const dashboard = await firstValueFrom(
+        this.ariServiceClient.send(
+          RMQ_MESSAGES.AIR_SERVICES.DASHBOARD.EMAILED_DASHBOARD,
+          dashboardEmailDTO
+        )
+      );
+
+      return dashboard;
+    } catch (err) {
+      throw new RpcException(err);
+    }
+  }
+
   @Get(API_ENDPOINTS.AIR_SERVICES.DASHBOARD.GET_DASHBOARDS)
   public async getDashboardList(@Query() listDashboardDTO: ListDashboardDTO) {
     try {
@@ -55,7 +90,23 @@ export class AirServicesDashboardController {
       throw new RpcException(err);
     }
   }
+  @Get(API_ENDPOINTS.AIR_SERVICES.DASHBOARD.GET_DASHBOARD_TICKETS)
+  public async getDashboardTickets(@Query() payload: FilterTicketDto) {
+    try {
+      const dashboardtTicketList = await firstValueFrom(
+        this.ariServiceClient.send(
+          RMQ_MESSAGES.AIR_SERVICES.DASHBOARD.GET_DASHBOARD_Tickets,
+          {
+            ...payload,
+          }
+        )
+      );
 
+      return dashboardtTicketList;
+    } catch (err) {
+      throw new RpcException(err);
+    }
+  }
   @Get(API_ENDPOINTS.AIR_SERVICES.DASHBOARD.GET_DASHBOARD)
   @ApiParam({
     type: String,
@@ -73,6 +124,24 @@ export class AirServicesDashboardController {
         )
       );
       return dashboardList;
+    } catch (err) {
+      throw new RpcException(err);
+    }
+  }
+  @Auth(true)
+  @ApiOkResponse({ type: AnnoucementDashboardResponseDTO })
+  @Post(API_ENDPOINTS.AIR_SERVICES.DASHBOARD.CREATE_DASHBOARD_ANNOUCEMENT)
+  public async createDashboardAnnoucement(
+    @Body() dashboardannoucementDTO: CreateAnnouncementDTO
+  ): Promise<AnnoucementDashboardResponseDTO> {
+    try {
+      const dashboardAnnouncement = await firstValueFrom(
+        this.ariServiceClient.send(
+          RMQ_MESSAGES.AIR_SERVICES.DASHBOARD.CREATE_DASHBOARD_ANNOUCEMENT,
+          dashboardannoucementDTO
+        )
+      );
+      return dashboardAnnouncement;
     } catch (err) {
       throw new RpcException(err);
     }

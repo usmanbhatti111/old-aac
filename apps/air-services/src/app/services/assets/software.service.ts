@@ -13,6 +13,7 @@ import {
 } from '@shared/dto';
 
 import { successResponse } from '@shared/constants';
+import { Types } from 'mongoose';
 
 @Injectable()
 export class SoftwareService {
@@ -295,6 +296,104 @@ export class SoftwareService {
         `User Remove Successfully`,
         removeUser
       );
+      return response;
+    } catch (error) {
+      throw new RpcException(error);
+    }
+  }
+  async softwareOverview(payload: { id: IdDto }) {
+    try {
+      const { id } = payload.id;
+
+      const overview = await this.softwareRepository.aggregate([
+        {
+          $facet: {
+            totalUsage: [
+              { $match: { _id: new Types.ObjectId(id) } },
+              {
+                $lookup: {
+                  from: 'softwareusers',
+                  localField: '_id',
+                  foreignField: 'softwareId',
+                  as: 'users',
+                },
+              },
+              {
+                $unwind: {
+                  path: '$users',
+                },
+              },
+              {
+                $count: 'count',
+              },
+            ],
+
+            totalContracts: [
+              { $match: { _id: new Types.ObjectId(id) } },
+              {
+                $lookup: {
+                  from: 'softwareusers',
+                  localField: '_id',
+                  foreignField: 'softwareId',
+                  as: 'users',
+                },
+              },
+              { $addFields: { contract: '$users.contractId' } },
+              {
+                $project: {
+                  users: 0,
+                },
+              },
+              {
+                $unwind: {
+                  path: '$contract',
+                },
+              },
+              {
+                $count: 'count',
+              },
+            ],
+          },
+        },
+        {
+          $unwind: {
+            path: '$totalUsage',
+            preserveNullAndEmptyArrays: true,
+          },
+        },
+        {
+          $unwind: {
+            path: '$totalContracts',
+            preserveNullAndEmptyArrays: true,
+          },
+        },
+        {
+          $project: {
+            usageActivity: {
+              $cond: {
+                if: { $eq: [{ $type: '$totalUsage.count' }, 'int'] },
+                then: '$totalUsage.count',
+                else: 0,
+              },
+            },
+
+            contractUtilization: {
+              $cond: {
+                if: { $eq: [{ $type: '$totalContracts.count' }, 'int'] },
+                then: '$totalContracts.count',
+                else: 0,
+              },
+            },
+          },
+        },
+      ]);
+
+      const response = successResponse(
+        HttpStatus.OK,
+        `User Remove Successfully`,
+        overview
+      );
+
       return response;
     } catch (error) {
       throw new RpcException(error);

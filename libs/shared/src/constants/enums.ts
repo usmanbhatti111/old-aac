@@ -16,6 +16,11 @@ export enum UserAccountStatus {
   INACTIVE = 'INACTIVE',
 }
 
+export enum PermissionStatus {
+  ACTIVE = 'ACTIVE',
+  INACTIVE = 'INACTIVE',
+}
+
 export enum EJobType {
   FULL_TIME = 'FULL_TIME',
   PART_TIME = 'PART_TIME',
@@ -252,6 +257,21 @@ export enum EExportFile {
   XLS = 'XLS',
 }
 
+export enum FileType {
+  PDF = 'PDF',
+  PNG = 'PNG',
+}
+export enum IsRecurring {
+  YES = 'YES',
+  NO = 'NO',
+}
+
+export enum Schedule {
+  DAILY = 'Daily',
+  WEEKLY = 'Weekly',
+  MONTHLY = 'Monthly',
+}
+
 export enum ECardTypes {
   MASTER = 'MASTER',
   VISA = 'VISA',
@@ -304,6 +324,15 @@ export enum EIsDeletedStatus {
   ACTIVE = 'ACTIVE',
   SOFT_DELETED = 'SOFT_DELETED',
   HARD_DELETED = 'HARD_DELETED',
+}
+
+export enum CompanyAccountRoleStatusEnum {
+  ACTIVE = 'ACTIVE',
+  INACTIVE = 'INACTIVE',
+}
+export enum EEnquiriesStatus {
+  DONE = 'done',
+  PENDING = 'pending',
 }
 
 export enum ETaxApplyOn {
@@ -359,6 +388,7 @@ export enum EActivitylogModule {
   CALLS = 'CALLS',
   MEETINGS = 'MEETINGS',
   EMAILS = 'EMAILS',
+  OTHERS = 'OTHERS',
 }
 
 export enum EApplicationStatus {

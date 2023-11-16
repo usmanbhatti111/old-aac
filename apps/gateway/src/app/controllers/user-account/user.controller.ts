@@ -10,7 +10,13 @@ import {
   Req,
 } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
-import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiCreatedResponse,
+  ApiOkResponse,
+  ApiOperation,
+  ApiTags,
+} from '@nestjs/swagger';
 import {
   API_ENDPOINTS,
   API_TAGS,
@@ -23,6 +29,9 @@ import {
   CreateUserDto,
   UpdateProfileDto,
   EditUserByAdminDto,
+  GetAdminUserListResponseDto,
+  AddAdminUserResponseDto,
+  UserProfileResponseDto,
 } from '@shared/dto';
 import { firstValueFrom } from 'rxjs';
 import { Auth } from '../../decorators/auth.decorator';
@@ -37,7 +46,11 @@ export class UserController {
   @Auth(true)
   @Post(API_ENDPOINTS.USER.CREATE)
   @ApiOperation({ summary: 'Create users as Super Admin' })
-  public createUser(@Body() body: CreateUserDto, @Req() request: AppRequest) {
+  @ApiCreatedResponse({ type: AddAdminUserResponseDto })
+  public createUser(
+    @Body() body: CreateUserDto,
+    @Req() request: AppRequest
+  ): Promise<AddAdminUserResponseDto> {
     const { user } = request;
     return firstValueFrom(
       this.userServiceClient.send(RMQ_MESSAGES.USER.CREATE, {
@@ -50,7 +63,10 @@ export class UserController {
   @Auth(true)
   @Get(API_ENDPOINTS.USER.GET)
   @ApiOperation({ summary: 'List Admin User' })
-  public getUsers(@Query() query: GetAdminUserDto) {
+  @ApiOkResponse({ type: GetAdminUserListResponseDto })
+  public getUsers(
+    @Query() query: GetAdminUserDto
+  ): Promise<GetAdminUserListResponseDto> {
     return firstValueFrom(
       this.userServiceClient.send(RMQ_MESSAGES.USER.GET_LIST, query)
     );
@@ -59,7 +75,8 @@ export class UserController {
   @Auth(true)
   @Get(API_ENDPOINTS.USER.GET_ONE)
   @ApiOperation({ summary: 'User Profile' })
-  public profile(@Param('id') userId: string) {
+  @ApiOkResponse({ type: UserProfileResponseDto })
+  public profile(@Param('id') userId: string): Promise<UserProfileResponseDto> {
     return firstValueFrom(
       this.userServiceClient.send(RMQ_MESSAGES.USER.PROFILE, userId)
     );
@@ -68,10 +85,11 @@ export class UserController {
   @Auth(true)
   @Patch(API_ENDPOINTS.USER.UPDATE)
   @ApiOperation({ summary: 'Update Profile' })
+  @ApiOkResponse({ type: UserProfileResponseDto })
   public updateProfile(
     @Param('id') userId: string,
     @Query() query: UpdateProfileDto
-  ) {
+  ): Promise<UserProfileResponseDto> {
     query.userId = userId;
     return firstValueFrom(
       this.userServiceClient.send(RMQ_MESSAGES.USER.UPDATE_PROFILE, query)
@@ -81,10 +99,11 @@ export class UserController {
   @Auth(true)
   @Patch(API_ENDPOINTS.USER.EDIT_USER)
   @ApiOperation({ summary: 'Edit User by Admin' })
+  @ApiOkResponse({ type: UserProfileResponseDto })
   public editUser(
     @Param('id') userId: string,
     @Query() query: EditUserByAdminDto
-  ) {
+  ): Promise<UserProfileResponseDto> {
     query.userId = userId;
     return firstValueFrom(
       this.userServiceClient.send(RMQ_MESSAGES.USER.EDIT_USER, query)

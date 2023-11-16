@@ -45,7 +45,7 @@ export class EditUserByAdminDto {
     example: '',
   })
   @IsOptional()
-  CNR?: string;
+  CRN?: string;
 
   @ApiProperty({
     required: false,

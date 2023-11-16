@@ -14,6 +14,8 @@ import { ActivitylogsController } from './controllers/activitylogs.controller';
 import { ActivityLogController } from './controllers/activity-log.controller';
 import { ActivityLogService } from './services/activityLog.service';
 import { CustomizedColumnsController } from './controllers/customize-columns.controller';
+import { DropdownService } from './services/dropdown.service';
+import { DropdownController } from './controllers/dropdown.controller';
 
 @Module({
   imports: [SharedModule],
@@ -23,6 +25,7 @@ import { CustomizedColumnsController } from './controllers/customize-columns.con
     AttachmentController,
     ActivitylogsController,
     ActivityLogController,
+    DropdownController,
     // CallsController,
     CustomizedColumnsController,
   ],
@@ -32,6 +35,7 @@ import { CustomizedColumnsController } from './controllers/customize-columns.con
     AttachmentService,
     ActivitylogsService,
     ActivityLogService,
+    DropdownService,
     // CallsService,
   ],
 })

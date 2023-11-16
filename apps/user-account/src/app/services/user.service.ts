@@ -57,10 +57,9 @@ export class UserService {
     try {
       const { page = 1, limit = 10, search, products } = payload;
       const offset = (page - 1) * limit;
-      delete payload.page;
-      delete payload.limit;
-      delete payload.search;
-      delete payload.products;
+
+      const keysToRemove = ['page', 'limit', 'search', 'products'];
+      keysToRemove.forEach((key) => delete payload[key]);
 
       let filterQuery = {};
       if (search) {
@@ -193,7 +192,9 @@ export class UserService {
   async updateProfile(payload: UpdateProfileDto) {
     try {
       const { userId } = payload;
-      delete payload.userId;
+
+      const keysToRemove = ['userId'];
+      keysToRemove.forEach((key) => delete payload[key]);
 
       const user = await this.userRepository.findByIdAndUpdate(
         { _id: userId },
@@ -207,11 +208,11 @@ export class UserService {
 
   async editUserByAdmin(payload: EditUserByAdminDto) {
     try {
-      const { userId, products } = payload;
-      delete payload.userId;
-      delete payload.products;
-      delete payload.companyName;
-      delete payload.CNR;
+      const { userId, products, companyName, CRN } = payload;
+
+      const keysToRemove = ['userId', 'products', 'companyName', 'CRN'];
+      keysToRemove.forEach((key) => delete payload[key]);
+
       let mongooseQuery = {};
       if (products) {
         mongooseQuery = { $addToSet: { products: { $each: products } } };
@@ -219,8 +220,23 @@ export class UserService {
 
       const user = await this.userRepository.findByIdAndUpdate(
         { _id: userId },
-        { ...mongooseQuery, ...payload }
+        {
+          ...mongooseQuery,
+          ...payload,
+        }
       );
+
+      if (companyName || CRN) {
+        const orgData = {
+          ...(CRN && { crn: CRN }),
+          ...(companyName && { name: companyName }),
+        };
+        await this.orgRepository.findByIdAndUpdate(
+          { _id: user.organization },
+          orgData
+        );
+      }
+
       return successResponse(HttpStatus.OK, ResponseMessage.SUCCESS, user);
     } catch (error) {
       throw new RpcException(error);

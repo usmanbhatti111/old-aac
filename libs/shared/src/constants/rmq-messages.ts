@@ -4,6 +4,12 @@ export const RMQ_MESSAGES = {
     GET_EXAMPLES: 'get-examples',
     EDIT_EXAMPLE: 'edit-example',
   },
+  PERMISSION: {
+    ADD_ALL_PERMISSIONS: 'add-all-permissions',
+    ADD_COMPNAY_ACCOUNT_ROLE: 'add-company-account-role',
+    GET_COMPNAY_ACCOUNT_ROLES: 'get-company-account-roles',
+    EDIT_COMPANY_ACCOUNT_ROLE: 'edit-company-account-role',
+  },
   AUTHENTICATION: {
     FORCE_CONFIRM: 'force-confirm-user',
     SIGNUP: 'auth-signup',
@@ -77,6 +83,13 @@ export const RMQ_MESSAGES = {
       GET_QUICK_LINKS_GROUP_BY_PRODUCT: 'get-quick-links-group-by-product',
     },
 
+    ENQUIRIES: {
+      ADD_ENQUIRY: 'add-enquiry',
+      GET_ENQUIRIES: 'get-enquiries',
+      GET_ENQUIRY: 'get-enquiry',
+      UPDATE_ENQUIRY: 'update-enquiry',
+      DELETE_ENQUIRIES: 'delete-enquiries',
+    },
     TAX_CALCULATIONS: {
       ADD_TAX: 'add-tax',
       GET_TAXS: 'get-taxs',
@@ -179,10 +192,13 @@ export const RMQ_MESSAGES = {
   AIR_SERVICES: {
     DASHBOARD: {
       CREATE_DASHBOARD: 'create-dashboard',
+      CREATE_DASHBOARD_ANNOUCEMENT: 'create-dashboard-annoucement',
       GET_DASHBOARD_LIST: 'get-dashboard-list',
       GET_DASHBOARD: 'get-dashboard',
+      GET_DASHBOARD_Tickets: 'get-dashboard-tickets',
       UPDATE_DASHBOARD: 'update-dashboard',
       DELETE_DASHBOARD: 'delete-dashboard',
+      EMAILED_DASHBOARD: 'emailed-dashboards',
     },
     WIDGETS: {
       CREATE_WIDGETS: 'create-widgets',
@@ -237,6 +253,7 @@ export const RMQ_MESSAGES = {
       SOFTWARE_ALLOCATE_CONTRACT: 'software-allocate-contract',
       SOFTWARE_DEALLOCATE_CONTRACT: 'software-deallocate-contract',
       SOFTWARE_USERS_REMOVE: 'software-users-remove',
+      SOFTWARE_OVERVIEW: 'software-overview',
       GET_SOFTWARE_DEVICES: 'software-devices',
     },
     TASK: {
@@ -419,5 +436,9 @@ export const RMQ_MESSAGES = {
   },
   CUSTOMIZED_COLUMNS: {
     GET_CUSTOMIZE_COLUMN: 'get-customize-column',
+  },
+  DROPDOWNS: {
+    ORGANIZATIONS_DROPDOWN: 'organization-dropdown',
+    PRODUCTS_DROPDOWN: 'products-dropdown',
   },
 };
