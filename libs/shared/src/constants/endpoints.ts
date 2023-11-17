@@ -201,7 +201,7 @@ export const API_ENDPOINTS = {
       GET_PURCHASEORDER_RECIEVED: 'purchaseorder-recieved',
       GET_PURCHASEORDERASSOCIATE: 'purchaseorderassociate/:id',
       GET_PURCHASEORDERLIST: 'purchaseorderlist',
-      DELETE_PURCHASEORDER: 'purchaseorder',
+      DELETE_PURCHASEORDER: 'purchaseorder/:id',
       UPDATE_PURCHASEORDER: 'purchaseorder/:id',
       ADD_ASSOCIATE_ORDER: 'add-associate-order/:id',
       ADD_APPROVER_ORDER: 'add-approver-order',
