@@ -545,38 +545,6 @@ export class DealsService {
     }
   }
 
-  // async addNote(payload: DealNoteDto) {
-  //   try {
-  //     const filter = { _id: payload?.dealId, isDeleted: false };
-
-  //     const res = await this.dealsRepository.findOneAndUpdate(filter, {
-  //       $push: {
-  //         notesIds: payload?.noteId,
-  //       },
-  //     });
-
-  //     return successResponse(HttpStatus.OK, ResponseMessage.SUCCESS, res);
-  //   } catch (error) {
-  //     throw new RpcException(error);
-  //   }
-  // }
-
-  // async deleteNote(payload: DealNoteDto) {
-  //   try {
-  //     const filter = { _id: payload?.dealId, isDeleted: false };
-
-  //     const res = await this.dealsRepository.findOneAndUpdate(filter, {
-  //       $pull: {
-  //         notesIds: payload?.noteId,
-  //       },
-  //     });
-
-  //     return successResponse(HttpStatus.OK, ResponseMessage.SUCCESS, res);
-  //   } catch (error) {
-  //     throw new RpcException(error);
-  //   }
-  // }
-
   async deleteDeals(payload: DeleteDealsDto) {
     try {
       const ids = payload?.ids?.split(',');
@@ -810,32 +778,6 @@ export class DealsService {
       throw new RpcException(error);
     }
   }
-
-  // async getNotes(payload: IdDto) {
-  //   try {
-  //     const pipeline = [
-  //       {
-  //         $match: {
-  //           _id: payload?.id,
-  //           isDeleted: false,
-  //         },
-  //       },
-  //       {
-  //         $lookup: {
-  //           from: 'notes',
-  //           localField: 'notesIds',
-  //           foreignField: '_id',
-  //           as: 'notes',
-  //         },
-  //       },
-  //     ];
-
-  //     const deal = await this.dealsRepository.aggregate(pipeline);
-  //     return successResponse(HttpStatus.OK, ResponseMessage.SUCCESS, deal);
-  //   } catch (error) {
-  //     throw new RpcException(error);
-  //   }
-  // }
 
   async getTasks(payload: IdDto) {
     try {
