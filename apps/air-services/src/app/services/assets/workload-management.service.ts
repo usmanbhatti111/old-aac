@@ -84,11 +84,6 @@ export class WorkloadManagementService {
         }
       }
 
-      // pipeline.push({
-      //   $sort: { startDate: 1 },
-
-      // });
-
       if (startDate) {
         pipeline.push({
           $match: {
