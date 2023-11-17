@@ -12,6 +12,7 @@ import {
   UsePipes,
   ValidationPipe,
   Patch,
+  Req,
 } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
 import { RpcException } from '@nestjs/microservices';
@@ -27,6 +28,8 @@ import {
   API_ENDPOINTS,
   API_TAGS,
   CONTROLLERS,
+  EActivityType,
+  EActivitylogModule,
   RMQ_MESSAGES,
   SERVICES,
   TicketStatusEnum,
@@ -48,31 +51,56 @@ import {
   ListTicketDTO,
   BulkTicketUpdateDto,
   UpdateManyTicketResponse,
+  ActivityLogParams,
 } from '@shared/dto';
 import { ColumnPipe } from '../../pipes/column.pipe';
+import { DownloadService } from '@shared/services';
+import { AppRequest } from '../../shared/interface/request.interface';
 
 @ApiTags(API_TAGS.TICKETS)
 @Controller(CONTROLLERS.TICKET)
 @ApiBearerAuth()
 export class TicketController {
   constructor(
-    @Inject(SERVICES.AIR_SERVICES) private ariServiceClient: ClientProxy
+    @Inject(SERVICES.AIR_SERVICES) private ariServiceClient: ClientProxy,
+    @Inject(SERVICES.COMMON_FEATURE) private commonFeatureClient: ClientProxy,
+    private readonly downloadService: DownloadService
   ) {}
 
   @Auth(true)
   @Post()
   public async createTicket(
     @Body() payload: CreateTicketDTO,
-    @Res() res: Response | any
+    @Req() request: AppRequest
   ) {
     try {
+      const { user } = request;
       const response = await firstValueFrom(
         this.ariServiceClient.send(
           RMQ_MESSAGES.AIR_SERVICES.TICKETS.CREATE_TICKET,
           payload
         )
       );
-      return res.status(response.statusCode).json(response);
+      if (response?.data) {
+        const params: ActivityLogParams = {
+          performedBy: user?._id, // userId
+          activityType: EActivityType.CREATED, // UPDATED
+          module: EActivitylogModule.TICKETS, // module
+          moduleId: response?.data?._id, // module._id
+          moduleName: response?.data?.details.name || 'Ticket activity logs', //module.name
+        };
+        firstValueFrom(
+          this.commonFeatureClient.emit(
+            RMQ_MESSAGES.ACTIVITY_LOG.ACTIVITY_LOG,
+            {
+              ...params,
+            }
+          )
+        );
+        response.data.activity = true;
+      }
+
+      return response;
     } catch (err) {
       throw new RpcException(err);
     }
@@ -218,21 +246,16 @@ export class TicketController {
   @Auth(true)
   @Delete(API_ENDPOINTS.AIR_SERVICES.TICKETS.DELETE_CHILD_TICKETS)
   @ApiOkResponse({ type: DeleteTicketResponse })
-  @ApiParam({
-    type: String,
-    name: 'id',
-    description: 'id should be childTicketId',
-  })
   public async deleteChildTicket(
     @Res() res: Response | any,
-    @Param() id: IdDto
+    @Query('ids') ids: string[]
   ): Promise<DeleteTicketResponse> {
     try {
       const response = await firstValueFrom(
         this.ariServiceClient.send(
           RMQ_MESSAGES.AIR_SERVICES.TICKETS.DELETE_CHILD_TICKETS,
           {
-            id,
+            ids,
           }
         )
       );
@@ -324,6 +347,14 @@ export class TicketController {
           { listTicketDTO, columnNames }
         )
       );
+      if (listTicketDTO.exportType) {
+        const data = response?.data?.tickets || [];
+        return this.downloadService.downloadFile(
+          listTicketDTO.exportType,
+          data,
+          res
+        );
+      }
       return res.status(response.statusCode).json(response);
     } catch (err) {
       throw new RpcException(err);

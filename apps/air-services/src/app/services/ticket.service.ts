@@ -255,14 +255,11 @@ export class TicketService {
     }
   }
 
-  async deleteChildTicket(payload: any) {
+  async deleteChildTicket(payload: { ids: string[] }) {
     try {
-      const { id } = payload.id;
-
-      const data = await this.ticketRepository.delete({
-        _id: id.id,
-        isChildTicket: true,
-      });
+      const { ids } = payload;
+      const filterQuery = { isChildTicket: true };
+      const data = await this.ticketRepository.deleteMany(filterQuery, ids);
       //should also remove  from parent ticket
       const response = successResponse(
         HttpStatus.OK,
@@ -328,13 +325,15 @@ export class TicketService {
 
   async getTicketList(payload: {
     listTicketDTO: ListTicketDTO;
-    columnNames: string[];
+    columnNames: object;
   }) {
     try {
       const { limit, page, search } = payload.listTicketDTO;
       const offset = limit * (page - 1);
-      const pipeline: any = [{ $project: payload.columnNames }];
-
+      const pipeline: any = [];
+      if (typeof payload.columnNames === 'object') {
+        pipeline.push({ $project: payload.columnNames });
+      }
       if (search) {
         pipeline.push({
           $match: {

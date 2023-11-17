@@ -228,7 +228,7 @@ export abstract class AbstractRepository<TDocument extends AbstractSchema> {
     filterQuery: FilterQuery<TDocument>,
     document: Partial<TDocument>
   ) {
-    return this.model.findOneAndUpdate(filterQuery, document, {
+    return await this.model.findOneAndUpdate(filterQuery, document, {
       lean: true,
       upsert: true,
       new: true,
@@ -270,14 +270,13 @@ export abstract class AbstractRepository<TDocument extends AbstractSchema> {
     offset = 1,
     limit = 10,
     returnKey,
-    sort,
     pipelines = [],
   }: {
     filterQuery?: FilterQuery<TDocument>;
     offset: number;
     limit: number;
     returnKey?: string;
-    sort?: Record<string, 1 | Expression.Meta | -1>;
+    // sort?: Record<string, 1 | Expression.Meta | -1>;
     pipelines?: Array<any>;
   }) {
     if (typeof offset !== 'number') {
@@ -295,7 +294,6 @@ export abstract class AbstractRepository<TDocument extends AbstractSchema> {
       ...pipelines,
       {
         $sort: {
-          ...sort,
           createdAt: -1,
         },
       },
@@ -352,7 +350,6 @@ export abstract class AbstractRepository<TDocument extends AbstractSchema> {
 
       {
         $sort: {
-          ...sort,
           createdAt: -1,
         },
       },
@@ -454,5 +451,19 @@ export abstract class AbstractRepository<TDocument extends AbstractSchema> {
         },
       }
     );
+  }
+
+  async findOneWithoutException(
+    filterQuery: FilterQuery<TDocument>,
+    projection?: ProjectionType<TDocument>,
+    options?: {}
+  ): Promise<TDocument> {
+    const document = await this.model.findOne(
+      filterQuery,
+      projection || {},
+      options || { lean: true }
+    );
+
+    return document;
   }
 }

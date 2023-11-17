@@ -41,7 +41,6 @@ import {
   Plan,
   PlanProductFeature,
   PlanProductFeatureSchema,
-  PlanProductModulePermission,
   PlanSchema,
   PlanType,
   PlanTypeSchema,
@@ -49,7 +48,6 @@ import {
   ProductCategoriesSchema,
   ProductFeatures,
   ProductFeaturesSchema,
-  ProductModulePermissionSchema,
   Products,
   ProductsSchema,
   Purchase,
@@ -94,16 +92,28 @@ import {
   ActivityLogSchema,
   Articles,
   ArticlesSchema,
+  AnnoucementSchema,
   Deals,
   DealsSchema,
   Note,
   NoteSchema,
+  Annoucement,
+  PurchaseApproval,
+  PurchaseApprovalSchema,
+  EmailedDashboards,
+  EmailedDashboardsSchema,
+  PlanProductPermissionSchema,
+  PlanProductPermission,
   TaxCalculation,
   TaxCalculationSchema,
   DealViews,
   DealViewsSchema,
-  PurchaseApproval,
-  PurchaseApprovalSchema,
+  CompanyAccountRole,
+  CompanyAccountRoleSchema,
+  Enquiries,
+  EnquiriesSchema,
+  JobApplications,
+  JobApplicationsSchema,
 } from './schema';
 import {
   ReportsWidget,
@@ -155,10 +165,6 @@ export const DbModels = [
   {
     name: PlanProductFeature.name,
     schema: PlanProductFeatureSchema,
-  },
-  {
-    name: PlanProductModulePermission.name,
-    schema: ProductModulePermissionSchema,
   },
   {
     name: PlanType.name,
@@ -321,6 +327,10 @@ export const DbModels = [
     schema: DashboardSchema,
   },
   {
+    name: EmailedDashboards.name,
+    schema: EmailedDashboardsSchema,
+  },
+  {
     name: OrganizationCompanyAccount.name,
     schema: OrganizationCompanyAccountSchema,
   },
@@ -358,6 +368,14 @@ export const DbModels = [
     schema: NoteSchema,
   },
   {
+    name: Annoucement.name,
+    schema: AnnoucementSchema,
+  },
+  {
+    name: PlanProductPermission.name,
+    schema: PlanProductPermissionSchema,
+  },
+  {
     name: TaxCalculation.name,
     schema: TaxCalculationSchema,
     collection: MODEL.TAX_CALCULATION,
@@ -374,5 +392,19 @@ export const DbModels = [
   {
     name: PurchaseApproval.name,
     schema: PurchaseApprovalSchema,
+  },
+  {
+    name: CompanyAccountRole.name,
+    schema: CompanyAccountRoleSchema,
+  },
+  {
+    name: Enquiries.name,
+    schema: EnquiriesSchema,
+    collection: MODEL.ENQUIRIES,
+  },
+  {
+    name: JobApplications.name,
+    schema: JobApplicationsSchema,
+    collection: MODEL.JOB_APPLICATIONS,
   },
 ];

@@ -48,6 +48,7 @@ import {
 import { firstValueFrom } from 'rxjs';
 import { Auth } from '../../decorators/auth.decorator';
 import { DownloadService } from '@shared/services';
+import { Response } from 'express';
 @ApiBearerAuth()
 @ApiTags(API_TAGS.ASSETS)
 @Controller(CONTROLLERS.ASSETS)
@@ -199,22 +200,19 @@ export class SoftwareController {
     }
   }
 
-  @Auth(true)
   @Get(API_ENDPOINTS.AIR_SERVICES.ASSETS.GET_SOFTWARE_DEVICES)
-  public async getSoftwareDevices(
+  async getSoftwareDevices(
     @Query() payload: GetSoftwareDevicesDto,
-    @Res() res: Response | any
+    @Res() res: Response
   ) {
     try {
-      const { exportType } = payload;
       const response = await firstValueFrom(
         this.airServiceClient.send(
           RMQ_MESSAGES.AIR_SERVICES.ASSETS.GET_SOFTWARE_DEVICES,
           { ...payload }
         )
       );
-
-      if (exportType) {
+      if (payload.exportType) {
         const data =
           response?.data?.inventories.map(
             ({
@@ -231,9 +229,9 @@ export class SoftwareController {
               installationDate,
             })
           ) || [];
-        return this.downloadService.downloadFile(exportType, data, res);
+        return this.downloadService.downloadFile(payload.exportType, data, res);
       }
-      return response;
+      return res.status(response.statusCode).json(response);
     } catch (err) {
       throw new RpcException(err);
     }
@@ -283,14 +281,9 @@ export class SoftwareController {
   }
   @Get(API_ENDPOINTS.AIR_SERVICES.ASSETS.SOFTWARE_USERS_DETAILS)
   @Auth(true)
-  @ApiParam({
-    type: String,
-    name: 'id',
-    description: 'id should be Assets softwareId',
-  })
   @ApiOkResponse({ type: SoftwareUsersDetailsResponse })
   async getSoftwareUsers(
-    @Param() id: IdDto,
+    @Query() id: IdDto,
     @Req() { user: { _id } },
     @Query() dto: GetSoftwareUserDto,
     @Res() res: Response | any
@@ -304,7 +297,7 @@ export class SoftwareController {
         )
       );
       if (exportType) {
-        const data = response.data.softwareusers || [];
+        const data = response.data.collections || [];
         const file = this.downloadService.downloadFile(exportType, data, res);
         return file;
       }
@@ -374,6 +367,31 @@ export class SoftwareController {
         )
       );
       return response;
+    } catch (err) {
+      throw new RpcException(err);
+    }
+  }
+  @Get(API_ENDPOINTS.AIR_SERVICES.ASSETS.SOFTWARE_OVERVIEW)
+  @Auth(true)
+  @ApiParam({
+    type: String,
+    name: 'id',
+    description: 'id should be Assets softwareId',
+  })
+  @ApiOkResponse({ type: SoftwareUsersDetailsResponse })
+  async getSoftwareOverview(
+    @Param() id: IdDto,
+    @Req() { user: { _id } },
+    @Res() res: Response | any
+  ) {
+    try {
+      const response = await firstValueFrom(
+        this.airServiceClient.send(
+          RMQ_MESSAGES.AIR_SERVICES.ASSETS.SOFTWARE_OVERVIEW,
+          { id, userId: _id }
+        )
+      );
+      return res.status(response.statusCode).json(response);
     } catch (err) {
       throw new RpcException(err);
     }

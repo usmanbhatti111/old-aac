@@ -9,27 +9,22 @@ export class AddPlanResponseDto {
 
   @ApiProperty({
     example: {
-      _id: '65265060b3f1860c66c7adce',
+      _id: '6548c118e9c20128444ddb98',
       description: 'some description',
       defaultUsers: 12,
       defaultStorage: 12,
       planPrice: 12,
       additionalPerUserPrice: 12,
-      planProducts: ['6524d340be1197f49712edb9', '6523d0f009e8c90ad90dc338'],
-      planProductFeatures: [
-        '652650601a6e84f64e08ca4f',
-        '652650601a6e84f64e08ca58',
-      ],
-      planProductModulePermissions: [
-        '652650601a6e84f64e08ca50',
-        '652650601a6e84f64e08ca59',
-      ],
+      planProducts: ['6523d0f009e8c90ad90dc338'],
+      planProductFeatures: ['6548c118a5df59e815dc2d76'],
+      planProductPermissions: ['6548c118a5df59e815dc2d79'],
       additionalStoragePrice: 12,
-      planTypeId: '6524d3695bf6cc10405eaf2d',
-      createdBy: '65262d9c3686b5e9a4fc4222',
+      planTypeId: '651bee19040d3384e81b81ff',
+      createdBy: '652d0c8612be46f5da445de8',
+      isDeleted: false,
       isActive: true,
-      createdAt: '2023-10-11T07:36:00.932Z',
-      updatedAt: '2023-10-11T07:36:00.964Z',
+      createdAt: '2023-11-06T10:34:00.891Z',
+      updatedAt: '2023-11-06T10:34:00.891Z',
     },
   })
   data: {};

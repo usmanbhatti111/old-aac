@@ -117,11 +117,25 @@ export const API_ENDPOINTS = {
       EDIT_QUICK_LINK: '/:id',
     },
 
+    ENQUIRIES: {
+      ADD_ENQUIRY: '/',
+      GET_ENQUIRIES: '/',
+      GET_ENQUIRY: '/:id',
+      UPDATE_ENQUIRY: '/:id',
+      DELETE_ENQUIRY: ':ids',
+    },
     TAX_CALCULATION: {
       ADD_TAX: '/',
       GET_TAXS: '/',
       UPDATE_TAX: '/:id',
       DELETE_TAXS: '/:ids',
+    },
+
+    JOB_APPLICATIONS: {
+      CREATE_JOB_APPLICATION: '/',
+      GET_JOB_APPLICATIONS: '/',
+      GET_UNIQUE_CANDIDATE: '/get-unique-candidate',
+      EDIT_JOB_APPLICATION: '/:id',
     },
 
     ADD_USER: 'add-user',
@@ -160,13 +174,18 @@ export const API_ENDPOINTS = {
     GET_PRODUCTS: '/',
     EDIT_PRODUCT: '/:id',
   },
-
+  PERMISSION: {
+    ADD_ALL_PERMISSIONS: '/',
+    ADD_COMPANY_ACCOUNT_ROLE: '/role',
+    UPDATE_COMPANY_ACCOUNT_ROLE: '/role/:id',
+    GET_COMPNAY_ACCOUNT_ROLES: '/role',
+  },
   AIR_SERVICES: {
     TICKETS: {
       ticket: 'ticket',
       ADD_CHILD_TICKET: 'add-child-ticket',
       GET_CHILD_TICKETS: 'get-child-tickets/:id',
-      DELETE_CHILD_TICKETS: 'delete-child-tickets/:id',
+      DELETE_CHILD_TICKETS: 'delete-child-tickets',
       EDIT_CHILD_TICKETS: 'edit-child-tickets/:id',
       ASSOCIATE_ASSETS: 'associate-assets',
       DETACH_ASSETS: 'detach-assets',
@@ -176,7 +195,7 @@ export const API_ENDPOINTS = {
     ASSETS: {
       INVENTORY: 'inventory',
       EDIT_INVENTORY: 'inventory/:id',
-      DELETE_INVENTORY: '/:id',
+      DELETE_INVENTORY: 'inventory/:id',
       PURCHASEORDER: 'purchaseorder',
       GET_PURCHASEORDER: 'purchaseorder/:id',
       GET_PURCHASEORDER_RECIEVED: 'purchaseorder-recieved',
@@ -200,25 +219,29 @@ export const API_ENDPOINTS = {
       DELETE_SOFTWARE_DEVICE: 'software-device/:id',
       GET_INVENTORY_SOFTWARE_DETAILS: 'get-inventory-software/:id',
       ADD_SOFTWARE_USERS: 'add-software-users',
-      SOFTWARE_USERS_DETAILS: 'software-users-details/:id',
+      SOFTWARE_USERS_DETAILS: 'software-users-details',
       SOFTWARE_USERS_DOWNLOAD_FILE: 'software-users-download-file',
       SOFTWARE_ALLOCATE_CONTRACT: 'software-allocate-contract',
       SOFTWARE_DEALLOCATE_CONTRACT: 'software-deallocate-contract',
       SOFTWARE_USERS_REMOVE: 'software-users-remove/:id',
+      SOFTWARE_OVERVIEW: 'software_overview/:id',
       GET_SOFTWARE_DEVICES: 'software-devices',
     },
     TASK: {
       ADD_TASK: '/',
       GET_TASK: '/',
       UPDATE_TASK: '/:id',
-      DELETE_TASK: '/:id',
+      DELETE_TASK_DATA: '/:id',
     },
     DASHBOARD: {
       ADD_DASHBOARD: '/',
       GET_DASHBOARDS: '/',
       GET_DASHBOARD: '/:id',
+      CREATE_DASHBOARD_ANNOUCEMENT: 'dashboard-annoucement',
+      GET_DASHBOARD_TICKETS: 'tickets',
       UPDATE_DASHBOARD: '/:id',
       DELETE_DASHBOARD: '/:id',
+      EMAILED_DASHBOARD: 'emailed-dashboards',
     },
     REPORT_WIDGETS: {
       ADD_REPORT_WIDGET: '/',
@@ -227,6 +250,7 @@ export const API_ENDPOINTS = {
       UPDATE_REPORT_WIDGET: '/:id',
       DELETE_REPORT_WIDGET: '/:id',
     },
+
     TASK_MANAGEMENT: {
       CREATE_TASK: 'management',
       TASK_LIST: 'management',
@@ -383,5 +407,9 @@ export const API_ENDPOINTS = {
     ARTICLES: {
       GET_UNAPPROVED_ARTICLES: 'unapproved-articles',
     },
+  },
+  DROPDOWNS: {
+    ORGANIZATION_DROPDOWN: 'organizations',
+    PRODUCTS_DROPDOWN: 'products',
   },
 };

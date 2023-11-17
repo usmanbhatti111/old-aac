@@ -9,9 +9,15 @@ export enum UserRole {
   SUPER_ADMIN = 'SUPER_ADMIN',
   ORG_ADMIN = 'ORG_ADMIN',
   ORG_EMPLOYEE = 'ORG_EMPLOYEE',
+  ORG_REQUESTER = 'ORG_REQUESTER',
 }
 
 export enum UserAccountStatus {
+  ACTIVE = 'ACTIVE',
+  INACTIVE = 'INACTIVE',
+}
+
+export enum PermissionStatus {
   ACTIVE = 'ACTIVE',
   INACTIVE = 'INACTIVE',
 }
@@ -211,6 +217,12 @@ export enum ETaskNotifyStatus {
   FIFTEEN_MINS = '15',
   THIRTY_MINS = '30',
 }
+export enum EManageWorloadStatus {
+  ALL = 'ALL',
+  PLANNED = 'PLANNED',
+  UNPLANNED = 'UNPLANNED',
+  DELAYED = 'DELAYED',
+}
 
 export enum ETaskAssociate {
   COMPANIES = 'Companies',
@@ -250,6 +262,21 @@ export enum EMongooseDateFilter {
 export enum EExportFile {
   CSV = 'CSV',
   XLS = 'XLS',
+}
+
+export enum FileType {
+  PDF = 'PDF',
+  PNG = 'PNG',
+}
+export enum IsRecurring {
+  YES = 'YES',
+  NO = 'NO',
+}
+
+export enum Schedule {
+  DAILY = 'Daily',
+  WEEKLY = 'Weekly',
+  MONTHLY = 'Monthly',
 }
 
 export enum ECardTypes {
@@ -306,6 +333,15 @@ export enum EIsDeletedStatus {
   HARD_DELETED = 'HARD_DELETED',
 }
 
+export enum CompanyAccountRoleStatusEnum {
+  ACTIVE = 'ACTIVE',
+  INACTIVE = 'INACTIVE',
+}
+export enum EEnquiriesStatus {
+  DONE = 'done',
+  PENDING = 'pending',
+}
+
 export enum ETaxApplyOn {
   INVOICE = 'invoice',
   QUOTES = 'quotes',
@@ -359,4 +395,12 @@ export enum EActivitylogModule {
   CALLS = 'CALLS',
   MEETINGS = 'MEETINGS',
   EMAILS = 'EMAILS',
+  OTHERS = 'OTHERS',
+}
+
+export enum EApplicationStatus {
+  PENDING = 'pending',
+  REJECTED = 'rejected',
+  SHORTLISTED = 'shortlisted',
+  INTERVIEWED = 'interviewed',
 }

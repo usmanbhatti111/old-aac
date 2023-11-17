@@ -17,7 +17,15 @@ export class ProductFeaturesService {
 
   async addProductFeature(payload: AddProductFeatureDto) {
     try {
-      const res = await this.productFeaturesRepository.create(payload);
+      const { productIds } = payload;
+
+      delete payload.productIds;
+
+      const data = productIds.map((productId) => {
+        return { ...payload, productId };
+      });
+
+      const res = await this.productFeaturesRepository.createMany(data);
 
       const response = successResponse(
         HttpStatus.CREATED,

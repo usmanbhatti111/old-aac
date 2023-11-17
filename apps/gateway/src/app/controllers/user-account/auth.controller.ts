@@ -60,7 +60,6 @@ export class AuthController {
             { crn: Number(payload.crn) }
           )
         );
-
         const { products } = payload;
 
         if (products.length > 0) {

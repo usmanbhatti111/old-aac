@@ -2,7 +2,7 @@ import { ApiProperty } from '@nestjs/swagger';
 import { Transform, Type } from 'class-transformer';
 import { IsNotEmpty, IsNumber, IsOptional, IsString } from 'class-validator';
 import { ProductFeatureDto } from './product-feature.dto';
-import { ProductModuleDto } from './product-module.dto';
+import { ProductPermissionDto } from './product-permission.dto';
 import { toMongoObjectId } from '../../functions';
 
 export class AddPlanDto {
@@ -85,11 +85,11 @@ export class AddPlanDto {
   planFeature: ProductFeatureDto[];
 
   @ApiProperty({
-    type: () => ProductModuleDto,
+    type: () => ProductPermissionDto,
     isArray: true,
   })
-  @Type(() => ProductModuleDto)
-  planModule: ProductModuleDto[];
+  @Type(() => ProductPermissionDto)
+  planPermission: ProductPermissionDto[];
 
   createdBy: string;
 }

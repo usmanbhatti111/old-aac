@@ -13,6 +13,8 @@ import { ActivitylogsController } from './controllers/activitylogs.controller';
 // import { TwilioModule } from 'nestjs-twilio';
 import { ActivityLogController } from './controllers/activity-log.controller';
 import { ActivityLogService } from './services/activityLog.service';
+import { DropdownService } from './services/dropdown.service';
+import { DropdownController } from './controllers/dropdown.controller';
 
 @Module({
   imports: [SharedModule],
@@ -22,6 +24,7 @@ import { ActivityLogService } from './services/activityLog.service';
     AttachmentController,
     ActivitylogsController,
     ActivityLogController,
+    DropdownController,
     // CallsController,
   ],
   providers: [
@@ -30,6 +33,7 @@ import { ActivityLogService } from './services/activityLog.service';
     AttachmentService,
     ActivitylogsService,
     ActivityLogService,
+    DropdownService,
     // CallsService,
   ],
 })

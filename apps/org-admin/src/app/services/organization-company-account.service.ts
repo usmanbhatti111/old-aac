@@ -1,7 +1,7 @@
 import { HttpStatus, Injectable } from '@nestjs/common';
 import { errorResponse, successResponse } from '@shared/constants';
 import { OrganizationCompanyAccountRepository } from '@shared';
-import mongoose from 'mongoose';
+
 import {
   CreateOrganizationCompanyAccountDto,
   GetAllOrganizationCompanyAccountsDto,
@@ -37,6 +37,7 @@ export class OrganizationCompanyAccountService {
       const res = await this.organizationCompanyAccountRepository.create({
         ...payload,
       });
+
       return successResponse(
         HttpStatus.OK,
         'Company account added successfully',
@@ -53,16 +54,15 @@ export class OrganizationCompanyAccountService {
     payload: GetAllOrganizationCompanyAccountsDto
   ) {
     try {
-      const page = payload?.page || 1; // Default to page 1 if not specified
-      const perPage = payload?.limit || 10; // Default to 10 items per page if not specified
-
-      const skip = (page - 1) * perPage;
-
-      // Get the total count of records (without pagination)
-      const totalCount = await this.organizationCompanyAccountRepository.count({
+      const filterQuery = {
+        isDeleted: false,
         organizationId: payload?.organizationId,
-      });
+      };
 
+      let { limit, page } = payload;
+      limit = limit ? limit : 10;
+      page = page ? page : 1;
+      const offset = limit * (page - 1);
       const pipelines: any = [
         {
           $lookup: {
@@ -73,21 +73,16 @@ export class OrganizationCompanyAccountService {
           },
         },
       ];
-
       const res = await this.organizationCompanyAccountRepository.paginate({
-        filterQuery: {
-          organizationId: new mongoose.Types.ObjectId(payload?.organizationId),
-        },
-        offset: skip,
-        limit: perPage,
+        filterQuery,
+        offset,
+        limit,
         pipelines,
       });
 
-      return successResponse(HttpStatus.OK, 'Success', res, {
-        count: totalCount,
-        page: page,
-        limit: perPage,
-      });
+      const response = successResponse(HttpStatus.OK, 'Success', res);
+
+      return response;
     } catch (error) {
       return errorResponse(HttpStatus.BAD_REQUEST, error?.meta?.message);
     }

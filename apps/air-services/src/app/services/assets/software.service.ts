@@ -13,6 +13,7 @@ import {
 } from '@shared/dto';
 
 import { successResponse } from '@shared/constants';
+import { Types } from 'mongoose';
 
 @Injectable()
 export class SoftwareService {
@@ -171,52 +172,90 @@ export class SoftwareService {
       const { id } = payload.id;
       const { limit, page, search, name, assignedDate } = payload.dto;
       const assign = new Date(assignedDate);
-      const filterQuery = {
-        softwareId: id,
-      };
-      const pipelines: any = [
+      const pipeline: any = [
+        {
+          $match: { softwareId: id },
+        },
         {
           $lookup: {
             from: 'users',
             localField: 'userRefId',
-
             foreignField: '_id',
             as: 'details',
           },
         },
         {
-          $lookup: {
-            from: 'contracts',
-            localField: 'contractId',
-
-            foreignField: '_id',
-            as: 'contracts',
-          },
-        },
-
-        {
           $unwind: '$details',
         },
         {
-          $unwind: '$contracts',
+          $lookup: {
+            from: 'contracts',
+            localField: 'contractId',
+            foreignField: '_id',
+            as: 'contractDetails',
+          },
+        },
+        {
+          $unwind: '$contractDetails',
+        },
+        {
+          $facet: {
+            total: [
+              {
+                $sortByCount: '$tag',
+              },
+            ],
+            data: [
+              {
+                $addFields: {
+                  _id: '$_id',
+                },
+              },
+            ],
+          },
+        },
+        {
+          $unwind: '$total',
+        },
+        {
+          $project: {
+            collections: {
+              $slice: [
+                '$data',
+                (page - 1) * limit,
+                {
+                  $ifNull: [limit, '$total.count'],
+                },
+              ],
+            },
+            total: '$total.count',
+            page: {
+              $ceil: { $literal: page - 1 / limit },
+            },
+            pages: {
+              $ceil: {
+                $divide: ['$total.count', limit],
+              },
+            },
+          },
         },
       ];
       if (search) {
-        pipelines.push({
+        pipeline.push({
           $match: {
             'details.firstName': { $regex: search, $options: 'i' },
           },
         });
       }
       if (name) {
-        pipelines.push({
+        pipeline.push({
           $match: {
             'details.firstName': { $regex: name, $options: 'i' },
           },
         });
       }
       if (assignedDate) {
-        pipelines.push({
+        pipeline.push({
           $match: {
             createdAt: {
               $lte: new Date(assign.getTime() + 1 * 24 * 60 * 60 * 1000),
@@ -225,13 +264,11 @@ export class SoftwareService {
           },
         });
       }
-      const Param = {
-        filterQuery,
-        pipelines,
-        limit,
-        offset: page,
-      };
-      const softwareDetails = await this.softwareUsersRepo.paginate(Param);
+
+      const softwareDetails = await this.softwareUsersRepo.aggregate([
+        ...pipeline,
+      ]);
+
       const response = successResponse(
         HttpStatus.OK,
         `Software Users Details Successfully`,
@@ -295,6 +332,104 @@ export class SoftwareService {
         `User Remove Successfully`,
         removeUser
       );
+      return response;
+    } catch (error) {
+      throw new RpcException(error);
+    }
+  }
+  async softwareOverview(payload: { id: IdDto }) {
+    try {
+      const { id } = payload.id;
+
+      const overview = await this.softwareRepository.aggregate([
+        {
+          $facet: {
+            totalUsage: [
+              { $match: { _id: new Types.ObjectId(id) } },
+              {
+                $lookup: {
+                  from: 'softwareusers',
+                  localField: '_id',
+                  foreignField: 'softwareId',
+                  as: 'users',
+                },
+              },
+              {
+                $unwind: {
+                  path: '$users',
+                },
+              },
+              {
+                $count: 'count',
+              },
+            ],
+
+            totalContracts: [
+              { $match: { _id: new Types.ObjectId(id) } },
+              {
+                $lookup: {
+                  from: 'softwareusers',
+                  localField: '_id',
+                  foreignField: 'softwareId',
+                  as: 'users',
+                },
+              },
+              { $addFields: { contract: '$users.contractId' } },
+              {
+                $project: {
+                  users: 0,
+                },
+              },
+              {
+                $unwind: {
+                  path: '$contract',
+                },
+              },
+              {
+                $count: 'count',
+              },
+            ],
+          },
+        },
+        {
+          $unwind: {
+            path: '$totalUsage',
+            preserveNullAndEmptyArrays: true,
+          },
+        },
+        {
+          $unwind: {
+            path: '$totalContracts',
+            preserveNullAndEmptyArrays: true,
+          },
+        },
+        {
+          $project: {
+            usageActivity: {
+              $cond: {
+                if: { $eq: [{ $type: '$totalUsage.count' }, 'int'] },
+                then: '$totalUsage.count',
+                else: 0,
+              },
+            },
+
+            contractUtilization: {
+              $cond: {
+                if: { $eq: [{ $type: '$totalContracts.count' }, 'int'] },
+                then: '$totalContracts.count',
+                else: 0,
+              },
+            },
+          },
+        },
+      ]);
+
+      const response = successResponse(
+        HttpStatus.OK,
+        `Software overview recieved successfully`,
+        overview
+      );
+
       return response;
     } catch (error) {
       throw new RpcException(error);

@@ -4,6 +4,12 @@ export const RMQ_MESSAGES = {
     GET_EXAMPLES: 'get-examples',
     EDIT_EXAMPLE: 'edit-example',
   },
+  PERMISSION: {
+    ADD_ALL_PERMISSIONS: 'add-all-permissions',
+    ADD_COMPNAY_ACCOUNT_ROLE: 'add-company-account-role',
+    GET_COMPNAY_ACCOUNT_ROLES: 'get-company-account-roles',
+    EDIT_COMPANY_ACCOUNT_ROLE: 'edit-company-account-role',
+  },
   AUTHENTICATION: {
     FORCE_CONFIRM: 'force-confirm-user',
     SIGNUP: 'auth-signup',
@@ -77,11 +83,25 @@ export const RMQ_MESSAGES = {
       GET_QUICK_LINKS_GROUP_BY_PRODUCT: 'get-quick-links-group-by-product',
     },
 
+    ENQUIRIES: {
+      ADD_ENQUIRY: 'add-enquiry',
+      GET_ENQUIRIES: 'get-enquiries',
+      GET_ENQUIRY: 'get-enquiry',
+      UPDATE_ENQUIRY: 'update-enquiry',
+      DELETE_ENQUIRIES: 'delete-enquiries',
+    },
     TAX_CALCULATIONS: {
       ADD_TAX: 'add-tax',
       GET_TAXS: 'get-taxs',
       UPDATE_TAX: 'update-tax',
       DELETE_TAXS: 'delete-taxs',
+    },
+
+    JOB_APPLICATIONS: {
+      CREATE_JOB_APPLICATION: 'create-job-application',
+      GET_UNIQUE_CANDIDATE: 'get-unique-candidate',
+      GET_JOB_APPLICATIONS: 'get-job-applications',
+      EDIT_JOB_APPLICATION: 'edit-job-application',
     },
 
     ADD_USER: 'add-user',
@@ -172,10 +192,13 @@ export const RMQ_MESSAGES = {
   AIR_SERVICES: {
     DASHBOARD: {
       CREATE_DASHBOARD: 'create-dashboard',
+      CREATE_DASHBOARD_ANNOUCEMENT: 'create-dashboard-annoucement',
       GET_DASHBOARD_LIST: 'get-dashboard-list',
       GET_DASHBOARD: 'get-dashboard',
+      GET_DASHBOARD_Tickets: 'get-dashboard-tickets',
       UPDATE_DASHBOARD: 'update-dashboard',
       DELETE_DASHBOARD: 'delete-dashboard',
+      EMAILED_DASHBOARD: 'emailed-dashboards',
     },
     WIDGETS: {
       CREATE_WIDGETS: 'create-widgets',
@@ -230,13 +253,14 @@ export const RMQ_MESSAGES = {
       SOFTWARE_ALLOCATE_CONTRACT: 'software-allocate-contract',
       SOFTWARE_DEALLOCATE_CONTRACT: 'software-deallocate-contract',
       SOFTWARE_USERS_REMOVE: 'software-users-remove',
+      SOFTWARE_OVERVIEW: 'software-overview',
       GET_SOFTWARE_DEVICES: 'software-devices',
     },
     TASK: {
       ADD_TASK: 'add_task',
       GET_TASKS: 'get-tasks',
       UPDATE_TASK: 'update-task',
-      DELETE_TASK: 'delete-task',
+      DELETE_TASK_DATA: 'delete-task-data',
     },
     TASK_MANAGEMENT: {
       CREATE_TASK: 'create-task',
@@ -408,5 +432,9 @@ export const RMQ_MESSAGES = {
   ACTIVITY_LOG: {
     GET_ALL_ACTIVITIES: 'get-all-activities',
     ACTIVITY_LOG: 'activity-log',
+  },
+  DROPDOWNS: {
+    ORGANIZATIONS_DROPDOWN: 'organization-dropdown',
+    PRODUCTS_DROPDOWN: 'products-dropdown',
   },
 };
