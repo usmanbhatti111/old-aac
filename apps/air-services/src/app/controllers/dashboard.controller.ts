@@ -9,6 +9,8 @@ import {
   ListDashboardDTO,
   FilterTicketDto,
   CreateAnnouncementDTO,
+  DeleteDashboardDto,
+  EditDashboardtDTO,
 } from '@shared/dto';
 
 @Controller()
@@ -50,5 +52,13 @@ export class DashboardController {
     @Payload() payload: CreateAnnouncementDTO
   ) {
     return this.dashboardService.createDashboardAnnoucement(payload);
+  }
+  @MessagePattern(RMQ_MESSAGES.AIR_SERVICES.DASHBOARD.DELETE_DASHBOARD)
+  deleteDashboard(@Payload() payload: DeleteDashboardDto) {
+    return this.dashboardService.deleteDashboard(payload);
+  }
+  @MessagePattern(RMQ_MESSAGES.AIR_SERVICES.DASHBOARD.UPDATE_DASHBOARD)
+  editDashboard(@Payload() payload: EditDashboardtDTO) {
+    return this.dashboardService.editDashboard(payload);
   }
 }

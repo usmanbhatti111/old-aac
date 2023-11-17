@@ -12,6 +12,7 @@ import {
   UsePipes,
   ValidationPipe,
   Patch,
+  Req,
 } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
 import { RpcException } from '@nestjs/microservices';
@@ -27,6 +28,8 @@ import {
   API_ENDPOINTS,
   API_TAGS,
   CONTROLLERS,
+  EActivityType,
+  EActivitylogModule,
   RMQ_MESSAGES,
   SERVICES,
   TicketStatusEnum,
@@ -48,9 +51,11 @@ import {
   ListTicketDTO,
   BulkTicketUpdateDto,
   UpdateManyTicketResponse,
+  ActivityLogParams,
 } from '@shared/dto';
 import { ColumnPipe } from '../../pipes/column.pipe';
 import { DownloadService } from '@shared/services';
+import { AppRequest } from '../../shared/interface/request.interface';
 
 @ApiTags(API_TAGS.TICKETS)
 @Controller(CONTROLLERS.TICKET)
@@ -58,6 +63,7 @@ import { DownloadService } from '@shared/services';
 export class TicketController {
   constructor(
     @Inject(SERVICES.AIR_SERVICES) private ariServiceClient: ClientProxy,
+    @Inject(SERVICES.COMMON_FEATURE) private commonFeatureClient: ClientProxy,
     private readonly downloadService: DownloadService
   ) {}
 
@@ -65,16 +71,36 @@ export class TicketController {
   @Post()
   public async createTicket(
     @Body() payload: CreateTicketDTO,
-    @Res() res: Response | any
+    @Req() request: AppRequest
   ) {
     try {
+      const { user } = request;
       const response = await firstValueFrom(
         this.ariServiceClient.send(
           RMQ_MESSAGES.AIR_SERVICES.TICKETS.CREATE_TICKET,
           payload
         )
       );
-      return res.status(response.statusCode).json(response);
+      if (response?.data) {
+        const params: ActivityLogParams = {
+          performedBy: user?._id, // userId
+          activityType: EActivityType.CREATED, // UPDATED
+          module: EActivitylogModule.TICKETS, // module
+          moduleId: response?.data?._id, // module._id
+          moduleName: response?.data?.details.name || 'Ticket activity logs', //module.name
+        };
+        firstValueFrom(
+          this.commonFeatureClient.emit(
+            RMQ_MESSAGES.ACTIVITY_LOG.ACTIVITY_LOG,
+            {
+              ...params,
+            }
+          )
+        );
+        response.data.activity = true;
+      }
+
+      return response;
     } catch (err) {
       throw new RpcException(err);
     }
