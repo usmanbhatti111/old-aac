@@ -10,7 +10,7 @@ export type SoftwareUserDocument = HydratedDocument<SoftwareUsers>;
 export class SoftwareUsers extends AbstractSchema {
   @Prop({ type: SchemaTypes.ObjectId, ref: 'users', required: true })
   userRefId?: string;
-  @Prop({ type: SchemaTypes.ObjectId, required: true })
+  @Prop({ type: String, required: true })
   softwareId?: string;
   @Prop({
     type: SchemaTypes.ObjectId,

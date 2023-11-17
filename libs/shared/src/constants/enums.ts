@@ -9,6 +9,7 @@ export enum UserRole {
   SUPER_ADMIN = 'SUPER_ADMIN',
   ORG_ADMIN = 'ORG_ADMIN',
   ORG_EMPLOYEE = 'ORG_EMPLOYEE',
+  ORG_REQUESTER = 'ORG_REQUESTER',
 }
 
 export enum UserAccountStatus {

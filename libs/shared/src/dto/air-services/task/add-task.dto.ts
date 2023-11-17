@@ -6,6 +6,7 @@ import {
   IsISO8601,
   IsOptional,
   IsMongoId,
+  IsEnum,
 } from 'class-validator';
 
 export class AddTaskDto {
@@ -27,14 +28,14 @@ export class AddTaskDto {
   })
   ticketId: string;
 
-  @IsNotEmpty()
+  @IsOptional()
   @IsString()
   @ApiProperty({
     type: String,
     example: 'Content will display here...',
-    required: true,
+    required: false,
   })
-  description: string;
+  description?: string;
 
   @IsNotEmpty()
   @IsMongoId()
@@ -45,80 +46,204 @@ export class AddTaskDto {
   })
   departmentId: string;
 
-  @IsNotEmpty()
+  @IsOptional()
   @IsMongoId()
   @ApiProperty({
     type: String,
     example: '651bdf53beeb02bc627d6804',
-    required: true,
+    required: false,
   })
-  createdBy: string;
+  createdBy?: string;
 
-  @IsNotEmpty()
+  @IsOptional()
   @IsMongoId()
   @ApiProperty({
     type: String,
     example: '651bdf53beeb02bc627d6804',
-    required: true,
+    required: false,
   })
-  assignTo: string;
+  assignTo?: string;
 
-  @IsNotEmpty()
-  @IsString()
+  @IsOptional()
+  @IsEnum(ETicketsTaskStatus)
   @ApiProperty({
-    type: String,
+    enum: ETicketsTaskStatus,
     example: ETicketsTaskStatus.TODO,
-    required: true,
+    required: false,
   })
-  status: string;
+  status?: string;
 
-  @IsNotEmpty()
-  @IsString()
+  @IsOptional()
+  @IsEnum(ETaskNotifyStatus)
   @ApiProperty({
-    type: String,
+    enum: ETaskNotifyStatus,
     example: ETaskNotifyStatus.FIVE_MINS,
-    required: true,
+    required: false,
   })
-  notifyBefore: string;
+  notifyBefore?: string;
 
-  @IsNotEmpty()
+  @IsOptional()
   @IsISO8601()
   @ApiProperty({
     type: Date,
-    required: true,
+    required: false,
   })
-  startDate: Date;
+  startDate?: Date;
 
   @IsOptional()
   @IsString()
   @ApiProperty({
     type: String,
-    required: true,
+    required: false,
   })
-  startDateTime: string;
+  startDateTime?: string;
 
-  @IsNotEmpty()
+  @IsOptional()
   @IsISO8601()
   @ApiProperty({
     type: Date,
-    required: true,
+    required: false,
   })
-  endDate: Date;
+  endDate?: Date;
 
   @IsOptional()
   @IsString()
   @ApiProperty({
     type: String,
-    required: true,
+    required: false,
   })
-  endDateTime: string;
+  endDateTime?: string;
 
-  @IsNotEmpty()
+  @IsOptional()
   @IsString()
   @ApiProperty({
     type: String,
     example: '1h10m',
-    required: true,
+    required: false,
   })
-  plannedEffort: string;
+  plannedEffort?: string;
+
+  @IsOptional()
+  @IsString()
+  @ApiProperty({
+    type: String,
+    example: 'This is for comment section..',
+    required: false,
+  })
+  comments?: string;
+}
+
+export class UpdateTaskDto {
+  @IsNotEmpty()
+  @IsString()
+  @ApiProperty({
+    type: String,
+    example: 'Title Name',
+    required: false,
+  })
+  title: string;
+
+  @IsOptional()
+  @IsString()
+  @ApiProperty({
+    type: String,
+    example: 'Content will display here...',
+    required: false,
+  })
+  description?: string;
+
+  @IsOptional()
+  @IsMongoId()
+  @ApiProperty({
+    type: String,
+    example: '651bdf53beeb02bc627d6804',
+    required: false,
+  })
+  departmentId: string;
+
+  @IsOptional()
+  @IsMongoId()
+  @ApiProperty({
+    type: String,
+    example: '651bdf53beeb02bc627d6804',
+    required: false,
+  })
+  createdBy?: string;
+
+  @IsOptional()
+  @IsMongoId()
+  @ApiProperty({
+    type: String,
+    example: '651bdf53beeb02bc627d6804',
+    required: false,
+  })
+  assignTo?: string;
+
+  @IsOptional()
+  @IsEnum(ETicketsTaskStatus)
+  @ApiProperty({
+    enum: ETicketsTaskStatus,
+    example: ETicketsTaskStatus.TODO,
+    required: false,
+  })
+  status?: string;
+
+  @IsOptional()
+  @IsEnum(ETaskNotifyStatus)
+  @ApiProperty({
+    enum: ETaskNotifyStatus,
+    example: ETaskNotifyStatus.FIVE_MINS,
+    required: false,
+  })
+  notifyBefore?: string;
+
+  @IsOptional()
+  @IsISO8601()
+  @ApiProperty({
+    type: Date,
+    required: false,
+  })
+  startDate?: Date;
+
+  @IsOptional()
+  @IsString()
+  @ApiProperty({
+    type: String,
+    required: false,
+  })
+  startDateTime?: string;
+
+  @IsOptional()
+  @IsISO8601()
+  @ApiProperty({
+    type: Date,
+    required: false,
+  })
+  endDate?: Date;
+
+  @IsOptional()
+  @IsString()
+  @ApiProperty({
+    type: String,
+    required: false,
+  })
+  endDateTime?: string;
+
+  @IsOptional()
+  @IsString()
+  @ApiProperty({
+    type: String,
+    example: '1h10m',
+    required: false,
+  })
+  plannedEffort?: string;
+
+  @IsOptional()
+  @IsString()
+  @ApiProperty({
+    type: String,
+    example: 'This is for comment section..',
+    required: false,
+  })
+  comments?: string;
 }
