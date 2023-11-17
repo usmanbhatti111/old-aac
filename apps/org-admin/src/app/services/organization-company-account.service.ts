@@ -1,7 +1,7 @@
 import { HttpStatus, Injectable } from '@nestjs/common';
 import { errorResponse, successResponse } from '@shared/constants';
 import { OrganizationCompanyAccountRepository } from '@shared';
-import mongoose from 'mongoose';
+
 import {
   CreateOrganizationCompanyAccountDto,
   GetAllOrganizationCompanyAccountsDto,
@@ -56,7 +56,7 @@ export class OrganizationCompanyAccountService {
     try {
       const filterQuery = {
         isDeleted: false,
-        organizationId: new mongoose.Types.ObjectId(payload?.organizationId),
+        organizationId: payload?.organizationId,
       };
 
       let { limit, page } = payload;
