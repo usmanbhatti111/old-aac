@@ -8,6 +8,7 @@ export * from './task-activity.repository';
 export * from './software-users-repository';
 export * from './dashboard.repository';
 export * from './emailed-dashboards.repository';
+export * from './report-widgets.repository';
 export * from './articles.repository';
 export * from './report-widgets.repository';
 export * from './articles.repository';
