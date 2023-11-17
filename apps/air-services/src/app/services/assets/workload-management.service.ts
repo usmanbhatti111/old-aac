@@ -84,6 +84,11 @@ export class WorkloadManagementService {
         }
       }
 
+      // pipeline.push({
+      //   $sort: { startDate: 1 },
+
+      // });
+
       if (startDate) {
         pipeline.push({
           $match: {
@@ -129,6 +134,10 @@ export class WorkloadManagementService {
                                 },
                                 else: 0,
                               },
+                              $divide: [
+                                { $subtract: ['$endDate', '$startDate'] },
+                                1000 * 60 * 60 * 24,
+                              ],
                             },
                           ],
                         },
