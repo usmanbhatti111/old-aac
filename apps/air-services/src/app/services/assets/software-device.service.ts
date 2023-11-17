@@ -2,7 +2,7 @@ import { HttpStatus, Injectable } from '@nestjs/common';
 import { RpcException } from '@nestjs/microservices';
 import { InventoryRepository } from '@shared';
 import { successResponse } from '@shared/constants';
-import { Types } from 'mongoose';
+import mongoose from 'mongoose';
 
 @Injectable()
 export class SoftwareDeviceService {
@@ -32,7 +32,7 @@ export class SoftwareDeviceService {
       if (deviceId) {
         filterQuery = {
           deviceIds: {
-            $in: [new Types.ObjectId(deviceId)],
+            $in: [new mongoose.Types.ObjectId(deviceId)],
           },
         };
       }
@@ -55,12 +55,11 @@ export class SoftwareDeviceService {
         },
       ];
       if (search) {
-        filterQuery = {
-          displayName: {
-            $regex: search,
-            $options: 'i',
+        pipelines.push({
+          $match: {
+            displayName: { $regex: search, $options: 'i' },
           },
-        };
+        });
       }
       const response = await this.InventoryRepository.paginate({
         filterQuery,
@@ -68,7 +67,8 @@ export class SoftwareDeviceService {
         offset,
         limit,
       });
-      return successResponse(HttpStatus.OK, 'Success', response);
+      const res = successResponse(HttpStatus.OK, 'Success', response);
+      return res;
     } catch (error) {
       throw new RpcException(error);
     }

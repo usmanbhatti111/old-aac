@@ -65,7 +65,7 @@ export class AirServicesDashboardController {
   @ApiOkResponse({ type: EmailedDashboardResponseDTO })
   @Post(API_ENDPOINTS.AIR_SERVICES.DASHBOARD.EMAILED_DASHBOARD)
   public async sendDashboardUrl(
-    @Body() dashboardEmailDTO: EmailedDashboardDTO
+    @Query() dashboardEmailDTO: EmailedDashboardDTO
   ): Promise<EmailedDashboardResponseDTO> {
     try {
       const dashboard = await firstValueFrom(

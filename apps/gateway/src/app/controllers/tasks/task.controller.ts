@@ -1,12 +1,11 @@
 import {
-  Body,
   Controller,
   Delete,
   Get,
   Inject,
   Param,
+  Patch,
   Post,
-  Put,
   Query,
   Req,
   Res,
@@ -20,7 +19,7 @@ import {
   RMQ_MESSAGES,
   SERVICES,
 } from '@shared/constants';
-import { AddTaskDto } from '@shared/dto';
+import { AddTaskDto, GetTaskListDto, IdDto, UpdateTaskDto } from '@shared/dto';
 import { Response } from 'express';
 import { firstValueFrom } from 'rxjs';
 import { AppRequest } from '../../shared/interface/request.interface';
@@ -37,7 +36,7 @@ export class TaskController {
   @Auth(true)
   @Post(API_ENDPOINTS.AIR_SERVICES.TASK.ADD_TASK)
   public async addTask(
-    @Body() dto: AddTaskDto,
+    @Query() dto: AddTaskDto,
     @Res() res: Response | any,
     @Req() req: AppRequest
   ) {
@@ -59,15 +58,12 @@ export class TaskController {
     name: 'ticketId',
     type: String,
   })
-  async getTasks(
-    @Query('ticketId') ticketId: string,
-    @Res() res: Response | any
-  ) {
+  async getTasks(@Query() payload: GetTaskListDto, @Res() res: Response | any) {
     try {
       const response = await firstValueFrom(
         this.airServiceClient.send(
           RMQ_MESSAGES.AIR_SERVICES.TASK.GET_TASKS,
-          ticketId
+          payload
         )
       );
 
@@ -77,10 +73,11 @@ export class TaskController {
     }
   }
 
-  @Put(API_ENDPOINTS.AIR_SERVICES.TASK.UPDATE_TASK)
+  @Auth(true)
+  @Patch(API_ENDPOINTS.AIR_SERVICES.TASK.UPDATE_TASK)
   async updateTask(
-    @Param('id') id: string,
-    @Body() updateTaskDto: AddTaskDto,
+    @Param() { id }: IdDto,
+    @Query() updateTaskDto: UpdateTaskDto,
     @Res() res: Response | any
   ) {
     try {
@@ -96,16 +93,18 @@ export class TaskController {
     }
   }
 
-  @Delete(API_ENDPOINTS.AIR_SERVICES.TASK.DELETE_TASK)
-  public async deleteTask(
+  @Auth(true)
+  @Delete(API_ENDPOINTS.AIR_SERVICES.TASK.DELETE_TASK_DATA)
+  async deleteTaskData(
     @Query('ids') ids: string[],
     @Res() res: Response | any
   ) {
     try {
       const response = await firstValueFrom(
-        this.airServiceClient.send(RMQ_MESSAGES.AIR_SERVICES.TASK.DELETE_TASK, {
-          ids,
-        })
+        this.airServiceClient.send(
+          RMQ_MESSAGES.AIR_SERVICES.TASK.DELETE_TASK_DATA,
+          { ids }
+        )
       );
       return res.status(response.statusCode).json(response);
     } catch (err) {
