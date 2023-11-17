@@ -49,10 +49,12 @@ export class CreateAnnouncementDTO {
   @IsMongoId()
   @IsOptional()
   vibilityId: string;
+
   @ApiProperty({ example: 'test email', required: false })
   @IsString()
   @IsOptional()
   additionalEmail: string;
+
   @ApiProperty({ example: 'test email', required: false })
   @IsString()
   @IsOptional()

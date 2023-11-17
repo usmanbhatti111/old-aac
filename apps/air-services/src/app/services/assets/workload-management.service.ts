@@ -134,6 +134,10 @@ export class WorkloadManagementService {
                                 },
                                 else: 0,
                               },
+                              $divide: [
+                                { $subtract: ['$endDate', '$startDate'] },
+                                1000 * 60 * 60 * 24,
+                              ],
                             },
                           ],
                         },
@@ -221,8 +225,8 @@ export class WorkloadManagementService {
           $addFields: {
             plannedEffortTotalMinutes: {
               $add: [
-                { $multiply: ['$plannedEffortHours', 60] },
-                '$plannedEffortMinutes',
+                { $multiply: [{ $toInt: '$plannedEffortHours' }, 60] },
+                { $toInt: { $arrayElemAt: ['$plannedEffortMinutes', 0] } },
               ],
             },
           },

@@ -31,12 +31,14 @@ export class WorkLoadFilterDto {
   })
   @IsOptional()
   countDayWiseHours: boolean;
+
   @ApiProperty({
     example: true,
     required: false,
   })
   @IsOptional()
   countDayWiseHoursAverage: boolean;
+
   @ApiProperty({
     type: String,
     enum: EManageWorloadStatus,

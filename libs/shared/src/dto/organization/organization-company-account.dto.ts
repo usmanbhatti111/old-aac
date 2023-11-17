@@ -1,8 +1,9 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsInt, IsNotEmpty, IsOptional } from 'class-validator';
-import { Type } from 'class-transformer';
+import { Transform, Type } from 'class-transformer';
 import { paginationDTO } from '../pagination/pagination.dto';
 import { IdDto } from '../common';
+import { toMongoObjectId } from 'libs/shared/src/functions';
 
 export interface IOrganizationCompanyAccount {
   organizationId: string;
@@ -146,6 +147,8 @@ export class UpdateOrganizationCompanyAccountStatusDto extends IdDto {
 }
 
 export class GetAllOrganizationCompanyAccountsDto extends paginationDTO {
+  @IsNotEmpty()
+  @Transform(toMongoObjectId)
   organizationId: string;
 }
 export class OrganizationCompanyAccountDto {
