@@ -12,6 +12,7 @@ import {
   ListDashboardDTO,
   FilterTicketDto,
   CreateAnnouncementDTO,
+  DeleteDashboardDto,
 } from '@shared/dto';
 import { successResponse } from '@shared/constants';
 
@@ -139,6 +140,28 @@ export class DashboardService {
         [`${filterField}Stats`]: monthlyStats,
         totalTickets,
       };
+    } catch (error) {
+      return new RpcException(error);
+    }
+  }
+  async deleteDashboard(payload: DeleteDashboardDto) {
+    try {
+      const { id } = payload;
+      const res = await this.dashboardRepository.delete({ _id: id });
+
+      return successResponse(HttpStatus.OK, 'Success', res);
+    } catch (error) {
+      return new RpcException(error);
+    }
+  }
+  async editDashboard(payload) {
+    try {
+      const { id, updateDataDto } = payload;
+      const res = await this.dashboardRepository.findByIdAndUpdate(
+        { _id: id },
+        { $set: updateDataDto }
+      );
+      return successResponse(HttpStatus.CREATED, 'Success', res);
     } catch (error) {
       return new RpcException(error);
     }

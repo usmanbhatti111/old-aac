@@ -1,5 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsISO8601, IsOptional } from 'class-validator';
+import { IsISO8601, IsMongoId, IsNotEmpty, IsOptional } from 'class-validator';
+import { PaginationDto } from '../../common';
 
 export class GetTaskDto {
   @ApiProperty({
@@ -39,4 +40,15 @@ export class GetTaskDto {
   })
   @IsOptional()
   search: string;
+}
+
+export class GetTaskListDto extends PaginationDto {
+  @IsNotEmpty()
+  @IsMongoId()
+  @ApiProperty({
+    type: String,
+    example: '651bdf53beeb02bc627d6804',
+    required: true,
+  })
+  ticketId: string;
 }

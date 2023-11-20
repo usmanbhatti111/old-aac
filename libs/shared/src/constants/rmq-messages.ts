@@ -260,7 +260,7 @@ export const RMQ_MESSAGES = {
       ADD_TASK: 'add_task',
       GET_TASKS: 'get-tasks',
       UPDATE_TASK: 'update-task',
-      DELETE_TASK: 'delete-task',
+      DELETE_TASK_DATA: 'delete-task-data',
     },
     TASK_MANAGEMENT: {
       CREATE_TASK: 'create-task',

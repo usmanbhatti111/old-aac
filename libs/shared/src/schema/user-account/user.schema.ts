@@ -96,6 +96,12 @@ export class User extends AbstractSchema {
   })
   organization?: string;
 
+  @Prop({
+    type: SchemaTypes.ObjectId,
+    required: false,
+  })
+  company?: string;
+
   @Prop()
   drn?: string; // Delegate Reference Number
 

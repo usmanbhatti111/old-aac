@@ -49,10 +49,12 @@ export class CreateAnnouncementDTO {
   @IsMongoId()
   @IsOptional()
   vibilityId: string;
+
   @ApiProperty({ example: 'test email', required: false })
   @IsString()
   @IsOptional()
   additionalEmail: string;
+
   @ApiProperty({ example: 'test email', required: false })
   @IsString()
   @IsOptional()
@@ -85,4 +87,12 @@ export class AnnoucementDashboardResponseDTO {
 
   @ApiProperty({ example: null })
   errors: [];
+}
+export class DeleteDashboardDto {
+  @ApiProperty({
+    example: '651e6368a3a6baf2f193efb0',
+  })
+  @IsMongoId()
+  @IsNotEmpty()
+  id: string;
 }

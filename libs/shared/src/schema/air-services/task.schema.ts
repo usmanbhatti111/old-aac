@@ -47,7 +47,6 @@ export class Task extends AbstractSchema {
     type: String,
     required: false,
     enum: ETaskNotifyStatus,
-    default: ETaskNotifyStatus.FIVE_MINS,
   })
   notifyBefore: string;
 
@@ -65,6 +64,9 @@ export class Task extends AbstractSchema {
 
   @Prop({ type: String, required: false })
   plannedEffort: String;
+
+  @Prop({ type: String, required: false })
+  comments: String;
 }
 
 export const TaskSchema = SchemaFactory.createForClass(Task);
