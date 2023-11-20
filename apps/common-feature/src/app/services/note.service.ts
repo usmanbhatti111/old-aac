@@ -27,8 +27,8 @@ export class NoteService {
 
         const fileObject: MediaObject = {
           ...s3Response,
-          size: file.size,
-          mimetype: file.mimetype,
+          size: file?.size,
+          mimetype: file?.mimetype,
         };
 
         payload.file = fileObject;
@@ -48,7 +48,7 @@ export class NoteService {
       const filterQuery = {
         isDeleted: false,
         recordId: payload?.recordId,
-        createdBy: payload.createdBy,
+        createdBy: payload?.createdBy,
       };
 
       if (search) {
@@ -130,7 +130,7 @@ export class NoteService {
 
       const filter = {
         _id: id,
-        createdBy: payload.createdBy,
+        createdBy: payload?.createdBy,
         isDeleted: false,
       };
 
@@ -178,8 +178,8 @@ export class NoteService {
 
           const fileObject: MediaObject = {
             ...s3Response,
-            size: file.size,
-            mimetype: file.mimetype,
+            size: file?.size,
+            mimetype: file?.mimetype,
           };
 
           payload.file = fileObject;

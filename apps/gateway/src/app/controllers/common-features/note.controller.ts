@@ -22,6 +22,8 @@ import {
   API_ENDPOINTS,
   API_TAGS,
   CONTROLLERS,
+  EActivityType,
+  EActivitylogModule,
   RMQ_MESSAGES,
   SERVICES,
 } from '@shared/constants';
@@ -37,6 +39,7 @@ import {
   GetNoteResponseDto,
   GetNotesResponseDto,
   UpdateNoteResponseDto,
+  ActivityLogParams,
 } from '@shared/dto';
 import { firstValueFrom } from 'rxjs';
 import { Auth } from '../../decorators/auth.decorator';
@@ -76,6 +79,27 @@ export class NoteController {
         payload
       )
     );
+
+    //ActivityLog
+    if (response?.data) {
+      const params: ActivityLogParams = {
+        performedBy: request?.user?._id,
+        activityType: EActivityType.CREATED,
+        module: EActivitylogModule.NOTES,
+        moduleId: response?.data?._id,
+        moduleName: response?.data?.title || 'notes',
+      };
+
+      firstValueFrom(
+        this.commonFeatureServiceClient.emit(
+          RMQ_MESSAGES.ACTIVITY_LOG.ACTIVITY_LOG,
+          {
+            ...params,
+          }
+        )
+      );
+      response.data.activity = true;
+    }
 
     return response;
   }
@@ -145,6 +169,27 @@ export class NoteController {
       )
     );
 
+    //ActivityLog
+    if (response?.data) {
+      const params: ActivityLogParams = {
+        performedBy: request?.user?._id,
+        activityType: EActivityType.UPDATED,
+        module: EActivitylogModule.NOTES,
+        moduleId: response?.data?._id,
+        moduleName: response?.data?.title || 'notes',
+      };
+
+      firstValueFrom(
+        this.commonFeatureServiceClient.emit(
+          RMQ_MESSAGES.ACTIVITY_LOG.ACTIVITY_LOG,
+          {
+            ...params,
+          }
+        )
+      );
+      response.data.activity = true;
+    }
+
     return response;
   }
 
@@ -163,6 +208,27 @@ export class NoteController {
         payload
       )
     );
+
+    //ActivityLog
+    if (response?.data) {
+      const params: ActivityLogParams = {
+        performedBy: request?.user?._id,
+        activityType: EActivityType.DELETED,
+        module: EActivitylogModule.NOTES,
+        moduleId: response?.data?._id,
+        moduleName: response?.data?.title || 'notes',
+      };
+
+      firstValueFrom(
+        this.commonFeatureServiceClient.emit(
+          RMQ_MESSAGES.ACTIVITY_LOG.ACTIVITY_LOG,
+          {
+            ...params,
+          }
+        )
+      );
+      response.data.activity = true;
+    }
 
     return response;
   }
