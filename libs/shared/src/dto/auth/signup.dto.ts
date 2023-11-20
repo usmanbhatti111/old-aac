@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNotEmpty, IsOptional } from 'class-validator';
+import { IsMongoId, IsNotEmpty, IsOptional } from 'class-validator';
 
 export class SignupDto {
   @ApiProperty({
@@ -14,10 +14,17 @@ export class SignupDto {
 
   @ApiProperty({
     example: 'ORG_ADMIN',
-    enum: ['SUPER_ADMIN', 'ORG_ADMIN'],
+    enum: ['SUPER_ADMIN', 'ORG_ADMIN', 'ORG_EMPLOYEE', 'ORG_REQUESTER'],
   })
   @IsNotEmpty()
   role: string;
+
+  @ApiProperty({
+    example: '651e6368a3a6baf2f193efb0',
+  })
+  @IsMongoId()
+  @IsOptional()
+  company?: string;
 
   @ApiProperty({ type: Array, default: [] })
   @IsOptional()

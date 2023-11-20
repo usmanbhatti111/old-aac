@@ -195,7 +195,7 @@ export const API_ENDPOINTS = {
     ASSETS: {
       INVENTORY: 'inventory',
       EDIT_INVENTORY: 'inventory/:id',
-      DELETE_INVENTORY: '/:id',
+      DELETE_INVENTORY: 'inventory',
       PURCHASEORDER: 'purchaseorder',
       GET_PURCHASEORDER: 'purchaseorder/:id',
       GET_PURCHASEORDER_RECIEVED: 'purchaseorder-recieved',
@@ -219,7 +219,7 @@ export const API_ENDPOINTS = {
       DELETE_SOFTWARE_DEVICE: 'software-device/:id',
       GET_INVENTORY_SOFTWARE_DETAILS: 'get-inventory-software/:id',
       ADD_SOFTWARE_USERS: 'add-software-users',
-      SOFTWARE_USERS_DETAILS: 'software-users-details/:id',
+      SOFTWARE_USERS_DETAILS: 'software-users-details',
       SOFTWARE_USERS_DOWNLOAD_FILE: 'software-users-download-file',
       SOFTWARE_ALLOCATE_CONTRACT: 'software-allocate-contract',
       SOFTWARE_DEALLOCATE_CONTRACT: 'software-deallocate-contract',
@@ -231,7 +231,7 @@ export const API_ENDPOINTS = {
       ADD_TASK: '/',
       GET_TASK: '/',
       UPDATE_TASK: '/:id',
-      DELETE_TASK: '/:id',
+      DELETE_TASK_DATA: '/:id',
     },
     DASHBOARD: {
       ADD_DASHBOARD: '/',
@@ -396,13 +396,6 @@ export const API_ENDPOINTS = {
     SEND_VERIFICATION_TOKEN: 'send-verification-token',
     VERIFY_NUMBER_TOKEN: 'verify_number_token',
   },
-  DEAL_NOTE: {
-    CREATE_DEAL_NOTE: '/',
-    GET_DEAL_NOTES: '/',
-    GET_DEAL_NOTE: '/:id',
-    UPDATE_DEAL_NOTE: '/:id',
-    DELETE_DEAL_NOTE: '/:id',
-  },
 
   KNOWLEDGE_BASE: {
     ARTICLES: {
@@ -415,5 +408,14 @@ export const API_ENDPOINTS = {
   DROPDOWNS: {
     ORGANIZATION_DROPDOWN: 'organizations',
     PRODUCTS_DROPDOWN: 'products',
+  },
+  COMMON_FEATURES: {
+    NOTES: {
+      CREATE_NOTE: '/',
+      GET_NOTES: '/',
+      GET_NOTE: '/:id',
+      UPDATE_NOTE: '/:id',
+      DELETE_NOTE: '/:id',
+    },
   },
 };

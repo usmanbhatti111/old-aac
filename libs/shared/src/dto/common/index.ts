@@ -16,3 +16,4 @@ export * from './media.dto';
 export * from './create-customize-column.dto';
 export * from './get-customize-column.dto';
 export * from './get-customize-column-reponse.dto';
+export * from './note.dto';

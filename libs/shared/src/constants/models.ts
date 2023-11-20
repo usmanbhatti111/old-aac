@@ -37,4 +37,5 @@ export const MODEL = {
   DEAL_VIEW: 'dealViews',
   JOB_APPLICATIONS: 'jobApplications',
   CUSTOMIZE_COLUMNS: 'customizeColumns',
+  NOTES: 'notes',
 };

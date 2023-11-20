@@ -2,7 +2,7 @@ import { Controller } from '@nestjs/common';
 import { MessagePattern, Payload } from '@nestjs/microservices';
 import { RMQ_MESSAGES } from '@shared/constants';
 import { TaskService } from '../services/tasks.service';
-import { AddTaskDto } from '@shared/dto';
+import { AddTaskDto, GetTaskListDto, UpdateTaskDto } from '@shared/dto';
 @Controller()
 export class TaskController {
   constructor(private taskService: TaskService) {}
@@ -13,17 +13,17 @@ export class TaskController {
   }
 
   @MessagePattern(RMQ_MESSAGES.AIR_SERVICES.TASK.GET_TASKS)
-  getTasks(@Payload() payload: AddTaskDto) {
+  getTasks(@Payload() payload: GetTaskListDto) {
     return this.taskService.getTasks(payload);
   }
 
   @MessagePattern(RMQ_MESSAGES.AIR_SERVICES.TASK.UPDATE_TASK)
-  async updateTask(@Payload() payload: AddTaskDto) {
+  async updateTask(@Payload() payload: UpdateTaskDto) {
     return this.taskService.updateTask(payload);
   }
 
-  @MessagePattern(RMQ_MESSAGES.AIR_SERVICES.TASK.DELETE_TASK)
-  deleteTask(@Payload() payload: { ids: string[] }) {
-    return this.taskService.deleteTask(payload);
+  @MessagePattern(RMQ_MESSAGES.AIR_SERVICES.TASK.DELETE_TASK_DATA)
+  deleteTaskData(@Payload() payload: { ids: string[] }) {
+    return this.taskService.deleteTaskData(payload);
   }
 }

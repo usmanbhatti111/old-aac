@@ -9,6 +9,7 @@ export enum UserRole {
   SUPER_ADMIN = 'SUPER_ADMIN',
   ORG_ADMIN = 'ORG_ADMIN',
   ORG_EMPLOYEE = 'ORG_EMPLOYEE',
+  ORG_REQUESTER = 'ORG_REQUESTER',
 }
 
 export enum UserAccountStatus {
@@ -215,6 +216,12 @@ export enum ETaskNotifyStatus {
   TEN_MINS = '10',
   FIFTEEN_MINS = '15',
   THIRTY_MINS = '30',
+}
+export enum EManageWorloadStatus {
+  ALL = 'ALL',
+  PLANNED = 'PLANNED',
+  UNPLANNED = 'UNPLANNED',
+  DELAYED = 'DELAYED',
 }
 
 export enum ETaskAssociate {

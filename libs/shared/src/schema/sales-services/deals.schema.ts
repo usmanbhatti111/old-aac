@@ -153,12 +153,12 @@ export class Deals extends AbstractSchema {
   })
   tasksIds?: string[];
 
-  @Prop({
-    type: [mongoose.Schema.Types.ObjectId],
-    ref: 'notes',
-    default: [],
-  })
-  notesIds?: string[];
+  // @Prop({
+  //   type: [mongoose.Schema.Types.ObjectId],
+  //   ref: 'notes',
+  //   default: [],
+  // })
+  // notesIds?: string[];
 
   @Prop({
     type: [mongoose.Schema.Types.ObjectId],

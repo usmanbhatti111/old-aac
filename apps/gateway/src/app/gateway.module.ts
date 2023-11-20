@@ -51,6 +51,7 @@ import { DealPipelineController } from './controllers/sales-settings/deal-pipeli
 import { SalesProductController } from './controllers/sales-settings/sales-product.controller';
 import { AttachmentController } from './controllers/common-features/attachment.controller';
 import { ActivityLogController } from './controllers/common-features/activity-log.controller';
+
 import { ReportsWidgetController } from './controllers/reports-widgets.controller';
 // import { ActivityLogController } from './controllers/common-features/activity-log.controller';
 import { ArticlesController } from './controllers/knowledge-base/articles.controller';
@@ -59,7 +60,6 @@ import { ContactNoteController } from './controllers/common-features/contact/con
 import { ContactCallController } from './controllers/common-features/contact/contact-call.controller';
 import { ContactMeetingController } from './controllers/common-features/contact/contact-meeting.controller';
 import { DealsController } from './controllers/sales/deals.controller';
-import { NoteController } from './controllers/sales/note.controller';
 import { EnquiriesController } from './controllers/super-admin/enquiries.controller';
 import { TaxCalculationController } from './controllers/super-admin/tax-calculation.controller';
 import { DealViewsController } from './controllers/sales/deal-views.controller';
@@ -67,6 +67,7 @@ import { ActivitylogsController } from './controllers/common-features/activitylo
 import { JobApplicationsController } from './controllers/super-admin/job-applications.controller';
 import { CustomizedColumnsController } from './controllers/customize-columns.controller';
 import { DropdownController } from './controllers/common-features/dropdown.controller';
+import { NoteController } from './controllers/common-features/note.controller';
 
 @Module({
   imports: [
