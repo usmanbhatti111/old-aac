@@ -59,6 +59,7 @@ export const RMQ_MESSAGES = {
     GET_ORGANIZATION_COMPANY_ACCOUNT: 'get-company-account',
     UPDATE_ORGANIZATION_COMPANY_ACCOUNT: 'update-company-account',
     DELETE_ORGANIZATION_COMPANY_ACCOUNT: 'delete-company-account',
+    DELETE_MULTIPLE_ORGANIZATION_COMPANY_ACCOUNT: 'delete-multiple-company-account',
     UPDATE_ORGANIZATION_COMPANY_ACCOUNT_STATUS: 'update-company-account-status',
   },
   SUPER_ADMIN: {
