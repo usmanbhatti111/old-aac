@@ -18,9 +18,6 @@ export class UserO extends AbstractSchema {
   firstName: string;
 
   @Prop({ type: String })
-  middleName: string;
-
-  @Prop({ type: String })
   lastName: string;
 
   @Prop({ type: String })

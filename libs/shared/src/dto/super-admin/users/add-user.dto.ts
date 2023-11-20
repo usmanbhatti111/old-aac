@@ -10,13 +10,6 @@ export class AddUserDto {
   firstName: string;
 
   @ApiProperty({
-    required: false,
-    example: '',
-  })
-  @IsNotEmpty()
-  middleName: string;
-
-  @ApiProperty({
     required: true,
     example: '',
   })

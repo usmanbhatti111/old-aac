@@ -13,20 +13,21 @@ export class Address {
   @Prop()
   buildingName: string;
   @Prop()
+  buildingNumber: string;
+  @Prop()
   streetName: string;
   @Prop()
   city: string; // alt: town
   @Prop()
   country: string;
+  @Prop()
+  composite: string;
 }
 
 @Schema({ versionKey: false, timestamps: true })
 export class User extends AbstractSchema {
   @Prop()
   firstName: string;
-
-  @Prop()
-  middleName?: string;
 
   @Prop()
   lastName: string;

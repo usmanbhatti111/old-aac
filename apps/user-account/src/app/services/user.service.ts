@@ -97,7 +97,6 @@ export class UserService {
         $project: {
           _id: 1,
           firstName: 1,
-          middleName: 1,
           lastName: 1,
           role: 1,
           products: 1,
@@ -172,7 +171,7 @@ export class UserService {
         ResponseMessage.SUCCESS,
         await this.userRepository.findOne(
           { ...payload },
-          '_id firstName middleName lastName role products organization igStatus status'
+          '_id firstName lastName role products organization igStatus status'
         )
       );
     } catch (error) {
