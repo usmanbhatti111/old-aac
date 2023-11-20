@@ -214,7 +214,7 @@ export const API_ENDPOINTS = {
       EDIT_SOFTWARE: 'edit-software/:id',
       DELETE_SOFTWARE: 'delete-software/:id',
       GET_SOFTWARE: 'get-software',
-      ASSIGN_CATEGORY: 'assign-category/:id',
+      ASSIGN_CATEGORY: 'software/assign-category/:id',
       CHANGE_PURCHASEORDER_STATUS: 'status-purchaseorder/:id',
       SEARCH_INVENTORY: 'search-inventory',
       DELETE_SOFTWARE_DEVICE: 'software-device/:id',

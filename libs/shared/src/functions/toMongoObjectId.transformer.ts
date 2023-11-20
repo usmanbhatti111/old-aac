@@ -11,14 +11,16 @@ import { Types, isValidObjectId } from 'mongoose';
 //   }
 // }
 
-export function toMongoObjectId({ value, key }): Types.ObjectId | Types.ObjectId[] {
+export function toMongoObjectId({
+  value,
+  key,
+}): Types.ObjectId | Types.ObjectId[] {
   if (!value) return;
   if (Array.isArray(value)) {
-
-    const response: Types.ObjectId[] = []
+    const response: Types.ObjectId[] = [];
     for (const val of value) {
       if (isValidObjectId(val)) {
-        response.push(new Types.ObjectId(val))
+        response.push(new Types.ObjectId(val));
       } else {
         throw new BadRequestException(
           `${val} of ${key} is not a valid MongoId`

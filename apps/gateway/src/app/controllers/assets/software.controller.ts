@@ -218,15 +218,19 @@ export class SoftwareController {
             ({
               displayName,
               version,
-              departmentId,
-              usedBy,
+              userDetail,
+              departmentDetail,
               installationDate,
             }) => ({
               displayName,
               version: version ? version : '--',
-              departmentId,
-              usedBy: usedBy ? usedBy : '--',
-              installationDate,
+              department: departmentDetail ? departmentDetail?.name : '--',
+              usedBy: userDetail
+                ? userDetail?.firstName + ' ' + userDetail?.lastName
+                : '--',
+              installationDate: installationDate
+                ? installationDate?.substr(0, 11)
+                : '--',
             })
           ) || [];
         return this.downloadService.downloadFile(payload.exportType, data, res);
