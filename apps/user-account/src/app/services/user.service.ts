@@ -9,7 +9,9 @@ import {
   UpdateProfileDto,
   EditUserByAdminDto,
   SignupDto,
+  MediaObject,
 } from '@shared/dto';
+import { S3Service } from '@shared/services';
 import { Model } from 'mongoose';
 import { CompanyHouseService } from './company-house.service';
 
@@ -19,7 +21,8 @@ export class UserService {
     private userRepository: UserRepository,
     private companyHouseService: CompanyHouseService,
     @InjectModel('User') private readonly exampleModel: Model<User>,
-    private readonly orgRepository: OrganizationRepository
+    private readonly orgRepository: OrganizationRepository,
+    private s3: S3Service
   ) {}
 
   async create(payload: CreateUserDto) {
@@ -55,7 +58,13 @@ export class UserService {
 
   async listUsers(payload: GetAdminUserDto) {
     try {
-      const { page = 1, limit = 10, search, products } = payload;
+      const {
+        page = 1,
+        limit = 10,
+        search,
+        products,
+        role = UserRole.SUPER_ADMIN,
+      } = payload;
       const offset = (page - 1) * limit;
 
       const keysToRemove = ['page', 'limit', 'search', 'products'];
@@ -91,29 +100,50 @@ export class UserService {
             ...filterQuery,
             ...payload,
           };
-      const pipelines = [];
+      let pipelines = [];
 
-      pipelines.push({
-        $project: {
-          _id: 1,
-          firstName: 1,
-          lastName: 1,
-          role: 1,
-          products: 1,
-          status: 1,
-          organization: 1,
-          createdAt: 1,
-        },
-      });
-
-      pipelines.push({
-        $lookup: {
-          from: 'organizations',
-          localField: 'organization',
-          foreignField: '_id',
-          as: 'organization',
-        },
-      });
+      if ([UserRole.ORG_ADMIN, UserRole.ORG_EMPLOYEE].includes(role)) {
+        pipelines = [
+          ...pipelines,
+          {
+            $lookup: {
+              from: 'organizations',
+              localField: 'organization',
+              foreignField: '_id',
+              as: 'organization',
+            },
+          },
+          {
+            $lookup: {
+              from: 'products',
+              localField: 'products',
+              foreignField: '_id',
+              as: 'products',
+            },
+          },
+          { $unwind: '$organization' },
+          {
+            $project: {
+              _id: 1,
+              firstName: 1,
+              lastName: 1,
+              avatar: 1,
+              role: 1,
+              products: {
+                _id: 1,
+                logo: 1,
+                name: 1,
+              },
+              organization: {
+                _id: 1,
+                name: 1,
+              },
+              status: 1,
+              createdAt: 1,
+            },
+          },
+        ];
+      }
 
       const res = await this.userRepository.paginate({
         filterQuery,
@@ -190,7 +220,22 @@ export class UserService {
 
   async updateProfile(payload: UpdateProfileDto) {
     try {
-      const { userId } = payload;
+      const { userId, avatar } = payload;
+
+      if (avatar) {
+        const s3Response = await this.s3.uploadFile(
+          avatar,
+          'users/avatar/{uuid}'
+        );
+
+        const profileImage: MediaObject = {
+          ...s3Response,
+          size: avatar.size,
+          mimetype: avatar.mimetype,
+        };
+
+        payload.avatar = profileImage;
+      }
 
       const keysToRemove = ['userId'];
       keysToRemove.forEach((key) => delete payload[key]);

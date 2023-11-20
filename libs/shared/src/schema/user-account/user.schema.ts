@@ -1,6 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import mongoose, { HydratedDocument, SchemaTypes } from 'mongoose';
 import { UserRole, UserStatus } from '../../constants';
+import { MediaObject } from '../../dto';
 import { AbstractSchema } from '../abstract-repo/abstract.schema';
 import { Organization } from '../organization';
 import { Products } from '../super-admin';
@@ -31,6 +32,9 @@ export class User extends AbstractSchema {
 
   @Prop()
   lastName: string;
+
+  @Prop({ type: SchemaTypes.Mixed })
+  avatar?: MediaObject;
 
   @Prop({ unique: true })
   email: string; // unique

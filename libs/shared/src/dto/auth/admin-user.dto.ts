@@ -39,6 +39,7 @@ export class CreateUserDto extends User {
       streetName: 'string',
       city: 'string', // alt: town
       country: 'string',
+      composite: 'string',
     },
   })
   @IsOptional()

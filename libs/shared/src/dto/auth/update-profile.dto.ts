@@ -1,7 +1,12 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsOptional } from 'class-validator';
+import { ApiSingleFile } from '../../custom';
 
 export class UpdateProfileDto {
+  @ApiSingleFile({ required: false })
+  @IsOptional()
+  avatar: any;
+
   @ApiProperty({
     required: false,
     example: '',

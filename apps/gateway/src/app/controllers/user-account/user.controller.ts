@@ -8,6 +8,7 @@ import {
   Post,
   Query,
   Req,
+  UploadedFile,
 } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
 import {
@@ -17,6 +18,7 @@ import {
   ApiOperation,
   ApiTags,
 } from '@nestjs/swagger';
+import { ApiFormData } from '@shared';
 import {
   API_ENDPOINTS,
   API_TAGS,
@@ -86,13 +88,23 @@ export class UserController {
   @Patch(API_ENDPOINTS.USER.UPDATE)
   @ApiOperation({ summary: 'Update Profile' })
   @ApiOkResponse({ type: UserProfileResponseDto })
+  @ApiFormData({
+    required: false,
+    single: true,
+    fieldName: 'avatar',
+    fileTypes: ['jpg', 'png', 'jpeg'],
+    errorMessage: 'Invalid document file entered.',
+  })
   public updateProfile(
     @Param('id') userId: string,
-    @Query() query: UpdateProfileDto
+    @Body() payload: UpdateProfileDto,
+    @UploadedFile() file: any
   ): Promise<UserProfileResponseDto> {
-    query.userId = userId;
+    payload.userId = userId;
+    payload.avatar = file;
+
     return firstValueFrom(
-      this.userServiceClient.send(RMQ_MESSAGES.USER.UPDATE_PROFILE, query)
+      this.userServiceClient.send(RMQ_MESSAGES.USER.UPDATE_PROFILE, payload)
     );
   }
 
