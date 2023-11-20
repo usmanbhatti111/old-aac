@@ -12,6 +12,5 @@ export * from './restore-deal-action.dto';
 export * from './restore-deal-action-response.dto';
 export * from './deals-grid-view.dto';
 export * from './deal-associations.dto';
-export * from './note.dto';
 export * from './deal-notes.dto';
 export * from './deal-tasks.dto';

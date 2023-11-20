@@ -4,6 +4,7 @@ import { RMQ_MESSAGES } from '@shared/constants';
 import { OrganizationCompanyAccountService } from '../services/organization-company-account.service';
 import {
   CreateOrganizationCompanyAccountDto,
+  DeleteMultipleOrganizationCompanyAccountDto,
   DeleteOrganizationCompanyAccountDto,
   GetAllOrganizationCompanyAccountsDto,
   IdDto,
@@ -71,6 +72,16 @@ export class OrganizationCompanyAccountController {
     @Payload() payload: DeleteOrganizationCompanyAccountDto
   ) {
     return await this.OrganizationCompanyAccountService.deleteOrganizationCompanyAccount(
+      payload
+    );
+  }
+
+  @MessagePattern({
+    cmd: RMQ_MESSAGES.ORGANIZATION_COMPANY_ACCOUNT
+      .DELETE_MULTIPLE_ORGANIZATION_COMPANY_ACCOUNT,
+  })
+  async deleteMultipleOrganizationAccount(@Payload() payload: DeleteMultipleOrganizationCompanyAccountDto) {
+    return await this.OrganizationCompanyAccountService.deleteMultipleOrganizationCompanyAccount(
       payload
     );
   }

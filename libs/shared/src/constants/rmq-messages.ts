@@ -59,6 +59,7 @@ export const RMQ_MESSAGES = {
     GET_ORGANIZATION_COMPANY_ACCOUNT: 'get-company-account',
     UPDATE_ORGANIZATION_COMPANY_ACCOUNT: 'update-company-account',
     DELETE_ORGANIZATION_COMPANY_ACCOUNT: 'delete-company-account',
+    DELETE_MULTIPLE_ORGANIZATION_COMPANY_ACCOUNT: 'delete-multiple-company-account',
     UPDATE_ORGANIZATION_COMPANY_ACCOUNT_STATUS: 'update-company-account-status',
   },
   SUPER_ADMIN: {
@@ -414,19 +415,8 @@ export const RMQ_MESSAGES = {
       GET_DEAL_VIEW: 'get-deal-view',
       ADD_TASK: 'add-task',
       DELETE_TASK: 'delete-task',
-      ADD_NOTE: 'add-note',
-      DELETE_NOTE: 'delete-note',
-      GET_NOTES: 'get-notes',
       GET_TASKS: 'get-tasks',
     },
-  },
-
-  DEAL_NOTE: {
-    CREATE_DEAL_NOTE: 'create-deal-note',
-    GET_DEAL_NOTES: 'get-deal-notes',
-    GET_DEAL_NOTE: 'get-deal-note',
-    UPDATE_DEAL_NOTE: 'update-deal-note',
-    DELETE_DEAL_NOTE: 'delete-deal-note',
   },
 
   ACTIVITY_LOG: {
@@ -436,5 +426,14 @@ export const RMQ_MESSAGES = {
   DROPDOWNS: {
     ORGANIZATIONS_DROPDOWN: 'organization-dropdown',
     PRODUCTS_DROPDOWN: 'products-dropdown',
+  },
+  COMMON_FEATURES: {
+    NOTES: {
+      CREATE_NOTE: 'create-deal-note',
+      GET_NOTES: 'get-deal-notes',
+      GET_NOTE: 'get-deal-note',
+      UPDATE_NOTE: 'update-deal-note',
+      DELETE_NOTE: 'delete-deal-note',
+    },
   },
 };

@@ -15,6 +15,8 @@ import { ActivityLogController } from './controllers/activity-log.controller';
 import { ActivityLogService } from './services/activityLog.service';
 import { DropdownService } from './services/dropdown.service';
 import { DropdownController } from './controllers/dropdown.controller';
+import { NoteController } from './controllers/note.controller';
+import { NoteService } from './services/note.service';
 
 @Module({
   imports: [SharedModule],
@@ -26,6 +28,7 @@ import { DropdownController } from './controllers/dropdown.controller';
     ActivityLogController,
     DropdownController,
     // CallsController,
+    NoteController,
   ],
   providers: [
     ContactService,
@@ -35,6 +38,7 @@ import { DropdownController } from './controllers/dropdown.controller';
     ActivityLogService,
     DropdownService,
     // CallsService,
+    NoteService,
   ],
 })
 export class CommonFeatureModule {}
