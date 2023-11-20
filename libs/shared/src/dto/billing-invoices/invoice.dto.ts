@@ -7,9 +7,10 @@ import {
   IsOptional,
   IsString,
 } from 'class-validator';
-import { Type } from 'class-transformer';
+import { Transform, Type } from 'class-transformer';
 import { InvoiceStatusEnum } from '../../constants/enums';
 import { PaginationDto } from '../common';
+import { toMongoObjectId } from '../../functions';
 
 export class CreateInvoiceDto {
   @ApiProperty({
@@ -74,6 +75,14 @@ export class ListInvoicesDTO extends PaginationDto {
   @IsMongoId()
   @IsOptional()
   organizationId: string;
+
+  @ApiProperty({
+    type: String,
+    required: false,
+  })
+  @IsOptional()
+  @Transform(toMongoObjectId)
+  organizationPlanId: string;
 
   @ApiProperty({
     type: String,
