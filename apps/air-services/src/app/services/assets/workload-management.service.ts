@@ -268,6 +268,7 @@ export class WorkloadManagementService {
         pipeline.push({
           $unwind: '$dateRange',
         });
+
         pipeline.push({
           $group: {
             _id: {
@@ -280,7 +281,7 @@ export class WorkloadManagementService {
             },
             totalPlannedEffort: { $sum: '$plannedEffortTotalMinutes' },
             count: { $sum: 1 },
-            tasks: { $addToSet: '$tasks' }, // Use $addToSet to accumulate unique tasks
+            tasks: { $addToSet: '$$ROOT' },
           },
         });
 
@@ -312,9 +313,7 @@ export class WorkloadManagementService {
           pipeline.push({
             $project: {
               _id: 0,
-              year: '$_id.year',
-              month: '$_id.month',
-              day: '$_id.day',
+              date: '$_id.date',
               totalPlannedEffortFormatted: 1,
               averagePlannedEffort: 1,
               count: 1,
@@ -325,9 +324,7 @@ export class WorkloadManagementService {
           pipeline.push({
             $project: {
               _id: 0,
-              year: '$_id.year',
-              month: '$_id.month',
-              day: '$_id.day',
+              date: '$_id.date',
               totalPlannedEffort: 1,
               count: 1,
               tasks: 1,
