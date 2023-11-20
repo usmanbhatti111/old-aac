@@ -114,11 +114,11 @@ export class UserController {
   @ApiOkResponse({ type: UserProfileResponseDto })
   public editUser(
     @Param('id') userId: string,
-    @Query() query: EditUserByAdminDto
+    @Body() body: EditUserByAdminDto
   ): Promise<UserProfileResponseDto> {
-    query.userId = userId;
+    body.userId = userId;
     return firstValueFrom(
-      this.userServiceClient.send(RMQ_MESSAGES.USER.EDIT_USER, query)
+      this.userServiceClient.send(RMQ_MESSAGES.USER.EDIT_USER, body)
     );
   }
 }
