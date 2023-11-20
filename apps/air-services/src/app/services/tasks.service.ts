@@ -35,12 +35,6 @@ export class TaskService {
           },
         },
         {
-          $unwind: {
-            path: '$assignedUser',
-            preserveNullAndEmptyArrays: true,
-          },
-        },
-        {
           $lookup: {
             from: 'departments',
             localField: 'departmentId',

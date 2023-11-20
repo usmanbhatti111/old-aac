@@ -80,7 +80,9 @@ export class OrganizationCompanyAccountController {
     cmd: RMQ_MESSAGES.ORGANIZATION_COMPANY_ACCOUNT
       .DELETE_MULTIPLE_ORGANIZATION_COMPANY_ACCOUNT,
   })
-  async deleteMultipleOrganizationAccount(@Payload() payload: DeleteMultipleOrganizationCompanyAccountDto) {
+  async deleteMultipleOrganizationAccount(
+    @Payload() payload: DeleteMultipleOrganizationCompanyAccountDto
+  ) {
     return await this.OrganizationCompanyAccountService.deleteMultipleOrganizationCompanyAccount(
       payload
     );
