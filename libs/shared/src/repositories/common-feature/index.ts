@@ -4,4 +4,5 @@ export * from './attachment.repository';
 export * from './activitylogs';
 export * from './activitt-log.repository';
 export * from './customize-columns.repositorty';
+export * from './companies';
 export * from './note.repository';

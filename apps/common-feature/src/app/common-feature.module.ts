@@ -16,6 +16,8 @@ import { ActivityLogService } from './services/activityLog.service';
 import { CustomizedColumnsController } from './controllers/customize-columns.controller';
 import { DropdownService } from './services/dropdown.service';
 import { DropdownController } from './controllers/dropdown.controller';
+import { CompaniesService } from './services/companies.services';
+import { CompaniesController } from './controllers/companies.controller';
 import { NoteController } from './controllers/note.controller';
 import { NoteService } from './services/note.service';
 
@@ -30,6 +32,7 @@ import { NoteService } from './services/note.service';
     DropdownController,
     // CallsController,
     CustomizedColumnsController,
+    CompaniesController,
     NoteController,
   ],
   providers: [
@@ -40,6 +43,7 @@ import { NoteService } from './services/note.service';
     ActivityLogService,
     DropdownService,
     // CallsService,
+    CompaniesService,
     NoteService,
   ],
 })

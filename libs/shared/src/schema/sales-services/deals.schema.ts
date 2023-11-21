@@ -1,5 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import mongoose from 'mongoose';
+import mongoose, { SchemaTypes } from 'mongoose';
 
 import { AbstractSchema } from '../abstract-repo/abstract.schema';
 import {
@@ -190,7 +190,6 @@ export class Deals extends AbstractSchema {
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: MODEL.USER })
   deletedBy?: string;
 
-  @Prop({ type: Boolean, default: false })
   @Prop({
     type: String,
     enum: EIsDeletedStatus,
@@ -198,6 +197,9 @@ export class Deals extends AbstractSchema {
     default: EIsDeletedStatus.ACTIVE,
   })
   isDeleted?: string;
+
+  @Prop({ type: SchemaTypes.ObjectId, required: false })
+  recordIds?: string | mongoose.Types.ObjectId;
 
   @Prop({ required: false })
   deletedAt?: Date;

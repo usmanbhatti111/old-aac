@@ -68,6 +68,7 @@ import { JobApplicationsController } from './controllers/super-admin/job-applica
 import { CustomizedColumnsController } from './controllers/customize-columns.controller';
 import { DropdownController } from './controllers/common-features/dropdown.controller';
 import { NoteController } from './controllers/common-features/note.controller';
+import { CompaniesController } from './controllers/common-features/companies.controller';
 
 @Module({
   imports: [
@@ -136,6 +137,7 @@ import { NoteController } from './controllers/common-features/note.controller';
     JobApplicationsController,
     CustomizedColumnsController,
     DropdownController,
+    CompaniesController,
   ],
   providers: [
     // Exceptions Filter

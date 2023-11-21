@@ -65,6 +65,7 @@ import {
   TaxCalculationRepository,
   JobApplicationsRepository,
   CustomizeColumnsRepository,
+  CompanyRepository,
 } from '../src/repositories/index';
 import { MongooseConfig } from './config/mongo.config';
 import { SharedService } from './shared.service';
@@ -149,6 +150,7 @@ import {
     ActivitylogsRepository,
     JobApplicationsRepository,
     CustomizeColumnsRepository,
+    CompanyRepository,
     {
       provide: 'S3',
       useFactory: (config: ConfigService) =>
@@ -244,6 +246,7 @@ import {
     JobApplicationsRepository,
     CustomizeColumnsRepository,
     CustomizeColumnsService,
+    CompanyRepository,
   ],
 })
 export class SharedModule {}

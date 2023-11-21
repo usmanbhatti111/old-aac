@@ -17,7 +17,8 @@ export class AssetsSoftwareDto {
     example: {
       description: 'Enter Description',
       publisher: 'Name of publisher',
-      Category: 'Any thing',
+      category: 'Any thing',
+      managedBy: '6555e426560f7182109578c1',
     },
   })
   details: string;

@@ -1,10 +1,12 @@
 import { Module } from '@nestjs/common';
+import { SharedModule } from '@shared';
 
-import { AppController } from './app.controller';
+import { MarketingCompanyController } from './controller/companies-controller';
+import { MarketingCompanyService } from './services/companies-services';
 
 @Module({
-  imports: [],
-  controllers: [AppController],
-  providers: [],
+  imports: [SharedModule],
+  controllers: [MarketingCompanyController],
+  providers: [MarketingCompanyService],
 })
 export class MarketingModule {}

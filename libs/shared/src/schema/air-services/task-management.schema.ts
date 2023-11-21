@@ -1,5 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { HydratedDocument, SchemaTypes } from 'mongoose';
+import mongoose, { HydratedDocument, SchemaTypes } from 'mongoose';
 import { AbstractSchema } from '../abstract-repo/abstract.schema';
 
 export type TaskManagementDocument = HydratedDocument<TaskManagement>;
@@ -33,6 +33,9 @@ export class TaskManagement extends AbstractSchema {
   @Prop()
   time: string;
 
+  @Prop({ type: [SchemaTypes.ObjectId], required: false })
+  recordIds?: string | mongoose.Types.ObjectId;
+
   @Prop()
   reminder: string;
 
@@ -47,12 +50,6 @@ export class TaskManagement extends AbstractSchema {
 
   @Prop({ type: SchemaTypes.ObjectId, required: false })
   deletedById?: string;
-
-  @Prop({ type: Date, default: Date.now })
-  createdAt?: Date;
-
-  @Prop({ type: Date })
-  updatedAt?: Date;
 
   @Prop({ type: Date, default: Date.now })
   deletedAt?: Date;

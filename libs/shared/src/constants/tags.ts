@@ -51,4 +51,5 @@ export const API_TAGS = {
   JOB_APPLICATIONS: 'Job Applications',
   CUSTOMIZED_COLUMNS: 'Customized Columns',
   DROPDOWNS: 'Dropdowns',
+  COMPANIES: 'Companies',
 };

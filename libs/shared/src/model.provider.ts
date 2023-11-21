@@ -114,6 +114,8 @@ import {
   EnquiriesSchema,
   JobApplications,
   JobApplicationsSchema,
+  Company,
+  CompanySchema,
 } from './schema';
 import {
   ReportsWidget,
@@ -414,5 +416,9 @@ export const DbModels = [
     name: CustomizeColumns.name,
     schema: CustomizeColumnsSchema,
     collection: MODEL.CUSTOMIZE_COLUMNS,
+  },
+  {
+    name: Company.name,
+    schema: CompanySchema,
   },
 ];

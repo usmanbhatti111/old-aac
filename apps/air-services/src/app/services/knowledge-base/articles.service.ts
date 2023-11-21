@@ -32,7 +32,15 @@ export class ArticlesService {
 
   async getArticles(payload: GetArticlesRequestDto) {
     try {
-      const { status, organizationId, authorId, search, page, limit } = payload;
+      const {
+        status,
+        organizationId,
+        authorId,
+        folderId,
+        search,
+        page,
+        limit,
+      } = payload;
       const filterQuery = {
         organizationId,
       };
@@ -97,6 +105,7 @@ export class ArticlesService {
       ];
 
       if (authorId) filterQuery['author'] = new Types.ObjectId(authorId);
+      if (folderId) filterQuery['folder'] = new Types.ObjectId(folderId);
       if (status) filterQuery['status'] = status;
       if (search) {
         const regex = new RegExp(search, 'i');
