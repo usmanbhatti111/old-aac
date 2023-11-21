@@ -35,6 +35,7 @@ import {
   DeleteOrganizationCompanyAccountDto,
   DeleteOrganizationCompanyAccountResponseDto,
   UpdateOrganizationCompanyAccountStatusDto,
+  DeleteMultipleOrganizationCompanyAccountDto,
 } from '@shared/dto';
 import { Response } from 'express';
 import { firstValueFrom } from 'rxjs';
@@ -158,6 +159,31 @@ export class OrganizationCompanyAccountController {
       )
     );
     return res.status(response.statusCode).json(response);
+  }
+
+  @Auth(true)
+  @Delete(
+    API_ENDPOINTS.ORGANIZATION_COMPANY_ACCOUNT
+      .DELETE_MULTIPLE_ORGANIZATION_COMPANY_ACCOUNT
+  )
+  @ApiOkResponse({ type: DeleteOrganizationCompanyAccountResponseDto })
+  public async deleteMultipleOrganizationAccount(
+    @Req() request: AppRequest,
+    @Body() payload: DeleteMultipleOrganizationCompanyAccountDto
+  ): Promise<DeleteOrganizationCompanyAccountResponseDto> {
+    payload.deletedBy = request?.user?._id;
+
+    const response = await firstValueFrom(
+      this.organizationAccountServiceClient.send(
+        {
+          cmd: RMQ_MESSAGES.ORGANIZATION_COMPANY_ACCOUNT
+            .DELETE_MULTIPLE_ORGANIZATION_COMPANY_ACCOUNT,
+        },
+        payload
+      )
+    );
+
+    return response;
   }
 
   @Auth(true)
