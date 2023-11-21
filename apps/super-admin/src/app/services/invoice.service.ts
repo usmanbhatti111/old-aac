@@ -9,6 +9,7 @@ import {
 import {
   InvoiceStatusEnum,
   ResponseMessage,
+  UserRole,
   successResponse,
 } from '@shared/constants';
 import {
@@ -87,6 +88,37 @@ export class InvoiceService {
           $addFields: {
             organizations: {
               $arrayElemAt: ['$organizations', 0],
+            },
+          },
+        },
+        {
+          $lookup: {
+            from: 'users',
+            let: {
+              organizationId: '$organizationId',
+              role: UserRole.ORG_ADMIN,
+              status: 'ACTIVE',
+            },
+            as: 'usersOrg',
+            pipeline: [
+              {
+                $match: {
+                  $expr: {
+                    $and: [
+                      { $eq: ['$organization', '$$organizationId'] },
+                      { $eq: ['$role', '$$role'] },
+                      // { $eq: ['$status', '$$status'] }
+                    ],
+                  },
+                },
+              },
+            ],
+          },
+        },
+        {
+          $addFields: {
+            usersOrg: {
+              $arrayElemAt: ['$usersOrg', 0],
             },
           },
         },
@@ -304,7 +336,14 @@ export class InvoiceService {
 
   async getAllInvoices(payload: ListInvoicesDTO) {
     try {
-      const { page = 0, limit = 10, organizationId, search, status } = payload;
+      const {
+        page = 0,
+        limit = 10,
+        organizationId,
+        search,
+        status,
+        organizationPlanId,
+      } = payload;
       let filterQuery = {};
 
       if (search) {
@@ -317,6 +356,10 @@ export class InvoiceService {
         filterQuery['organizationId'] = new mongoose.Types.ObjectId(
           organizationId
         );
+      }
+
+      if (organizationPlanId) {
+        filterQuery['organizationPlanId'] = organizationPlanId;
       }
 
       if (status) {
@@ -348,6 +391,37 @@ export class InvoiceService {
         },
         {
           $lookup: {
+            from: 'users',
+            let: {
+              organizationId: '$organizationId',
+              role: UserRole.ORG_ADMIN,
+              status: 'ACTIVE',
+            },
+            as: 'usersOrg',
+            pipeline: [
+              {
+                $match: {
+                  $expr: {
+                    $and: [
+                      { $eq: ['$organization', '$$organizationId'] },
+                      { $eq: ['$role', '$$role'] },
+                      // { $eq: ['$status', '$$status'] }
+                    ],
+                  },
+                },
+              },
+            ],
+          },
+        },
+        {
+          $addFields: {
+            usersOrg: {
+              $arrayElemAt: ['$usersOrg', 0],
+            },
+          },
+        },
+        {
+          $lookup: {
             from: 'plans',
             as: 'plans',
             let: { planId: '$planId' },
@@ -360,8 +434,25 @@ export class InvoiceService {
                 },
               },
               {
+                $lookup: {
+                  from: 'products',
+                  localField: 'planProducts',
+                  foreignField: '_id',
+                  as: 'products',
+                },
+              },
+              {
                 $project: {
-                  description: 1,
+                  updatedAt: 0,
+                  planProductFeatures: 0,
+                  planProductModulePermissions: 0,
+                  'products.description': 0,
+                  'products.logo': 0,
+                  'products.isActive': 0,
+                  'products.createdBy': 0,
+                  'products.isDeleted': 0,
+                  'products.createdAt': 0,
+                  'products.updatedAt': 0,
                 },
               },
             ],

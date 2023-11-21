@@ -68,7 +68,6 @@ export class AddTaskDto {
   @IsEnum(ETicketsTaskStatus)
   @ApiProperty({
     enum: ETicketsTaskStatus,
-    example: ETicketsTaskStatus.TODO,
     required: false,
   })
   status?: string;
@@ -77,7 +76,6 @@ export class AddTaskDto {
   @IsEnum(ETaskNotifyStatus)
   @ApiProperty({
     enum: ETaskNotifyStatus,
-    example: ETaskNotifyStatus.FIVE_MINS,
     required: false,
   })
   notifyBefore?: string;
@@ -134,7 +132,7 @@ export class AddTaskDto {
 }
 
 export class UpdateTaskDto {
-  @IsNotEmpty()
+  @IsOptional()
   @IsString()
   @ApiProperty({
     type: String,
@@ -183,7 +181,6 @@ export class UpdateTaskDto {
   @IsEnum(ETicketsTaskStatus)
   @ApiProperty({
     enum: ETicketsTaskStatus,
-    example: ETicketsTaskStatus.TODO,
     required: false,
   })
   status?: string;
@@ -192,7 +189,6 @@ export class UpdateTaskDto {
   @IsEnum(ETaskNotifyStatus)
   @ApiProperty({
     enum: ETaskNotifyStatus,
-    example: ETaskNotifyStatus.FIVE_MINS,
     required: false,
   })
   notifyBefore?: string;

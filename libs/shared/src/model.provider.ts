@@ -366,6 +366,7 @@ export const DbModels = [
   {
     name: Note.name,
     schema: NoteSchema,
+    collection: MODEL.NOTES,
   },
   {
     name: Annoucement.name,

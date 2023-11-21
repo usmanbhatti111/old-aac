@@ -42,7 +42,6 @@ import {
   FilterPurchaseOrderRecievedDto,
   GetPurchasesAssociationResponseOrderDto,
   DeleteAssociatePurchaseOrderDto,
-  AddPurchaseOrderApprover,
   AssociatePurchaseOrderDto,
 } from '@shared/dto';
 import { DownloadService } from '@shared/services';

@@ -24,8 +24,41 @@ export class TaskService {
       if (ticketId) {
         filterQuery['ticketId'] = new mongoose.Types.ObjectId(ticketId);
       }
+
+      const pipelines = [
+        {
+          $lookup: {
+            from: 'users',
+            localField: 'assignTo',
+            foreignField: '_id',
+            as: 'assignedUser',
+          },
+        },
+        {
+          $lookup: {
+            from: 'departments',
+            localField: 'departmentId',
+            foreignField: '_id',
+            as: 'departmentData',
+          },
+        },
+        {
+          $unwind: {
+            path: '$departmentData',
+            preserveNullAndEmptyArrays: true,
+          },
+        },
+        {
+          $unwind: {
+            path: '$assignedUser',
+            preserveNullAndEmptyArrays: true,
+          },
+        },
+      ];
+
       const res = await this.taskRepository.paginate({
         filterQuery,
+        pipelines,
         offset,
         limit,
       });

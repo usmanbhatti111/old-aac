@@ -36,4 +36,5 @@ export const MODEL = {
   TAX_CALCULATION: 'taxCalculations',
   DEAL_VIEW: 'dealViews',
   JOB_APPLICATIONS: 'jobApplications',
+  NOTES: 'notes',
 };

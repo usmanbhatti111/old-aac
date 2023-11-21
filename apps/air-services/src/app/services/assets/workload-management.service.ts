@@ -225,8 +225,8 @@ export class WorkloadManagementService {
           $addFields: {
             plannedEffortTotalMinutes: {
               $add: [
-                { $multiply: [{ $toInt: '$plannedEffortHours' }, 60] },
-                { $toInt: { $arrayElemAt: ['$plannedEffortMinutes', 0] } },
+                { $multiply: ['$plannedEffortHours', 60] },
+                '$plannedEffortMinutes',
               ],
             },
           },

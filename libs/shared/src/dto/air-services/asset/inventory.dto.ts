@@ -111,6 +111,7 @@ export class GetInventoryDto extends paginationDTO {
   @IsEnum(EMongooseDateFilter)
   @IsOptional()
   updatedAt: string;
+  @IsOptional()
   @IsEnum(['services', 'hardware', 'software'])
   @ApiProperty({
     example: 'services',
@@ -118,7 +119,7 @@ export class GetInventoryDto extends paginationDTO {
     required: false,
   })
   assetType: string;
-
+  @IsOptional()
   @IsEnum(['low', 'medium', 'high'])
   @ApiProperty({
     example: 'low',
