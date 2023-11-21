@@ -7,7 +7,6 @@ import {
   Param,
   Patch,
   Post,
-  Put,
   Query,
   Req,
   Res,
@@ -28,8 +27,6 @@ import {
   SERVICES,
 } from '@shared/constants';
 import {
-  CreateDealCuztomizeColumnDto,
-  CreateDealCuztomizeColumnResponseDto,
   CreateDealDto,
   CreateDealResponseDto,
   DealAssociationDto,
@@ -309,29 +306,6 @@ export class DealsController {
     const response = await firstValueFrom(
       this.salesService.send(
         RMQ_MESSAGES.SALES.DEALS.DEAL_ACTION_PREVIEW,
-        payload
-      )
-    );
-
-    return response;
-  }
-
-  @Auth(true)
-  @Put(API_ENDPOINTS.SALES.DEALS.CREATE_OR_UPDATE_CUSTOMIZE_COLUMN)
-  @ApiOkResponse({ type: CreateDealCuztomizeColumnResponseDto })
-  public async createOrUpdateCustomizeColumn(
-    @Req() request: AppRequest,
-    @Body() payload: CreateDealCuztomizeColumnDto
-  ): Promise<CreateDealCuztomizeColumnResponseDto> {
-    if (payload?.userId === request?.user?._id) {
-      payload.userId = request?.user?._id;
-    } else {
-      delete payload?.userId;
-    }
-
-    const response = await firstValueFrom(
-      this.salesService.send(
-        RMQ_MESSAGES.SALES.DEALS.CREATE_OR_UPDATE_CUSTOMIZE_COLUMN,
         payload
       )
     );

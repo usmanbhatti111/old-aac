@@ -379,7 +379,6 @@ export const API_ENDPOINTS = {
       ADD_NOTE: 'add-note',
       DELETE_NOTE: 'delete-note',
       DEAL_ACTION_PREVIEW: 'deal-action-preview/:id',
-      CREATE_OR_UPDATE_CUSTOMIZE_COLUMN: 'create-or-update-customize-column',
     },
     DEAL_VIEWS: {
       CREATE_DEAL_VIEW: '/',

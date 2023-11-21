@@ -2,7 +2,6 @@ import { Controller } from '@nestjs/common';
 import { MessagePattern, Payload } from '@nestjs/microservices';
 import { RMQ_MESSAGES } from '@shared/constants';
 import {
-  CreateDealCuztomizeColumnDto,
   CreateDealDto,
   DealAssociationDto,
   DealTaskDto,
@@ -92,12 +91,5 @@ export class DealsController {
   @MessagePattern(RMQ_MESSAGES.SALES.DEAL_VIEWS.GET_TASKS)
   async getTasks(@Payload() payload: IdDto) {
     return this.dealsService.getTasks(payload);
-  }
-
-  @MessagePattern(RMQ_MESSAGES.SALES.DEALS.CREATE_OR_UPDATE_CUSTOMIZE_COLUMN)
-  async createOrUpdateCustomizeColumn(
-    @Payload() payload: CreateDealCuztomizeColumnDto
-  ) {
-    return this.customizeColumnsService.createCustomizeColumns(payload);
   }
 }

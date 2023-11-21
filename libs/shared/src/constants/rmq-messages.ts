@@ -408,7 +408,6 @@ export const RMQ_MESSAGES = {
       CREATE_ASSOCIATION: 'create-association',
       DELETE_ASSOCIATION: 'delete-association',
       DEAL_ACTION_PREVIEW: 'deal-action-preview',
-      CREATE_OR_UPDATE_CUSTOMIZE_COLUMN: 'create-or-update-customize-column',
     },
     DEAL_VIEWS: {
       CREATE_DEAL_VIEW: 'create-deal-view',
@@ -425,6 +424,7 @@ export const RMQ_MESSAGES = {
   },
   CUSTOMIZED_COLUMNS: {
     GET_CUSTOMIZE_COLUMN: 'get-customize-column',
+    CREATE_OR_UPDATE_CUSTOMIZE_COLUMN: 'create-or-update-customize-column',
   },
   DROPDOWNS: {
     ORGANIZATIONS_DROPDOWN: 'organization-dropdown',

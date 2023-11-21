@@ -396,6 +396,7 @@ export enum EActivitylogModule {
   MEETINGS = 'MEETINGS',
   EMAILS = 'EMAILS',
   OTHERS = 'OTHERS',
+  CUSTOMIZED_COLUMNS = 'CUSTOMIZED_COLUMNS',
 }
 
 export enum EApplicationStatus {
@@ -407,4 +408,5 @@ export enum EApplicationStatus {
 
 export enum ECustomizeColumnType {
   DEALS = 'deals',
+  COMPANIES = 'companies',
 }
