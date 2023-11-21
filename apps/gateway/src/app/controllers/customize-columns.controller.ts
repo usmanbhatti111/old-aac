@@ -12,8 +12,8 @@ import {
 } from '@shared/constants';
 import {
   ActivityLogParams,
-  CreateDealCuztomizeColumnDto,
-  CreateDealCuztomizeColumnResponseDto,
+  CreateCustomizeColumnDto,
+  CreateCuztomizeColumnResponseDto,
   GetCustomizedColumns,
   GetCustomizedColumnsResponseDto,
 } from '@shared/dto';
@@ -50,12 +50,12 @@ export class CustomizedColumnsController {
   }
 
   @Auth(true)
-  @Put(API_ENDPOINTS.SALES.DEALS.CREATE_OR_UPDATE_CUSTOMIZE_COLUMN)
-  @ApiOkResponse({ type: CreateDealCuztomizeColumnResponseDto })
+  @Put(API_ENDPOINTS.CUSTOMIZED_COLUMNS.CREATE_OR_UPDATE_CUSTOMIZE_COLUMN)
+  @ApiOkResponse({ type: CreateCuztomizeColumnResponseDto })
   public async createOrUpdateCustomizeColumn(
     @Req() request: AppRequest,
-    @Body() payload: CreateDealCuztomizeColumnDto
-  ): Promise<CreateDealCuztomizeColumnResponseDto> {
+    @Body() payload: CreateCustomizeColumnDto
+  ): Promise<CreateCuztomizeColumnResponseDto> {
     if (payload?.userId === request?.user?._id) {
       payload.userId = request?.user?._id;
     } else {
@@ -72,11 +72,11 @@ export class CustomizedColumnsController {
     //ActivityLog
     if (response?.data) {
       const params: ActivityLogParams = {
-        performedBy: request?.user?._id, // userId
-        activityType: EActivityType.CREATED, // UPDATED
-        module: EActivitylogModule.CUSTOMIZED_COLUMNS, // module
-        moduleId: response?.data?._id, // module._id
-        moduleName: response?.data?.name || 'Subscription', //module.name
+        performedBy: request?.user?._id,
+        activityType: EActivityType.CREATED,
+        module: EActivitylogModule.CUSTOMIZED_COLUMNS,
+        moduleId: response?.data?._id,
+        moduleName: response?.data?.name || 'Customize Columns',
       };
       firstValueFrom(
         this.commonFeatures.emit(RMQ_MESSAGES.ACTIVITY_LOG.ACTIVITY_LOG, {
@@ -85,8 +85,6 @@ export class CustomizedColumnsController {
       );
       response.data.activity = true;
     }
-
-    return response;
 
     return response;
   }

@@ -660,7 +660,7 @@ export class DealsService {
         offset,
         limit,
         pipelines,
-        sort: { deletedAt: -1 },
+        // sort: { deletedAt: -1 },
       });
 
       const response = successResponse(

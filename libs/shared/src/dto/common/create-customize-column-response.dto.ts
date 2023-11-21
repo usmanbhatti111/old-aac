@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 
-export class CreateDealCuztomizeColumnResponseDto {
+export class CreateCuztomizeColumnResponseDto {
   @ApiProperty({ example: 200 })
   statusCode: number;
 

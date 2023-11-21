@@ -404,6 +404,7 @@ export const API_ENDPOINTS = {
   },
   CUSTOMIZED_COLUMNS: {
     GET_CUSTOMIZE_COLUMN: '/',
+    CREATE_OR_UPDATE_CUSTOMIZE_COLUMN: '/',
   },
   DROPDOWNS: {
     ORGANIZATION_DROPDOWN: 'organizations',
