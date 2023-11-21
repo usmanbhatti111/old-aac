@@ -1,11 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import {
-  AttachmentDTO,
-  NoteDto,
-  OrganizationDto,
-  SalesProductDto,
-} from '@shared/dto';
-import { Transform, Type } from 'class-transformer';
+import { Transform } from 'class-transformer';
 import { IsNotEmpty, IsOptional } from 'class-validator';
 import { toMongoObjectId } from 'libs/shared/src/functions';
 
@@ -39,7 +33,7 @@ export class DealNotesResponseDto {
   message: string;
 
   @ApiProperty({
-    example: [NoteDto],
+    example: [],
   })
   data: {};
 

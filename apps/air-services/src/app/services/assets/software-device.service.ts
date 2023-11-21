@@ -42,15 +42,27 @@ export class SoftwareDeviceService {
             from: 'users',
             localField: 'usedBy',
             foreignField: '_id',
-            as: 'users',
+            as: 'userDetail',
           },
         },
         {
           $lookup: {
-            from: 'department',
+            from: 'departments',
             localField: 'departmentId',
             foreignField: '_id',
-            as: 'department',
+            as: 'departmentDetail',
+          },
+        },
+        {
+          $unwind: {
+            path: '$userDetail',
+            preserveNullAndEmptyArrays: true,
+          },
+        },
+        {
+          $unwind: {
+            path: '$departmentDetail',
+            preserveNullAndEmptyArrays: true,
           },
         },
       ];

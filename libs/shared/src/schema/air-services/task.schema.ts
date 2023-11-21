@@ -39,7 +39,6 @@ export class Task extends AbstractSchema {
     type: String,
     required: false,
     enum: ETicketsTaskStatus,
-    default: ETicketsTaskStatus.TODO,
   })
   status: string;
 

@@ -4,6 +4,7 @@ import { OrganizationCompanyAccountRepository } from '@shared';
 
 import {
   CreateOrganizationCompanyAccountDto,
+  DeleteMultipleOrganizationCompanyAccountDto,
   GetAllOrganizationCompanyAccountsDto,
   IdDto,
   UpdateOrganizationCompanyAccountDto,
@@ -57,6 +58,7 @@ export class OrganizationCompanyAccountService {
       const filterQuery = {
         isDeleted: false,
         organizationId: payload?.organizationId,
+        accountName: { $regex: payload?.search, $options: 'i' },
       };
 
       let { limit, page } = payload;
@@ -142,6 +144,27 @@ export class OrganizationCompanyAccountService {
         },
         { isDeleted: true }
       );
+      return successResponse(HttpStatus.OK, 'Success', {});
+    } catch (error) {
+      return errorResponse(HttpStatus.BAD_REQUEST, error?.response?.message);
+    }
+  }
+
+  async deleteMultipleOrganizationCompanyAccount(
+    payload: DeleteMultipleOrganizationCompanyAccountDto
+  ) {
+    try {
+      const { accountIds, deletedBy } = payload;
+
+      for (const accountId of accountIds) {
+        await this.organizationCompanyAccountRepository.findOneAndUpdate(
+          {
+            _id: accountId,
+          },
+          { isDeleted: true, deletedAt: Date.now(), deletedBy }
+        );
+      }
+
       return successResponse(HttpStatus.OK, 'Success', {});
     } catch (error) {
       return errorResponse(HttpStatus.BAD_REQUEST, error?.response?.message);

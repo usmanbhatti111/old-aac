@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsInt, IsNotEmpty, IsOptional } from 'class-validator';
+import { IsArray, IsInt, IsNotEmpty, IsOptional } from 'class-validator';
 import { Transform, Type } from 'class-transformer';
 import { paginationDTO } from '../pagination/pagination.dto';
 import { IdDto } from '../common';
@@ -137,6 +137,20 @@ export class DeleteOrganizationCompanyAccountDto extends IdDto {
   deletedBy: string;
 }
 
+export class DeleteMultipleOrganizationCompanyAccountDto {
+  @ApiProperty({
+    required: true,
+    type: [String],
+    isArray: true,
+  })
+  @Transform(toMongoObjectId)
+  @IsNotEmpty()
+  @IsArray()
+  accountIds: string[];
+
+  deletedBy?: string;
+}
+
 export class UpdateOrganizationCompanyAccountStatusDto extends IdDto {
   updatedBy: string;
   @ApiProperty({
@@ -150,6 +164,8 @@ export class GetAllOrganizationCompanyAccountsDto extends paginationDTO {
   @IsNotEmpty()
   @Transform(toMongoObjectId)
   organizationId: string;
+
+  search: string;
 }
 export class OrganizationCompanyAccountDto {
   @ApiProperty({
@@ -302,4 +318,9 @@ export class GetOrganizationCompanyAccountDto {
   @IsInt()
   @Type(() => Number)
   limit?: number;
+
+  @ApiProperty({
+    example: 'company name',
+  })
+  search?: string;
 }

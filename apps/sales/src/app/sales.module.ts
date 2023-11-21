@@ -7,8 +7,6 @@ import { SalesProductService } from './services/sales-product.service';
 import { SharedModule } from '@shared';
 import { DealsController } from './controllers/deals.controller';
 import { DealsService } from './services/deals.service';
-import { NoteController } from './controllers/note.controller';
-import { NoteService } from './services/note.service';
 import { DealViewsController } from './controllers/deal-views.controller';
 import { DealViewsService } from './services/deal-views.service';
 
@@ -18,14 +16,12 @@ import { DealViewsService } from './services/deal-views.service';
     DealPipelineController,
     SalesProductController,
     DealsController,
-    NoteController,
     DealViewsController,
   ],
   providers: [
     DealPipelineService,
     SalesProductService,
     DealsService,
-    NoteService,
     DealViewsService,
   ],
 })
