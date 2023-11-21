@@ -67,6 +67,7 @@ import { ActivitylogsController } from './controllers/common-features/activitylo
 import { JobApplicationsController } from './controllers/super-admin/job-applications.controller';
 import { DropdownController } from './controllers/common-features/dropdown.controller';
 import { NoteController } from './controllers/common-features/note.controller';
+import { CompaniesController } from './controllers/common-features/companies.controller';
 
 @Module({
   imports: [
@@ -134,6 +135,7 @@ import { NoteController } from './controllers/common-features/note.controller';
     ActivitylogsController,
     JobApplicationsController,
     DropdownController,
+    CompaniesController,
   ],
   providers: [
     // Exceptions Filter

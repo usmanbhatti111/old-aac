@@ -54,5 +54,7 @@ export const CONTROLLERS = {
   DEAL_VIEWS: 'deal-views',
   ACTIVITY_LOG: 'activity-log',
   JOB_APPLICATIONS: 'job-applications',
+  COMPANY: 'company',
   DROPDOWN: 'dropdown',
+  COMPANIES: 'companies',
 };

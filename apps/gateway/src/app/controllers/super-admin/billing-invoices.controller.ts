@@ -128,7 +128,7 @@ export class InvoiceController {
           moduleName: response?.data?.name || 'Subscription', //module.name
         };
         firstValueFrom(
-          this.commonFeatureClient.emit(
+          this.commonFeatureClient.send(
             RMQ_MESSAGES.ACTIVITY_LOG.ACTIVITY_LOG,
             {
               ...params,
