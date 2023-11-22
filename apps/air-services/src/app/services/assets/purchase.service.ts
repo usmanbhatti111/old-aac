@@ -101,7 +101,7 @@ export class PurchaseOrderService {
       const filterQuery = {};
       const searchFilter = {};
       let expiryFilter = {};
-      const pipeline: any = [
+      const pipelines: any = [
         {
           $lookup: {
             from: 'attachments',
@@ -134,28 +134,26 @@ export class PurchaseOrderService {
           { status: { $regex: search, $options: 'i' } },
           { currency: { $regex: search, $options: 'i' } },
         ];
-        pipeline.push({ $match: searchFilter });
+        pipelines.push({ $match: searchFilter });
       }
 
       if (createdAt) {
         expiryFilter = mongooseDateFilter(createdAt, 'createdAt');
-        pipeline.push({ $match: expiryFilter });
+        pipelines.push({ $match: expiryFilter });
       }
       if (expectedDeliveryDate) {
         expiryFilter = mongooseDateFilter(
           expectedDeliveryDate,
           'expectedDeliveryDate'
         );
-        pipeline.push({ $match: expiryFilter });
+        pipelines.push({ $match: expiryFilter });
       }
-      const response = await this.purchaseRepository.newPaginate(
+      const response = await this.purchaseRepository.paginate({
         filterQuery,
-        pipeline,
-        {
-          page,
-          limit,
-        }
-      );
+        offset: page,
+        limit,
+        pipelines,
+      });
       return successResponse(HttpStatus.OK, ResponseMessage.SUCCESS, response);
     } catch (error) {
       throw new RpcException(error);
@@ -216,18 +214,16 @@ export class PurchaseOrderService {
       const { page, limit, status } = payload;
 
       const filterQuery = {};
-      const pipeline = [];
+      const pipelines = [];
       if (status) {
         filterQuery['status'] = status;
       }
-      const res = await this.purchaseRepository.newPaginate(
+      const res = await this.purchaseRepository.paginate({
         filterQuery,
-        pipeline,
-        {
-          page,
-          limit,
-        }
-      );
+        offset: page,
+        limit,
+        pipelines,
+      });
       return successResponse(HttpStatus.OK, ResponseMessage.SUCCESS, res);
     } catch (error) {
       throw new RpcException(error);

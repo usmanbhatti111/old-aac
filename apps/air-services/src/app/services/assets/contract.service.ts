@@ -118,7 +118,7 @@ export class ContractService {
       const filterQuery = {};
       const searchFilter = {};
       let expiryFilter = {};
-      let pipeline: any = [
+      let pipelines: any = [
         {
           $lookup: {
             from: 'attachments',
@@ -145,12 +145,12 @@ export class ContractService {
           { status: { $regex: search, $options: 'i' } },
           { cost: { $regex: search, $options: 'i' } },
         ];
-        pipeline.push({ $match: searchFilter });
+        pipelines.push({ $match: searchFilter });
       }
       if (assetId) {
         filterQuery['assetId'] = new mongoose.Types.ObjectId(assetId);
-        pipeline = [
-          ...pipeline,
+        pipelines = [
+          ...pipelines,
           {
             $lookup: {
               from: 'assetssoftwares',
@@ -169,16 +169,14 @@ export class ContractService {
       }
       if (expiry) {
         expiryFilter = mongooseDateFilter(expiry, 'endDate');
-        pipeline.push({ $match: expiryFilter });
+        pipelines.push({ $match: expiryFilter });
       }
-      const response = await this.contractRepository.newPaginate(
+      const response = await this.contractRepository.paginate({
         filterQuery,
-        pipeline,
-        {
-          page,
-          limit,
-        }
-      );
+        offset: page,
+        limit,
+        pipelines,
+      });
 
       return successResponse(HttpStatus.CREATED, 'Success', response);
     } catch (error) {
