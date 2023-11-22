@@ -27,13 +27,17 @@ import {
   ChangeCompanyOwnerDto,
   ChangeCompanyOwnerResponseDto,
   CreateComapanyDTO,
+  CreateCompanyCustomizeColumnDto,
+  CreateCompanyCustomizeColumnResponseDto,
   DeleteCompaniesDto,
   DeleteCompaniesResponseDto,
   GetComapaniesResponseDTO,
   GetComapanyDto,
   GetComapanyResponseDTO,
+  GetCompanyCustomizedColumns,
   GetCompanyDetailsDto,
   GetCompanyDetailsResponseDto,
+  GetCustomizedCompanyColumnsResponseDto,
   GetDeletedCompanisDto,
   GetUniqueCompaniesOwnersDto,
   UpdateComapanyDto,
@@ -155,7 +159,7 @@ export class CompaniesController {
   // nome
 
   @Auth(true)
-  @Post(API_ENDPOINTS.MARKETING.COMPANY.CREATE)
+  @Post(API_ENDPOINTS.COMPANY.CREATE)
   @ApiOkResponse({ type: GetComapanyResponseDTO })
   public async addMarketingCompany(
     @Req() req: AppRequest,
@@ -189,7 +193,7 @@ export class CompaniesController {
   }
 
   @Auth(true)
-  @Get(API_ENDPOINTS.MARKETING.COMPANY.GET)
+  @Get(API_ENDPOINTS.COMPANY.GET)
   @ApiOkResponse({ type: GetComapaniesResponseDTO })
   public async getMarketingCompanies(
     @Req() req: AppRequest,
@@ -223,7 +227,7 @@ export class CompaniesController {
   }
 
   @Auth(true)
-  @Get(API_ENDPOINTS.MARKETING.COMPANY.DETAIL)
+  @Get(API_ENDPOINTS.COMPANY.DETAIL)
   public async marketingCompanyDetail(
     @Req() req: AppRequest,
     @Param('id') id: string
@@ -255,7 +259,7 @@ export class CompaniesController {
   }
 
   @Auth(true)
-  @Patch(API_ENDPOINTS.MARKETING.COMPANY.UPDATE)
+  @Patch(API_ENDPOINTS.COMPANY.UPDATE)
   @ApiOkResponse({ type: GetComapanyResponseDTO })
   public async updateMarketingCompany(
     @Req() req: AppRequest,
@@ -293,7 +297,7 @@ export class CompaniesController {
   }
 
   @Auth(true)
-  @Delete(API_ENDPOINTS.MARKETING.COMPANY.DELETE)
+  @Delete(API_ENDPOINTS.COMPANY.DELETE)
   @ApiOkResponse({ type: GetComapanyResponseDTO })
   public async deleteMarketingCompany(
     @Req() req: AppRequest,
@@ -329,7 +333,7 @@ export class CompaniesController {
   }
 
   @Auth(true)
-  @Get(API_ENDPOINTS.MARKETING.COMPANY.GET_DELETED)
+  @Get(API_ENDPOINTS.COMPANY.GET_DELETED)
   @ApiOkResponse({ type: GetComapaniesResponseDTO })
   public async getDeletedCompanies(
     @Req() req: AppRequest,
@@ -358,6 +362,65 @@ export class CompaniesController {
 
       response.data.activity = true;
     }
+
+    return response;
+  }
+
+  @Auth(true)
+  @Patch(API_ENDPOINTS.COMPANY.CUSTOMIZE_COLUMN)
+  @ApiOkResponse({ type: CreateCompanyCustomizeColumnResponseDto })
+  public async createOrUpdateCustomizeColumn(
+    @Req() request: AppRequest,
+    @Body() payload: CreateCompanyCustomizeColumnDto
+  ): Promise<CreateCompanyCustomizeColumnResponseDto> {
+    if (payload?.userId === request?.user?._id) {
+      payload.userId = request?.user?._id;
+    } else {
+      delete payload?.userId;
+    }
+
+    const response = await firstValueFrom(
+      this.commonFeatureClient.send(
+        RMQ_MESSAGES.COMPANY.CREATE_CUSTOMIZE_COLUMN,
+        payload
+      )
+    );
+
+    //ActivityLog
+    if (response?.data) {
+      const params: ActivityLogParams = {
+        performedBy: request?.user?._id,
+        activityType: EActivityType.CREATED,
+        module: EActivitylogModule.CUSTOMIZED_COLUMNS,
+        moduleId: response?.data?._id,
+        moduleName: response?.data?.name || 'Customize Columns',
+      };
+      firstValueFrom(
+        this.commonFeatureClient.emit(RMQ_MESSAGES.ACTIVITY_LOG.ACTIVITY_LOG, {
+          ...params,
+        })
+      );
+      response.data.activity = true;
+    }
+
+    return response;
+  }
+
+  @Auth(true)
+  @Get(API_ENDPOINTS.COMPANY.CUSTOMIZE_COLUMN)
+  @ApiOkResponse({ type: GetCustomizedCompanyColumnsResponseDto })
+  public async getCustomizedColumns(
+    @Req() request: AppRequest,
+    @Query() payload: GetCompanyCustomizedColumns
+  ): Promise<GetCustomizedCompanyColumnsResponseDto> {
+    payload.userId = request?.user?._id;
+
+    const response = await firstValueFrom(
+      this.commonFeatureClient.send(
+        RMQ_MESSAGES.COMPANY.GET_CUSTOMIZE_COLUMN,
+        payload
+      )
+    );
 
     return response;
   }

@@ -406,16 +406,17 @@ export const API_ENDPOINTS = {
     GET_CUSTOMIZE_COLUMN: '/',
     CREATE_OR_UPDATE_CUSTOMIZE_COLUMN: '/',
   },
-  MARKETING: {
-    COMPANY: {
-      CREATE: 'create',
-      GET: 'list',
-      DETAIL: 'detail/:id',
-      UPDATE: 'update/:id',
-      DELETE: 'delete/:id',
-      GET_DELETED: 'deleted-company',
-    },
+  // MARKETING: {
+  COMPANY: {
+    CREATE: 'create',
+    GET: 'list',
+    DETAIL: 'detail/:id',
+    UPDATE: 'update/:id',
+    DELETE: 'delete/:id',
+    GET_DELETED: 'deleted-company',
+    CUSTOMIZE_COLUMN: 'customize-column',
   },
+  // },
   DROPDOWNS: {
     ORGANIZATION_DROPDOWN: 'organizations',
     PRODUCTS_DROPDOWN: 'products',

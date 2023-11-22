@@ -1,4 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { ECustomizeColumnType } from '../../constants/enums';
 
 export class CreateCuztomizeColumnResponseDto {
   @ApiProperty({ example: 200 })
@@ -7,11 +8,14 @@ export class CreateCuztomizeColumnResponseDto {
   @ApiProperty({ example: 'Success' })
   message: string;
 
+  @ApiProperty()
+  type: string;
+
   @ApiProperty({
     example: {
       _id: '655462e69504c030d3724e94',
       userId: '653b47c4bb3e468fdf58c9ac',
-      type: 'deals',
+      type: ECustomizeColumnType.COMPANIES,
       isDeleted: false,
       columns: [
         {

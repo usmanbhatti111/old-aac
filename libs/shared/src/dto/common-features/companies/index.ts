@@ -7,3 +7,4 @@ export * from './get-company-details.dto';
 export * from './get-company-details-response.dto';
 export * from './get-company.dto';
 export * from './add-company.dto';
+export * from './customize-column.dto';
