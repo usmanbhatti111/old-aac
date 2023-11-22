@@ -18,6 +18,7 @@ export const API_ENDPOINTS = {
     GET_ONE: '/:id',
     CREATE: '/',
     UPDATE: '/:id',
+    ORG_USER: '/organization/:orgId',
     AVATAR: '/:id/avatar',
     EDIT_USER: 'edit/:id',
     DELETE: '/:id',

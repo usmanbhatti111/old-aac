@@ -1,8 +1,9 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty, OmitType, PartialType } from '@nestjs/swagger';
 import { Transform } from 'class-transformer';
 import { IsNotEmpty, IsOptional } from 'class-validator';
 import { User } from '../../schema/user-account';
 import { UserRole } from '../../constants/enums';
+import { toMongoObjectId } from '../../functions';
 
 export class CreateUserDto extends User {
   @ApiProperty({ type: String, example: 'John' })
@@ -57,6 +58,10 @@ export class CreateUserDto extends User {
   @IsOptional()
   linkedInUrl?: string;
 
+  @ApiProperty({ type: String, example: 'https://www.twitter.com/user' })
+  @IsOptional()
+  twitterUrl?: string;
+
   @ApiProperty({ type: Number, example: '21399249' })
   @IsOptional()
   crn?: number;
@@ -70,4 +75,25 @@ export class CreateUserDto extends User {
   products?: [];
 
   organization: string;
+}
+
+export class CreateOrgUserDto extends PartialType(
+  OmitType(CreateUserDto, ['crn', 'companyName', 'products'] as const)
+) {
+  @ApiProperty({
+    example: UserRole.ORG_EMPLOYEE,
+    enum: UserRole,
+  })
+  @IsNotEmpty()
+  role: string;
+}
+
+export class CreateOrgUserParamDto {
+  @ApiProperty({
+    required: true,
+    description: 'Example: 652627f809a15759b979dd3a',
+  })
+  @IsNotEmpty()
+  @Transform(toMongoObjectId)
+  orgId: string;
 }

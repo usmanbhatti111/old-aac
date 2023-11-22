@@ -7,10 +7,10 @@ import {
   GetAdminUserDto,
   CreateUserDto,
   UpdateProfileDto,
-  EditUserByAdminDto,
   SignupDto,
   MediaObject,
   UpdateAvatarDto,
+  CreateOrgUserDto,
 } from '@shared/dto';
 import { S3Service } from '@shared/services';
 import { Model } from 'mongoose';
@@ -52,6 +52,15 @@ export class UserService {
           `Wrong user role ${role}`
         );
       }
+    } catch (error) {
+      throw new RpcException(error);
+    }
+  }
+
+  async createOrgUser(payload: CreateOrgUserDto | any) {
+    try {
+      const result = await this.userRepository.create(payload);
+      return successResponse(HttpStatus.OK, ResponseMessage.SUCCESS, result);
     } catch (error) {
       throw new RpcException(error);
     }
@@ -230,43 +239,6 @@ export class UserService {
         { _id: userId },
         payload
       );
-      return successResponse(HttpStatus.OK, ResponseMessage.SUCCESS, user);
-    } catch (error) {
-      throw new RpcException(error);
-    }
-  }
-
-  async editUserByAdmin(payload: EditUserByAdminDto) {
-    try {
-      const { userId, products } = payload;
-
-      const keysToRemove = ['userId', 'products', 'crn'];
-      keysToRemove.forEach((key) => delete payload[key]);
-
-      let mongooseQuery = {};
-      if (products) {
-        mongooseQuery = { $addToSet: { products: { $each: products } } };
-      }
-
-      const user = await this.userRepository.findByIdAndUpdate(
-        { _id: userId },
-        {
-          ...mongooseQuery,
-          ...payload,
-        }
-      );
-
-      // if (companyName || CRN) {
-      //   const orgData = {
-      //     ...(CRN && { crn: CRN }),
-      //     ...(companyName && { name: companyName }),
-      //   };
-      //   await this.orgRepository.findByIdAndUpdate(
-      //     { _id: user.organization },
-      //     orgData
-      //   );
-      // }
-
       return successResponse(HttpStatus.OK, ResponseMessage.SUCCESS, user);
     } catch (error) {
       throw new RpcException(error);

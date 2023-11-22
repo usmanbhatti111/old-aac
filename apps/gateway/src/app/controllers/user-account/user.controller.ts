@@ -30,7 +30,6 @@ import {
   GetAdminUserDto,
   CreateUserDto,
   UpdateProfileDto,
-  EditUserByAdminDto,
   GetAdminUserListResponseDto,
   AddAdminUserResponseDto,
   UserProfileResponseDto,
@@ -38,6 +37,8 @@ import {
   UpdateAvatarParamDto,
   UpdateAvatarQueryDto,
   UserAvatarResponseDto,
+  CreateOrgUserDto,
+  CreateOrgUserParamDto,
 } from '@shared/dto';
 import { firstValueFrom } from 'rxjs';
 import { Auth } from '../../decorators/auth.decorator';
@@ -130,16 +131,17 @@ export class UserController {
   }
 
   @Auth(true)
-  @Patch(API_ENDPOINTS.USER.EDIT_USER)
-  @ApiOperation({ summary: 'Edit User by Admin' })
+  @Post(API_ENDPOINTS.USER.ORG_USER)
+  @ApiOperation({ summary: 'Add User for organization' })
   @ApiOkResponse({ type: UserProfileResponseDto })
-  public editUser(
-    @Param('id') userId: string,
-    @Body() body: EditUserByAdminDto
+  public createOrganizationUser(
+    @Param() { orgId }: CreateOrgUserParamDto,
+    @Body() payload: CreateOrgUserDto
   ): Promise<UserProfileResponseDto> {
-    body.userId = userId;
+    payload.organization = orgId;
+
     return firstValueFrom(
-      this.userServiceClient.send(RMQ_MESSAGES.USER.EDIT_USER, body)
+      this.userServiceClient.send(RMQ_MESSAGES.USER.CREATE_ORG_USER, payload)
     );
   }
 }

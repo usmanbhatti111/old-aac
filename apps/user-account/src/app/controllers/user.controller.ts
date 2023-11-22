@@ -5,8 +5,8 @@ import {
   GetAdminUserDto,
   CreateUserDto,
   UpdateProfileDto,
-  EditUserByAdminDto,
   UpdateAvatarDto,
+  CreateOrgUserDto,
 } from '@shared/dto';
 import { UserService } from '../services/user.service';
 
@@ -46,13 +46,13 @@ export class UserController {
     return this.userService.updateProfile(payload);
   }
 
-  @MessagePattern(RMQ_MESSAGES.USER.EDIT_USER)
-  editUser(@Payload() payload: EditUserByAdminDto) {
-    return this.userService.editUserByAdmin(payload);
-  }
-
   @MessagePattern(RMQ_MESSAGES.USER.UPDATE_AVATAR)
   editAvatar(@Payload() payload: UpdateAvatarDto) {
     return this.userService.updateAvatar(payload);
+  }
+
+  @MessagePattern(RMQ_MESSAGES.USER.CREATE_ORG_USER)
+  createOrgEmployee(@Payload() payload: CreateOrgUserDto) {
+    return this.userService.createOrgUser(payload);
   }
 }
