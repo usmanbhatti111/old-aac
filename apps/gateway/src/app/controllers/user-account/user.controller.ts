@@ -34,6 +34,10 @@ import {
   GetAdminUserListResponseDto,
   AddAdminUserResponseDto,
   UserProfileResponseDto,
+  UpdateAvatarDto,
+  UpdateAvatarParamDto,
+  UpdateAvatarQueryDto,
+  UserAvatarResponseDto,
 } from '@shared/dto';
 import { firstValueFrom } from 'rxjs';
 import { Auth } from '../../decorators/auth.decorator';
@@ -85,9 +89,9 @@ export class UserController {
   }
 
   @Auth(true)
-  @Patch(API_ENDPOINTS.USER.UPDATE)
-  @ApiOperation({ summary: 'Update Profile' })
-  @ApiOkResponse({ type: UserProfileResponseDto })
+  @Patch(API_ENDPOINTS.USER.AVATAR)
+  @ApiOperation({ summary: 'Update User Avatar' })
+  @ApiOkResponse({ type: UserAvatarResponseDto })
   @ApiFormData({
     required: false,
     single: true,
@@ -95,13 +99,30 @@ export class UserController {
     fileTypes: ['jpg', 'png', 'jpeg'],
     errorMessage: 'Invalid document file entered.',
   })
+  public updateAvatar(
+    @Param() { id }: UpdateAvatarParamDto,
+    @Query() { removeAvatar }: UpdateAvatarQueryDto,
+    @Body() payload: UpdateAvatarDto,
+    @UploadedFile() file: any
+  ): Promise<UserProfileResponseDto> | any {
+    payload.userId = id;
+    payload.avatar = file;
+    payload.removeAvatar = removeAvatar;
+
+    return firstValueFrom(
+      this.userServiceClient.send(RMQ_MESSAGES.USER.UPDATE_AVATAR, payload)
+    );
+  }
+
+  @Auth(true)
+  @Patch(API_ENDPOINTS.USER.UPDATE)
+  @ApiOperation({ summary: 'Update Profile' })
+  @ApiOkResponse({ type: UserProfileResponseDto })
   public updateProfile(
     @Param('id') userId: string,
-    @Body() payload: UpdateProfileDto,
-    @UploadedFile() file: any
+    @Body() payload: UpdateProfileDto
   ): Promise<UserProfileResponseDto> {
     payload.userId = userId;
-    payload.avatar = file;
 
     return firstValueFrom(
       this.userServiceClient.send(RMQ_MESSAGES.USER.UPDATE_PROFILE, payload)

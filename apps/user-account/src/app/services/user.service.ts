@@ -10,6 +10,7 @@ import {
   EditUserByAdminDto,
   SignupDto,
   MediaObject,
+  UpdateAvatarDto,
 } from '@shared/dto';
 import { S3Service } from '@shared/services';
 import { Model } from 'mongoose';
@@ -220,22 +221,7 @@ export class UserService {
 
   async updateProfile(payload: UpdateProfileDto) {
     try {
-      const { userId, avatar } = payload;
-
-      if (avatar) {
-        const s3Response = await this.s3.uploadFile(
-          avatar,
-          'users/avatar/{uuid}'
-        );
-
-        const profileImage: MediaObject = {
-          ...s3Response,
-          size: avatar.size,
-          mimetype: avatar.mimetype,
-        };
-
-        payload.avatar = profileImage;
-      }
+      const { userId } = payload;
 
       const keysToRemove = ['userId'];
       keysToRemove.forEach((key) => delete payload[key]);
@@ -252,9 +238,9 @@ export class UserService {
 
   async editUserByAdmin(payload: EditUserByAdminDto) {
     try {
-      const { userId, products, companyName, CRN } = payload;
+      const { userId, products } = payload;
 
-      const keysToRemove = ['userId', 'products', 'companyName', 'CRN'];
+      const keysToRemove = ['userId', 'products', 'crn'];
       keysToRemove.forEach((key) => delete payload[key]);
 
       let mongooseQuery = {};
@@ -270,16 +256,16 @@ export class UserService {
         }
       );
 
-      if (companyName || CRN) {
-        const orgData = {
-          ...(CRN && { crn: CRN }),
-          ...(companyName && { name: companyName }),
-        };
-        await this.orgRepository.findByIdAndUpdate(
-          { _id: user.organization },
-          orgData
-        );
-      }
+      // if (companyName || CRN) {
+      //   const orgData = {
+      //     ...(CRN && { crn: CRN }),
+      //     ...(companyName && { name: companyName }),
+      //   };
+      //   await this.orgRepository.findByIdAndUpdate(
+      //     { _id: user.organization },
+      //     orgData
+      //   );
+      // }
 
       return successResponse(HttpStatus.OK, ResponseMessage.SUCCESS, user);
     } catch (error) {
@@ -308,5 +294,56 @@ export class UserService {
     };
 
     return this.orgRepository.create(orgPayload);
+  }
+
+  async updateAvatar(payload: UpdateAvatarDto) {
+    const { userId, avatar, removeAvatar } = payload;
+
+    try {
+      const user = await this.userRepository.findOne({ _id: userId });
+
+      if (removeAvatar === true && user.avatar != undefined) {
+        await this.s3.deleteFile(user.avatar.url);
+        await this.userRepository.findByIdAndUpdate(
+          { _id: userId },
+          { $unset: { avatar: 1 } }
+        );
+        return successResponse(
+          HttpStatus.OK,
+          'Avatar removed successfully!',
+          {}
+        );
+      }
+
+      if (avatar) {
+        if (user.avatar != undefined) {
+          await this.s3.deleteFile(user.avatar.url);
+        }
+
+        const s3Response = await this.s3.uploadFile(
+          avatar,
+          'users/avatar/{uuid}'
+        );
+
+        const profileImage: MediaObject = {
+          ...s3Response,
+          size: avatar.size,
+          mimetype: avatar.mimetype,
+        };
+
+        const updatedUser = await this.userRepository.findByIdAndUpdate(
+          { _id: userId },
+          { avatar: profileImage }
+        );
+
+        return successResponse(
+          HttpStatus.OK,
+          ResponseMessage.SUCCESS,
+          updatedUser
+        );
+      }
+    } catch (error) {
+      throw new RpcException(error);
+    }
   }
 }

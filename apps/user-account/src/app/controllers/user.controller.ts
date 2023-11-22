@@ -6,6 +6,7 @@ import {
   CreateUserDto,
   UpdateProfileDto,
   EditUserByAdminDto,
+  UpdateAvatarDto,
 } from '@shared/dto';
 import { UserService } from '../services/user.service';
 
@@ -48,5 +49,10 @@ export class UserController {
   @MessagePattern(RMQ_MESSAGES.USER.EDIT_USER)
   editUser(@Payload() payload: EditUserByAdminDto) {
     return this.userService.editUserByAdmin(payload);
+  }
+
+  @MessagePattern(RMQ_MESSAGES.USER.UPDATE_AVATAR)
+  editAvatar(@Payload() payload: UpdateAvatarDto) {
+    return this.userService.updateAvatar(payload);
   }
 }

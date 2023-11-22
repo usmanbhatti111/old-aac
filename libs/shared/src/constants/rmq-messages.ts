@@ -27,6 +27,7 @@ export const RMQ_MESSAGES = {
     FIND_BY_COGNITO: 'find-user-by-cognito',
     PROFILE: 'profile',
     UPDATE_PROFILE: 'update-profile',
+    UPDATE_AVATAR: 'update-avatar',
     EDIT_USER: 'edit-user-by-admin',
   },
   ROLE: {
