@@ -5,7 +5,7 @@ import { User } from '../../schema/user-account';
 import { UserRole } from '../../constants/enums';
 import { toMongoObjectId } from '../../functions';
 
-export class CreateUserDto extends User {
+export class CreateUserDto {
   @ApiProperty({ type: String, example: 'John' })
   @IsNotEmpty()
   firstName: string;
@@ -62,9 +62,9 @@ export class CreateUserDto extends User {
   @IsOptional()
   twitterUrl?: string;
 
-  @ApiProperty({ type: Number, example: '21399249' })
+  @ApiProperty({ type: String, example: '21399249' })
   @IsOptional()
-  crn?: number;
+  crn?: string;
 
   @ApiProperty({ type: String, example: 'Orcalo Ltd' })
   @IsOptional()
@@ -86,6 +86,9 @@ export class CreateOrgUserDto extends PartialType(
   })
   @IsNotEmpty()
   role: string;
+
+  @Transform(toMongoObjectId)
+  createdBy: string;
 }
 
 export class CreateOrgUserParamDto {

@@ -441,6 +441,7 @@ export const RMQ_MESSAGES = {
   DROPDOWNS: {
     ORGANIZATIONS_DROPDOWN: 'organization-dropdown',
     PRODUCTS_DROPDOWN: 'products-dropdown',
+    ORG_EMPLOYEES: 'organisation-employees-dropdown',
   },
   COMMON_FEATURES: {
     COMPANIES: {

@@ -30,9 +30,9 @@ export class SignupDto {
   @IsOptional()
   products?: [];
 
-  @ApiProperty({ type: Number })
+  @ApiProperty({ type: String })
   @IsOptional()
-  crn?: number;
+  crn?: string;
 
   @ApiProperty({
     uniqueItems: true,
@@ -50,14 +50,16 @@ export class SignupDto {
 
   @ApiProperty({
     example: '100-200',
+    required: false,
   })
-  @IsNotEmpty()
+  @IsOptional()
   numberOfEmployees: string;
 
   @ApiProperty({
     example: false,
+    required: false,
   })
-  @IsNotEmpty()
+  @IsOptional()
   enableEmployeeVerification: boolean;
 
   @ApiProperty({

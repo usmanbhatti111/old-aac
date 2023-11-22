@@ -2,7 +2,12 @@ import { HttpStatus, Injectable } from '@nestjs/common';
 import { RpcException } from '@nestjs/microservices';
 import { InjectModel } from '@nestjs/mongoose';
 import { OrganizationRepository, User, UserRepository } from '@shared';
-import { ResponseMessage, successResponse, UserRole } from '@shared/constants';
+import {
+  ResponseMessage,
+  successResponse,
+  UserRole,
+  UserStatus,
+} from '@shared/constants';
 import {
   GetAdminUserDto,
   CreateUserDto,
@@ -11,9 +16,10 @@ import {
   MediaObject,
   UpdateAvatarDto,
   CreateOrgUserDto,
+  GetOrgUsersDropDownDto,
 } from '@shared/dto';
 import { S3Service } from '@shared/services';
-import { Model } from 'mongoose';
+import { Model, Types } from 'mongoose';
 import { CompanyHouseService } from './company-house.service';
 
 @Injectable()
@@ -245,7 +251,7 @@ export class UserService {
     }
   }
 
-  async createUserOrg(crn: number) {
+  async createUserOrg(crn: string) {
     const { data } = await this.companyHouseService.searchCompanyByCode({
       crn,
     });
@@ -314,6 +320,66 @@ export class UserService {
           updatedUser
         );
       }
+    } catch (error) {
+      throw new RpcException(error);
+    }
+  }
+
+  async getOrgUserForDropdowns(payload: GetOrgUsersDropDownDto) {
+    const page = 1;
+    const limit = 10;
+    const offset = (page - 1) * limit;
+    const { search, organization } = payload;
+
+    let filterQuery = {};
+    if (search) {
+      filterQuery = {
+        ...filterQuery,
+        $or: [
+          {
+            firstName: {
+              $regex: search,
+              $options: 'i',
+            },
+          },
+          {
+            lastName: {
+              $regex: search,
+              $options: 'i',
+            },
+          },
+        ],
+      };
+    }
+
+    filterQuery = {
+      ...filterQuery,
+      organization: new Types.ObjectId(organization),
+      role: UserRole.ORG_EMPLOYEE,
+      status: UserStatus.ACTIVE,
+    };
+
+    const pipelines = [
+      {
+        $project: {
+          _id: 1,
+          firstName: 1,
+          lastName: 1,
+          avatar: 1,
+          role: 1,
+        },
+      },
+    ];
+
+    try {
+      const res = await this.userRepository.paginate({
+        filterQuery,
+        pipelines,
+        offset,
+        limit,
+      });
+
+      return successResponse(HttpStatus.OK, ResponseMessage.SUCCESS, res);
     } catch (error) {
       throw new RpcException(error);
     }
