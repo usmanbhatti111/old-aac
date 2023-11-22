@@ -396,6 +396,9 @@ export enum EActivitylogModule {
   MEETINGS = 'MEETINGS',
   EMAILS = 'EMAILS',
   OTHERS = 'OTHERS',
+  CUSTOMIZED_COLUMNS = 'CUSTOMIZED_COLUMNS',
+  MARKETING_COMPANY = 'MARKETING_COMPANY',
+  COMPANY = 'COMPANY',
 }
 
 export enum EApplicationStatus {
@@ -403,4 +406,14 @@ export enum EApplicationStatus {
   REJECTED = 'rejected',
   SHORTLISTED = 'shortlisted',
   INTERVIEWED = 'interviewed',
+}
+
+export enum ECustomizeColumnType {
+  DEALS = 'deals',
+  COMPANIES = 'companies',
+}
+
+export enum CompanyType {
+  PARTNER = 'Partner',
+  VENDOR = 'Vendor',
 }

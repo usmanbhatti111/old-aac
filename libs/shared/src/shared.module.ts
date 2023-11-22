@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Module, forwardRef } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 import { S3 } from '@aws-sdk/client-s3';
@@ -64,10 +64,17 @@ import {
   ActivitylogsRepository,
   TaxCalculationRepository,
   JobApplicationsRepository,
+  CustomizeColumnsRepository,
+  CompanyRepository,
 } from '../src/repositories/index';
 import { MongooseConfig } from './config/mongo.config';
 import { SharedService } from './shared.service';
-import { DownloadService, EmailService, S3Service } from './services';
+import {
+  CustomizeColumnsService,
+  DownloadService,
+  EmailService,
+  S3Service,
+} from './services';
 
 @Module({
   imports: [
@@ -142,6 +149,8 @@ import { DownloadService, EmailService, S3Service } from './services';
     DealViewsRepository,
     ActivitylogsRepository,
     JobApplicationsRepository,
+    CustomizeColumnsRepository,
+    CompanyRepository,
     {
       provide: 'S3',
       useFactory: (config: ConfigService) =>
@@ -159,6 +168,7 @@ import { DownloadService, EmailService, S3Service } from './services';
     ActivityLogRepository,
     ArticlesRepository,
     EmailService,
+    CustomizeColumnsService,
     CompanyAccountRoleRepository,
   ],
   exports: [
@@ -234,6 +244,9 @@ import { DownloadService, EmailService, S3Service } from './services';
     TaxCalculationRepository,
     DealViewsRepository,
     JobApplicationsRepository,
+    CustomizeColumnsRepository,
+    CustomizeColumnsService,
+    CompanyRepository,
   ],
 })
 export class SharedModule {}

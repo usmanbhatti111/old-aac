@@ -424,11 +424,29 @@ export const RMQ_MESSAGES = {
     GET_ALL_ACTIVITIES: 'get-all-activities',
     ACTIVITY_LOG: 'activity-log',
   },
+  CUSTOMIZED_COLUMNS: {
+    GET_CUSTOMIZE_COLUMN: 'get-customize-column',
+    CREATE_OR_UPDATE_CUSTOMIZE_COLUMN: 'create-or-update-customize-column',
+  },
+  COMPANY: {
+    CREATE: 'create-marketing-company',
+    GET: 'get-marketing-company',
+    DETAIL: 'marketing-company-detail',
+    UPDATE: 'update-marketing-company',
+    DELETE: 'delete-marketing-company',
+    GET_DELETED: 'get-deleted-company',
+  },
   DROPDOWNS: {
     ORGANIZATIONS_DROPDOWN: 'organization-dropdown',
     PRODUCTS_DROPDOWN: 'products-dropdown',
   },
   COMMON_FEATURES: {
+    COMPANIES: {
+      DELETE_COMPANIES: 'delete-companies',
+      GET_UNIQUE_COMPANIES_OWNERS: 'get-unique-companies-owners',
+      CHANGE_COMPANY_OWNER: 'change-company-owner',
+      GET_COMPANY_DETIALS: 'get-company-details',
+    },
     NOTES: {
       CREATE_NOTE: 'create-deal-note',
       GET_NOTES: 'get-deal-notes',

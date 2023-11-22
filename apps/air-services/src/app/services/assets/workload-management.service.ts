@@ -134,10 +134,6 @@ export class WorkloadManagementService {
                                 },
                                 else: 0,
                               },
-                              $divide: [
-                                { $subtract: ['$endDate', '$startDate'] },
-                                1000 * 60 * 60 * 24,
-                              ],
                             },
                           ],
                         },
@@ -194,8 +190,7 @@ export class WorkloadManagementService {
           },
         });
       }
-
-      if (countDayWiseHours) {
+      if (countDayWiseHours || countDayWiseHoursAverage) {
         pipeline.push({
           $addFields: {
             plannedEffortHours: {
@@ -240,131 +235,21 @@ export class WorkloadManagementService {
                   $range: [
                     0,
                     {
-                      $add: [
-                        1,
-                        {
-                          $cond: {
-                            if: { $ifNull: ['$endDate', false] },
-                            then: {
+                      $cond: {
+                        if: { $gte: ['$endDate', '$startDate'] },
+                        then: {
+                          $add: [
+                            1,
+                            {
                               $divide: [
                                 { $subtract: ['$endDate', '$startDate'] },
                                 1000 * 60 * 60 * 24,
                               ],
                             },
-                            else: 0,
-                          },
-                        },
-                      ],
-                    },
-                  ],
-                },
-                as: 'dayOffset',
-                in: {
-                  $add: [
-                    '$startDate',
-                    { $multiply: ['$$dayOffset', 1000 * 60 * 60 * 24] },
-                  ],
-                },
-              },
-            },
-          },
-        });
-
-        pipeline.push({
-          $unwind: '$dateRange',
-        });
-
-        pipeline.push({
-          $group: {
-            _id: {
-              date: {
-                $dateToString: { format: '%Y-%m-%d', date: '$dateRange' },
-              },
-            },
-            totalPlannedEffort: { $sum: '$plannedEffortTotalMinutes' },
-            count: { $sum: 1 },
-          },
-        });
-
-        pipeline.push({
-          $addFields: {
-            totalPlannedEffortFormatted: {
-              $concat: [
-                {
-                  $toString: {
-                    $trunc: { $divide: ['$totalPlannedEffort', 60] },
-                  },
-                },
-                'h ',
-                { $toString: { $mod: ['$totalPlannedEffort', 60] } },
-                'm',
-              ],
-            },
-          },
-        });
-
-        pipeline.push({
-          $project: {
-            _id: 0,
-            date: '$_id.date',
-            totalPlannedEffortFormatted: 1,
-          },
-        });
-      }
-      if (countDayWiseHoursAverage) {
-        pipeline.push({
-          $addFields: {
-            plannedEffortHours: {
-              $toInt: {
-                $arrayElemAt: [{ $split: ['$plannedEffort', 'h'] }, 0],
-              },
-            },
-            plannedEffortMinutes: {
-              $toInt: {
-                $arrayElemAt: [
-                  {
-                    $split: [
-                      {
-                        $arrayElemAt: [{ $split: ['$plannedEffort', 'h'] }, 1],
-                      },
-                      'm',
-                    ],
-                  },
-                  0,
-                ],
-              },
-            },
-          },
-        });
-
-        pipeline.push({
-          $addFields: {
-            plannedEffortTotalMinutes: {
-              $add: [
-                { $multiply: ['$plannedEffortHours', 60] },
-                '$plannedEffortMinutes',
-              ],
-            },
-          },
-        });
-
-        pipeline.push({
-          $addFields: {
-            dateRange: {
-              $map: {
-                input: {
-                  $range: [
-                    0,
-                    {
-                      $add: [
-                        1,
-                        {
-                          $divide: [
-                            { $subtract: ['$endDate', '$startDate'] },
-                            1000 * 60 * 60 * 24,
                           ],
                         },
-                      ],
+                        else: 0,
+                      },
                     },
                   ],
                 },
@@ -388,29 +273,64 @@ export class WorkloadManagementService {
           $group: {
             _id: {
               date: {
-                $dateToString: { format: '%Y-%m-%d', date: '$dateRange' },
+                $dateToString: {
+                  format: '%Y-%m-%dT%H:%M:%S.%LZ',
+                  date: '$dateRange',
+                },
               },
             },
             totalPlannedEffort: { $sum: '$plannedEffortTotalMinutes' },
             count: { $sum: 1 },
+            tasks: { $addToSet: '$$ROOT' },
           },
         });
 
-        pipeline.push({
-          $addFields: {
-            averagePlannedEffort: {
-              $divide: ['$totalPlannedEffort', '$count'],
+        if (countDayWiseHoursAverage) {
+          pipeline.push({
+            $addFields: {
+              totalPlannedEffortFormatted: {
+                $concat: [
+                  {
+                    $toString: {
+                      $trunc: { $divide: ['$totalPlannedEffort', 60] },
+                    },
+                  },
+                  'h ',
+                  { $toString: { $mod: ['$totalPlannedEffort', 60] } },
+                  'm',
+                ],
+              },
+              averagePlannedEffort: {
+                $cond: {
+                  if: { $ne: ['$count', 0] },
+                  then: { $divide: ['$totalPlannedEffort', '$count'] },
+                  else: 0,
+                },
+              },
             },
-          },
-        });
+          });
 
-        pipeline.push({
-          $project: {
-            _id: 0,
-            date: '$_id.date',
-            averagePlannedEffort: 1,
-          },
-        });
+          pipeline.push({
+            $project: {
+              _id: 0,
+              date: '$_id.date',
+              totalPlannedEffortFormatted: 1,
+              averagePlannedEffort: 1,
+              count: 1,
+              tasks: 1,
+            },
+          });
+        } else {
+          pipeline.push({
+            $project: {
+              _id: 0,
+              date: '$_id.date',
+              totalPlannedEffort: 1,
+              count: 1,
+              tasks: 1,
+            },
+          });
+        }
       }
 
       const res = await this.taskRepository.aggregate(pipeline);

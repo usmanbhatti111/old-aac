@@ -1,4 +1,4 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { IsArray, IsInt, IsNotEmpty, IsOptional } from 'class-validator';
 import { Transform, Type } from 'class-transformer';
 import { paginationDTO } from '../pagination/pagination.dto';
@@ -165,7 +165,8 @@ export class GetAllOrganizationCompanyAccountsDto extends paginationDTO {
   @Transform(toMongoObjectId)
   organizationId: string;
 
-  search: string;
+  @IsOptional()
+  search?: string;
 }
 export class OrganizationCompanyAccountDto {
   @ApiProperty({
@@ -319,8 +320,9 @@ export class GetOrganizationCompanyAccountDto {
   @Type(() => Number)
   limit?: number;
 
-  @ApiProperty({
+  @ApiPropertyOptional({
     example: 'company name',
   })
+  @IsOptional()
   search?: string;
 }

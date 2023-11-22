@@ -65,8 +65,10 @@ import { TaxCalculationController } from './controllers/super-admin/tax-calculat
 import { DealViewsController } from './controllers/sales/deal-views.controller';
 import { ActivitylogsController } from './controllers/common-features/activitylogs.controller';
 import { JobApplicationsController } from './controllers/super-admin/job-applications.controller';
+import { CustomizedColumnsController } from './controllers/customize-columns.controller';
 import { DropdownController } from './controllers/common-features/dropdown.controller';
 import { NoteController } from './controllers/common-features/note.controller';
+import { CompaniesController } from './controllers/common-features/companies.controller';
 
 @Module({
   imports: [
@@ -133,7 +135,9 @@ import { NoteController } from './controllers/common-features/note.controller';
     DealViewsController,
     ActivitylogsController,
     JobApplicationsController,
+    CustomizedColumnsController,
     DropdownController,
+    CompaniesController,
   ],
   providers: [
     // Exceptions Filter

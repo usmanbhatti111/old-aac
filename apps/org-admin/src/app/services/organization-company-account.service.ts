@@ -58,9 +58,10 @@ export class OrganizationCompanyAccountService {
       const filterQuery = {
         isDeleted: false,
         organizationId: payload?.organizationId,
-        accountName: { $regex: payload?.search, $options: 'i' },
+        ...(payload?.search && {
+          accountName: { $regex: payload?.search, $options: 'i' },
+        }),
       };
-
       let { limit, page } = payload;
       limit = limit ? limit : 10;
       page = page ? page : 1;

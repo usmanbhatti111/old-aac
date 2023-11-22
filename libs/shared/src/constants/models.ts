@@ -1,4 +1,5 @@
 export const MODEL = {
+  ACTIVITY_LOGS: 'activitylogs',
   EXAMPLE: 'Example',
   SUPER_ADMIN: 'SUPER_ADMIN',
   INVENTORY: 'Inventory',
@@ -14,6 +15,13 @@ export const MODEL = {
   FAQS: 'Faqs',
   FOLDER: 'folders',
   FILE: 'files',
+  NOTES: 'notes',
+  CALLS: 'calls',
+  MEETINGS: 'meetings',
+  EMAILS: 'emails',
+  ATTACHMENTS: 'attachments',
+  MARKETING_COMPANY: 'marketingCompany',
+
   PRODUCT_FEATURES: 'productfeatures',
   User: 'User',
   PLAN_TYPE: 'plantypes',
@@ -36,5 +44,5 @@ export const MODEL = {
   TAX_CALCULATION: 'taxCalculations',
   DEAL_VIEW: 'dealViews',
   JOB_APPLICATIONS: 'jobApplications',
-  NOTES: 'notes',
+  CUSTOMIZE_COLUMNS: 'customizeColumns',
 };

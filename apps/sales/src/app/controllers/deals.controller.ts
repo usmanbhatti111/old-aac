@@ -13,11 +13,15 @@ import {
   RestoreDealActionDto,
   UpdateDealDto,
 } from '@shared/dto';
+import { CustomizeColumnsService } from '@shared/services';
 import { DealsService } from '../services/deals.service';
 
 @Controller()
 export class DealsController {
-  constructor(private readonly dealsService: DealsService) {}
+  constructor(
+    private readonly dealsService: DealsService,
+    private readonly customizeColumnsService: CustomizeColumnsService
+  ) {}
 
   @MessagePattern(RMQ_MESSAGES.SALES.DEALS.CREATE_DEAL)
   async createDeal(@Payload() payload: CreateDealDto) {

@@ -402,11 +402,31 @@ export const API_ENDPOINTS = {
       GET_UNAPPROVED_ARTICLES: 'unapproved-articles',
     },
   },
+  CUSTOMIZED_COLUMNS: {
+    GET_CUSTOMIZE_COLUMN: '/',
+    CREATE_OR_UPDATE_CUSTOMIZE_COLUMN: '/',
+  },
+  MARKETING: {
+    COMPANY: {
+      CREATE: 'create',
+      GET: 'list',
+      DETAIL: 'detail/:id',
+      UPDATE: 'update/:id',
+      DELETE: 'delete/:id',
+      GET_DELETED: 'deleted-company',
+    },
+  },
   DROPDOWNS: {
     ORGANIZATION_DROPDOWN: 'organizations',
     PRODUCTS_DROPDOWN: 'products',
   },
   COMMON_FEATURES: {
+    COMPANIES: {
+      GET_UNIQUE_COMPANIES_OWNERS: 'get-unique-companies-owners',
+      CHANGE_COMPANY_OWNER: 'change-company-owner',
+      GET_COMPANY_DETIALS: 'get-company-details/:id',
+      DELETE_COMPANIES: '/:ids',
+    },
     NOTES: {
       CREATE_NOTE: '/',
       GET_NOTES: '/',
