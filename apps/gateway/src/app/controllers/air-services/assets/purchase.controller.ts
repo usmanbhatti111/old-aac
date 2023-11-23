@@ -46,9 +46,9 @@ import {
   AddPurchaseOrderApprover,
 } from '@shared/dto';
 import { DownloadService } from '@shared/services';
-import { Auth } from '../../decorators/auth.decorator';
+import { Auth } from '../../../decorators/auth.decorator';
 import { firstValueFrom } from 'rxjs';
-import { AppRequest } from '../../shared/interface/request.interface';
+import { AppRequest } from '../../../shared/interface/request.interface';
 @ApiTags(API_TAGS.ASSETS)
 @Controller(CONTROLLERS.ASSETS)
 @ApiBearerAuth()

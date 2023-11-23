@@ -23,7 +23,7 @@ import {
   ApiTags,
   ApiBearerAuth,
 } from '@nestjs/swagger';
-import { Auth } from '../../decorators/auth.decorator';
+import { Auth } from '../../../decorators/auth.decorator';
 import {
   API_ENDPOINTS,
   API_TAGS,
@@ -53,9 +53,9 @@ import {
   UpdateManyTicketResponse,
   ActivityLogParams,
 } from '@shared/dto';
-import { ColumnPipe } from '../../pipes/column.pipe';
+import { ColumnPipe } from '../../../pipes/column.pipe';
 import { DownloadService } from '@shared/services';
-import { AppRequest } from '../../shared/interface/request.interface';
+import { AppRequest } from '../../../shared/interface/request.interface';
 
 @ApiTags(API_TAGS.TICKETS)
 @Controller(CONTROLLERS.TICKET)
