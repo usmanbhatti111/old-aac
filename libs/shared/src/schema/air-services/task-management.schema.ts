@@ -1,6 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import mongoose, { HydratedDocument, SchemaTypes } from 'mongoose';
 import { AbstractSchema } from '../abstract-repo/abstract.schema';
+import { MODEL } from '../../constants/models';
 
 export type TaskManagementDocument = HydratedDocument<TaskManagement>;
 
@@ -16,31 +17,35 @@ export class TaskManagement extends AbstractSchema {
   priority: string;
 
   @Prop()
-  status: string;
+  status?: string;
+
+  @Prop({
+    type: SchemaTypes.ObjectId,
+    ref: MODEL.DEAL,
+    required: false,
+  })
+  dealId?: string;
 
   @Prop()
-  deal: string;
+  associate?: string;
+
+  @Prop({ type: SchemaTypes.ObjectId, ref: MODEL.USER, required: false })
+  assignTo?: string;
 
   @Prop()
-  associate: string;
-
-  @Prop({ type: SchemaTypes.ObjectId, required: false })
-  assignTo: string;
+  dueDate?: Date;
 
   @Prop()
-  dueDate: Date;
-
-  @Prop()
-  time: string;
+  time?: string;
 
   @Prop({ type: [SchemaTypes.ObjectId], required: false })
   recordIds?: string | mongoose.Types.ObjectId;
 
   @Prop()
-  reminder: string;
+  reminder?: string;
 
   @Prop({ type: String, maxlength: 10485760 })
-  note: string;
+  note?: string;
 
   @Prop({ type: SchemaTypes.ObjectId, required: false })
   createdById?: string;
