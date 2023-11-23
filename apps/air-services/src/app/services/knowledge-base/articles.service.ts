@@ -45,7 +45,7 @@ export class ArticlesService {
         organizationId,
       };
 
-      const pipeline: any[] = [
+      const pipelines: any[] = [
         {
           $lookup: {
             from: 'users',
@@ -109,7 +109,7 @@ export class ArticlesService {
       if (status) filterQuery['status'] = status;
       if (search) {
         const regex = new RegExp(search, 'i');
-        pipeline.push({
+        pipelines.push({
           $match: {
             $or: [
               { authorName: regex },
@@ -122,11 +122,12 @@ export class ArticlesService {
         });
       }
 
-      const response = await this.articlesRepository.newPaginate(
+      const response = await this.articlesRepository.paginate({
         filterQuery,
-        pipeline,
-        { page, limit }
-      );
+        offset: page,
+        limit,
+        pipelines,
+      });
       return successResponse(HttpStatus.OK, 'Success', response);
     } catch (error) {
       throw new RpcException(error);
@@ -142,7 +143,7 @@ export class ArticlesService {
         isApproved: false,
       };
 
-      const pipeline = [
+      const pipelines = [
         {
           $lookup: {
             from: 'users',
@@ -200,14 +201,12 @@ export class ArticlesService {
           },
         },
       ];
-      const response = await this.articlesRepository.newPaginate(
+      const response = await this.articlesRepository.paginate({
         filterQuery,
-        pipeline,
-        {
-          page,
-          limit,
-        }
-      );
+        offset: page,
+        limit,
+        pipelines,
+      });
       return successResponse(HttpStatus.OK, 'Success', response);
     } catch (error) {
       throw new RpcException(error);

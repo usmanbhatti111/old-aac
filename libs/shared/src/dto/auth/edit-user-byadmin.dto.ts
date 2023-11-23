@@ -23,29 +23,41 @@ export class EditUserByAdminDto {
     example: '',
   })
   @IsOptional()
-  middleName?: string;
-
-  @ApiProperty({
-    required: false,
-    example: '',
-  })
-  @IsOptional()
   lastName?: string;
 
   @ApiProperty({
-    uniqueItems: true,
-    required: false,
-    example: '',
+    type: Object,
+    example: {
+      flatNumber: 'string', // alt: unit
+      buildingName: 'string',
+      buildingNumber: 'string',
+      streetName: 'string',
+      city: 'string', // alt: town
+      country: 'string',
+      composite: 'string',
+    },
   })
   @IsOptional()
-  email?: string;
+  address?: {};
+
+  @ApiProperty({ type: String, example: 'Manager' })
+  @IsOptional()
+  jobTitle: string;
+
+  @ApiProperty({ type: String, example: 'https://www.facebook.com/user' })
+  @IsOptional()
+  facebookUrl?: string;
+
+  @ApiProperty({ type: String, example: 'https://www.linkdin.com/user' })
+  @IsOptional()
+  linkedInUrl?: string;
 
   @ApiProperty({
     required: false,
     example: '',
   })
   @IsOptional()
-  CRN?: string;
+  crn?: string;
 
   @ApiProperty({
     required: false,
@@ -53,13 +65,6 @@ export class EditUserByAdminDto {
   })
   @IsOptional()
   phoneNumber?: string;
-
-  @ApiProperty({
-    required: false,
-    example: '',
-  })
-  @IsOptional()
-  companyName?: string;
 
   @ApiProperty({
     required: false,

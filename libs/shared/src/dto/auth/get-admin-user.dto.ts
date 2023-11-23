@@ -1,5 +1,8 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsOptional } from 'class-validator';
+import { Transform } from 'class-transformer';
+import { IsOptional, IsString } from 'class-validator';
+import { UserRole } from '../../constants/enums';
+import { toMongoObjectId } from '../../functions';
 import { paginationDTO } from '../pagination/pagination.dto';
 
 export class GetAdminUserDto extends paginationDTO {
@@ -25,7 +28,7 @@ export class GetAdminUserDto extends paginationDTO {
     example: '',
   })
   @IsOptional()
-  role: string;
+  role: UserRole;
 
   @ApiProperty({
     example: '',
@@ -33,4 +36,12 @@ export class GetAdminUserDto extends paginationDTO {
   })
   @IsOptional()
   search: string;
+}
+
+export class GetOrgUsersDropDownDto {
+  @IsString()
+  search: string;
+
+  @Transform(toMongoObjectId)
+  organization: string;
 }

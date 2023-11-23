@@ -13,7 +13,6 @@ export class UpdateProfileResponseDto {
       role: 'SUPER ADMIN',
       isProductOwner: false,
       firstName: 'ali',
-      middleName: 'jan',
       lastName: 'tesori',
       address: 'tesori por',
       email: 'ali@gmail.com',

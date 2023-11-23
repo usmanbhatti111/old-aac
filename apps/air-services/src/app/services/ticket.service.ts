@@ -56,7 +56,7 @@ export class TicketService {
     try {
       const { page, limit } = payload;
       const filterQuery = { _id: new Types.ObjectId(payload?.ticketId) };
-      const pipeline = [
+      const pipelines = [
         {
           $lookup: {
             from: 'assets',
@@ -77,11 +77,12 @@ export class TicketService {
           },
         },
       ];
-      const response = await this.ticketRepository.newPaginate(
+      const response = await this.ticketRepository.paginate({
         filterQuery,
-        pipeline,
-        { page, limit }
-      );
+        offset: page,
+        limit,
+        pipelines,
+      });
       return successResponse(HttpStatus.OK, `Success`, response);
     } catch (error) {
       throw new RpcException(error);

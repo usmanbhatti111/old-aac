@@ -22,21 +22,19 @@ export class ActivityLogService {
   async getActivityLog(payload: GetActivityLogDto) {
     try {
       const { entityId, page, limit } = payload;
-      const pipeline = [
+      const pipelines = [
         {
           $match: {
             entityId: new Types.ObjectId(entityId),
           },
         },
       ];
-      const response = await this.activityLogRepository.newPaginate(
-        {},
-        pipeline,
-        {
-          page,
-          limit,
-        }
-      );
+      const response = await this.activityLogRepository.paginate({
+        filterQuery: {},
+        offset: page,
+        limit,
+        pipelines,
+      });
       return successResponse(HttpStatus.OK, 'Activity logs list', response);
     } catch (error) {
       throw new RpcException(error);

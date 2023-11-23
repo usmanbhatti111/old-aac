@@ -1,19 +1,16 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty, OmitType, PartialType } from '@nestjs/swagger';
 import { Transform } from 'class-transformer';
 import { IsNotEmpty, IsOptional } from 'class-validator';
 import { User } from '../../schema/user-account';
 import { UserRole } from '../../constants/enums';
+import { toMongoObjectId } from '../../functions';
 
-export class CreateUserDto extends User {
-  @ApiProperty({ type: String })
+export class CreateUserDto {
+  @ApiProperty({ type: String, example: 'John' })
   @IsNotEmpty()
   firstName: string;
 
-  @ApiProperty({ type: String })
-  @IsOptional()
-  middleName?: string;
-
-  @ApiProperty({ type: String })
+  @ApiProperty({ type: String, example: 'Smith' })
   @IsNotEmpty()
   lastName: string;
 
@@ -24,14 +21,14 @@ export class CreateUserDto extends User {
   @IsNotEmpty()
   role: string;
 
-  @ApiProperty({ type: String })
+  @ApiProperty({ type: String, example: 'text@example.com' })
   @IsNotEmpty()
   email: string;
 
-  @ApiProperty({ type: String })
+  @ApiProperty({ type: String, example: '+44 23882323' })
   phoneNumber?: string;
 
-  @ApiProperty({ type: String })
+  @ApiProperty({ type: String, example: 'SA135' })
   postCode?: string;
 
   @ApiProperty({
@@ -39,31 +36,37 @@ export class CreateUserDto extends User {
     example: {
       flatNumber: 'string', // alt: unit
       buildingName: 'string',
+      buildingNumber: 'string',
       streetName: 'string',
       city: 'string', // alt: town
       country: 'string',
+      composite: 'string',
     },
   })
   @IsOptional()
   address?: {};
 
-  @ApiProperty({ type: String })
+  @ApiProperty({ type: String, example: 'Manager' })
   @IsOptional()
   jobTitle: string;
 
-  @ApiProperty({ type: String })
+  @ApiProperty({ type: String, example: 'https://www.facebook.com/user' })
   @IsOptional()
   facebookUrl?: string;
 
-  @ApiProperty({ type: String })
+  @ApiProperty({ type: String, example: 'https://www.linkdin.com/user' })
   @IsOptional()
   linkedInUrl?: string;
 
-  @ApiProperty({ type: Number })
+  @ApiProperty({ type: String, example: 'https://www.twitter.com/user' })
   @IsOptional()
-  crn?: number;
+  twitterUrl?: string;
 
-  @ApiProperty({ type: String })
+  @ApiProperty({ type: String, example: '21399249' })
+  @IsOptional()
+  crn?: string;
+
+  @ApiProperty({ type: String, example: 'Orcalo Ltd' })
   @IsOptional()
   companyName?: string;
 
@@ -72,4 +75,28 @@ export class CreateUserDto extends User {
   products?: [];
 
   organization: string;
+}
+
+export class CreateOrgUserDto extends PartialType(
+  OmitType(CreateUserDto, ['crn', 'companyName', 'products'] as const)
+) {
+  @ApiProperty({
+    example: UserRole.ORG_EMPLOYEE,
+    enum: UserRole,
+  })
+  @IsNotEmpty()
+  role: string;
+
+  @Transform(toMongoObjectId)
+  createdBy: string;
+}
+
+export class CreateOrgUserParamDto {
+  @ApiProperty({
+    required: true,
+    description: 'Example: 652627f809a15759b979dd3a',
+  })
+  @IsNotEmpty()
+  @Transform(toMongoObjectId)
+  orgId: string;
 }

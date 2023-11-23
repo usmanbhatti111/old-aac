@@ -1,6 +1,6 @@
 import { Controller, Get, Inject, Query, Req } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
-import { ApiCreatedResponse, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiCreatedResponse, ApiTags } from '@nestjs/swagger';
 import {
   API_ENDPOINTS,
   API_TAGS,
@@ -12,12 +12,15 @@ import {
 import { firstValueFrom } from 'rxjs';
 import { AppRequest } from '../../shared/interface/request.interface';
 import { GetAllDropdownResponseDto, GetAllSearchDTO } from '@shared/dto';
+import { Auth } from '../../decorators/auth.decorator';
 
 @ApiTags(API_TAGS.DROPDOWNS)
 @Controller(CONTROLLERS.DROPDOWN)
+@ApiBearerAuth()
 export class DropdownController {
   constructor(
-    @Inject(SERVICES.COMMON_FEATURE) private commonFeatureClient: ClientProxy
+    @Inject(SERVICES.COMMON_FEATURE) private commonFeatureClient: ClientProxy,
+    @Inject(SERVICES.USER) private userClient: ClientProxy
   ) {}
 
   @Get(API_ENDPOINTS.DROPDOWNS.ORGANIZATION_DROPDOWN)
@@ -48,6 +51,23 @@ export class DropdownController {
         { cmd: RMQ_MESSAGES.DROPDOWNS.PRODUCTS_DROPDOWN },
         { search: search?.search, userId: user?._id }
       )
+    );
+    return response;
+  }
+
+  @Auth(true)
+  @Get(API_ENDPOINTS.DROPDOWNS.ORG_EMPLOYEES)
+  @ApiCreatedResponse({ type: GetAllDropdownResponseDto })
+  public async getOrgUsers(
+    @Query() { search }: GetAllSearchDTO,
+    @Req() request: AppRequest
+  ): Promise<GetAllDropdownResponseDto> {
+    const { user } = request;
+    const response = await firstValueFrom(
+      this.userClient.send(RMQ_MESSAGES.DROPDOWNS.ORG_EMPLOYEES, {
+        search: search,
+        organization: user.organization,
+      })
     );
     return response;
   }
