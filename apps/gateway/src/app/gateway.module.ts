@@ -13,14 +13,14 @@ import { PlanController } from './controllers/super-admin/plan.controller';
 import { PermissionController } from './controllers/super-admin/permission.controller';
 import { OrganizationController } from './controllers/organization/organization.controller';
 import { OrganizationCompanyAccountController } from './controllers/organization/organization-company-account.controller';
-import { TaskController } from './controllers/tasks/task.controller';
+import { TaskController } from './controllers/air-services/tasks/task.controller';
 import { SuperAdminController } from './controllers/super-admin.controller';
 import { JobsController } from './controllers/settings/jobs.controller';
-import { TicketController } from './controllers/tickets/tickets.controller';
+import { TicketController } from './controllers/air-services/tickets/tickets.controller';
 import { InvoiceController } from './controllers/super-admin/billing-invoices.controller';
-import { InventoryController } from './controllers/assets/inventory.controller';
-import { PurchaseOrderController } from './controllers/assets/purchase.controller';
-import { ExpenseController } from './controllers/assets/expense.controller';
+import { InventoryController } from './controllers/air-services/assets/inventory.controller';
+import { PurchaseOrderController } from './controllers/air-services/assets/purchase.controller';
+import { ExpenseController } from './controllers/air-services/assets/expense.controller';
 import { ProductsController } from './controllers/products.controller';
 import { ProductFeaturesController } from './controllers/product-features.controller';
 import { NewsAndEventsController } from './controllers/super-admin/news-and-events.contoller';
@@ -32,21 +32,21 @@ import { APP_FILTER, APP_GUARD } from '@nestjs/core';
 import { ExceptionsFilter } from './shared/filters/exceptions.filter';
 import { UserController } from './controllers/user-account/user.controller';
 import { AuthGuard } from './shared/guards/auth.guard';
-import { SoftwareController } from './controllers/assets/software.controller';
+import { SoftwareController } from './controllers/air-services/assets/software.controller';
 import { TaskManagementController } from './controllers/tasks/task-management.controller';
-import { WorkloadManagementController } from './controllers/workload/workload-management.controller';
+import { WorkloadManagementController } from './controllers/air-services/workload/workload-management.controller';
 // import { ActivityLogMiddleware } from './middleware/activity-log.middleware';
 import { RequestLogController } from './controllers/log/request-log.controller';
 import { SubscriptionController } from './controllers/org-admin/subscription.controller';
 import { ContactController } from './controllers/common-features/contact/contact.controller';
 import { DocumentsController } from './controllers/common-features/documents.controller';
-import { ContractController } from './controllers/assets/contract.controller';
+import { ContractController } from './controllers/air-services/assets/contract.controller';
 import { ProductCategoriesController } from './controllers/org-admin/product-category.controller';
 import { ColumnPipe } from './pipes/column.pipe';
 import { SharedModule } from '@shared';
 import { ContactStatusController } from './controllers/org-admin/contact-status.controller';
 import { LifecycleStagesController } from './controllers/org-admin/lifecycle-stages.controller';
-import { AirServicesDashboardController } from './controllers/airservices-dashboard.controller';
+import { AirServicesDashboardController } from './controllers/air-services/dashboard/dashboard.controller';
 import { DealPipelineController } from './controllers/sales-settings/deal-pipeline.controller';
 import { SalesProductController } from './controllers/sales-settings/sales-product.controller';
 import { AttachmentController } from './controllers/common-features/attachment.controller';
@@ -54,7 +54,6 @@ import { ActivityLogController } from './controllers/common-features/activity-lo
 
 import { ReportsWidgetController } from './controllers/reports-widgets.controller';
 // import { ActivityLogController } from './controllers/common-features/activity-log.controller';
-import { ArticlesController } from './controllers/knowledge-base/articles.controller';
 // import { CallsController } from './controllers/common-features/calls.controller';
 import { ContactNoteController } from './controllers/common-features/contact/contact-note.controller';
 import { ContactCallController } from './controllers/common-features/contact/contact-call.controller';
@@ -69,6 +68,7 @@ import { CustomizedColumnsController } from './controllers/customize-columns.con
 import { DropdownController } from './controllers/common-features/dropdown.controller';
 import { NoteController } from './controllers/common-features/note.controller';
 import { CompaniesController } from './controllers/common-features/companies.controller';
+import { ArticlesController } from './controllers/air-services/knowledge-base/articles.controller';
 
 @Module({
   imports: [

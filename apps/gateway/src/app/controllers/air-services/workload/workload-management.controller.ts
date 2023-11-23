@@ -15,7 +15,7 @@ import {
   WorkLoadFilterDto,
 } from '@shared/dto';
 import { firstValueFrom } from 'rxjs';
-import { Auth } from '../../decorators/auth.decorator';
+import { Auth } from '../../../decorators/auth.decorator';
 
 @ApiTags(API_TAGS.WORK_LOAD_MANAGEMENT)
 @Controller(CONTROLLERS.WORK_LOAD_MANAGEMENT)

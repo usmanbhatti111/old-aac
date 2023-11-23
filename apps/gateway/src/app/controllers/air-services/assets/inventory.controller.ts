@@ -37,7 +37,7 @@ import {
 import { Response } from 'express';
 import { firstValueFrom } from 'rxjs';
 import { DownloadService } from '@shared/services';
-import { Auth } from '../../decorators/auth.decorator';
+import { Auth } from '../../../decorators/auth.decorator';
 @ApiTags(API_TAGS.ASSETS)
 @Controller(CONTROLLERS.ASSETS)
 @ApiBearerAuth()
