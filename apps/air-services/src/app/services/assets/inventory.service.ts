@@ -103,7 +103,7 @@ export class InventoryService {
       }
 
       let expiryFilter = {};
-      const pipeline: any = [
+      const pipelines: any = [
         {
           $lookup: {
             from: 'attachments',
@@ -122,20 +122,18 @@ export class InventoryService {
 
       if (updatedAt) {
         expiryFilter = mongooseDateFilter(updatedAt, 'updatedAt');
-        pipeline.push({ $match: expiryFilter });
+        pipelines.push({ $match: expiryFilter });
       }
       if (createdAt) {
         expiryFilter = mongooseDateFilter(createdAt, 'createdAt');
-        pipeline.push({ $match: expiryFilter });
+        pipelines.push({ $match: expiryFilter });
       }
-      const res = await this.inventoryRepository.newPaginate(
+      const res = await this.inventoryRepository.paginate({
         filterQuery,
-        pipeline,
-        {
-          page,
-          limit,
-        }
-      );
+        offset: page,
+        limit,
+        pipelines,
+      });
 
       return successResponse(HttpStatus.CREATED, 'Success', res);
     } catch (error) {

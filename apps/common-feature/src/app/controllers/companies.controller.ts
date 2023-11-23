@@ -4,8 +4,10 @@ import { RMQ_MESSAGES } from '@shared/constants';
 import {
   ChangeCompanyOwnerDto,
   CreateComapanyDTO,
+  CreateCompanyCustomizeColumnDto,
   DeleteCompaniesDto,
   GetComapanyDto,
+  GetCompanyCustomizedColumns,
   GetCompanyDetailsDto,
   GetDeletedCompanisDto,
   UpdateComapanyDto,
@@ -16,6 +18,7 @@ import { CompaniesService } from '../services/companies.services';
 export class CompaniesController {
   constructor(private readonly companiesService: CompaniesService) {}
 
+  // added by faiz
   @MessagePattern(RMQ_MESSAGES.COMMON_FEATURES.COMPANIES.DELETE_COMPANIES)
   async deleteCompanies(@Payload() payload: DeleteCompaniesDto) {
     return await this.companiesService.deleteCompanies(payload);
@@ -37,8 +40,8 @@ export class CompaniesController {
   async getCompanyDetails(@Payload() payload: GetCompanyDetailsDto) {
     return await this.companiesService.getCompanyDetails(payload);
   }
-  // nome
 
+  // added by nauman
   @EventPattern(RMQ_MESSAGES.COMPANY.CREATE)
   create(@Payload() payload: CreateComapanyDTO) {
     return this.companiesService.create(payload);
@@ -67,5 +70,17 @@ export class CompaniesController {
   @MessagePattern(RMQ_MESSAGES.COMPANY.GET_DELETED)
   deletedComapany(@Payload() paylaod: GetDeletedCompanisDto) {
     return this.companiesService.deletedCompanies(paylaod);
+  }
+
+  @MessagePattern(RMQ_MESSAGES.COMPANY.GET_CUSTOMIZE_COLUMN)
+  async getCustomizedColumns(@Payload() payload: GetCompanyCustomizedColumns) {
+    return this.companiesService.getCustomizedCompanyColumns(payload);
+  }
+
+  @MessagePattern(RMQ_MESSAGES.COMPANY.CREATE_CUSTOMIZE_COLUMN)
+  async createOrUpdateCustomizeColumn(
+    @Payload() payload: CreateCompanyCustomizeColumnDto
+  ) {
+    return this.companiesService.createCustomizeCompanyColumns(payload);
   }
 }

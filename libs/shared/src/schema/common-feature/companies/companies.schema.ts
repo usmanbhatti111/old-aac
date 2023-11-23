@@ -102,6 +102,13 @@ export class Company extends AbstractSchema {
   // update only if hard delete
   @Prop({ required: false })
   deletedAt?: Date;
+
+  @Prop({
+    type: mongoose.Schema.Types.ObjectId,
+    required: false,
+    ref: MODEL.COMPANY,
+  })
+  parentCompanyId?: string;
 }
 
 export const CompanySchema = SchemaFactory.createForClass(Company);

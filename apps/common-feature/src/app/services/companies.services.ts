@@ -1,7 +1,8 @@
 import { HttpStatus, Injectable } from '@nestjs/common';
 import { RpcException } from '@nestjs/microservices';
-import { CompanyRepository } from '@shared';
+import { CompanyRepository, CustomizeColumnsRepository } from '@shared';
 import {
+  ECustomizeColumnType,
   EIsDeletedStatus,
   MODEL,
   ResponseMessage,
@@ -10,8 +11,10 @@ import {
 import {
   ChangeCompanyOwnerDto,
   CreateComapanyDTO,
+  CreateCompanyCustomizeColumnDto,
   DeleteCompaniesDto,
   GetComapanyDto,
+  GetCompanyCustomizedColumns,
   GetCompanyDetailsDto,
   GetDeletedCompanisDto,
   UpdateComapanyDto,
@@ -20,7 +23,10 @@ import dayjs from 'dayjs';
 
 @Injectable()
 export class CompaniesService {
-  constructor(private readonly comapanyRepository: CompanyRepository) {}
+  constructor(
+    private readonly comapanyRepository: CompanyRepository,
+    private readonly customizeColumnsRepository: CustomizeColumnsRepository
+  ) {}
 
   async deleteCompanies(payload: DeleteCompaniesDto) {
     try {
@@ -230,8 +236,6 @@ export class CompaniesService {
     }
   }
 
-  // nome
-
   async create(payload: CreateComapanyDTO) {
     const response = await this.comapanyRepository.create(payload);
     return successResponse(HttpStatus.OK, ResponseMessage.SUCCESS, response);
@@ -338,6 +342,55 @@ export class CompaniesService {
         ResponseMessage.SUCCESS,
         result ? result : []
       );
+    } catch (error) {
+      throw new RpcException(error);
+    }
+  }
+
+  async createCustomizeCompanyColumns(
+    payload: CreateCompanyCustomizeColumnDto
+  ) {
+    try {
+      const filterQuery = {
+        isDeleted: false,
+        type: payload?.type,
+        userId: payload?.userId ? payload?.userId : null,
+      };
+
+      const res = await this.customizeColumnsRepository.upsert(
+        filterQuery,
+        payload
+      );
+
+      const response = successResponse(
+        HttpStatus.OK,
+        ResponseMessage.SUCCESS,
+        res
+      );
+      return response;
+    } catch (error) {
+      throw new RpcException(error);
+    }
+  }
+
+  async getCustomizedCompanyColumns(payload: GetCompanyCustomizedColumns) {
+    try {
+      const filterQuery = {
+        isDeleted: false,
+        type: ECustomizeColumnType.COMPANIES,
+        userId: payload?.userId,
+      };
+
+      let res = await this.customizeColumnsRepository.findOneWithoutException(
+        filterQuery
+      );
+
+      if (!res) {
+        filterQuery.userId = null;
+        res = await this.customizeColumnsRepository.findOne(filterQuery);
+      }
+
+      return successResponse(HttpStatus.OK, ResponseMessage.SUCCESS, res);
     } catch (error) {
       throw new RpcException(error);
     }

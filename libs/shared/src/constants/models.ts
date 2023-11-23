@@ -21,6 +21,7 @@ export const MODEL = {
   EMAILS: 'emails',
   ATTACHMENTS: 'attachments',
   MARKETING_COMPANY: 'marketingCompany',
+  COMPANY: 'Companies',
 
   PRODUCT_FEATURES: 'productfeatures',
   User: 'User',

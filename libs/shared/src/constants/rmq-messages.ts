@@ -437,6 +437,8 @@ export const RMQ_MESSAGES = {
     UPDATE: 'update-marketing-company',
     DELETE: 'delete-marketing-company',
     GET_DELETED: 'get-deleted-company',
+    CREATE_CUSTOMIZE_COLUMN: 'create-customize-column',
+    GET_CUSTOMIZE_COLUMN: 'get-customize-column',
   },
   DROPDOWNS: {
     ORGANIZATIONS_DROPDOWN: 'organization-dropdown',
