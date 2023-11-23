@@ -12,7 +12,7 @@ import {
   successResponse,
 } from '@shared/constants';
 import { GetAllInvoicesDto, GetInvoiceDto, PayNowDto } from '@shared/dto';
-import mongoose from 'mongoose';
+import dayjs from 'dayjs';
 
 @Injectable()
 export class InvoiceService {
@@ -24,7 +24,16 @@ export class InvoiceService {
 
   async getAllInvoices(payload: GetAllInvoicesDto) {
     try {
-      const { page = 0, limit = 10, organizationId, search, status } = payload;
+      const {
+        page = 1,
+        limit = 10,
+        organizationId,
+        search,
+        status,
+        organizationPlanId,
+        billingDate,
+        dueDate,
+      } = payload;
       let filterQuery = {};
       const offset = (page - 1) * limit;
 
@@ -40,10 +49,34 @@ export class InvoiceService {
         };
       }
 
+      if (organizationPlanId) {
+        filterQuery['organizationPlanId'] = organizationPlanId;
+      }
+
+      if (billingDate) {
+        const startDate = dayjs(billingDate).startOf('day').toDate();
+        const endDate = dayjs(billingDate).endOf('day').toDate();
+
+        filterQuery['billingDate'] = {
+          $gte: startDate,
+          $lte: endDate,
+        };
+      }
+
+      if (dueDate) {
+        const startDate = dayjs(dueDate).startOf('day').toDate();
+        const endDate = dayjs(dueDate).endOf('day').toDate();
+
+        filterQuery['dueDate'] = {
+          $gte: startDate,
+          $lte: endDate,
+        };
+      }
+
       const pipelines = [
         {
           $match: {
-            organizationId: new mongoose.Types.ObjectId(organizationId),
+            organizationId: organizationId,
             isDeleted: false,
           },
         },
@@ -126,7 +159,7 @@ export class InvoiceService {
       const pipeline = [
         {
           $match: {
-            organizationId: new mongoose.Types.ObjectId(organizationId),
+            organizationId: organizationId,
             isDeleted: false,
             status: InvoiceStatusEnum.OVERDUE,
           },
@@ -161,8 +194,8 @@ export class InvoiceService {
       const pipelines = [
         {
           $match: {
-            _id: new mongoose.Types.ObjectId(invoiceId),
-            organizationId: new mongoose.Types.ObjectId(organizationId),
+            _id: invoiceId,
+            organizationId: organizationId,
             isDeleted: false,
           },
         },

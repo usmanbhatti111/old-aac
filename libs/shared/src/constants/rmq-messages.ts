@@ -320,6 +320,7 @@ export const RMQ_MESSAGES = {
     },
     INVOICES: {
       GET_ALL_SUBSCRIPTION: 'get-all-subscriptions',
+      GET_ONE_SUBSCRIPTION: 'get-one-subscriptions',
       ASSIGN_PLAN: 'assign-plan',
       UPDATE_ASSIGN_PLAN: 'update-assign-plan',
       GET_ALL_INVOICES: 'get-all-invoices',

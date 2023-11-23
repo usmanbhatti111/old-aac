@@ -1,7 +1,15 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsMongoId, IsNotEmpty, IsOptional, IsString } from 'class-validator';
+import {
+  IsISO8601,
+  IsMongoId,
+  IsNotEmpty,
+  IsOptional,
+  IsString,
+} from 'class-validator';
 import { paginationDTO } from '../pagination/pagination.dto';
 import { InvoiceStatusEnum } from '../../constants/enums';
+import { Transform } from 'class-transformer';
+import { toMongoObjectId } from '../../functions';
 
 export class GetAllInvoicesDto extends paginationDTO {
   @ApiProperty({
@@ -18,6 +26,31 @@ export class GetAllInvoicesDto extends paginationDTO {
   })
   status: InvoiceStatusEnum;
 
+  @ApiProperty({
+    type: String,
+    required: false,
+  })
+  @IsOptional()
+  @Transform(toMongoObjectId)
+  organizationPlanId: string;
+
+  @ApiProperty({
+    required: false,
+    description: '2023-10-30',
+  })
+  @IsISO8601()
+  @IsOptional()
+  billingDate: Date;
+
+  @ApiProperty({
+    required: false,
+    description: '2023-11-09',
+  })
+  @IsISO8601()
+  @IsOptional()
+  dueDate: Date;
+
+  @Transform(toMongoObjectId)
   organizationId: string;
 }
 
@@ -104,12 +137,14 @@ export class GetAllInvoicesResponseDto {
 
 export class GetInvoiceDto {
   @ApiProperty({
+    type: String,
     example: '65152930f50394f42cee2db3',
   })
-  @IsMongoId()
+  @Transform(toMongoObjectId)
   @IsNotEmpty()
   invoiceId: string;
 
+  @Transform(toMongoObjectId)
   organizationId: string;
 }
 
@@ -200,7 +235,10 @@ export class PayNowDto {
   @IsNotEmpty()
   paymentId: string;
 
+  @Transform(toMongoObjectId)
   organizationId: string;
+
+  @Transform(toMongoObjectId)
   userId: string;
 }
 export class PayNowResponseDto {

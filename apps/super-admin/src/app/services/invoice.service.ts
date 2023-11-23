@@ -337,12 +337,14 @@ export class InvoiceService {
   async getAllInvoices(payload: ListInvoicesDTO) {
     try {
       const {
-        page = 0,
+        page = 1,
         limit = 10,
         organizationId,
         search,
         status,
         organizationPlanId,
+        billingDate,
+        dueDate,
       } = payload;
       let filterQuery = {};
 
@@ -365,6 +367,26 @@ export class InvoiceService {
       if (status) {
         filterQuery = {
           $or: [{ status: { $regex: status, $options: 'i' } }],
+        };
+      }
+
+      if (billingDate) {
+        const startDate = dayjs(billingDate).startOf('day').toDate();
+        const endDate = dayjs(billingDate).endOf('day').toDate();
+
+        filterQuery['billingDate'] = {
+          $gte: startDate,
+          $lte: endDate,
+        };
+      }
+
+      if (dueDate) {
+        const startDate = dayjs(dueDate).startOf('day').toDate();
+        const endDate = dayjs(dueDate).endOf('day').toDate();
+
+        filterQuery['dueDate'] = {
+          $gte: startDate,
+          $lte: endDate,
         };
       }
 

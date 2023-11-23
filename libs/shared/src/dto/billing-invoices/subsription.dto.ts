@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Type } from 'class-transformer';
+import { Transform, Type } from 'class-transformer';
 import {
   IsISO8601,
   IsMongoId,
@@ -12,6 +12,7 @@ import {
   BillingCycleEnum,
   OrganizationPlanStatusEnum,
 } from '../../constants/enums';
+import { toMongoObjectId } from '../../functions';
 
 export class getAllSubscriptionDto {
   @ApiProperty({
@@ -154,6 +155,24 @@ export class getAllSubscriptionDto {
   createdBy?: string;
 }
 
+export class getAllSubsDto {
+  @Transform(toMongoObjectId)
+  organizationId: string;
+}
+
+export class getOneSubsDto {
+  @ApiProperty({
+    type: String,
+    description: '651e6657364160a7fca7921e',
+  })
+  @IsNotEmpty()
+  @Transform(toMongoObjectId)
+  orgPlanId: string;
+
+  @Transform(toMongoObjectId)
+  organizationId;
+}
+
 export class GetAllAssignPlanResponseDto {
   @ApiProperty({ example: 200 })
   statusCode: string;
@@ -188,9 +207,10 @@ export class GetAllAssignPlanResponseDto {
 
 export class AssignOrgPlanOrgAdminDto {
   @ApiProperty({
+    type: String,
     example: '6526558a8f723637f754487d',
   })
-  @IsMongoId()
+  @Transform(toMongoObjectId)
   @IsNotEmpty()
   planId: string;
 
@@ -239,7 +259,10 @@ export class AssignOrgPlanOrgAdminDto {
   })
   billingCycle: BillingCycleEnum;
 
+  @Transform(toMongoObjectId)
   organizationId: string;
+
+  @Transform(toMongoObjectId)
   assignedBy?: string;
 }
 
@@ -363,18 +386,20 @@ export class UpdateAssignOrgPlanResponseOrgAdminDto {
 
 export class OrganizationPlanId {
   @ApiProperty({
+    type: String,
     example: '6524f1d3df46444d10994854',
   })
-  @IsMongoId()
+  @Transform(toMongoObjectId)
   @IsNotEmpty()
   organizationPlanId: string;
 }
 
 export class UpdateAssignOrgPlanSuperAdminDto {
   @ApiProperty({
+    type: String,
     example: '6526558a8f723637f754487d',
   })
-  @IsMongoId()
+  @Transform(toMongoObjectId)
   @IsNotEmpty()
   planId: string;
 
@@ -423,8 +448,11 @@ export class UpdateAssignOrgPlanSuperAdminDto {
   })
   billingCycle: BillingCycleEnum;
 
+  @Transform(toMongoObjectId)
   organizationPlanId?: string;
+  @Transform(toMongoObjectId)
   organizationId: string;
+  @Transform(toMongoObjectId)
   assignedBy: string;
 }
 

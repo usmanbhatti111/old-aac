@@ -93,7 +93,7 @@ export class ListInvoicesDTO extends PaginationDto {
 
   @ApiProperty({
     required: false,
-    example: '',
+    description: '2023-10-30',
   })
   @IsISO8601()
   @IsOptional()
@@ -101,7 +101,7 @@ export class ListInvoicesDTO extends PaginationDto {
 
   @ApiProperty({
     required: false,
-    example: '',
+    description: '2023-11-30',
   })
   @IsISO8601()
   @IsOptional()
