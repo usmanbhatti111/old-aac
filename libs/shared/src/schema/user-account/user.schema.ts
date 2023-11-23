@@ -1,6 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import mongoose, { HydratedDocument, SchemaTypes } from 'mongoose';
 import { UserRole, UserStatus } from '../../constants';
+import { MediaObject } from '../../dto';
 import { AbstractSchema } from '../abstract-repo/abstract.schema';
 import { Organization } from '../organization';
 import { Products } from '../super-admin';
@@ -13,11 +14,15 @@ export class Address {
   @Prop()
   buildingName: string;
   @Prop()
+  buildingNumber: string;
+  @Prop()
   streetName: string;
   @Prop()
   city: string; // alt: town
   @Prop()
   country: string;
+  @Prop()
+  composite: string;
 }
 
 @Schema({ versionKey: false, timestamps: true })
@@ -26,10 +31,10 @@ export class User extends AbstractSchema {
   firstName: string;
 
   @Prop()
-  middleName?: string;
-
-  @Prop()
   lastName: string;
+
+  @Prop({ type: SchemaTypes.Mixed })
+  avatar?: MediaObject;
 
   @Prop({ unique: true })
   email: string; // unique

@@ -14,13 +14,6 @@ export class UpdateUserDto {
     example: '',
   })
   @IsOptional()
-  middleName?: string;
-
-  @ApiProperty({
-    required: false,
-    example: '',
-  })
-  @IsOptional()
   lastName?: string;
 
   @ApiProperty({

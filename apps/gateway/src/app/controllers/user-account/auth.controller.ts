@@ -57,7 +57,7 @@ export class AuthController {
         await firstValueFrom(
           this.userServiceClient.send(
             RMQ_MESSAGES.AUTHENTICATION.SEARCH_ORG_BY_CRN,
-            { crn: Number(payload.crn) }
+            { crn: payload.crn }
           )
         );
         const { products } = payload;
