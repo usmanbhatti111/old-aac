@@ -343,6 +343,7 @@ export class InvoiceService {
         search,
         status,
         organizationPlanId,
+        planId,
         billingDate,
         dueDate,
       } = payload;
@@ -362,6 +363,10 @@ export class InvoiceService {
 
       if (organizationPlanId) {
         filterQuery['organizationPlanId'] = organizationPlanId;
+      }
+
+      if (planId) {
+        filterQuery['planId'] = planId;
       }
 
       if (status) {
