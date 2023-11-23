@@ -1,6 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Transform } from 'class-transformer';
 import { IsBoolean, IsOptional } from 'class-validator';
+import { UserStatus } from '../../constants';
 import { ApiSingleFile } from '../../custom';
 import { toMongoObjectId } from '../../functions';
 
@@ -48,6 +49,14 @@ export class UpdateProfileDto {
   })
   @IsOptional()
   address?: {};
+
+  @ApiProperty({
+    required: false,
+    example: UserStatus.ACTIVE,
+    enum: [UserStatus.ACTIVE, UserStatus.INACTIVE],
+  })
+  @IsOptional()
+  status?: string;
 
   @ApiProperty({
     required: false,

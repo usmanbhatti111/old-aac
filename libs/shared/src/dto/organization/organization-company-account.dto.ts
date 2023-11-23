@@ -3,20 +3,14 @@ import { IsArray, IsInt, IsNotEmpty, IsOptional } from 'class-validator';
 import { Transform, Type } from 'class-transformer';
 import { paginationDTO } from '../pagination/pagination.dto';
 import { IdDto } from '../common';
-import { toMongoObjectId } from 'libs/shared/src/functions';
+import { toMongoObjectId } from '../../functions';
 
 export interface IOrganizationCompanyAccount {
   organizationId: string;
   logoUrl?: string;
   accountName: string;
   phoneNo: string;
-  address?: string;
-  unit?: string;
-  buildingName?: string;
-  buildingNumber?: string;
-  streetName?: string;
-  city?: string;
-  country?: string;
+  address?: object;
   isActive: boolean;
   postCode: string;
   createdAt?: Date;
