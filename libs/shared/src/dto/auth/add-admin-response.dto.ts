@@ -11,7 +11,6 @@ export class AddAdminUserResponseDto {
     example: {
       _id: '6544d211c7d6a2a220c91cf3',
       firstName: 'alo ',
-      middleName: 'qaqor',
       lastName: 'tol',
       email: 'aliqaqor@yopmail.com',
       phoneNumber: '03215987461',

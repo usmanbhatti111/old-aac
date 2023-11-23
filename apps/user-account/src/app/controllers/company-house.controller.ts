@@ -13,7 +13,7 @@ export class CompanyHouseController {
   }
 
   @MessagePattern(RMQ_MESSAGES.AUTHENTICATION.SEARCH_ORG_BY_CRN)
-  searchByCrn(@Payload() payload: { crn: number }) {
+  searchByCrn(@Payload() payload: { crn: string }) {
     return this.companyHouseService.searchCompanyByCode(payload);
   }
 }

@@ -113,7 +113,7 @@ export class JobApplicationsService {
                   _id: 1,
                   name: {
                     $reduce: {
-                      input: ['$firstName', '$middleName', '$lastName'],
+                      input: ['$firstName', '$lastName'],
                       initialValue: '',
                       in: {
                         $cond: {
@@ -227,11 +227,7 @@ export class JobApplicationsService {
           $addFields: {
             name: {
               $reduce: {
-                input: [
-                  '$candidates.firstName',
-                  '$candidates.middleName',
-                  '$candidates.lastName',
-                ],
+                input: ['$candidates.firstName', '$candidates.lastName'],
                 initialValue: '',
                 in: {
                   $cond: {

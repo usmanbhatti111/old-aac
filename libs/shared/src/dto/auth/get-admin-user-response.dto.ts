@@ -12,7 +12,6 @@ export class GetAdminUserListResponseDto {
       {
         _id: '6544c532ec1548e3f94c9f4d',
         firstName: 'BP  INC',
-        middleName: 'ESTATES',
         lastName: 'INC',
         role: 'ORG_ADMIN',
         status: 'INACTIVE',

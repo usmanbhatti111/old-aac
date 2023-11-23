@@ -3,6 +3,7 @@ import mongoose, { HydratedDocument, SchemaTypes } from 'mongoose';
 import { AbstractSchema } from '../abstract-repo/abstract.schema';
 import { IOrganizationCompanyAccount } from '../../dto/organization';
 import { Organization } from './organization.schema';
+import { Address } from '../user-account';
 
 export type OrganizationCompanyAccountDocument =
   HydratedDocument<OrganizationCompanyAccount>;
@@ -28,26 +29,8 @@ export class OrganizationCompanyAccount
   @Prop({ type: String, required: true })
   phoneNo: string;
 
-  @Prop({ type: String, required: false })
-  address?: string;
-
-  @Prop({ type: String, required: false })
-  unit?: string;
-
-  @Prop({ type: String, required: false })
-  buildingName?: string;
-
-  @Prop({ type: String, required: false })
-  buildingNumber?: string;
-
-  @Prop({ type: String, required: false })
-  streetName?: string;
-
-  @Prop({ type: String, required: false })
-  city?: string;
-
-  @Prop({ type: String, required: false })
-  country?: string;
+  @Prop({ type: Address })
+  address?: object;
 
   @Prop({ type: String, required: true })
   postCode: string;

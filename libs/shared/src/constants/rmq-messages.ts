@@ -23,10 +23,12 @@ export const RMQ_MESSAGES = {
   USER: {
     GET_LIST: 'get-users',
     CREATE: 'create-user',
+    CREATE_ORG_USER: 'create-org-user',
     FIND_BY_EMAIL: 'find-user-by-email',
     FIND_BY_COGNITO: 'find-user-by-cognito',
     PROFILE: 'profile',
     UPDATE_PROFILE: 'update-profile',
+    UPDATE_AVATAR: 'update-avatar',
     EDIT_USER: 'edit-user-by-admin',
   },
   ROLE: {
@@ -442,6 +444,7 @@ export const RMQ_MESSAGES = {
   DROPDOWNS: {
     ORGANIZATIONS_DROPDOWN: 'organization-dropdown',
     PRODUCTS_DROPDOWN: 'products-dropdown',
+    ORG_EMPLOYEES: 'organisation-employees-dropdown',
   },
   COMMON_FEATURES: {
     COMPANIES: {

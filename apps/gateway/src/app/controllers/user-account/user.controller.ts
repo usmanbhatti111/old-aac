@@ -8,6 +8,7 @@ import {
   Post,
   Query,
   Req,
+  UploadedFile,
 } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
 import {
@@ -17,6 +18,7 @@ import {
   ApiOperation,
   ApiTags,
 } from '@nestjs/swagger';
+import { ApiFormData } from '@shared';
 import {
   API_ENDPOINTS,
   API_TAGS,
@@ -28,10 +30,15 @@ import {
   GetAdminUserDto,
   CreateUserDto,
   UpdateProfileDto,
-  EditUserByAdminDto,
   GetAdminUserListResponseDto,
   AddAdminUserResponseDto,
   UserProfileResponseDto,
+  UpdateAvatarDto,
+  UpdateAvatarParamDto,
+  UpdateAvatarQueryDto,
+  UserAvatarResponseDto,
+  CreateOrgUserDto,
+  CreateOrgUserParamDto,
 } from '@shared/dto';
 import { firstValueFrom } from 'rxjs';
 import { Auth } from '../../decorators/auth.decorator';
@@ -83,30 +90,58 @@ export class UserController {
   }
 
   @Auth(true)
+  @Patch(API_ENDPOINTS.USER.AVATAR)
+  @ApiOperation({ summary: 'Update User Avatar' })
+  @ApiOkResponse({ type: UserAvatarResponseDto })
+  @ApiFormData({
+    required: false,
+    single: true,
+    fieldName: 'avatar',
+    fileTypes: ['jpg', 'png', 'jpeg'],
+    errorMessage: 'Invalid document file entered.',
+  })
+  public updateAvatar(
+    @Param() { id }: UpdateAvatarParamDto,
+    @Query() { removeAvatar }: UpdateAvatarQueryDto,
+    @Body() payload: UpdateAvatarDto,
+    @UploadedFile() file: any
+  ): Promise<UserProfileResponseDto> | any {
+    payload.userId = id;
+    payload.avatar = file;
+    payload.removeAvatar = removeAvatar;
+
+    return firstValueFrom(
+      this.userServiceClient.send(RMQ_MESSAGES.USER.UPDATE_AVATAR, payload)
+    );
+  }
+
+  @Auth(true)
   @Patch(API_ENDPOINTS.USER.UPDATE)
   @ApiOperation({ summary: 'Update Profile' })
   @ApiOkResponse({ type: UserProfileResponseDto })
   public updateProfile(
     @Param('id') userId: string,
-    @Query() query: UpdateProfileDto
+    @Body() payload: UpdateProfileDto
   ): Promise<UserProfileResponseDto> {
-    query.userId = userId;
+    payload.userId = userId;
+
     return firstValueFrom(
-      this.userServiceClient.send(RMQ_MESSAGES.USER.UPDATE_PROFILE, query)
+      this.userServiceClient.send(RMQ_MESSAGES.USER.UPDATE_PROFILE, payload)
     );
   }
 
   @Auth(true)
-  @Patch(API_ENDPOINTS.USER.EDIT_USER)
-  @ApiOperation({ summary: 'Edit User by Admin' })
+  @Post(API_ENDPOINTS.USER.ORG_USER)
+  @ApiOperation({ summary: 'Add User for organization' })
   @ApiOkResponse({ type: UserProfileResponseDto })
-  public editUser(
-    @Param('id') userId: string,
-    @Query() query: EditUserByAdminDto
+  public createOrganizationUser(
+    @Param() { orgId }: CreateOrgUserParamDto,
+    @Body() payload: CreateOrgUserDto
   ): Promise<UserProfileResponseDto> {
-    query.userId = userId;
+    payload.organization = orgId;
+
     return firstValueFrom(
-      this.userServiceClient.send(RMQ_MESSAGES.USER.EDIT_USER, query)
+      this.userServiceClient.send(RMQ_MESSAGES.USER.CREATE_ORG_USER, payload)
     );
   }
 }
