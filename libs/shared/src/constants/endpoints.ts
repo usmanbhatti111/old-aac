@@ -324,6 +324,9 @@ export const API_ENDPOINTS = {
       GET_ONE: 'get-one/:id',
       PAY_NOW_INVOICE: 'pay-now-invoice',
     },
+    SUBSCRIPTION: {
+      GET_ONE: 'get-one',
+    },
     CONTACT_STATUS: {
       ADD_CONTACT_STATUS: '/',
       GET_CONTACT_STATUSES: '/',

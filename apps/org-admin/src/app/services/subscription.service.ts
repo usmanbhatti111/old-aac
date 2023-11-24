@@ -5,8 +5,9 @@ import { ResponseMessage, successResponse } from '@shared/constants';
 import {
   AssignOrgPlanOrgAdminDto,
   UpdateAssignOrgPlanOrgAdminDto,
+  getAllSubsDto,
+  getOneSubsDto,
 } from '@shared/dto';
-import mongoose from 'mongoose';
 
 @Injectable()
 export class SubscriptionService {
@@ -15,13 +16,13 @@ export class SubscriptionService {
     private productRepository: ProductsRepository
   ) {}
 
-  async getAllSubscriptions(payload) {
+  async getAllSubscriptions(payload: getAllSubsDto) {
     try {
       const { organizationId } = payload;
       const pipelines = [
         {
           $match: {
-            organizationId: new mongoose.Types.ObjectId(organizationId),
+            organizationId: organizationId,
             status: 'ACTIVE',
             isDeleted: false,
           },
@@ -115,6 +116,93 @@ export class SubscriptionService {
       const result = [...organizationplans, ...updatedProducts];
 
       return successResponse(HttpStatus.OK, ResponseMessage.SUCCESS, result);
+    } catch (error) {
+      throw new RpcException(error);
+    }
+  }
+  async getOneSubscription(payload: getOneSubsDto) {
+    try {
+      const { orgPlanId, organizationId } = payload;
+      const pipelines = [
+        {
+          $match: {
+            _id: orgPlanId,
+            organizationId: organizationId,
+            status: 'ACTIVE',
+            isDeleted: false,
+          },
+        },
+        {
+          $lookup: {
+            from: 'plans',
+            localField: 'planId',
+            foreignField: '_id',
+            as: 'plans',
+          },
+        },
+        {
+          $unwind: {
+            path: '$plans',
+            preserveNullAndEmptyArrays: true,
+          },
+        },
+        {
+          $lookup: {
+            from: 'plantypes',
+            localField: 'plans.planTypeId',
+            foreignField: '_id',
+            as: 'plantypes',
+          },
+        },
+        {
+          $unwind: {
+            path: '$plantypes',
+            preserveNullAndEmptyArrays: true,
+          },
+        },
+        {
+          $addFields: {
+            planProducts: '$plans.planProducts',
+          },
+        },
+        {
+          $lookup: {
+            from: 'products',
+            localField: 'planProducts',
+            foreignField: '_id',
+            as: 'planProducts',
+          },
+        },
+        {
+          $project: {
+            'plans.planProductFeatures': 0,
+            'plans.planProductModulePermissions': 0,
+            'plans.createdAt': 0,
+            'plans.updatedAt': 0,
+            'planProducts.description': 0,
+            'planProducts.isActive': 0,
+            'planProducts.isDeleted': 0,
+            'planProducts.logo': 0,
+            'planProducts.modifiedBy': 0,
+            'planProducts.createdAt': 0,
+            'planProducts.updatedAt': 0,
+            createdAt: 0,
+            updatedAt: 0,
+            isDeleted: 0,
+            __v: 0,
+          },
+        },
+      ];
+
+      const organizationplans = await this.orgPlanRepository.aggregate(
+        pipelines
+      );
+
+      return successResponse(
+        HttpStatus.OK,
+        ResponseMessage.SUCCESS,
+        organizationplans[0]
+      );
     } catch (error) {
       throw new RpcException(error);
     }
