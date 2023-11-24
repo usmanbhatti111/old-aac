@@ -8,7 +8,7 @@ import {
   Get,
 } from '@nestjs/common';
 import { ClientProxy, RpcException } from '@nestjs/microservices';
-import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags, ApiOkResponse } from '@nestjs/swagger';
 import {
   API_ENDPOINTS,
   API_TAGS,
@@ -16,7 +16,11 @@ import {
   RMQ_MESSAGES,
   SERVICES,
 } from '@shared/constants';
-import { AddAssetTypeDto, ListAssetTypeDto } from '@shared/dto';
+import {
+  AddAssetTypeDto,
+  AddAssetTypeResponseDTO,
+  ListAssetTypeDto,
+} from '@shared/dto';
 import { firstValueFrom } from 'rxjs';
 import { AppRequest } from '../../../../shared/interface/request.interface';
 import { Auth } from '../../../../decorators/auth.decorator';
@@ -30,11 +34,12 @@ export class AssetTypeController {
   ) {}
 
   @Auth(true)
+  @ApiOkResponse({ type: AddAssetTypeResponseDTO })
   @Post(API_ENDPOINTS.AIR_SERVICES.SETTINGS.ASSET_TYPE.ASSET_TYPE)
   public async addAssetType(
     @Body() dto: AddAssetTypeDto,
     @Req() req: AppRequest
-  ) {
+  ): Promise<AddAssetTypeResponseDTO> {
     try {
       dto.createdBy = req?.user?._id;
       dto.companyId = req?.user?.organization;
