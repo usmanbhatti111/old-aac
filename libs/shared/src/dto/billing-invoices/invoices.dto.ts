@@ -35,6 +35,14 @@ export class GetAllInvoicesDto extends paginationDTO {
   organizationPlanId: string;
 
   @ApiProperty({
+    type: String,
+    required: false,
+  })
+  @IsOptional()
+  @Transform(toMongoObjectId)
+  planId: string;
+
+  @ApiProperty({
     required: false,
     description: '2023-10-30',
   })
