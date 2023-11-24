@@ -17,6 +17,7 @@ import {
   UpdateAvatarDto,
   CreateOrgUserDto,
   GetOrgUsersDropDownDto,
+  GetOrgEmployeesQueryDto,
 } from '@shared/dto';
 import { S3Service } from '@shared/services';
 import { Model, Types } from 'mongoose';
@@ -388,6 +389,70 @@ export class UserService {
           lastName: 1,
           avatar: 1,
           role: 1,
+        },
+      },
+    ];
+
+    try {
+      const res = await this.userRepository.paginate({
+        filterQuery,
+        pipelines,
+        offset,
+        limit,
+      });
+
+      return successResponse(HttpStatus.OK, ResponseMessage.SUCCESS, res);
+    } catch (error) {
+      throw new RpcException(error);
+    }
+  }
+
+  async getOrgUsers(payload: GetOrgEmployeesQueryDto) {
+    const { search, product, orgId, page = 1, limit = 10 } = payload;
+    const offset = (page - 1) * limit;
+
+    let filterQuery = {};
+    if (search) {
+      filterQuery = {
+        ...filterQuery,
+        $or: [
+          {
+            firstName: {
+              $regex: search,
+              $options: 'i',
+            },
+          },
+          {
+            lastName: {
+              $regex: search,
+              $options: 'i',
+            },
+          },
+        ],
+      };
+    }
+
+    filterQuery = {
+      ...filterQuery,
+      organization: orgId,
+      role: UserRole.ORG_EMPLOYEE,
+      status: UserStatus.ACTIVE,
+      ...(product && {
+        products: { $in: [product] },
+      }),
+    };
+
+    const pipelines = [
+      {
+        $project: {
+          _id: 1,
+          firstName: 1,
+          lastName: 1,
+          avatar: 1,
+          email: 1,
+          role: 1,
+          status: 1,
+          phoneNumber: 1,
         },
       },
     ];

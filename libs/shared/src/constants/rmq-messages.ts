@@ -24,6 +24,7 @@ export const RMQ_MESSAGES = {
     GET_LIST: 'get-users',
     CREATE: 'create-user',
     CREATE_ORG_USER: 'create-org-user',
+    GET_ORG_USERS: 'get-org-users',
     FIND_BY_EMAIL: 'find-user-by-email',
     FIND_BY_COGNITO: 'find-user-by-cognito',
     PROFILE: 'profile',

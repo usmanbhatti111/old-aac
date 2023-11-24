@@ -9,6 +9,7 @@ import {
   CreateOrgUserDto,
   GetOrgUsersDropDownDto,
   IdParamDto,
+  GetOrgEmployeesQueryDto,
 } from '@shared/dto';
 import { UserService } from '../services/user.service';
 
@@ -61,5 +62,10 @@ export class UserController {
   @MessagePattern(RMQ_MESSAGES.USER.CREATE_ORG_USER)
   createOrgEmployee(@Payload() payload: CreateOrgUserDto) {
     return this.userService.createOrgUser(payload);
+  }
+
+  @MessagePattern(RMQ_MESSAGES.USER.GET_ORG_USERS)
+  getOrgEmployees(@Payload() payload: GetOrgEmployeesQueryDto) {
+    return this.userService.getOrgUsers(payload);
   }
 }
