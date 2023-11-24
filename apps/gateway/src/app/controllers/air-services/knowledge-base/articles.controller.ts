@@ -87,7 +87,9 @@ export class ArticlesController {
   }
 
   @Auth(true)
-  @Get(API_ENDPOINTS.KNOWLEDGE_BASE.ARTICLES.GET_UNAPPROVED_ARTICLES)
+  @Get(
+    API_ENDPOINTS.AIR_SERVICES.KNOWLEDGE_BASE.ARTICLES.GET_UNAPPROVED_ARTICLES
+  )
   @ApiOkResponse({ type: GetUnapprovedArticlesResponseDto })
   public async getUnapprovedArticles(
     @Query() queryParams: GetUnapprovedArticlesRequestDto,
