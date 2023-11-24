@@ -200,9 +200,11 @@ export class CompaniesController {
     @Req() req: AppRequest,
     @Query() payload: GetComapanyDto
   ): Promise<GetComapaniesResponseDTO> {
-    return firstValueFrom(
+    const response = await firstValueFrom(
       this.commonFeatureClient.send(RMQ_MESSAGES.COMPANY.GET, payload)
     );
+
+    return response;
   }
 
   @Auth(true)
@@ -211,9 +213,10 @@ export class CompaniesController {
     @Req() req: AppRequest,
     @Param('id') id: string
   ) {
-    return firstValueFrom(
+    const response = await firstValueFrom(
       this.commonFeatureClient.send(RMQ_MESSAGES.COMPANY.DETAIL, id)
     );
+    return response;
   }
 
   @Auth(true)
@@ -297,9 +300,10 @@ export class CompaniesController {
     @Req() req: AppRequest,
     @Query() payload: GetDeletedCompanisDto
   ): Promise<GetComapaniesResponseDTO> {
-    return firstValueFrom(
+    const respones = await firstValueFrom(
       this.commonFeatureClient.send(RMQ_MESSAGES.COMPANY.GET_DELETED, payload)
     );
+    return respones;
   }
 
   @Auth(true)
@@ -369,7 +373,7 @@ export class CompaniesController {
     const response = await firstValueFrom(
       this.commonFeatureClient.send(RMQ_MESSAGES.COMPANY.GET_CUSTOMIZE_COLUMN, {
         id,
-        userId: req.user._id,
+        userId: req?.user?._id,
       })
     );
 
@@ -386,7 +390,7 @@ export class CompaniesController {
     const response = await firstValueFrom(
       this.commonFeatureClient.send(RMQ_MESSAGES.COMPANY.GET_CUSTOMIZE_COLUMN, {
         id,
-        userId: req.user._id,
+        userId: req?.user?._id,
       })
     );
 
@@ -403,7 +407,7 @@ export class CompaniesController {
     const response = await firstValueFrom(
       this.commonFeatureClient.send(RMQ_MESSAGES.COMPANY.GET_CUSTOMIZE_COLUMN, {
         id,
-        userId: req.user._id,
+        userId: req?.user?._id,
       })
     );
 
