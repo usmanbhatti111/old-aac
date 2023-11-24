@@ -8,6 +8,7 @@ import {
   UpdateAvatarDto,
   CreateOrgUserDto,
   GetOrgUsersDropDownDto,
+  IdParamDto,
 } from '@shared/dto';
 import { UserService } from '../services/user.service';
 
@@ -38,8 +39,8 @@ export class UserController {
   }
 
   @MessagePattern(RMQ_MESSAGES.USER.PROFILE)
-  userProfile(userId: string) {
-    return this.userService.userProfile(userId);
+  userProfile(@Payload() payload: IdParamDto) {
+    return this.userService.userProfile(payload);
   }
 
   @MessagePattern(RMQ_MESSAGES.DROPDOWNS.ORG_EMPLOYEES)

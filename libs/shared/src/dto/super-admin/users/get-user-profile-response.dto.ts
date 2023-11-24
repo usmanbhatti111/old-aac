@@ -1,4 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { Transform } from 'class-transformer';
+import { IsMongoId, IsNotEmpty } from 'class-validator';
+import { toMongoObjectId } from '../../../functions';
 
 export class UserProfileResponseDto {
   @ApiProperty({ example: 201 })
@@ -77,4 +80,14 @@ export class UserAvatarResponseDto {
 
   @ApiProperty({ example: null })
   errors: [];
+}
+
+export class IdParamDto {
+  @ApiProperty({
+    required: true,
+    description: 'Example: 652627f809a15759b979dd3a',
+  })
+  @IsNotEmpty()
+  @Transform(toMongoObjectId)
+  id: string;
 }
