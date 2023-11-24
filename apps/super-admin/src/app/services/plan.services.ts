@@ -235,7 +235,7 @@ export class PlanService {
       const paginateRes = await this.planRepository.paginate({
         filterQuery: {},
         offset: skip,
-        limit: payload?.limit,
+        limit: take,
         pipelines,
       });
 
@@ -347,7 +347,8 @@ export class PlanService {
     productId: string,
     featureProducts: ProductFeatureDto[],
     productPermissions: ProductPermissionDto[],
-    plan: Plan = null
+    plan: Plan = null,
+    isCRM = false
   ) {
     const featureProduct = featureProducts.find(
       (val) => val.productId.toString() == productId.toString()
@@ -362,37 +363,37 @@ export class PlanService {
     });
 
     const productFeatureResResList = [];
-    for (const feature of featureProduct.features) {
-      await this.featureRepository.findOne({
-        _id: feature?.featureId,
-      });
-      productFeatureResResList.push(
-        await this.productFeatureRepository.upsert(
-          {
-            productId,
-            featureId: feature?.featureId,
-          },
-          { dealsAssociationsDetail: feature?.dealsAssociationsDetail }
-        )
-      ); // inserting plan product features data
-    }
+    if (featureProduct)
+      for (const feature of featureProduct.features) {
+        await this.featureRepository.findOne({
+          _id: feature?.featureId,
+        });
+        productFeatureResResList.push(
+          await this.productFeatureRepository.upsert(
+            {
+              productId,
+              featureId: feature?.featureId,
+            },
+            { dealsAssociationsDetail: feature?.dealsAssociationsDetail }
+          )
+        ); // inserting plan product features data
+      }
 
-    const slugIds = [];
-
-    for (const slug of productPermission.permissionSlugs) {
-      slugIds.push((await this.permissionRepository.findOne({ slug }))._id);
-    }
+    if (productPermission)
+      for (const slug of productPermission.permissionSlugs) {
+        await this.permissionRepository.findOne({ slug });
+      }
 
     const planProductPermission =
       await this.planProductPermissionRepository.upsert(
         { productId: productPermission?.productId },
         {
           productId: productPermission?.productId,
-          permissionSlugs: slugIds,
+          permissionSlugs: productPermission?.permissionSlugs,
         }
       ); // inserting plan product module permission data
 
-    if (plan) {
+    if (plan)
       plan = await this.planRepository.findOneAndUpdate(
         { _id: plan._id },
         {
@@ -405,9 +406,10 @@ export class PlanService {
           planProductPermissions: plan?.planProductPermissions?.[0]
             ? [...plan.planProductPermissions, planProductPermission]
             : [planProductPermission],
+          isCRM,
         }
       );
-    } else {
+    else {
       plan = await this.planRepository.create({
         ...payload,
         planProducts: [product],
@@ -440,7 +442,8 @@ export class PlanService {
             productId,
             payload?.planFeature,
             payload?.planPermission,
-            planRes
+            planRes,
+            true
           );
         }
       } else {
@@ -450,7 +453,8 @@ export class PlanService {
           payload?.productId,
           payload?.planFeature,
           payload?.planPermission,
-          planRes
+          planRes,
+          false
         );
       }
 

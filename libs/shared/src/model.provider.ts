@@ -383,6 +383,10 @@ export const DbModels = [
     schema: PlanProductPermissionSchema,
   },
   {
+    name: PlanProductPermission.name,
+    schema: PlanProductPermissionSchema,
+  },
+  {
     name: TaxCalculation.name,
     schema: TaxCalculationSchema,
     collection: MODEL.TAX_CALCULATION,
