@@ -407,6 +407,10 @@ export const API_ENDPOINTS = {
       GET_UNAPPROVED_ARTICLES: 'unapproved-articles',
     },
   },
+  IMPORT_FILE: {
+    CREATE_IMPORT_FILE: '/',
+  },
+
   CUSTOMIZED_COLUMNS: {
     GET_CUSTOMIZE_COLUMN: '/',
     CREATE_OR_UPDATE_CUSTOMIZE_COLUMN: '/',
@@ -421,12 +425,13 @@ export const API_ENDPOINTS = {
     GET_DELETED: 'deleted-company',
     CUSTOMIZE_COLUMN: 'customize-column',
   },
-  // },
+  
   DROPDOWNS: {
     ORGANIZATION_DROPDOWN: 'organizations',
     PRODUCTS_DROPDOWN: 'products',
     ORG_EMPLOYEES: 'organizations/:id/users',
   },
+  
   COMMON_FEATURES: {
     COMPANIES: {
       GET_UNIQUE_COMPANIES_OWNERS: 'get-unique-companies-owners',

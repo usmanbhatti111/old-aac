@@ -473,7 +473,7 @@ export class DealsService {
 
   async associateDeal(payload: DealAssociationDto) {
     try {
-      const filter = { _id: payload?.dealId, isDeleted: false };
+      const filter = { _id: payload?.dealId, isDeleted: EIsDeletedStatus.ACTIVE };
 
       const res = await this.dealsRepository.findOneAndUpdate(filter, {
         $push: {
@@ -494,7 +494,7 @@ export class DealsService {
 
   async disassociateDeal(payload: DealAssociationDto) {
     try {
-      const filter = { _id: payload?.dealId, isDeleted: false };
+      const filter = { _id: payload?.dealId, isDeleted: EIsDeletedStatus.ACTIVE };
 
       const res = await this.dealsRepository.findOneAndUpdate(filter, {
         $pull: {
@@ -504,38 +504,6 @@ export class DealsService {
           companiesIds: payload?.companyId,
           ticketsIds: payload?.ticketId,
           attachmentsIds: payload?.attachmentId,
-        },
-      });
-
-      return successResponse(HttpStatus.OK, ResponseMessage.SUCCESS, res);
-    } catch (error) {
-      throw new RpcException(error);
-    }
-  }
-
-  async addTask(payload: DealTaskDto) {
-    try {
-      const filter = { _id: payload?.dealId, isDeleted: false };
-
-      const res = await this.dealsRepository.findOneAndUpdate(filter, {
-        $push: {
-          tasksIds: payload?.taskId,
-        },
-      });
-
-      return successResponse(HttpStatus.OK, ResponseMessage.SUCCESS, res);
-    } catch (error) {
-      throw new RpcException(error);
-    }
-  }
-
-  async deleteTask(payload: DealTaskDto) {
-    try {
-      const filter = { _id: payload?.dealId, isDeleted: false };
-
-      const res = await this.dealsRepository.findOneAndUpdate(filter, {
-        $pull: {
-          tasksIds: payload?.taskId,
         },
       });
 
@@ -785,7 +753,7 @@ export class DealsService {
         {
           $match: {
             _id: payload?.id,
-            isDeleted: false,
+            isDeleted: EIsDeletedStatus.ACTIVE,
           },
         },
         {

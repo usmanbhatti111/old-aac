@@ -68,16 +68,6 @@ export class DealsController {
     return this.dealsService.disassociateDeal(payload);
   }
 
-  @MessagePattern(RMQ_MESSAGES.SALES.DEAL_VIEWS.DELETE_TASK)
-  async deleteTask(@Payload() payload: DealTaskDto) {
-    return this.dealsService.deleteTask(payload);
-  }
-
-  @MessagePattern(RMQ_MESSAGES.SALES.DEAL_VIEWS.ADD_TASK)
-  async addTask(@Payload() payload: DealTaskDto) {
-    return this.dealsService.addTask(payload);
-  }
-
   @MessagePattern(RMQ_MESSAGES.SALES.DEALS.GET_ASSOCIATIONS)
   async populateAssociations(@Payload() payload: IdDto) {
     return this.dealsService.populateAssociations(payload);

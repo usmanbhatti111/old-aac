@@ -13,6 +13,8 @@ import { ActivitylogsController } from './controllers/activitylogs.controller';
 // import { TwilioModule } from 'nestjs-twilio';
 import { ActivityLogController } from './controllers/activity-log.controller';
 import { ActivityLogService } from './services/activityLog.service';
+import { ImportFileController } from './controllers/import-file.controller';
+import { ImportFileService } from './services/import-file.service';
 import { CustomizedColumnsController } from './controllers/customize-columns.controller';
 import { DropdownService } from './services/dropdown.service';
 import { DropdownController } from './controllers/dropdown.controller';
@@ -31,6 +33,7 @@ import { NoteService } from './services/note.service';
     ActivityLogController,
     DropdownController,
     // CallsController,
+    ImportFileController,
     CustomizedColumnsController,
     CompaniesController,
     NoteController,
@@ -43,6 +46,7 @@ import { NoteService } from './services/note.service';
     ActivityLogService,
     DropdownService,
     // CallsService,
+    ImportFileService,
     CompaniesService,
     NoteService,
   ],
