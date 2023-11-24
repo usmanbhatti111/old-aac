@@ -53,6 +53,7 @@ export const CONTROLLERS = {
   TAX_CALCULATION: 'tax-calculation',
   DEAL_VIEWS: 'deal-views',
   ACTIVITY_LOG: 'activity-log',
+  IMPORT_FILE: 'import-file',
   JOB_APPLICATIONS: 'job-applications',
   CUSTOMIZED_COLUMNS: 'customized-columns',
   COMPANY: 'company',

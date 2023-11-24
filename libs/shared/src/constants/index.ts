@@ -6,3 +6,4 @@ export * from './tags';
 export * from './responses';
 export * from './enums';
 export * from './models';
+export * from './lambda-urls';

@@ -133,6 +133,8 @@ import {
   ContactNote,
   ContactNoteSchema,
   ContactSchema,
+  ImportFile,
+  ImportFileSchema,
   CustomizeColumns,
   CustomizeColumnsSchema,
 } from './schema/common-feature';
@@ -397,6 +399,10 @@ export const DbModels = [
   {
     name: PurchaseApproval.name,
     schema: PurchaseApprovalSchema,
+  },
+  {
+    name: ImportFile.name,
+    schema: ImportFileSchema,
   },
   {
     name: CompanyAccountRole.name,

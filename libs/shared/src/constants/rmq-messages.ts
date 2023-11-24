@@ -427,6 +427,11 @@ export const RMQ_MESSAGES = {
     GET_ALL_ACTIVITIES: 'get-all-activities',
     ACTIVITY_LOG: 'activity-log',
   },
+
+  IMPORT_FILE: {
+    CREATE_IMPORT_FILE: 'create-import-file',
+  },
+
   CUSTOMIZED_COLUMNS: {
     GET_CUSTOMIZE_COLUMN: 'get-customize-column',
     CREATE_OR_UPDATE_CUSTOMIZE_COLUMN: 'create-or-update-customize-column',
