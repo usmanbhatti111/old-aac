@@ -15,6 +15,8 @@ export * from './air-services/contracts/index';
 export * from './air-services/task/index';
 export * from './air-services/dashboard/index';
 export * from './air-services/reports/index';
+export * from './air-services/settings/index';
+
 export * from './example';
 export * from './billing-invoices';
 export * from './products';

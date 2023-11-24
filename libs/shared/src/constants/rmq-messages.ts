@@ -306,6 +306,11 @@ export const RMQ_MESSAGES = {
       ADD: 'add-contract-type',
       GET: 'get-contract-types',
     },
+
+    VENDORS: {
+      ADD_VENDORS: 'add-vendors',
+      GET_VENDORS: 'get-vendors',
+    },
   },
 
   NEWS_AND_EVENTS: {

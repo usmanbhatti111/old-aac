@@ -26,6 +26,8 @@ import { ReportWidgetController } from './controllers/reports.widget.controller'
 import { ReportWidgetService } from './services/reports.widget.service';
 import { ArticlesService } from './services/knowledge-base/articles.service';
 import { ArticlesController } from './controllers/knowledge-base/articles.controller';
+import { VendorController } from './controllers/settings/asset-management/vendors.controller';
+import { VendorsService } from './services/settings/vendors.sevice';
 
 @Module({
   imports: [SharedModule],
@@ -43,6 +45,7 @@ import { ArticlesController } from './controllers/knowledge-base/articles.contro
     DashboardController,
     ReportWidgetController,
     ArticlesController,
+    VendorController,
   ],
   providers: [
     TicketService,
@@ -58,6 +61,7 @@ import { ArticlesController } from './controllers/knowledge-base/articles.contro
     DashboardService,
     ReportWidgetService,
     ArticlesService,
+    VendorsService,
   ],
 })
 export class AirServicesModule {}
