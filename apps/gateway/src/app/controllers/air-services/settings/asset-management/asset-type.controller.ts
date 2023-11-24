@@ -30,7 +30,7 @@ export class AssetTypeController {
   ) {}
 
   @Auth(true)
-  @Post(API_ENDPOINTS.AIR_SERVICES.SETTINGS.ASSET_TYPE)
+  @Post(API_ENDPOINTS.AIR_SERVICES.SETTINGS.ASSET_TYPE.ASSET_TYPE)
   public async addAssetType(
     @Body() dto: AddAssetTypeDto,
     @Req() req: AppRequest
@@ -48,8 +48,7 @@ export class AssetTypeController {
       throw new RpcException(err);
     }
   }
-
-  @Get(API_ENDPOINTS.AIR_SERVICES.SETTINGS.ASSET_TYPE_LIST)
+  @Get(API_ENDPOINTS.AIR_SERVICES.SETTINGS.ASSET_TYPE.ASSET_TYPE_LIST)
   public async getAssetTypeList(@Query() listDashboardDTO: ListAssetTypeDto) {
     try {
       const dashboardList = await firstValueFrom(

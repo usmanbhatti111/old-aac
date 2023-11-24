@@ -196,8 +196,14 @@ export const API_ENDPOINTS = {
       BULK_TICKET_UPDATE: 'bulk-ticket-update',
     },
     SETTINGS: {
-      ASSET_TYPE: '/',
-      ASSET_TYPE_LIST: '/assset-type-list',
+      CONTRACT_TYPE: {
+        ADD: 'add-contract-type',
+        GET: 'get-contract-types',
+      },
+      ASSET_TYPE: {
+        ASSET_TYPE: '/',
+        ASSET_TYPE_LIST: '/assset-type-list',
+      },
     },
     ASSETS: {
       INVENTORY: 'inventory',
@@ -239,6 +245,11 @@ export const API_ENDPOINTS = {
       GET_TASK: '/',
       UPDATE_TASK: '/:id',
       DELETE_TASK_DATA: '/:id',
+    },
+    KNOWLEDGE_BASE: {
+      ARTICLES: {
+        GET_UNAPPROVED_ARTICLES: 'unapproved-articles',
+      },
     },
     DASHBOARD: {
       ADD_DASHBOARD: '/',
@@ -287,16 +298,9 @@ export const API_ENDPOINTS = {
       GET_CONTRACT: 'get-contract',
       GET_CONTRACTS: 'get-contracts',
     },
-    SETTINGS: {
-      CONTRACT_TYPE: {
-        ADD: 'add-contract-type',
-        GET: 'get-contract-types',
-      },
-    },
-    KNOWLEDGE_BASE: {
-      ARTICLES: {
-        GET_UNAPPROVED_ARTICLES: 'unapproved-articles',
-      },
+    CONTRACT_TYPE: {
+      ADD: 'add-contract-type',
+      GET: 'get-contract-types',
     },
   },
   PRODUCT_FEATURES: {
@@ -414,6 +418,11 @@ export const API_ENDPOINTS = {
     VERIFY_NUMBER_TOKEN: 'verify_number_token',
   },
 
+  KNOWLEDGE_BASE: {
+    ARTICLES: {
+      GET_UNAPPROVED_ARTICLES: 'unapproved-articles',
+    },
+  },
   CUSTOMIZED_COLUMNS: {
     GET_CUSTOMIZE_COLUMN: '/',
     CREATE_OR_UPDATE_CUSTOMIZE_COLUMN: '/',
