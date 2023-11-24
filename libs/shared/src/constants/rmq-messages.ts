@@ -204,6 +204,9 @@ export const RMQ_MESSAGES = {
       DELETE_DASHBOARD: 'delete-dashboard',
       EMAILED_DASHBOARD: 'emailed-dashboards',
     },
+    SETTINGS: {
+      ASSET_TYPE: 'asset-type',
+    },
     WIDGETS: {
       CREATE_WIDGETS: 'create-widgets',
       GET_WIDGETS_LIST: 'get-widgets-list',

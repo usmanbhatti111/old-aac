@@ -195,6 +195,9 @@ export const API_ENDPOINTS = {
       CHANGE_STATUS: 'status/:id',
       BULK_TICKET_UPDATE: 'bulk-ticket-update',
     },
+    SETTINGS: {
+      ASSET_TYPE: '/',
+    },
     ASSETS: {
       INVENTORY: 'inventory',
       EDIT_INVENTORY: 'inventory/:id',
