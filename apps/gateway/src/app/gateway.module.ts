@@ -14,7 +14,6 @@ import { PermissionController } from './controllers/super-admin/permission.contr
 import { OrganizationController } from './controllers/organization/organization.controller';
 import { OrganizationCompanyAccountController } from './controllers/organization/organization-company-account.controller';
 import { TaskController } from './controllers/air-services/tasks/task.controller';
-import { AssetTypeController } from './controllers/air-services/settings/asset-management/asset-type.controller';
 import { SuperAdminController } from './controllers/super-admin.controller';
 import { JobsController } from './controllers/settings/jobs.controller';
 import { InvoiceController } from './controllers/super-admin/billing-invoices.controller';
@@ -87,7 +86,6 @@ import { airServicesControllers } from './controllers/air-services';
     FaqsController,
     InvoiceController,
     TaskController,
-    AssetTypeController,
     NewsAndEventsController,
     PaymentController,
     QuickLinksController,
