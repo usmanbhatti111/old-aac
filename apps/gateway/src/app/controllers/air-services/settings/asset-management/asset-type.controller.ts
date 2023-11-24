@@ -1,4 +1,12 @@
-import { Body, Controller, Inject, Post, Req } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Inject,
+  Post,
+  Req,
+  Query,
+  Get,
+} from '@nestjs/common';
 import { ClientProxy, RpcException } from '@nestjs/microservices';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import {
@@ -8,7 +16,7 @@ import {
   RMQ_MESSAGES,
   SERVICES,
 } from '@shared/constants';
-import { AddAssetTypeDto } from '@shared/dto';
+import { AddAssetTypeDto, ListAssetTypeDto } from '@shared/dto';
 import { firstValueFrom } from 'rxjs';
 import { AppRequest } from '../../../../shared/interface/request.interface';
 import { Auth } from '../../../../decorators/auth.decorator';
@@ -41,24 +49,18 @@ export class AssetTypeController {
     }
   }
 
-  // @Auth(true)
-  // @Get(API_ENDPOINTS.AIR_SERVICES.TASK.GET_TASK)
-  // @ApiQuery({
-  //   name: 'ticketId',
-  //   type: String,
-  // })
-  // async getTasks(@Query() payload: GetTaskListDto, @Res() res: Response | any) {
-  //   try {
-  //     const response = await firstValueFrom(
-  //       this.airServiceClient.send(
-  //         RMQ_MESSAGES.AIR_SERVICES.TASK.GET_TASKS,
-  //         payload
-  //       )
-  //     );
-
-  //     return res.status(response.statusCode).json(response);
-  //   } catch (err) {
-  //     return res.status(err.statusCode).json(err);
-  //   }
-  // }
+  @Get(API_ENDPOINTS.AIR_SERVICES.SETTINGS.ASSET_TYPE_LIST)
+  public async getAssetTypeList(@Query() listDashboardDTO: ListAssetTypeDto) {
+    try {
+      const dashboardList = await firstValueFrom(
+        this.airServiceClient.send(
+          RMQ_MESSAGES.AIR_SERVICES.SETTINGS.ASSET_TYPE_LIST,
+          listDashboardDTO
+        )
+      );
+      return dashboardList;
+    } catch (err) {
+      throw new RpcException(err);
+    }
+  }
 }

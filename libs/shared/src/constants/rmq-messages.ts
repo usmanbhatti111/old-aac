@@ -206,6 +206,7 @@ export const RMQ_MESSAGES = {
     },
     SETTINGS: {
       ASSET_TYPE: 'asset-type',
+      ASSET_TYPE_LIST: 'asset-type-list',
     },
     WIDGETS: {
       CREATE_WIDGETS: 'create-widgets',

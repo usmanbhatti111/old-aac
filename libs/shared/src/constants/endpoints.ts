@@ -197,6 +197,7 @@ export const API_ENDPOINTS = {
     },
     SETTINGS: {
       ASSET_TYPE: '/',
+      ASSET_TYPE_LIST: '/assset-type-list',
     },
     ASSETS: {
       INVENTORY: 'inventory',
