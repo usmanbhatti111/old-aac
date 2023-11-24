@@ -28,4 +28,12 @@ export class AddAssetTypeDto {
     required: false,
   })
   createdBy: string;
+  @IsOptional()
+  @IsMongoId()
+  @ApiProperty({
+    type: String,
+    example: '651bdf53beeb02bc627d6804',
+    required: false,
+  })
+  companyId: string;
 }

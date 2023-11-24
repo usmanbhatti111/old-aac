@@ -19,6 +19,11 @@ export class AssetType extends AbstractSchema {
     required: false,
   })
   createdBy: string;
+  @Prop({
+    type: SchemaTypes.ObjectId,
+    required: false,
+  })
+  companyId: string;
 }
 
 export const AssetTypeSchema = SchemaFactory.createForClass(AssetType);
