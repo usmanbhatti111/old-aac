@@ -286,6 +286,10 @@ export const API_ENDPOINTS = {
       GET_CONTRACT: 'get-contract',
       GET_CONTRACTS: 'get-contracts',
     },
+    CONTRACT_TYPE: {
+      ADD: 'add-contract-type',
+      GET: 'get-contract-types',
+    },
   },
   PRODUCT_FEATURES: {
     ADD_PRODUCT_FEATURE: '/',

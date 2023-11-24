@@ -70,6 +70,7 @@ import { DropdownController } from './controllers/common-features/dropdown.contr
 import { NoteController } from './controllers/common-features/note.controller';
 import { CompaniesController } from './controllers/common-features/companies.controller';
 import { ArticlesController } from './controllers/air-services/knowledge-base/articles.controller';
+import { airServicesControllers } from './controllers/air-services';
 
 @Module({
   imports: [
@@ -140,6 +141,7 @@ import { ArticlesController } from './controllers/air-services/knowledge-base/ar
     CustomizedColumnsController,
     DropdownController,
     CompaniesController,
+    ...airServicesControllers,
   ],
   providers: [
     // Exceptions Filter

@@ -53,4 +53,5 @@ export const API_TAGS = {
   CUSTOMIZED_COLUMNS: 'Customized Columns',
   DROPDOWNS: 'Dropdowns',
   COMPANIES: 'Companies',
+  CONTRACT_TYPE: 'Contract Type',
 };
