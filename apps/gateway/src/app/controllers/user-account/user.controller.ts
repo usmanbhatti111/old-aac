@@ -39,6 +39,8 @@ import {
   UserAvatarResponseDto,
   CreateOrgUserDto,
   CreateOrgUserParamDto,
+  IdParamDto,
+  GetOrgEmployeesQueryDto,
 } from '@shared/dto';
 import { firstValueFrom } from 'rxjs';
 import { Auth } from '../../decorators/auth.decorator';
@@ -83,9 +85,9 @@ export class UserController {
   @Get(API_ENDPOINTS.USER.GET_ONE)
   @ApiOperation({ summary: 'User Profile' })
   @ApiOkResponse({ type: UserProfileResponseDto })
-  public profile(@Param('id') userId: string): Promise<UserProfileResponseDto> {
+  public profile(@Param() { id }: IdParamDto): Promise<UserProfileResponseDto> {
     return firstValueFrom(
-      this.userServiceClient.send(RMQ_MESSAGES.USER.PROFILE, userId)
+      this.userServiceClient.send(RMQ_MESSAGES.USER.PROFILE, { id })
     );
   }
 
@@ -142,6 +144,22 @@ export class UserController {
 
     return firstValueFrom(
       this.userServiceClient.send(RMQ_MESSAGES.USER.CREATE_ORG_USER, payload)
+    );
+  }
+
+  @Auth(true)
+  @Get(API_ENDPOINTS.USER.ORG_USER)
+  @ApiOperation({ summary: 'Get Users for organization' })
+  @ApiOkResponse({ type: UserProfileResponseDto })
+  public getOrganizationUsers(
+    @Param() { orgId }: CreateOrgUserParamDto,
+    @Query() query: GetOrgEmployeesQueryDto
+  ): Promise<UserProfileResponseDto> {
+    return firstValueFrom(
+      this.userServiceClient.send(RMQ_MESSAGES.USER.GET_ORG_USERS, {
+        ...query,
+        orgId,
+      })
     );
   }
 }

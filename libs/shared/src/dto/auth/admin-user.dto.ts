@@ -4,6 +4,7 @@ import { IsNotEmpty, IsOptional } from 'class-validator';
 import { User } from '../../schema/user-account';
 import { UserRole } from '../../constants/enums';
 import { toMongoObjectId } from '../../functions';
+import { PaginationDto } from '../common';
 
 export class CreateUserDto {
   @ApiProperty({ type: String, example: 'John' })
@@ -97,6 +98,36 @@ export class CreateOrgUserParamDto {
     description: 'Example: 652627f809a15759b979dd3a',
   })
   @IsNotEmpty()
+  @Transform(toMongoObjectId)
+  orgId: string;
+}
+
+export class GetOrgEmployeesQueryDto extends PaginationDto {
+  @ApiProperty({
+    type: String,
+    required: false,
+    description: 'Example: 652627f809a15759b979dd3a',
+  })
+  @IsOptional()
+  @Transform(toMongoObjectId)
+  product: string;
+
+  @ApiProperty({
+    type: String,
+    required: false,
+    description: 'Example: 652627f809a15759b979dd3a',
+  })
+  @IsOptional()
+  @Transform(toMongoObjectId)
+  company: string;
+
+  @ApiProperty({
+    example: '',
+    required: false,
+  })
+  @IsOptional()
+  search: string;
+
   @Transform(toMongoObjectId)
   orgId: string;
 }
