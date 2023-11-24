@@ -20,7 +20,6 @@ export class AddAssetTypeDto {
   })
   Description: string;
 
-  @IsOptional()
   @IsMongoId()
   @ApiProperty({
     type: String,
@@ -28,7 +27,7 @@ export class AddAssetTypeDto {
     required: false,
   })
   createdBy: string;
-  @IsOptional()
+
   @IsMongoId()
   @ApiProperty({
     type: String,
