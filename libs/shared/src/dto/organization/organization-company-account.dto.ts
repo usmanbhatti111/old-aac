@@ -46,10 +46,19 @@ export class CreateOrganizationCompanyAccountDto {
   phoneNo: string;
 
   @ApiProperty({
-    example: '123 Main St',
-    description: 'The address of the account.',
+    type: Object,
+    example: {
+      flatNumber: 'string', // alt: unit
+      buildingName: 'string',
+      buildingNumber: 'string',
+      streetName: 'string',
+      city: 'string', // alt: town
+      country: 'string',
+      composite: 'string',
+    },
   })
-  address?: string;
+  @IsOptional()
+  address?: {};
 
   @ApiProperty({
     example: '12345',
