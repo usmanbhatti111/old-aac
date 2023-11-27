@@ -42,6 +42,9 @@ export class Vendor extends AbstractSchema {
 
   @Prop({ type: String, required: false })
   zipCode: string;
+
+  @Prop({ type: String, required: false })
+  companyId: string;
 }
 
 export const VendorsSchema = SchemaFactory.createForClass(Vendor);

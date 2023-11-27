@@ -20,7 +20,8 @@ import {
 import { Auth } from '../../../../decorators/auth.decorator';
 import { AppRequest } from '../../../../shared/interface/request.interface';
 import { firstValueFrom } from 'rxjs';
-import { AddVendorDTO } from '@shared/dto';
+import { AddVendorDTO, ListVendorsDto } from '@shared/dto';
+
 @ApiBearerAuth()
 @ApiTags(API_TAGS.VENDORS)
 @Controller(CONTROLLERS.VENDORS)
@@ -33,9 +34,11 @@ export class VendorController {
   @Post(API_ENDPOINTS.AIR_SERVICES.VENDORS.ADD_VENDORS)
   public async addTask(
     @Body() payload: AddVendorDTO,
+    @Req() request: AppRequest,
     @Res() res: Response | any
   ) {
     try {
+      payload.companyId = request?.user?.companyId;
       const response = await firstValueFrom(
         this.airServiceClient.send(
           RMQ_MESSAGES.AIR_SERVICES.VENDORS.ADD_VENDORS,
@@ -50,18 +53,13 @@ export class VendorController {
   }
 
   @Auth(true)
-  @Get()
-  //   @ApiOkResponse({ type: GetArticlesResponseDto })
-  public async getVendors(
-    @Query() queryParams: any,
-    @Req() req: AppRequest
-  ): Promise<any> {
+  @Get(API_ENDPOINTS.AIR_SERVICES.VENDORS.GET_VENDORS)
+  public async getVendors(@Query() ListVendorsDto: ListVendorsDto) {
     try {
-      queryParams.organizationId = req?.user?.organization;
       const response = await firstValueFrom(
         this.airServiceClient.send(
           RMQ_MESSAGES.AIR_SERVICES.VENDORS.GET_VENDORS,
-          queryParams
+          ListVendorsDto
         )
       );
 

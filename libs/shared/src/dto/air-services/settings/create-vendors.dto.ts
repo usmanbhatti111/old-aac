@@ -89,4 +89,5 @@ export class AddVendorDTO {
   @IsString()
   @IsNotEmpty()
   zipCode: string;
+  companyId: string;
 }

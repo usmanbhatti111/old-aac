@@ -2,7 +2,7 @@ import { Controller } from '@nestjs/common';
 import { MessagePattern, Payload } from '@nestjs/microservices';
 import { RMQ_MESSAGES } from '@shared/constants';
 
-import { AddVendorDTO } from '@shared/dto';
+import { AddVendorDTO, ListVendorsDto } from '@shared/dto';
 import { VendorsService } from '../../../services/settings/vendors.sevice';
 @Controller()
 export class VendorController {
@@ -14,7 +14,7 @@ export class VendorController {
   }
 
   @MessagePattern(RMQ_MESSAGES.AIR_SERVICES.VENDORS.GET_VENDORS)
-  getTasks(@Payload() payload: any) {
+  getTasks(@Payload() payload: ListVendorsDto) {
     return this.vendorsService.getVendors(payload);
   }
 }
