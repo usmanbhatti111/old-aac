@@ -47,6 +47,7 @@ export const RMQ_MESSAGES = {
     PLAN: 'plan',
     DELETE_PLAN: 'delete-plan',
     PLAN_TYPE_LIST: 'plan-type-list',
+    PRODUCT_PLAN_LIST: 'plan-product-list',
   },
 
   ORGANIZATION: {

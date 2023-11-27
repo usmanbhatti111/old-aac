@@ -8,11 +8,17 @@ import {
   EditPlanDto,
   PlanDeleteDto,
   PlanFilterDto,
+  PlanProductParamDto,
 } from '@shared/dto';
 
 @Controller()
 export class PlanController {
   constructor(private readonly planService: PlanService) {}
+
+  @MessagePattern(RMQ_MESSAGES.PLAN.PRODUCT_PLAN_LIST)
+  getProductPlans(@Payload() payload: PlanProductParamDto) {
+    return this.planService.getProductPlans(payload);
+  }
 
   @MessagePattern(RMQ_MESSAGES.PLAN.ADD_PLAN_TYPE)
   addPlanType(@Payload() payload: AddPlanTypeDto) {
