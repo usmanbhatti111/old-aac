@@ -55,7 +55,7 @@ export class TaskManagementController {
     return firstValueFrom(
       this.airServiceClient.send(
         RMQ_MESSAGES.AIR_SERVICES.TASK_MANAGEMENT.TASK_LIST,
-        { query }
+        query
       )
     );
   }
@@ -65,9 +65,7 @@ export class TaskManagementController {
     return firstValueFrom(
       this.airServiceClient.send(
         RMQ_MESSAGES.AIR_SERVICES.TASK_MANAGEMENT.TASK_DETAIL,
-        {
-          id,
-        }
+        id
       )
     );
   }

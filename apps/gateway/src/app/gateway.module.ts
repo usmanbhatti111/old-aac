@@ -54,6 +54,7 @@ import { EnquiriesController } from './controllers/super-admin/enquiries.control
 import { TaxCalculationController } from './controllers/super-admin/tax-calculation.controller';
 import { DealViewsController } from './controllers/sales/deal-views.controller';
 import { ActivitylogsController } from './controllers/common-features/activitylogs.controller';
+import { ImportFileController } from './controllers/common-features/import-file.controller';
 import { JobApplicationsController } from './controllers/super-admin/job-applications.controller';
 import { CustomizedColumnsController } from './controllers/customize-columns.controller';
 import { DropdownController } from './controllers/common-features/dropdown.controller';
@@ -114,6 +115,7 @@ import { airServicesControllers } from './controllers/air-services';
     TaxCalculationController,
     DealViewsController,
     ActivitylogsController,
+    ImportFileController,
     JobApplicationsController,
     CustomizedColumnsController,
     DropdownController,

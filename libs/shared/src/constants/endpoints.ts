@@ -333,6 +333,9 @@ export const API_ENDPOINTS = {
       GET_ONE: 'get-one/:id',
       PAY_NOW_INVOICE: 'pay-now-invoice',
     },
+    SUBSCRIPTION: {
+      GET_ONE: 'get-one',
+    },
     CONTACT_STATUS: {
       ADD_CONTACT_STATUS: '/',
       GET_CONTACT_STATUSES: '/',
@@ -413,26 +416,33 @@ export const API_ENDPOINTS = {
       GET_UNAPPROVED_ARTICLES: 'unapproved-articles',
     },
   },
+  IMPORT_FILE: {
+    CREATE_IMPORT_FILE: '/',
+  },
+
   CUSTOMIZED_COLUMNS: {
     GET_CUSTOMIZE_COLUMN: '/',
     CREATE_OR_UPDATE_CUSTOMIZE_COLUMN: '/',
   },
-  // MARKETING: {
   COMPANY: {
-    CREATE: 'create',
-    GET: 'list',
-    DETAIL: 'detail/:id',
-    UPDATE: 'update/:id',
-    DELETE: 'delete/:id',
-    GET_DELETED: 'deleted-company',
+    CREATE: '/',
+    GET: '/',
+    DETAIL: '/:id',
+    UPDATE: '/:id',
+    DELETE: '/:id',
+    GET_DELETED: 'deleted',
     CUSTOMIZE_COLUMN: 'customize-column',
+    CALLS: 'calls/:id',
+    MAILS: 'mails/:id',
+    MEETINGS: 'meetings/:id',
   },
-  // },
+
   DROPDOWNS: {
     ORGANIZATION_DROPDOWN: 'organizations',
     PRODUCTS_DROPDOWN: 'products',
     ORG_EMPLOYEES: 'organizations/:id/users',
   },
+
   COMMON_FEATURES: {
     COMPANIES: {
       GET_UNIQUE_COMPANIES_OWNERS: 'get-unique-companies-owners',

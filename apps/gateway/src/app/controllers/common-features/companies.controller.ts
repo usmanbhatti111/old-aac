@@ -34,6 +34,7 @@ import {
   GetComapaniesResponseDTO,
   GetComapanyDto,
   GetComapanyResponseDTO,
+  GetCompanyCallResponseDto,
   GetCompanyCustomizedColumns,
   GetCompanyDetailsDto,
   GetCompanyDetailsResponseDto,
@@ -203,26 +204,6 @@ export class CompaniesController {
       this.commonFeatureClient.send(RMQ_MESSAGES.COMPANY.GET, payload)
     );
 
-    //ActivityLog
-    if (response.data) {
-      const params: ActivityLogParams = {
-        performedBy: req?.user?._id,
-        activityType: EActivityType.RETRIEVE,
-        module: EActivitylogModule.MARKETING_COMPANY,
-        moduleId: response?.data[0]?._id,
-        moduleName: response?.data[0]?.name || 'Subscription',
-      };
-
-      firstValueFrom(
-        this.commonFeatureClient.emit(
-          RMQ_MESSAGES.ACTIVITY_LOG.ACTIVITY_LOG,
-          params
-        )
-      );
-
-      response.data.activity = true;
-    }
-
     return response;
   }
 
@@ -235,26 +216,6 @@ export class CompaniesController {
     const response = await firstValueFrom(
       this.commonFeatureClient.send(RMQ_MESSAGES.COMPANY.DETAIL, id)
     );
-
-    //ActivityLog
-    if (response?.data) {
-      const params: ActivityLogParams = {
-        performedBy: req?.user?._id,
-        activityType: EActivityType.RETRIEVE,
-        module: EActivitylogModule.MARKETING_COMPANY,
-        moduleId: response?.data?._id,
-        moduleName: response?.data?.name || 'Subscription',
-      };
-
-      firstValueFrom(
-        this.commonFeatureClient.emit(
-          RMQ_MESSAGES.ACTIVITY_LOG.ACTIVITY_LOG,
-          params
-        )
-      );
-      response.data.activity = true;
-    }
-
     return response;
   }
 
@@ -339,31 +300,10 @@ export class CompaniesController {
     @Req() req: AppRequest,
     @Query() payload: GetDeletedCompanisDto
   ): Promise<GetComapaniesResponseDTO> {
-    const response = await firstValueFrom(
+    const respones = await firstValueFrom(
       this.commonFeatureClient.send(RMQ_MESSAGES.COMPANY.GET_DELETED, payload)
     );
-
-    //ActivityLog
-    if (response.data) {
-      const params: ActivityLogParams = {
-        performedBy: req?.user?._id,
-        activityType: EActivityType.RETRIEVE,
-        module: EActivitylogModule.MARKETING_COMPANY,
-        moduleId: response?.data[0]?._id,
-        moduleName: response?.data[0]?.name || 'Subscription',
-      };
-
-      firstValueFrom(
-        this.commonFeatureClient.emit(
-          RMQ_MESSAGES.ACTIVITY_LOG.ACTIVITY_LOG,
-          params
-        )
-      );
-
-      response.data.activity = true;
-    }
-
-    return response;
+    return respones;
   }
 
   @Auth(true)
@@ -415,11 +355,60 @@ export class CompaniesController {
   ): Promise<GetCustomizedCompanyColumnsResponseDto> {
     payload.userId = request?.user?._id;
 
-    const response = await firstValueFrom(
+    return firstValueFrom(
       this.commonFeatureClient.send(
         RMQ_MESSAGES.COMPANY.GET_CUSTOMIZE_COLUMN,
         payload
       )
+    );
+  }
+
+  @Auth(true)
+  @Get(API_ENDPOINTS.COMPANY.CALLS)
+  @ApiOkResponse({ type: GetCompanyCallResponseDto })
+  public async getCalls(
+    @Req() req: AppRequest,
+    @Param('id') id: string
+  ): Promise<GetCompanyCallResponseDto> {
+    const response = await firstValueFrom(
+      this.commonFeatureClient.send(RMQ_MESSAGES.COMPANY.GET_CUSTOMIZE_COLUMN, {
+        id,
+        userId: req?.user?._id,
+      })
+    );
+
+    return response;
+  }
+
+  @Auth(true)
+  @Get(API_ENDPOINTS.COMPANY.MAILS)
+  @ApiOkResponse({ type: GetCustomizedCompanyColumnsResponseDto })
+  public async getEmails(
+    @Req() req: AppRequest,
+    @Param('id') id: string
+  ): Promise<GetCustomizedCompanyColumnsResponseDto> {
+    const response = await firstValueFrom(
+      this.commonFeatureClient.send(RMQ_MESSAGES.COMPANY.GET_CUSTOMIZE_COLUMN, {
+        id,
+        userId: req?.user?._id,
+      })
+    );
+
+    return response;
+  }
+
+  @Auth(true)
+  @Get(API_ENDPOINTS.COMPANY.MEETINGS)
+  @ApiOkResponse({ type: GetCustomizedCompanyColumnsResponseDto })
+  public async getMeetings(
+    @Req() req: AppRequest,
+    @Param('id') id: string
+  ): Promise<GetCustomizedCompanyColumnsResponseDto> {
+    const response = await firstValueFrom(
+      this.commonFeatureClient.send(RMQ_MESSAGES.COMPANY.GET_CUSTOMIZE_COLUMN, {
+        id,
+        userId: req?.user?._id,
+      })
     );
 
     return response;
