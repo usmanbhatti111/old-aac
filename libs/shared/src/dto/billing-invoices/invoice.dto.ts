@@ -87,13 +87,37 @@ export class ListInvoicesDTO extends PaginationDto {
   @ApiProperty({
     type: String,
     required: false,
+  })
+  @IsOptional()
+  @Transform(toMongoObjectId)
+  planId: string;
+
+  @ApiProperty({
+    type: String,
+    required: false,
+  })
+  @IsOptional()
+  @Transform(toMongoObjectId)
+  productId: string;
+
+  @ApiProperty({
+    type: String,
+    required: false,
+  })
+  @IsOptional()
+  @Transform(toMongoObjectId)
+  planTypeId: string;
+
+  @ApiProperty({
+    type: String,
+    required: false,
     enum: InvoiceStatusEnum,
   })
   status: InvoiceStatusEnum;
 
   @ApiProperty({
     required: false,
-    example: '',
+    description: '2023-10-30',
   })
   @IsISO8601()
   @IsOptional()
@@ -101,7 +125,7 @@ export class ListInvoicesDTO extends PaginationDto {
 
   @ApiProperty({
     required: false,
-    example: '',
+    description: '2023-11-30',
   })
   @IsISO8601()
   @IsOptional()

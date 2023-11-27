@@ -323,6 +323,7 @@ export const RMQ_MESSAGES = {
     },
     INVOICES: {
       GET_ALL_SUBSCRIPTION: 'get-all-subscriptions',
+      GET_ONE_SUBSCRIPTION: 'get-one-subscriptions',
       ASSIGN_PLAN: 'assign-plan',
       UPDATE_ASSIGN_PLAN: 'update-assign-plan',
       GET_ALL_INVOICES: 'get-all-invoices',
@@ -394,10 +395,18 @@ export const RMQ_MESSAGES = {
   CALLS: {
     GET_NUMBERS_LIST: 'get-numbers-list',
     INITIATE_CALL: 'initiate-call',
+    CALL_CANCELED_COMPLETED: 'call-canceled-completed',
+    GET_CALL_LOGS: 'get-call-logs',
     VERIFY_PHONE_NUMBER: 'verify-phone-number',
     NEW_OUTGOING_CALLER: 'new-outgoing-caller',
     SEND_VERIFICATION_TOKEN: 'send-verification-token',
     VERIFY_NUMBER_TOKEN: 'verify-number-token',
+    CREATE_SCHEDULED_CALL: 'create-scheduled-call',
+    UPDATE_SCHEDULED_CALL: 'update-scheduled-call',
+    DELETE_SCHEDULED_CALL: 'delete-scheduled-call',
+    GET_ALL_SCHEDULED_CALL: 'get-all-scheduled-call',
+    ADD_ATTENDEES_CALL: 'add-attendees-call',
+    DELETE_ATTENDEES_CALL: 'delete-attendees-call',
   },
 
   SALES: {
@@ -427,6 +436,11 @@ export const RMQ_MESSAGES = {
     GET_ALL_ACTIVITIES: 'get-all-activities',
     ACTIVITY_LOG: 'activity-log',
   },
+
+  IMPORT_FILE: {
+    CREATE_IMPORT_FILE: 'create-import-file',
+  },
+
   CUSTOMIZED_COLUMNS: {
     GET_CUSTOMIZE_COLUMN: 'get-customize-column',
     CREATE_OR_UPDATE_CUSTOMIZE_COLUMN: 'create-or-update-customize-column',

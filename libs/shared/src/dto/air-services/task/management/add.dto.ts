@@ -6,6 +6,9 @@ import {
   IsOptional,
   IsEnum,
 } from 'class-validator';
+
+import { Transform } from 'class-transformer';
+import { toMongoObjectId } from 'libs/shared/src/functions';
 import {
   ETaskAssociate,
   ETaskReminder,
@@ -54,12 +57,12 @@ export class AddTaskManagementDto {
 
   @ApiProperty({
     type: String,
-    example: 'Title Name',
+    example: '655633c2d9d816a1a1cfbeb2',
     required: false,
   })
-  @IsString()
+  @Transform(toMongoObjectId)
   @IsOptional()
-  deal?: string;
+  dealId?: string;
 
   @ApiProperty({
     type: String,

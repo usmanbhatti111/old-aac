@@ -170,6 +170,7 @@ export enum OutcomeEnum {
   NO_RESPONSE = 'No response',
   NOT_INTERESTED = 'Not interested',
   NOT_ABLE_TO_REACH = 'Not able to reach',
+  OTHERS = 'Others',
 }
 
 export enum ContactAssociationEnum {
@@ -362,6 +363,7 @@ export enum EActivityType {
   DELETED = 'DELETED',
   UPLOADED = 'UPLOADED',
   ASSOCIATED = 'ASSOCIATED',
+  VERIFY = 'VERIFY',
 }
 
 export enum EActivitylogModule {
@@ -406,6 +408,30 @@ export enum EApplicationStatus {
   REJECTED = 'rejected',
   SHORTLISTED = 'shortlisted',
   INTERVIEWED = 'interviewed',
+}
+
+export enum ECallsType {
+  CONFERENCE = 'CONFERENCE',
+  ONE_ON_ONE = 'ONE_ON_ONE',
+}
+
+export enum ECallsSetReminder {
+  BEFORE_30_MIN = '30 minutes before',
+  BEFORE_1_HOUR = '1 hour before',
+  BEFORE_1_DAY = '1 day before',
+  BEFORE_1_WEEK = '1 week before',
+}
+
+export enum ECallsStatus {
+  SCHEDULED = 'Scheduled',
+  MISSED = 'Missed',
+  RE_SCHEDULED = 'Re-Scheduled',
+  COMPLETED = 'Completed',
+}
+
+export enum ECallsStatusUpdate {
+  CANCELED = 'canceled', //before call attendend
+  COMPLETED = 'completed', //completed after call accept
 }
 
 export enum ECustomizeColumnType {
