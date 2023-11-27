@@ -42,7 +42,7 @@ export class AssetTypeController {
   ): Promise<AddAssetTypeResponseDTO> {
     try {
       dto.createdBy = req?.user?._id;
-      dto.companyId = req?.user?.organization;
+      dto.companyId = req?.user?.companyId;
       const response = await firstValueFrom(
         this.airServiceClient.send(
           RMQ_MESSAGES.AIR_SERVICES.SETTINGS.ASSET_TYPE,
