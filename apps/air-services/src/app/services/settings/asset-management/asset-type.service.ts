@@ -9,6 +9,9 @@ export class AssetTypeService {
 
   async addAssetType(payload: AddAssetTypeDto) {
     try {
+      const newPayload: any = payload;
+      newPayload.createdBy = new Types.ObjectId(newPayload?.createdBy);
+      newPayload.companyId = new Types.ObjectId(newPayload?.companyId);
       const res = await this.assettypeRepository.create({ ...payload });
       return res;
     } catch (error) {
@@ -18,14 +21,11 @@ export class AssetTypeService {
   async getAssetTypeList(payload: ListAssetTypeDto) {
     try {
       const { limit, page, search, companyId } = payload;
-      const offset = limit * (page - 1);
-      const filterQuery = {};
-      const pipeline: any = [];
-      if (companyId) {
-        filterQuery['companyId'] = new Types.ObjectId(companyId);
-      }
+      const offset = page;
+      const filterQuery = { companyId };
+      const pipelines: any = [];
       if (search) {
-        pipeline.push({
+        pipelines.push({
           $match: {
             Name: { $regex: search, $options: 'i' },
           },
@@ -35,7 +35,7 @@ export class AssetTypeService {
         filterQuery,
         offset,
         limit,
-        pipelines: pipeline,
+        pipelines,
       });
       return res;
     } catch (error) {

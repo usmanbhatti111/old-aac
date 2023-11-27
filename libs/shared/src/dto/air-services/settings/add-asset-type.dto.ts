@@ -20,20 +20,8 @@ export class AddAssetTypeDto {
   })
   Description: string;
 
-  @IsMongoId()
-  @ApiProperty({
-    type: String,
-    example: '651bdf53beeb02bc627d6804',
-    required: false,
-  })
   createdBy: string;
 
-  @IsMongoId()
-  @ApiProperty({
-    type: String,
-    example: '651bdf53beeb02bc627d6804',
-    required: false,
-  })
   companyId: string;
 }
 export class AddAssetTypeResponseDTO {
