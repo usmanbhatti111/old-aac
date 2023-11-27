@@ -50,16 +50,13 @@ import { AirServicesDashboardController } from './controllers/airservices-dashbo
 import { DealPipelineController } from './controllers/sales-settings/deal-pipeline.controller';
 import { SalesProductController } from './controllers/sales-settings/sales-product.controller';
 import { AttachmentController } from './controllers/common-features/attachment.controller';
-import { ActivityLogController } from './controllers/common-features/activity-log.controller';
-
 import { ReportsWidgetController } from './controllers/reports-widgets.controller';
-// import { ActivityLogController } from './controllers/common-features/activity-log.controller';
 import { ArticlesController } from './controllers/knowledge-base/articles.controller';
-// import { CallsController } from './controllers/common-features/calls.controller';
 import { ContactNoteController } from './controllers/common-features/contact/contact-note.controller';
 import { ContactCallController } from './controllers/common-features/contact/contact-call.controller';
 import { ContactMeetingController } from './controllers/common-features/contact/contact-meeting.controller';
 import { DealsController } from './controllers/sales/deals.controller';
+import { CallsController } from './controllers/common-features/calls.controller';
 import { EnquiriesController } from './controllers/super-admin/enquiries.controller';
 import { TaxCalculationController } from './controllers/super-admin/tax-calculation.controller';
 import { DealViewsController } from './controllers/sales/deal-views.controller';
@@ -122,12 +119,10 @@ import { CompaniesController } from './controllers/common-features/companies.con
     DealPipelineController,
     SalesProductController,
     AttachmentController,
-    ActivityLogController,
     ReportsWidgetController,
-    // ActivityLogController,
     ArticlesController,
+    CallsController,
     ReportsWidgetController,
-    // CallsController,
     DealsController,
     NoteController,
     PermissionController,
