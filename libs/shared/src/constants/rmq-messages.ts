@@ -195,6 +195,9 @@ export const RMQ_MESSAGES = {
     DELETE_ALL_ATTACHMENT: 'delete-all-attachment',
   },
   AIR_SERVICES: {
+    REQUESTER: {
+      ADD: 'add-requester',
+    },
     DASHBOARD: {
       CREATE_DASHBOARD: 'create-dashboard',
       CREATE_DASHBOARD_ANNOUCEMENT: 'create-dashboard-annoucement',

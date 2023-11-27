@@ -33,10 +33,9 @@ export class UserService {
     private s3: S3Service
   ) {}
 
-  async create(payload: CreateUserDto) {
+  async create(payload: CreateUserDto | any) {
     try {
       const { crn, role } = payload;
-
       if (role === UserRole.SUPER_ADMIN) {
         // PENDING: (need to create lambda function or new flow with identitygram) Send temporary password email
         // Change cognitoId to required true when it is done
@@ -52,6 +51,13 @@ export class UserService {
         const result = await this.userRepository.create(payload);
 
         return successResponse(HttpStatus.OK, ResponseMessage.SUCCESS, result);
+      } else if (role === UserRole.ORG_REQUESTER) {
+        const response = await this.userRepository.create(payload);
+        return successResponse(
+          HttpStatus.OK,
+          ResponseMessage.SUCCESS,
+          response
+        );
       } else {
         return successResponse(
           HttpStatus.OK,
