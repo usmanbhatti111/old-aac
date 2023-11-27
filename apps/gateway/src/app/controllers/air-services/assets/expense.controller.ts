@@ -11,7 +11,7 @@ import {
 import { CreateExpenseDTO } from '@shared/dto';
 import { Response } from 'express';
 import { firstValueFrom } from 'rxjs';
-import { Auth } from '../../decorators/auth.decorator';
+import { Auth } from '../../../decorators/auth.decorator';
 @ApiTags(API_TAGS.EXPENSE)
 @Controller(CONTROLLERS.EXPENSE)
 @ApiBearerAuth()

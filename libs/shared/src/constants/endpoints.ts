@@ -283,6 +283,17 @@ export const API_ENDPOINTS = {
       GET_CONTRACT: 'get-contract',
       GET_CONTRACTS: 'get-contracts',
     },
+    SETTINGS: {
+      CONTRACT_TYPE: {
+        ADD: 'add-contract-type',
+        GET: 'get-contract-types',
+      },
+    },
+    KNOWLEDGE_BASE: {
+      ARTICLES: {
+        GET_UNAPPROVED_ARTICLES: 'unapproved-articles',
+      },
+    },
   },
   PRODUCT_FEATURES: {
     ADD_PRODUCT_FEATURE: '/',
@@ -406,12 +417,6 @@ export const API_ENDPOINTS = {
     ADD_ATTENDEES: 'add-attendees',
     DELETE_ATTENDEES: '/:id/:attendeesId',
     CALL_CANCELED_COMPLETED: 'call-canceled-completed',
-  },
-
-  KNOWLEDGE_BASE: {
-    ARTICLES: {
-      GET_UNAPPROVED_ARTICLES: 'unapproved-articles',
-    },
   },
   IMPORT_FILE: {
     CREATE_IMPORT_FILE: '/',

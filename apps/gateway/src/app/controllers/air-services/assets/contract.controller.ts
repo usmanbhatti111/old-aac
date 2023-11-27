@@ -33,7 +33,7 @@ import {
 } from '@shared/dto';
 import { DownloadService } from '@shared/services';
 import { firstValueFrom } from 'rxjs';
-import { Auth } from '../../decorators/auth.decorator';
+import { Auth } from '../../../decorators/auth.decorator';
 import { ApiFormData } from '@shared';
 @ApiBearerAuth()
 @ApiTags(API_TAGS.CONTRACT)

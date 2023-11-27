@@ -46,7 +46,7 @@ import {
   SoftwareUsersResponse,
 } from '@shared/dto';
 import { firstValueFrom } from 'rxjs';
-import { Auth } from '../../decorators/auth.decorator';
+import { Auth } from '../../../decorators/auth.decorator';
 import { DownloadService } from '@shared/services';
 import { Response } from 'express';
 @ApiBearerAuth()

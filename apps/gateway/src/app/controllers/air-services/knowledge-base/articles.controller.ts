@@ -31,8 +31,8 @@ import {
   WriteArticleResponseDto,
 } from '@shared/dto';
 import { firstValueFrom } from 'rxjs';
-import { Auth } from '../../decorators/auth.decorator';
-import { AppRequest } from '../../shared/interface/request.interface';
+import { Auth } from '../../../decorators/auth.decorator';
+import { AppRequest } from '../../../shared/interface/request.interface';
 @ApiBearerAuth()
 @ApiTags(API_TAGS.ARTICLES)
 @Controller(CONTROLLERS.ARTICLES)
@@ -87,7 +87,9 @@ export class ArticlesController {
   }
 
   @Auth(true)
-  @Get(API_ENDPOINTS.KNOWLEDGE_BASE.ARTICLES.GET_UNAPPROVED_ARTICLES)
+  @Get(
+    API_ENDPOINTS.AIR_SERVICES.KNOWLEDGE_BASE.ARTICLES.GET_UNAPPROVED_ARTICLES
+  )
   @ApiOkResponse({ type: GetUnapprovedArticlesResponseDto })
   public async getUnapprovedArticles(
     @Query() queryParams: GetUnapprovedArticlesRequestDto,

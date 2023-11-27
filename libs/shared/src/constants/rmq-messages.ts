@@ -303,6 +303,10 @@ export const RMQ_MESSAGES = {
         DELETE: 'delete-article',
       },
     },
+    CONTRACT_TYPE: {
+      ADD: 'add-contract-type',
+      GET: 'get-contract-types',
+    },
   },
 
   NEWS_AND_EVENTS: {

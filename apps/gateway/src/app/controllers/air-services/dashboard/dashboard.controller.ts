@@ -37,7 +37,7 @@ import {
   DeleteDashboardDto,
   EditDashboardtDTO,
 } from '@shared/dto';
-import { Auth } from '../decorators/auth.decorator';
+import { Auth } from '../../../decorators/auth.decorator';
 @ApiBearerAuth()
 @ApiTags(API_TAGS.AIR_SERVICES_DASHBOARD)
 @Controller(CONTROLLERS.AIR_SERVICES_DASHBOARD)

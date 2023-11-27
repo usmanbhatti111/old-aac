@@ -22,8 +22,8 @@ import {
 import { AddTaskDto, GetTaskListDto, IdDto, UpdateTaskDto } from '@shared/dto';
 import { Response } from 'express';
 import { firstValueFrom } from 'rxjs';
-import { AppRequest } from '../../shared/interface/request.interface';
-import { Auth } from '../../decorators/auth.decorator';
+import { AppRequest } from '../../../shared/interface/request.interface';
+import { Auth } from '../../../decorators/auth.decorator';
 
 @ApiTags(API_TAGS.TASK)
 @Controller(CONTROLLERS.TASK)
