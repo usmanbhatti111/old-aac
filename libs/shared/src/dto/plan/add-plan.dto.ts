@@ -19,6 +19,12 @@ export class AddPlanDto {
   suite: string[];
 
   @ApiProperty({
+    type: String,
+  })
+  @IsOptional()
+  name?: string;
+
+  @ApiProperty({
     required: true,
     type: String,
   })

@@ -2,7 +2,11 @@ import { HttpStatus, Injectable } from '@nestjs/common';
 import { ResponseMessage, successResponse } from '@shared/constants';
 import { TaskActivityRepository, TaskManagementRepository } from '@shared';
 import { RpcException } from '@nestjs/microservices';
-import { GetTaskActivitytDto } from '@shared/dto';
+import {
+  AddTaskManagementDto,
+  GetTaskActivitytDto,
+  GetTaskManagementDto,
+} from '@shared/dto';
 import { Types } from 'mongoose';
 
 @Injectable()
@@ -12,7 +16,7 @@ export class TaskManagementService {
     private readonly taskActivityRepository: TaskActivityRepository
   ) {}
 
-  async addTask(payload) {
+  async addTask(payload: AddTaskManagementDto) {
     try {
       const res = await this.taskManagementRepository.create(payload);
       return successResponse(HttpStatus.CREATED, ResponseMessage.SUCCESS, res);
@@ -21,12 +25,12 @@ export class TaskManagementService {
     }
   }
 
-  async getTasks(payload) {
+  async getTasks(payload: GetTaskManagementDto) {
     try {
-      const { search, page, limit } = payload.query;
-      delete payload.query.search;
-      delete payload.query.page;
-      delete payload.query.limit;
+      const { search, page = 1, limit = 10 } = payload;
+      delete payload.search;
+      delete payload.page;
+      delete payload.limit;
 
       const offset = limit * (page - 1);
       const pipelines = [];
@@ -39,8 +43,40 @@ export class TaskManagementService {
         });
       }
 
+      pipelines.push({
+        $lookup: {
+          from: 'deals',
+          localField: 'dealId',
+          foreignField: '_id',
+          as: 'dealId',
+        },
+      });
+
+      pipelines.push({
+        $unwind: {
+          path: '$dealId',
+          preserveNullAndEmptyArrays: true,
+        },
+      });
+
+      pipelines.push({
+        $lookup: {
+          from: 'users',
+          localField: 'assignTo',
+          foreignField: '_id',
+          as: 'assignTo',
+        },
+      });
+
+      pipelines.push({
+        $unwind: {
+          path: '$assignTo',
+          preserveNullAndEmptyArrays: true,
+        },
+      });
+
       const filterQuery = {
-        ...payload.query,
+        ...payload,
         isDeleted: false,
       };
 
@@ -56,10 +92,10 @@ export class TaskManagementService {
     }
   }
 
-  async findOne(taskId) {
+  async findOne(id: string) {
     try {
       const task = await this.taskManagementRepository.findOne({
-        _id: taskId?.id,
+        _id: id,
       });
 
       return successResponse(HttpStatus.OK, ResponseMessage.SUCCESS, task);

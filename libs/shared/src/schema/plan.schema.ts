@@ -13,6 +13,9 @@ export class Plan extends AbstractSchema {
   @Prop()
   description?: string;
 
+  @Prop()
+  name?: string;
+
   @Prop({ required: true })
   defaultUsers: number;
 
@@ -67,6 +70,9 @@ export class Plan extends AbstractSchema {
 
   @Prop({ default: true })
   isActive?: boolean;
+
+  @Prop({ default: false })
+  isCRM?: boolean;
 }
 
 export const PlanSchema = SchemaFactory.createForClass(Plan);

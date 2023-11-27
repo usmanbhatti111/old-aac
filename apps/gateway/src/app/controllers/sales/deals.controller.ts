@@ -31,10 +31,6 @@ import {
   CreateDealResponseDto,
   DealAssociationDto,
   DealAssociationResponseDto,
-  // DealNoteDto,
-  // DealNotesResponseDto,
-  DealTaskDto,
-  DealTasksResponseDto,
   DeleteDealsDto,
   DeleteDealsResponseDto,
   GetDealsGridtViewDto,
@@ -104,31 +100,6 @@ export class DealsController {
         RMQ_MESSAGES.SALES.DEALS.DELETE_ASSOCIATION,
         payload
       )
-    );
-    return response;
-  }
-
-  @Auth(true)
-  @Patch(API_ENDPOINTS.SALES.DEALS.ADD_TASK)
-  @ApiOkResponse({ type: DealTasksResponseDto })
-  public async addTask(
-    @Req() request: AppRequest,
-    @Body() payload: DealTaskDto
-  ): Promise<DealTasksResponseDto> {
-    const response = await firstValueFrom(
-      this.salesService.send(RMQ_MESSAGES.SALES.DEAL_VIEWS.ADD_TASK, payload)
-    );
-    return response;
-  }
-  @Auth(true)
-  @Patch(API_ENDPOINTS.SALES.DEALS.DELETE_TASK)
-  @ApiOkResponse({ type: DealTasksResponseDto })
-  public async deleteTask(
-    @Req() request: AppRequest,
-    @Body() payload: DealTaskDto
-  ): Promise<DealTasksResponseDto> {
-    const response = await firstValueFrom(
-      this.salesService.send(RMQ_MESSAGES.SALES.DEAL_VIEWS.DELETE_TASK, payload)
     );
     return response;
   }

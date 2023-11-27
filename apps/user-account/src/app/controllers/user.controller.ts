@@ -8,6 +8,8 @@ import {
   UpdateAvatarDto,
   CreateOrgUserDto,
   GetOrgUsersDropDownDto,
+  IdParamDto,
+  GetOrgEmployeesQueryDto,
 } from '@shared/dto';
 import { UserService } from '../services/user.service';
 
@@ -38,8 +40,8 @@ export class UserController {
   }
 
   @MessagePattern(RMQ_MESSAGES.USER.PROFILE)
-  userProfile(userId: string) {
-    return this.userService.userProfile(userId);
+  userProfile(@Payload() payload: IdParamDto) {
+    return this.userService.userProfile(payload);
   }
 
   @MessagePattern(RMQ_MESSAGES.DROPDOWNS.ORG_EMPLOYEES)
@@ -60,5 +62,10 @@ export class UserController {
   @MessagePattern(RMQ_MESSAGES.USER.CREATE_ORG_USER)
   createOrgEmployee(@Payload() payload: CreateOrgUserDto) {
     return this.userService.createOrgUser(payload);
+  }
+
+  @MessagePattern(RMQ_MESSAGES.USER.GET_ORG_USERS)
+  getOrgEmployees(@Payload() payload: GetOrgEmployeesQueryDto) {
+    return this.userService.getOrgUsers(payload);
   }
 }

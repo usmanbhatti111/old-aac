@@ -90,8 +90,6 @@ import {
   OrganizationCompanyAccountSchema,
   SoftwareUsers,
   SoftwareUsersSchema,
-  ActivityLog,
-  ActivityLogSchema,
   Articles,
   ArticlesSchema,
   AnnoucementSchema,
@@ -135,6 +133,10 @@ import {
   ContactNote,
   ContactNoteSchema,
   ContactSchema,
+  ScheduleCalls,
+  ScheduleCallsSchema,
+  ImportFile,
+  ImportFileSchema,
   CustomizeColumns,
   CustomizeColumnsSchema,
 } from './schema/common-feature';
@@ -361,10 +363,6 @@ export const DbModels = [
     schema: SoftwareUsersSchema,
   },
   {
-    name: ActivityLog.name,
-    schema: ActivityLogSchema,
-  },
-  {
     name: Articles.name,
     schema: ArticlesSchema,
   },
@@ -387,6 +385,10 @@ export const DbModels = [
     schema: PlanProductPermissionSchema,
   },
   {
+    name: PlanProductPermission.name,
+    schema: PlanProductPermissionSchema,
+  },
+  {
     name: TaxCalculation.name,
     schema: TaxCalculationSchema,
     collection: MODEL.TAX_CALCULATION,
@@ -403,6 +405,14 @@ export const DbModels = [
   {
     name: PurchaseApproval.name,
     schema: PurchaseApprovalSchema,
+  },
+  {
+    name: ScheduleCalls.name,
+    schema: ScheduleCallsSchema,
+  },
+  {
+    name: ImportFile.name,
+    schema: ImportFileSchema,
   },
   {
     name: CompanyAccountRole.name,

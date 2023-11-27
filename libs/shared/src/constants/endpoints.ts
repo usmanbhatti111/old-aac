@@ -343,6 +343,9 @@ export const API_ENDPOINTS = {
       GET_ONE: 'get-one/:id',
       PAY_NOW_INVOICE: 'pay-now-invoice',
     },
+    SUBSCRIPTION: {
+      GET_ONE: 'get-one',
+    },
     CONTACT_STATUS: {
       ADD_CONTACT_STATUS: '/',
       GET_CONTACT_STATUSES: '/',
@@ -412,10 +415,19 @@ export const API_ENDPOINTS = {
   CALLS: {
     GET_NUMBERS_LIST: 'get-numbers-list',
     INITIATE_CALL: 'initiate-call',
+    GET_CALL_LOGS: 'get-call-logs',
     VERIFY_PHONE_NUMBER: 'verify-phone-number',
     NEW_OUTGOING_CALLER: 'new-outgoing-caller',
     SEND_VERIFICATION_TOKEN: 'send-verification-token',
     VERIFY_NUMBER_TOKEN: 'verify_number_token',
+    UPDATE_ONE: '/:id',
+    DELETE_ONE: '/:id',
+    ADD_ATTENDEES: 'add-attendees',
+    DELETE_ATTENDEES: '/:id/:attendeesId',
+    CALL_CANCELED_COMPLETED: 'call-canceled-completed',
+  },
+  IMPORT_FILE: {
+    CREATE_IMPORT_FILE: '/',
   },
 
   KNOWLEDGE_BASE: {
@@ -427,22 +439,25 @@ export const API_ENDPOINTS = {
     GET_CUSTOMIZE_COLUMN: '/',
     CREATE_OR_UPDATE_CUSTOMIZE_COLUMN: '/',
   },
-  // MARKETING: {
   COMPANY: {
-    CREATE: 'create',
-    GET: 'list',
-    DETAIL: 'detail/:id',
-    UPDATE: 'update/:id',
-    DELETE: 'delete/:id',
-    GET_DELETED: 'deleted-company',
+    CREATE: '/',
+    GET: '/',
+    DETAIL: '/:id',
+    UPDATE: '/:id',
+    DELETE: '/:id',
+    GET_DELETED: 'deleted',
     CUSTOMIZE_COLUMN: 'customize-column',
+    CALLS: 'calls/:id',
+    MAILS: 'mails/:id',
+    MEETINGS: 'meetings/:id',
   },
-  // },
+
   DROPDOWNS: {
     ORGANIZATION_DROPDOWN: 'organizations',
     PRODUCTS_DROPDOWN: 'products',
     ORG_EMPLOYEES: 'organizations/:id/users',
   },
+
   COMMON_FEATURES: {
     COMPANIES: {
       GET_UNIQUE_COMPANIES_OWNERS: 'get-unique-companies-owners',
