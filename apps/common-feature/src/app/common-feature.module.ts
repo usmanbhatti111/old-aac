@@ -8,11 +8,11 @@ import { AttachmentService } from './services/attachment.service';
 import { AttachmentController } from './controllers/attachment.controller';
 import { ActivitylogsService } from './services/activitylogs.service';
 import { ActivitylogsController } from './controllers/activitylogs.controller';
-// import { CallsController } from './controllers/calls.controller';
-// import { CallsService } from './services/calls.service';
-// import { TwilioModule } from 'nestjs-twilio';
-import { ActivityLogController } from './controllers/activity-log.controller';
-import { ActivityLogService } from './services/activityLog.service';
+import { CallsController } from './controllers/calls.controller';
+import { CallsService } from './services/calls.service';
+import { TwilioModule } from 'nestjs-twilio';
+import { ImportFileController } from './controllers/import-file.controller';
+import { ImportFileService } from './services/import-file.service';
 import { CustomizedColumnsController } from './controllers/customize-columns.controller';
 import { DropdownService } from './services/dropdown.service';
 import { DropdownController } from './controllers/dropdown.controller';
@@ -22,15 +22,21 @@ import { NoteController } from './controllers/note.controller';
 import { NoteService } from './services/note.service';
 
 @Module({
-  imports: [SharedModule],
+  imports: [
+    SharedModule,
+    TwilioModule.forRoot({
+      accountSid: process.env.TWILIO_ACCOUNT_SID,
+      authToken: process.env.TWILIO_AUTH_TOKEN,
+    }),
+  ],
   controllers: [
     ContactController,
     DocumentsController,
     AttachmentController,
     ActivitylogsController,
-    ActivityLogController,
+    CallsController,
     DropdownController,
-    // CallsController,
+    ImportFileController,
     CustomizedColumnsController,
     CompaniesController,
     NoteController,
@@ -40,9 +46,9 @@ import { NoteService } from './services/note.service';
     DocumentsService,
     AttachmentService,
     ActivitylogsService,
-    ActivityLogService,
+    CallsService,
     DropdownService,
-    // CallsService,
+    ImportFileService,
     CompaniesService,
     NoteService,
   ],

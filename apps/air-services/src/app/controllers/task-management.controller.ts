@@ -23,12 +23,12 @@ export class TaskManagementController {
   }
 
   @MessagePattern(RMQ_MESSAGES.AIR_SERVICES.TASK_MANAGEMENT.TASK_DETAIL)
-  taskDetail(@Payload() payload: EditTaskManagementDto) {
+  taskDetail(@Payload() payload: string) {
     return this.taskManagementService.findOne(payload);
   }
 
   @MessagePattern(RMQ_MESSAGES.AIR_SERVICES.TASK_MANAGEMENT.EDIT_TASK)
-  updateTask(@Payload() payload: AddTaskManagementDto) {
+  updateTask(@Payload() payload: EditTaskManagementDto) {
     return this.taskManagementService.updateTask(payload);
   }
 

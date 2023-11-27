@@ -13,9 +13,7 @@ export class PlanProductPermission extends AbstractSchema {
   productId: string | mongoose.Types.ObjectId; // Reference to Product _id
 
   @Prop({
-    type: [
-      { required: true, type: SchemaTypes.ObjectId, ref: MODEL.PERMISSION },
-    ],
+    type: [{ required: true, type: String, ref: MODEL.PERMISSION }],
   })
   permissionSlugs?: string[];
 

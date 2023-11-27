@@ -4,7 +4,6 @@ import { RMQ_MESSAGES } from '@shared/constants';
 import {
   CreateDealDto,
   DealAssociationDto,
-  DealTaskDto,
   DeleteDealsDto,
   GetDealsGridtViewDto,
   GetDealsListViewDto,
@@ -66,16 +65,6 @@ export class DealsController {
   @MessagePattern(RMQ_MESSAGES.SALES.DEALS.DELETE_ASSOCIATION)
   async disassociateDeal(@Payload() payload: DealAssociationDto) {
     return this.dealsService.disassociateDeal(payload);
-  }
-
-  @MessagePattern(RMQ_MESSAGES.SALES.DEAL_VIEWS.DELETE_TASK)
-  async deleteTask(@Payload() payload: DealTaskDto) {
-    return this.dealsService.deleteTask(payload);
-  }
-
-  @MessagePattern(RMQ_MESSAGES.SALES.DEAL_VIEWS.ADD_TASK)
-  async addTask(@Payload() payload: DealTaskDto) {
-    return this.dealsService.addTask(payload);
   }
 
   @MessagePattern(RMQ_MESSAGES.SALES.DEALS.GET_ASSOCIATIONS)

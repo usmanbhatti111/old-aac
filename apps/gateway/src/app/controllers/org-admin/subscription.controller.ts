@@ -11,6 +11,7 @@ import {
 import { ClientProxy } from '@nestjs/microservices';
 import { ApiBearerAuth, ApiCreatedResponse, ApiTags } from '@nestjs/swagger';
 import {
+  API_ENDPOINTS,
   API_TAGS,
   CONTROLLERS,
   EActivityType,
@@ -29,6 +30,7 @@ import {
   OrganizationPlanId,
   UpdateAssignOrgPlanOrgAdminDto,
   UpdateAssignOrgPlanResponseOrgAdminDto,
+  getOneSubsDto,
 } from '@shared/dto';
 
 @ApiTags(API_TAGS.BILLING_INVOICES)
@@ -53,6 +55,30 @@ export class SubscriptionController {
         { ...payload, organizationId: organizationId }
       )
     );
+    return response;
+  }
+
+  @Get(API_ENDPOINTS.ORG_ADMIN.SUBSCRIPTION.GET_ONE)
+  @Auth(true)
+  @ApiCreatedResponse({ type: GetAllAssignPlanResponseDto })
+  public async getOneSubscription(
+    @Query() orgPlanId: getOneSubsDto,
+    @Req() request: AppRequest
+  ) {
+    const { user } = request;
+    const organizationId = user?.organization;
+    const payload = {};
+    const response = await firstValueFrom(
+      this.orgAdminServiceClient.send(
+        { cmd: RMQ_MESSAGES.ORG_ADMIN.INVOICES.GET_ONE_SUBSCRIPTION },
+        {
+          ...payload,
+          orgPlanId: orgPlanId.orgPlanId,
+          organizationId: organizationId,
+        }
+      )
+    );
+
     return response;
   }
 
