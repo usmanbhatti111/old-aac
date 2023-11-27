@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { AssetTypeRepository } from '@shared';
 import { AddAssetTypeDto, ListAssetTypeDto } from '@shared/dto';
 import { RpcException } from '@nestjs/microservices';
+import { Types } from 'mongoose';
 @Injectable()
 export class AssetTypeService {
   constructor(private readonly assettypeRepository: AssetTypeRepository) {}
@@ -16,11 +17,13 @@ export class AssetTypeService {
   }
   async getAssetTypeList(payload: ListAssetTypeDto) {
     try {
-      const { limit, page, search } = payload;
+      const { limit, page, search, companyId } = payload;
       const offset = limit * (page - 1);
       const filterQuery = {};
       const pipeline: any = [];
-
+      if (companyId) {
+        filterQuery['companyId'] = new Types.ObjectId(companyId);
+      }
       if (search) {
         pipeline.push({
           $match: {
