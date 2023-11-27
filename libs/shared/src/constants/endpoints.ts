@@ -38,6 +38,7 @@ export const API_ENDPOINTS = {
     EDIT_PLAN: '/:planId',
     DELETE_PLAN: '/:planId',
     PLAN_TYPE_LIST: 'plan-type-list',
+    PRODUCT_PLAN_LIST: 'product-plan-list/:productId',
   },
   CONTACT: {
     CREATE_CONTACT: '/',
