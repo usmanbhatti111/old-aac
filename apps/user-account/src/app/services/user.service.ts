@@ -436,7 +436,7 @@ export class UserService {
       ...filterQuery,
       organization: orgId,
       role: UserRole.ORG_EMPLOYEE,
-      status: UserStatus.ACTIVE,
+      status: { $in: [UserStatus.ACTIVE, UserStatus.INACTIVE] },
       ...(product && {
         products: { $in: [product] },
       }),

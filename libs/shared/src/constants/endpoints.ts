@@ -283,9 +283,16 @@ export const API_ENDPOINTS = {
       GET_CONTRACT: 'get-contract',
       GET_CONTRACTS: 'get-contracts',
     },
-    CONTRACT_TYPE: {
-      ADD: 'add-contract-type',
-      GET: 'get-contract-types',
+    SETTINGS: {
+      CONTRACT_TYPE: {
+        ADD: 'add-contract-type',
+        GET: 'get-contract-types',
+      },
+    },
+    KNOWLEDGE_BASE: {
+      ARTICLES: {
+        GET_UNAPPROVED_ARTICLES: 'unapproved-articles',
+      },
     },
 
     VENDORS: {
@@ -405,16 +412,16 @@ export const API_ENDPOINTS = {
   CALLS: {
     GET_NUMBERS_LIST: 'get-numbers-list',
     INITIATE_CALL: 'initiate-call',
+    GET_CALL_LOGS: 'get-call-logs',
     VERIFY_PHONE_NUMBER: 'verify-phone-number',
     NEW_OUTGOING_CALLER: 'new-outgoing-caller',
     SEND_VERIFICATION_TOKEN: 'send-verification-token',
     VERIFY_NUMBER_TOKEN: 'verify_number_token',
-  },
-
-  KNOWLEDGE_BASE: {
-    ARTICLES: {
-      GET_UNAPPROVED_ARTICLES: 'unapproved-articles',
-    },
+    UPDATE_ONE: '/:id',
+    DELETE_ONE: '/:id',
+    ADD_ATTENDEES: 'add-attendees',
+    DELETE_ATTENDEES: '/:id/:attendeesId',
+    CALL_CANCELED_COMPLETED: 'call-canceled-completed',
   },
   IMPORT_FILE: {
     CREATE_IMPORT_FILE: '/',

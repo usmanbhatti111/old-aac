@@ -7,5 +7,6 @@ export interface AppRequest extends Request {
     lastName: string;
     role: string;
     organization?: string;
+    companyId?: string;
   };
 }

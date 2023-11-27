@@ -95,6 +95,22 @@ export class ListInvoicesDTO extends PaginationDto {
   @ApiProperty({
     type: String,
     required: false,
+  })
+  @IsOptional()
+  @Transform(toMongoObjectId)
+  productId: string;
+
+  @ApiProperty({
+    type: String,
+    required: false,
+  })
+  @IsOptional()
+  @Transform(toMongoObjectId)
+  planTypeId: string;
+
+  @ApiProperty({
+    type: String,
+    required: false,
     enum: InvoiceStatusEnum,
   })
   status: InvoiceStatusEnum;
