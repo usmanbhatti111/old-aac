@@ -31,6 +31,8 @@ export class InvoiceService {
         search,
         status,
         organizationPlanId,
+        productId,
+        planTypeId,
         planId,
         billingDate,
         dueDate,
@@ -56,6 +58,14 @@ export class InvoiceService {
 
       if (planId) {
         filterQuery['planId'] = planId;
+      }
+
+      if (productId) {
+        filterQuery = { 'plans.planProducts': { $in: [productId] } };
+      }
+
+      if (planTypeId) {
+        filterQuery['plans.planTypeId'] = planTypeId;
       }
 
       if (billingDate) {
@@ -115,7 +125,10 @@ export class InvoiceService {
               },
               {
                 $project: {
-                  description: 1,
+                  planProductFeatures: 0,
+                  planProductModulePermissions: 0,
+                  createdBy: 0,
+                  updatedAt: 0,
                 },
               },
             ],
