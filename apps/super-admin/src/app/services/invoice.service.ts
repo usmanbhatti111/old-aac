@@ -344,6 +344,8 @@ export class InvoiceService {
         status,
         organizationPlanId,
         planId,
+        productId,
+        planTypeId,
         billingDate,
         dueDate,
       } = payload;
@@ -367,6 +369,14 @@ export class InvoiceService {
 
       if (planId) {
         filterQuery['planId'] = planId;
+      }
+
+      if (productId) {
+        filterQuery = { 'plans.planProducts': { $in: [productId] } };
+      }
+
+      if (planTypeId) {
+        filterQuery['plans.planTypeId'] = planTypeId;
       }
 
       if (status) {
