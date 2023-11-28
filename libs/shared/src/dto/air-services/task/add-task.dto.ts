@@ -248,7 +248,7 @@ export class AddTaskResponseDto {
   @ApiProperty({ example: 201 })
   statusCode: number;
 
-  @ApiProperty({ example: 'Get Success' })
+  @ApiProperty({ example: 'Success' })
   message: string;
 
   @ApiProperty({
