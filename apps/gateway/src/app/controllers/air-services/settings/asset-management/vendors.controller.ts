@@ -57,12 +57,15 @@ export class VendorController {
     @Req() request: AppRequest
   ) {
     try {
-      const companyId = request?.user?.companyId;
+      const requestId = request?.user?.companyId;
 
       const response = await firstValueFrom(
         this.airServiceClient.send(
           RMQ_MESSAGES.AIR_SERVICES.VENDORS.GET_VENDORS,
-          { ListVendorsDto, companyId: companyId }
+          {
+            ...ListVendorsDto,
+            requestId: requestId,
+          }
         )
       );
 

@@ -2,6 +2,7 @@ import { ApiProperty } from '@nestjs/swagger';
 import { IsOptional, IsMongoId } from 'class-validator';
 import { PaginationDto } from '../../common';
 export class ListVendorsDto extends PaginationDto {
+  [x: string]: any;
   @ApiProperty({
     example: '',
     required: false,

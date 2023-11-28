@@ -21,9 +21,9 @@ export class VendorsService {
 
   async getVendors(payload: ListVendorsDto) {
     try {
-      const { limit, page, search } = payload;
+      const { limit, page, search, requestId } = payload;
       const offset = limit * (page - 1);
-      const filterQuery = { companyId: payload.companyId };
+      const filterQuery = { companyId: requestId };
       const pipelines: any = [];
 
       if (search) {
