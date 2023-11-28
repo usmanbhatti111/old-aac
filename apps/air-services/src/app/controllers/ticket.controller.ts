@@ -14,6 +14,7 @@ import {
   AssociatePurchaseOrderDto,
   DeleteAssociatePurchaseOrderDto,
   BulkTicketUpdateDto,
+  TicketIdsDto,
 } from '@shared/dto';
 
 @Controller()
@@ -63,7 +64,7 @@ export class TicketController {
   }
 
   @MessagePattern(RMQ_MESSAGES.AIR_SERVICES.TICKETS.DELETE_TICKETS)
-  public async deleteTickets(@Payload() payload: any) {
+  public async deleteTickets(@Payload() payload: TicketIdsDto) {
     return this.ticketService.deleteTickets(payload);
   }
 

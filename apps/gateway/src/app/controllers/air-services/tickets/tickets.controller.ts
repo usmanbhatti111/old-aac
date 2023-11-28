@@ -52,6 +52,7 @@ import {
   BulkTicketUpdateDto,
   UpdateManyTicketResponse,
   ActivityLogParams,
+  TicketIdsDto,
 } from '@shared/dto';
 import { ColumnPipe } from '../../../pipes/column.pipe';
 import { DownloadService } from '@shared/services';
@@ -142,17 +143,18 @@ export class TicketController {
   @Delete()
   @ApiOkResponse({ type: DeleteTicketResponse })
   public async deleteTickets(
-    @Res() res: Response | any,
-    @Query('ids') ids: string[]
+    @Query() payload: TicketIdsDto,
+    @Req() request: AppRequest
   ) {
     try {
+      payload.companyId = request?.user?.companyId;
       const response = await firstValueFrom(
         this.ariServiceClient.send(
           RMQ_MESSAGES.AIR_SERVICES.TICKETS.DELETE_TICKETS,
-          ids
+          payload
         )
       );
-      return res.status(response.statusCode).json(response);
+      return response;
     } catch (err) {
       throw new RpcException(err);
     }

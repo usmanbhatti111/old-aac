@@ -1,4 +1,6 @@
 export * from './create-ticket.dto';
+export * from './ticket.dto';
+
 export * from './associate-ticket.dto';
 export * from './get-ticket.dto';
 export * from './get-child-tickets-response.dto';

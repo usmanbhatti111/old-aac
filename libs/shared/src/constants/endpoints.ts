@@ -196,16 +196,6 @@ export const API_ENDPOINTS = {
       CHANGE_STATUS: 'status/:id',
       BULK_TICKET_UPDATE: 'bulk-ticket-update',
     },
-    SETTINGS: {
-      CONTRACT_TYPE: {
-        ADD: 'add-contract-type',
-        GET: 'get-contract-types',
-      },
-      ASSET_TYPE: {
-        ASSET_TYPE: '/',
-        ASSET_TYPE_LIST: '/assset-type-list',
-      },
-    },
     ASSETS: {
       INVENTORY: 'inventory',
       EDIT_INVENTORY: 'inventory/:id',
@@ -299,9 +289,19 @@ export const API_ENDPOINTS = {
       GET_CONTRACT: 'get-contract',
       GET_CONTRACTS: 'get-contracts',
     },
-    CONTRACT_TYPE: {
-      ADD: 'add-contract-type',
-      GET: 'get-contract-types',
+
+    SETTINGS: {
+      CONTRACT_TYPE: {
+        ADD: 'add-contract-type',
+        GET: 'get-contract-types',
+      },
+      ASSET_TYPE: {
+        ASSET_TYPE: '/',
+        ASSET_TYPE_LIST: '/assset-type-list',
+      },
+      REQUESTER: {
+        ADD: 'add-requester',
+      },
     },
   },
   PRODUCT_FEATURES: {
