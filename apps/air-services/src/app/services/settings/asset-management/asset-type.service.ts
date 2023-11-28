@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { AssetTypeRepository } from '@shared';
-import { AddAssetTypeDto, ListAssetTypeDto } from '@shared/dto';
 import { RpcException } from '@nestjs/microservices';
+import { AddAssetTypeDto, ListAssetTypeDto } from '@shared/dto';
 @Injectable()
 export class AssetTypeService {
   constructor(private readonly assettypeRepository: AssetTypeRepository) {}
