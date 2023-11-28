@@ -5,7 +5,6 @@ import {
   Get,
   Query,
   Post,
-  Res,
   Body,
 } from '@nestjs/common';
 import { ClientProxy, RpcException } from '@nestjs/microservices';
@@ -34,8 +33,7 @@ export class VendorController {
   @Post(API_ENDPOINTS.AIR_SERVICES.VENDORS.ADD_VENDORS)
   public async addTask(
     @Body() payload: AddVendorDTO,
-    @Req() request: AppRequest,
-    @Res() res: Response | any
+    @Req() request: AppRequest
   ) {
     try {
       payload.companyId = request?.user?.companyId;
@@ -46,20 +44,25 @@ export class VendorController {
         )
       );
 
-      return res.status(response.statusCode).json(response);
+      return response;
     } catch (error) {
-      return res.status(error.statusCode).json(error);
+      throw new RpcException(error);
     }
   }
 
   @Auth(true)
   @Get(API_ENDPOINTS.AIR_SERVICES.VENDORS.GET_VENDORS)
-  public async getVendors(@Query() ListVendorsDto: ListVendorsDto) {
+  public async getVendors(
+    @Query() ListVendorsDto: ListVendorsDto,
+    @Req() request: AppRequest
+  ) {
     try {
+      const companyId = request?.user?.companyId;
+
       const response = await firstValueFrom(
         this.airServiceClient.send(
           RMQ_MESSAGES.AIR_SERVICES.VENDORS.GET_VENDORS,
-          ListVendorsDto
+          { ListVendorsDto, companyId: companyId }
         )
       );
 
