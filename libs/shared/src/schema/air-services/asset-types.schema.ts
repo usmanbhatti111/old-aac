@@ -1,7 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument, SchemaTypes } from 'mongoose';
 import { AbstractSchema } from './../abstract-repo/abstract.schema';
-
+import { MODEL } from '../../constants';
 export type AssetTypeDocument = HydratedDocument<AssetType>;
 
 @Schema({
@@ -10,13 +10,14 @@ export type AssetTypeDocument = HydratedDocument<AssetType>;
 })
 export class AssetType extends AbstractSchema {
   @Prop({ type: String, required: true })
-  Name: string;
+  name: string;
 
   @Prop({ type: String, required: false })
-  Description: string;
+  description: string;
   @Prop({
     type: SchemaTypes.ObjectId,
-    required: false,
+    required: true,
+    ref: MODEL.USER,
   })
   createdBy: string;
   @Prop({
