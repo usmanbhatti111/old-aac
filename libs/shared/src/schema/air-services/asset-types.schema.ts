@@ -23,6 +23,7 @@ export class AssetType extends AbstractSchema {
   @Prop({
     type: SchemaTypes.ObjectId,
     required: false,
+    ref: MODEL.COMPANY,
   })
   companyId: string;
 }

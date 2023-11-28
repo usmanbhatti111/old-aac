@@ -443,3 +443,15 @@ export enum CompanyType {
   PARTNER = 'Partner',
   VENDOR = 'Vendor',
 }
+
+export enum EProductCatalogStatus {
+  IN_PRODUCTION = 'IN_PRODUCTION',
+  PIPELINE = 'PIPELINE',
+  RETIRED = 'RETIRED',
+}
+
+export enum EModeOfProcurement {
+  BUY = 'BUY',
+  LEASE = 'LEASE',
+  BOTH = 'BOTH',
+}

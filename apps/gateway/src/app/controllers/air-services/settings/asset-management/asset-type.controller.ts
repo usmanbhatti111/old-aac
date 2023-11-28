@@ -45,7 +45,7 @@ export class AssetTypeController {
       dto.companyId = req?.user?.companyId;
       const response = await firstValueFrom(
         this.airServiceClient.send(
-          RMQ_MESSAGES.AIR_SERVICES.SETTINGS.ASSET_TYPE,
+          RMQ_MESSAGES.AIR_SERVICES.SETTINGS.ASSET_TYPE.ADD,
           dto
         )
       );
@@ -59,7 +59,7 @@ export class AssetTypeController {
     try {
       const dashboardList = await firstValueFrom(
         this.airServiceClient.send(
-          RMQ_MESSAGES.AIR_SERVICES.SETTINGS.ASSET_TYPE_LIST,
+          RMQ_MESSAGES.AIR_SERVICES.SETTINGS.ASSET_TYPE.GET,
           listDashboardDTO
         )
       );

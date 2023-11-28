@@ -7,12 +7,12 @@ import { AddAssetTypeDto, ListAssetTypeDto } from '@shared/dto';
 export class AssetTypeController {
   constructor(private assettypeService: AssetTypeService) {}
 
-  @MessagePattern(RMQ_MESSAGES.AIR_SERVICES.SETTINGS.ASSET_TYPE)
+  @MessagePattern(RMQ_MESSAGES.AIR_SERVICES.SETTINGS.ASSET_TYPE.ADD)
   public async addAssetType(@Payload() payload: AddAssetTypeDto) {
     return this.assettypeService.addAssetType(payload);
   }
 
-  @MessagePattern(RMQ_MESSAGES.AIR_SERVICES.SETTINGS.ASSET_TYPE_LIST)
+  @MessagePattern(RMQ_MESSAGES.AIR_SERVICES.SETTINGS.ASSET_TYPE.GET)
   public async getAssetTypeList(@Payload() payload: ListAssetTypeDto) {
     return this.assettypeService.getAssetTypeList(payload);
   }

@@ -12,6 +12,7 @@ import {
   EditPlanDto,
   PlanDeleteDto,
   PlanFilterDto,
+  PlanProductParamDto,
   ProductFeatureDto,
   ProductPermissionDto,
 } from '@shared/dto';
@@ -419,6 +420,60 @@ export class PlanService {
     }
 
     return plan;
+  }
+
+  async getProductPlans(payload: PlanProductParamDto) {
+    try {
+      const res = await this.planRepository.aggregate([
+        {
+          $lookup: {
+            from: MODEL.PLAN_TYPE,
+            localField: 'planTypeId',
+            foreignField: '_id',
+            as: 'planType',
+          },
+        },
+        {
+          $lookup: {
+            from: MODEL.PRODUCT,
+            localField: 'planProducts',
+            foreignField: '_id',
+            as: 'products',
+          },
+        },
+        {
+          $lookup: {
+            from: MODEL.PLAN_PRODUCT_FEATURE,
+            localField: 'planProductFeatures',
+            foreignField: '_id',
+            as: 'planProductFeatures',
+          },
+        },
+        {
+          $unwind: {
+            path: '$planType',
+            preserveNullAndEmptyArrays: true,
+          },
+        },
+        {
+          $project: {
+            planTypeId: 0,
+          },
+        },
+        {
+          $match: {
+            planProducts: { $elemMatch: { $eq: payload.productId } },
+            ...this.notDeletedFilter,
+          },
+        },
+      ]);
+
+      if (res[0]) {
+        return successResponse(HttpStatus.OK, ResponseMessage.SUCCESS, res);
+      } else throw new RpcException('Record not found');
+    } catch (error) {
+      throw new RpcException(error);
+    }
   }
 
   async addPlan(payload: AddPlanDto) {

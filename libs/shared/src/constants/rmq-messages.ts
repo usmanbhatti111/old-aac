@@ -47,6 +47,7 @@ export const RMQ_MESSAGES = {
     PLAN: 'plan',
     DELETE_PLAN: 'delete-plan',
     PLAN_TYPE_LIST: 'plan-type-list',
+    PRODUCT_PLAN_LIST: 'plan-product-list',
   },
 
   ORGANIZATION: {
@@ -205,10 +206,6 @@ export const RMQ_MESSAGES = {
       DELETE_DASHBOARD: 'delete-dashboard',
       EMAILED_DASHBOARD: 'emailed-dashboards',
     },
-    SETTINGS: {
-      ASSET_TYPE: 'asset-type',
-      ASSET_TYPE_LIST: 'asset-type-list',
-    },
     WIDGETS: {
       CREATE_WIDGETS: 'create-widgets',
       GET_WIDGETS_LIST: 'get-widgets-list',
@@ -305,6 +302,16 @@ export const RMQ_MESSAGES = {
         GET_UNAPPROVED_ARTICLES: 'unapproved-articles',
         UPDATE: 'update-article',
         DELETE: 'delete-article',
+      },
+    },
+    SETTINGS: {
+      PRODUCT_CATALOG: {
+        ADD: 'add-product-catalog',
+        GET: 'get-product-catalog',
+      },
+      ASSET_TYPE: {
+        ADD: 'asset-type',
+        GET: 'asset-type-list',
       },
     },
     CONTRACT_TYPE: {

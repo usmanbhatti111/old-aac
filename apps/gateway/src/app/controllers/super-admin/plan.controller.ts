@@ -37,6 +37,7 @@ import {
   GetPlansTypeResponseDto,
   PlanFilterDto,
   PlanIdParamDto,
+  PlanProductParamDto,
   PostResponseDto,
 } from '@shared/dto';
 import { firstValueFrom } from 'rxjs';
@@ -50,6 +51,21 @@ export class PlanController {
   constructor(
     @Inject(SERVICES.SUPER_ADMIN) private superAdminServiceClient: ClientProxy
   ) {}
+
+  @Auth(true)
+  @Get(API_ENDPOINTS.PLAN.PRODUCT_PLAN_LIST)
+  @ApiOkResponse({ type: GetPlansResponseDto })
+  public async getProductPlans(
+    @Param() payload: PlanProductParamDto
+  ): Promise<GetPlansResponseDto> {
+    const response = await firstValueFrom(
+      this.superAdminServiceClient.send(
+        RMQ_MESSAGES.PLAN.PRODUCT_PLAN_LIST,
+        payload
+      )
+    );
+    return response;
+  }
 
   @Auth(true)
   @Post(API_ENDPOINTS.PLAN.ADD_PLAN_TYPE)

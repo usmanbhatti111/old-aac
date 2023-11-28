@@ -34,4 +34,4 @@ export * from './permisions';
 export * from './activitylog';
 export * from './dropdown';
 export * from './common-features';
-export * from './air-services/settings/index';
+export * from './air-services/settings';
