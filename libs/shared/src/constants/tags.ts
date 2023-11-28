@@ -55,4 +55,5 @@ export const API_TAGS = {
   DROPDOWNS: 'Dropdowns',
   COMPANIES: 'Companies',
   CONTRACT_TYPE: 'Contract Type',
+  PRODUCT_CATALOG: 'Product Catalog',
 };
