@@ -28,7 +28,7 @@ import { ReportWidgetService } from './services/reports.widget.service';
 import { ArticlesService } from './services/knowledge-base/articles.service';
 import { ArticlesController } from './controllers/knowledge-base/articles.controller';
 import { VendorController } from './controllers/settings/asset-management/vendors.controller';
-import { VendorsService } from './services/settings/vendors.sevice';
+import { VendorsService } from './services/settings/asset-management/vendors.service';
 import { AssetTypeService } from './services/settings/asset-management/asset-type.service';
 import { ProductCatalogController } from './controllers/settings/asset-management/product-catalog.controller';
 import { ProductCatalogService } from './services/settings/asset-management/product-catalog.service';

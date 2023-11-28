@@ -8,7 +8,7 @@ import {
   Body,
 } from '@nestjs/common';
 import { ClientProxy, RpcException } from '@nestjs/microservices';
-import { ApiTags, ApiBearerAuth } from '@nestjs/swagger';
+import { ApiTags, ApiBearerAuth, ApiOkResponse } from '@nestjs/swagger';
 import {
   API_ENDPOINTS,
   API_TAGS,
@@ -19,7 +19,12 @@ import {
 import { Auth } from '../../../../decorators/auth.decorator';
 import { AppRequest } from '../../../../shared/interface/request.interface';
 import { firstValueFrom } from 'rxjs';
-import { AddVendorDTO, ListVendorsDto } from '@shared/dto';
+import {
+  AddVendorRequestDTO,
+  AddVendorResponseDto,
+  ListVendorsRequestDto,
+  ListVendorsResponseDto,
+} from '@shared/dto';
 
 @ApiBearerAuth()
 @ApiTags(API_TAGS.VENDORS)
@@ -30,16 +35,17 @@ export class VendorController {
   ) {}
 
   @Auth(true)
-  @Post(API_ENDPOINTS.AIR_SERVICES.VENDORS.ADD_VENDORS)
+  @ApiOkResponse({ type: AddVendorResponseDto })
+  @Post(API_ENDPOINTS.AIR_SERVICES.SETTINGS.VENDORS.ADD_VENDORS)
   public async addTask(
-    @Body() payload: AddVendorDTO,
+    @Body() payload: AddVendorRequestDTO,
     @Req() request: AppRequest
-  ) {
+  ): Promise<AddVendorResponseDto> {
     try {
       payload.companyId = request?.user?.companyId;
       const response = await firstValueFrom(
         this.airServiceClient.send(
-          RMQ_MESSAGES.AIR_SERVICES.VENDORS.ADD_VENDORS,
+          RMQ_MESSAGES.AIR_SERVICES.SETTINGS.VENDORS.ADD_VENDORS,
           payload
         )
       );
@@ -51,21 +57,19 @@ export class VendorController {
   }
 
   @Auth(true)
-  @Get(API_ENDPOINTS.AIR_SERVICES.VENDORS.GET_VENDORS)
+  @ApiOkResponse({ type: ListVendorsResponseDto })
+  @Get(API_ENDPOINTS.AIR_SERVICES.SETTINGS.VENDORS.GET_VENDORS)
   public async getVendors(
-    @Query() ListVendorsDto: ListVendorsDto,
+    @Query() payload: ListVendorsRequestDto,
     @Req() request: AppRequest
-  ) {
+  ): Promise<ListVendorsResponseDto> {
     try {
-      const requestId = request?.user?.companyId;
+      payload['companyId'] = request?.user?.companyId;
 
       const response = await firstValueFrom(
         this.airServiceClient.send(
-          RMQ_MESSAGES.AIR_SERVICES.VENDORS.GET_VENDORS,
-          {
-            ...ListVendorsDto,
-            requestId: requestId,
-          }
+          RMQ_MESSAGES.AIR_SERVICES.SETTINGS.VENDORS.GET_VENDORS,
+          payload
         )
       );
 

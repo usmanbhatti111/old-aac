@@ -306,11 +306,10 @@ export const API_ENDPOINTS = {
       REQUESTER: {
         ADD: 'add-requester',
       },
-    },
-
-    VENDORS: {
-      ADD_VENDORS: 'add-vendors',
-      GET_VENDORS: 'get-vendors',
+      VENDORS: {
+        ADD_VENDORS: 'add-vendors',
+        GET_VENDORS: 'get-vendors',
+      },
     },
   },
   PRODUCT_FEATURES: {

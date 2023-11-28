@@ -316,15 +316,14 @@ export const RMQ_MESSAGES = {
         ADD: 'asset-type',
         GET: 'asset-type-list',
       },
+      VENDORS: {
+        ADD_VENDORS: 'add-vendors',
+        GET_VENDORS: 'get-vendors',
+      },
     },
     CONTRACT_TYPE: {
       ADD: 'add-contract-type',
       GET: 'get-contract-types',
-    },
-
-    VENDORS: {
-      ADD_VENDORS: 'add-vendors',
-      GET_VENDORS: 'get-vendors',
     },
   },
 

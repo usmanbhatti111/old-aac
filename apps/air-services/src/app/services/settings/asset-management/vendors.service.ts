@@ -1,29 +1,29 @@
 import { HttpStatus, Injectable } from '@nestjs/common';
-import { errorResponse, successResponse } from '@shared/constants';
+import { successResponse } from '@shared/constants';
 import { VendorsRepository } from '@shared';
-import { ListVendorsDto } from '@shared/dto';
+import { AddVendorRequestDTO, ListVendorsRequestDto } from '@shared/dto';
 import { RpcException } from '@nestjs/microservices';
 
 @Injectable()
 export class VendorsService {
   constructor(private readonly vendorsRepository: VendorsRepository) {}
 
-  async addVendor(payload) {
+  async addVendor(payload: AddVendorRequestDTO) {
     try {
       const res = await this.vendorsRepository.create({
         ...payload,
       });
       return successResponse(HttpStatus.CREATED, 'Success', res);
     } catch (error) {
-      return errorResponse(HttpStatus.BAD_REQUEST, 'Bad Request', error?.name);
+      return new RpcException(error);
     }
   }
 
-  async getVendors(payload: ListVendorsDto) {
+  async getVendors(payload: ListVendorsRequestDto) {
     try {
-      const { limit, page, search, requestId } = payload;
-      const offset = limit * (page - 1);
-      const filterQuery = { companyId: requestId };
+      const { limit, page, search, companyId } = payload;
+      const offset = page;
+      const filterQuery = { companyId };
       const pipelines: any = [];
 
       if (search) {
@@ -39,7 +39,7 @@ export class VendorsService {
         limit,
         pipelines,
       });
-      return res;
+      return successResponse(HttpStatus.OK, 'Success', res);
     } catch (error) {
       return new RpcException(error);
     }
