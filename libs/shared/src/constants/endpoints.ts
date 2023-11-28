@@ -295,6 +295,10 @@ export const API_ENDPOINTS = {
         ADD: 'add-contract-type',
         GET: 'get-contract-types',
       },
+      PRODUCT_CATALOG: {
+        ADD: '/',
+        GET: 'get-product-catalog',
+      },
       ASSET_TYPE: {
         ASSET_TYPE: '/',
         ASSET_TYPE_LIST: '/assset-type-list',

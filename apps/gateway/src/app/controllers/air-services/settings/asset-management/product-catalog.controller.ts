@@ -25,7 +25,7 @@ export class ProductCatalogController {
   ) {}
 
   @Auth(true)
-  @Post(API_ENDPOINTS.AIR_SERVICES.SETTINGS.CONTRACT_TYPE.ADD)
+  @Post(API_ENDPOINTS.AIR_SERVICES.SETTINGS.PRODUCT_CATALOG.ADD)
   @ApiOkResponse({ type: AddProductCatalogResponseDto })
   public async addProductCatalog(
     @Body() body: AddProductCatalogRequestDTO,
