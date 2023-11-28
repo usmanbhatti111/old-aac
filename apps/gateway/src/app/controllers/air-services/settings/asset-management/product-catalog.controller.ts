@@ -1,12 +1,4 @@
-import {
-  Controller,
-  Inject,
-  Req,
-  Get,
-  Query,
-  Body,
-  Post,
-} from '@nestjs/common';
+import { Controller, Inject, Req, Body, Post } from '@nestjs/common';
 import { ClientProxy, RpcException } from '@nestjs/microservices';
 import { ApiTags, ApiBearerAuth, ApiOkResponse } from '@nestjs/swagger';
 import {
@@ -46,27 +38,6 @@ export class ProductCatalogController {
         this.airServiceClient.send(
           RMQ_MESSAGES.AIR_SERVICES.SETTINGS.PRODUCT_CATALOG.ADD,
           body
-        )
-      );
-
-      return response;
-    } catch (err) {
-      throw new RpcException(err);
-    }
-  }
-
-  @Auth(true)
-  @Get(API_ENDPOINTS.AIR_SERVICES.SETTINGS.CONTRACT_TYPE.GET)
-  public async getProductCatalogs(
-    @Query() queryParams: any,
-    @Req() req: AppRequest
-  ): Promise<any> {
-    try {
-      queryParams.organizationId = req?.user?.organization;
-      const response = await firstValueFrom(
-        this.airServiceClient.send(
-          RMQ_MESSAGES.AIR_SERVICES.SETTINGS.PRODUCT_CATALOG.GET,
-          queryParams
         )
       );
 
