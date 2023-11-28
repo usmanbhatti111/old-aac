@@ -5,6 +5,7 @@ import { ExpenseController } from './controllers/assets/expense.controller';
 import { ExpenseService } from './services/assets/expense.service';
 import { SharedModule } from '@shared';
 import { TaskController } from './controllers/tasks.controller';
+import { AssetTypeController } from './controllers/settings/asset-management/asset-type.controller';
 import { TaskService } from './services/tasks.service';
 import { InventoryController } from './controllers/assets/inventory.controller';
 import { PurchaseOrderController } from './controllers/assets/purchase.controller';
@@ -26,6 +27,7 @@ import { ReportWidgetController } from './controllers/reports.widget.controller'
 import { ReportWidgetService } from './services/reports.widget.service';
 import { ArticlesService } from './services/knowledge-base/articles.service';
 import { ArticlesController } from './controllers/knowledge-base/articles.controller';
+import { AssetTypeService } from './services/settings/asset-management/asset-type.service';
 import { ProductCatalogController } from './controllers/settings/asset-management/product-catalog.controller';
 import { ProductCatalogService } from './services/settings/asset-management/product-catalog.service';
 
@@ -35,6 +37,7 @@ import { ProductCatalogService } from './services/settings/asset-management/prod
     TicketController,
     InventoryController,
     TaskController,
+    AssetTypeController,
     PurchaseOrderController,
     ExpenseController,
     SoftwareController,
@@ -51,6 +54,7 @@ import { ProductCatalogService } from './services/settings/asset-management/prod
     TicketService,
     InventoryService,
     TaskService,
+    AssetTypeService,
     ExpenseService,
     PurchaseOrderService,
     SoftwareService,

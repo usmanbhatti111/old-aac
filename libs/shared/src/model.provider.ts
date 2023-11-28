@@ -9,7 +9,9 @@ import {
   Example,
   ExampleSchema,
   Expense,
+  AssetType,
   ExpenseSchema,
+  AssetTypeSchema,
   Faq,
   FaqSchema,
   Feature,
@@ -181,6 +183,10 @@ export const DbModels = [
   {
     name: Expense.name,
     schema: ExpenseSchema,
+  },
+  {
+    name: AssetType.name,
+    schema: AssetTypeSchema,
   },
   {
     name: OrganizationPlan.name,

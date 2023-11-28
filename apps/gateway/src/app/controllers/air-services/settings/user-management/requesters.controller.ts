@@ -9,9 +9,9 @@ import {
   SERVICES,
 } from '@shared/constants';
 import { AddRequesterDto, AddRequesterResponseDTO } from '@shared/dto';
-import { Auth } from 'apps/gateway/src/app/decorators/auth.decorator';
-import { AppRequest } from 'apps/gateway/src/app/shared/interface/request.interface';
 import { firstValueFrom } from 'rxjs';
+import { Auth } from '../../../../decorators/auth.decorator';
+import { AppRequest } from '../../../../shared/interface/request.interface';
 
 @ApiTags(API_TAGS.REQUESTER)
 @Controller(CONTROLLERS.REQUESTER)

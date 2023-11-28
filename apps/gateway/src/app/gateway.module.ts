@@ -13,6 +13,7 @@ import { PlanController } from './controllers/super-admin/plan.controller';
 import { PermissionController } from './controllers/super-admin/permission.controller';
 import { OrganizationController } from './controllers/organization/organization.controller';
 import { OrganizationCompanyAccountController } from './controllers/organization/organization-company-account.controller';
+import { TaskController } from './controllers/air-services/tasks/task.controller';
 import { SuperAdminController } from './controllers/super-admin.controller';
 import { JobsController } from './controllers/settings/jobs.controller';
 import { InvoiceController } from './controllers/super-admin/billing-invoices.controller';
@@ -82,6 +83,7 @@ import { airServicesControllers } from './controllers/air-services';
     OrganizationCompanyAccountController,
     FaqsController,
     InvoiceController,
+    TaskController,
     NewsAndEventsController,
     PaymentController,
     QuickLinksController,

@@ -312,6 +312,10 @@ export const RMQ_MESSAGES = {
         ADD: 'add-product-catalog',
         GET: 'get-product-catalog',
       },
+      ASSET_TYPE: {
+        ADD: 'asset-type',
+        GET: 'asset-type-list',
+      },
     },
     CONTRACT_TYPE: {
       ADD: 'add-contract-type',
