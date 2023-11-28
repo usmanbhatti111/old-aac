@@ -68,6 +68,7 @@ import {
   JobApplicationsRepository,
   CustomizeColumnsRepository,
   CompanyRepository,
+  VendorsRepository,
   ProductCatalogRepository,
 } from '../src/repositories/index';
 import { MongooseConfig } from './config/mongo.config';
@@ -157,6 +158,7 @@ import {
     JobApplicationsRepository,
     CustomizeColumnsRepository,
     CompanyRepository,
+    VendorsRepository,
     {
       provide: 'S3',
       useFactory: (config: ConfigService) =>
@@ -255,6 +257,7 @@ import {
     CustomizeColumnsRepository,
     CustomizeColumnsService,
     CompanyRepository,
+    VendorsRepository,
     ProductCatalogRepository,
   ],
 })

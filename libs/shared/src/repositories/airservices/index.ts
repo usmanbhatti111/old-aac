@@ -15,5 +15,6 @@ export * from './articles.repository';
 export * from './report-widgets.repository';
 export * from './purchase-approval.repository';
 export * from './annoucement.repository';
+export * from './vendors.repository';
 export * from './asset-type.repository';
 export * from './product-catalog.repository';

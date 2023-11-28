@@ -116,6 +116,8 @@ import {
   JobApplicationsSchema,
   Company,
   CompanySchema,
+  Vendor,
+  VendorsSchema,
   ProductCatalog,
   ProductCatalogSchema,
 } from './schema';
@@ -438,6 +440,10 @@ export const DbModels = [
   {
     name: Company.name,
     schema: CompanySchema,
+  },
+  {
+    name: Vendor.name,
+    schema: VendorsSchema,
   },
   {
     name: ProductCatalog.name,

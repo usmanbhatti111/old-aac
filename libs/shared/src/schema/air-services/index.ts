@@ -13,5 +13,6 @@ export * from './dashboard.schema';
 export * from './emailed-dashboards.schema';
 export * from './articles.schema';
 export * from './annoucement.scehma';
+export * from './vendors.schema';
 export * from './asset-types.schema';
 export * from './product-catalog.schema';

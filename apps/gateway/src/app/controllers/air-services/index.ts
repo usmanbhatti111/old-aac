@@ -6,6 +6,7 @@ import { SoftwareController } from './assets/software.controller';
 import { AirServicesDashboardController } from './dashboard/dashboard.controller';
 import { ArticlesController } from './knowledge-base/articles.controller';
 import { ContractTypeController } from './settings/asset-management/contract-type.controller';
+import { VendorController } from './settings/asset-management/vendors.controller';
 import { RequesterController } from './settings/user-management/requesters.controller';
 import { ProductCatalogController } from './settings/asset-management/product-catalog.controller';
 import { TaskController } from './tasks/task.controller';
@@ -25,6 +26,7 @@ export const airServicesControllers = [
   AirServicesDashboardController,
   ArticlesController,
   ContractTypeController,
+  VendorController,
   RequesterController,
   ProductCatalogController,
 ];
