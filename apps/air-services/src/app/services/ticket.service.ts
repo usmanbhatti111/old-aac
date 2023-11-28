@@ -8,6 +8,7 @@ import {
   IdDto,
   paginationDTO,
   BulkTicketUpdateDto,
+  TicketIdsDto,
 } from '@shared/dto';
 import { Types } from 'mongoose';
 import { GetAssociateAssetsDto, GetTicketByIdDto } from '@shared/dto';
@@ -273,9 +274,11 @@ export class TicketService {
     }
   }
 
-  async deleteTickets(payload: any) {
+  async deleteTickets(payload: TicketIdsDto) {
     try {
-      const data = await this.ticketRepository.deleteMany({}, payload.ids);
+      const { Ids, companyId } = payload;
+      const filterQuery = { companyId: companyId };
+      const data = await this.ticketRepository.deleteMany(filterQuery, Ids);
       //should also remove  all the traces
       const response = successResponse(
         HttpStatus.OK,
