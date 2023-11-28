@@ -16,7 +16,6 @@ export * from './air-services/task/index';
 export * from './air-services/dashboard/index';
 export * from './air-services/reports/index';
 export * from './air-services/settings/index';
-
 export * from './example';
 export * from './billing-invoices';
 export * from './products';
@@ -36,3 +35,4 @@ export * from './permisions';
 export * from './activitylog';
 export * from './dropdown';
 export * from './common-features';
+export * from './air-services/settings';

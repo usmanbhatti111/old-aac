@@ -9,7 +9,9 @@ import {
   Example,
   ExampleSchema,
   Expense,
+  AssetType,
   ExpenseSchema,
+  AssetTypeSchema,
   Faq,
   FaqSchema,
   Feature,
@@ -116,6 +118,8 @@ import {
   CompanySchema,
   Vendor,
   VendorsSchema,
+  ProductCatalog,
+  ProductCatalogSchema,
 } from './schema';
 import {
   ReportsWidget,
@@ -181,6 +185,10 @@ export const DbModels = [
   {
     name: Expense.name,
     schema: ExpenseSchema,
+  },
+  {
+    name: AssetType.name,
+    schema: AssetTypeSchema,
   },
   {
     name: OrganizationPlan.name,
@@ -433,9 +441,12 @@ export const DbModels = [
     name: Company.name,
     schema: CompanySchema,
   },
-
   {
     name: Vendor.name,
     schema: VendorsSchema,
+  },
+  {
+    name: ProductCatalog.name,
+    schema: ProductCatalogSchema,
   },
 ];

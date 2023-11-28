@@ -5,6 +5,7 @@ import { ExpenseController } from './controllers/assets/expense.controller';
 import { ExpenseService } from './services/assets/expense.service';
 import { SharedModule } from '@shared';
 import { TaskController } from './controllers/tasks.controller';
+import { AssetTypeController } from './controllers/settings/asset-management/asset-type.controller';
 import { TaskService } from './services/tasks.service';
 import { InventoryController } from './controllers/assets/inventory.controller';
 import { PurchaseOrderController } from './controllers/assets/purchase.controller';
@@ -28,6 +29,9 @@ import { ArticlesService } from './services/knowledge-base/articles.service';
 import { ArticlesController } from './controllers/knowledge-base/articles.controller';
 import { VendorController } from './controllers/settings/asset-management/vendors.controller';
 import { VendorsService } from './services/settings/vendors.sevice';
+import { AssetTypeService } from './services/settings/asset-management/asset-type.service';
+import { ProductCatalogController } from './controllers/settings/asset-management/product-catalog.controller';
+import { ProductCatalogService } from './services/settings/asset-management/product-catalog.service';
 
 @Module({
   imports: [SharedModule],
@@ -35,6 +39,7 @@ import { VendorsService } from './services/settings/vendors.sevice';
     TicketController,
     InventoryController,
     TaskController,
+    AssetTypeController,
     PurchaseOrderController,
     ExpenseController,
     SoftwareController,
@@ -46,11 +51,13 @@ import { VendorsService } from './services/settings/vendors.sevice';
     ReportWidgetController,
     ArticlesController,
     VendorController,
+    ProductCatalogController,
   ],
   providers: [
     TicketService,
     InventoryService,
     TaskService,
+    AssetTypeService,
     ExpenseService,
     PurchaseOrderService,
     SoftwareService,
@@ -62,6 +69,7 @@ import { VendorsService } from './services/settings/vendors.sevice';
     ReportWidgetService,
     ArticlesService,
     VendorsService,
+    ProductCatalogService,
   ],
 })
 export class AirServicesModule {}

@@ -7,6 +7,7 @@ export const API_TAGS = {
   ORGANIZATION: 'Organization',
   ORGANIZATION_COMPANY_ACCOUNT: 'Organization Company Account',
   TASK: 'Task',
+  REQUESTER: 'Requester',
   TASK_MANAGEMENT: 'Task Management',
   WORK_LOAD_MANAGEMENT: 'Work Load Management',
   SUPER_ADMIN: 'Super Admin',
@@ -14,6 +15,7 @@ export const API_TAGS = {
   JOBS: 'Jobs',
   TICKETS: 'Tickets',
   ASSETS: 'Assets',
+  ASSET_TYPE: 'Asset type',
   EXPENSE: 'Expense',
   CONTRACT: 'Contract',
   BILLING_INVOICES: 'Billing & Invoices',
@@ -55,4 +57,5 @@ export const API_TAGS = {
   COMPANIES: 'Companies',
   CONTRACT_TYPE: 'Contract Type',
   VENDORS: 'Vendors',
+  PRODUCT_CATALOG: 'Product Catalog',
 };

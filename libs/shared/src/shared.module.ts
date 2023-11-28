@@ -10,6 +10,7 @@ import {
   ContactStateRepository,
   ContractRepository,
   ExpenseRepository,
+  AssetTypeRepository,
   FaqRepository,
   FeatureRepository,
   FileRepository,
@@ -68,6 +69,7 @@ import {
   CustomizeColumnsRepository,
   CompanyRepository,
   VendorsRepository,
+  ProductCatalogRepository,
 } from '../src/repositories/index';
 import { MongooseConfig } from './config/mongo.config';
 import { SharedService } from './shared.service';
@@ -109,6 +111,7 @@ import {
     ProductFeaturesRepository,
     OrganizationRepository,
     ExpenseRepository,
+    AssetTypeRepository,
     QuickLinksRepository,
     UserRepository,
     AdminRoleRepository,
@@ -174,6 +177,7 @@ import {
     EmailService,
     CustomizeColumnsService,
     CompanyAccountRoleRepository,
+    ProductCatalogRepository,
   ],
   exports: [
     SharedService,
@@ -201,6 +205,7 @@ import {
     OrganizationRepository,
     OrganizationCompanyAccountRepository,
     ExpenseRepository,
+    AssetTypeRepository,
     QuickLinksRepository,
     UserRepository,
     AdminRoleRepository,
@@ -253,6 +258,7 @@ import {
     CustomizeColumnsService,
     CompanyRepository,
     VendorsRepository,
+    ProductCatalogRepository,
   ],
 })
 export class SharedModule {}

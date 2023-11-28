@@ -237,6 +237,11 @@ export const API_ENDPOINTS = {
       UPDATE_TASK: '/:id',
       DELETE_TASK_DATA: '/:id',
     },
+    KNOWLEDGE_BASE: {
+      ARTICLES: {
+        GET_UNAPPROVED_ARTICLES: 'unapproved-articles',
+      },
+    },
     DASHBOARD: {
       ADD_DASHBOARD: '/',
       GET_DASHBOARDS: '/',
@@ -284,15 +289,22 @@ export const API_ENDPOINTS = {
       GET_CONTRACT: 'get-contract',
       GET_CONTRACTS: 'get-contracts',
     },
+
     SETTINGS: {
       CONTRACT_TYPE: {
         ADD: 'add-contract-type',
         GET: 'get-contract-types',
       },
-    },
-    KNOWLEDGE_BASE: {
-      ARTICLES: {
-        GET_UNAPPROVED_ARTICLES: 'unapproved-articles',
+      PRODUCT_CATALOG: {
+        ADD: '/',
+        GET: 'get-product-catalog',
+      },
+      ASSET_TYPE: {
+        ASSET_TYPE: '/',
+        ASSET_TYPE_LIST: '/assset-type-list',
+      },
+      REQUESTER: {
+        ADD: 'add-requester',
       },
     },
 
@@ -428,6 +440,11 @@ export const API_ENDPOINTS = {
     CREATE_IMPORT_FILE: '/',
   },
 
+  KNOWLEDGE_BASE: {
+    ARTICLES: {
+      GET_UNAPPROVED_ARTICLES: 'unapproved-articles',
+    },
+  },
   CUSTOMIZED_COLUMNS: {
     GET_CUSTOMIZE_COLUMN: '/',
     CREATE_OR_UPDATE_CUSTOMIZE_COLUMN: '/',

@@ -8,6 +8,7 @@ export const CONTROLLERS = {
   ORGANIZATION: 'organization',
   ORGANIZATION_COMPANY_ACCOUNT: 'org-company-account',
   TASK: 'task',
+  REQUESTER: 'requester',
   TASK_MANAGEMENT: 'task',
   WORK_LOAD_MANAGEMENT: 'workload',
   SUPER_ADMIN: 'super-admin',
@@ -15,7 +16,8 @@ export const CONTROLLERS = {
   JOBS: 'jobs',
   PRODUCTS: 'products',
   TICKET: 'ticket',
-  ASSETS: 'assets',
+  ASSETS: 'Assets',
+  ASSET_TYPE: 'Asset-type',
   PRODUCT_FEATURES: 'product-features',
   EXPENSE: 'expense',
   CONTRACT: 'contract',
@@ -62,4 +64,5 @@ export const CONTROLLERS = {
   COMPANIES: 'companies',
   CONTRACT_TYPE: 'contract-type',
   VENDORS: 'vendors',
+  PRODUCT_CATALOG: 'product-catalog',
 };

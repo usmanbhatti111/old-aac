@@ -196,6 +196,9 @@ export const RMQ_MESSAGES = {
     DELETE_ALL_ATTACHMENT: 'delete-all-attachment',
   },
   AIR_SERVICES: {
+    REQUESTER: {
+      ADD: 'add-requester',
+    },
     DASHBOARD: {
       CREATE_DASHBOARD: 'create-dashboard',
       CREATE_DASHBOARD_ANNOUCEMENT: 'create-dashboard-annoucement',
@@ -302,6 +305,16 @@ export const RMQ_MESSAGES = {
         GET_UNAPPROVED_ARTICLES: 'unapproved-articles',
         UPDATE: 'update-article',
         DELETE: 'delete-article',
+      },
+    },
+    SETTINGS: {
+      PRODUCT_CATALOG: {
+        ADD: 'add-product-catalog',
+        GET: 'get-product-catalog',
+      },
+      ASSET_TYPE: {
+        ADD: 'asset-type',
+        GET: 'asset-type-list',
       },
     },
     CONTRACT_TYPE: {
