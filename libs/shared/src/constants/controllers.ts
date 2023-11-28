@@ -61,4 +61,5 @@ export const CONTROLLERS = {
   DROPDOWN: 'dropdown',
   COMPANIES: 'companies',
   CONTRACT_TYPE: 'contract-type',
+  PRODUCT_CATALOG: 'product-catalog',
 };

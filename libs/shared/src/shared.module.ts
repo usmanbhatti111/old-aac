@@ -67,6 +67,7 @@ import {
   JobApplicationsRepository,
   CustomizeColumnsRepository,
   CompanyRepository,
+  ProductCatalogRepository,
 } from '../src/repositories/index';
 import { MongooseConfig } from './config/mongo.config';
 import { SharedService } from './shared.service';
@@ -172,6 +173,7 @@ import {
     EmailService,
     CustomizeColumnsService,
     CompanyAccountRoleRepository,
+    ProductCatalogRepository,
   ],
   exports: [
     SharedService,
@@ -250,6 +252,7 @@ import {
     CustomizeColumnsRepository,
     CustomizeColumnsService,
     CompanyRepository,
+    ProductCatalogRepository,
   ],
 })
 export class SharedModule {}

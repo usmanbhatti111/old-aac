@@ -304,6 +304,12 @@ export const RMQ_MESSAGES = {
         DELETE: 'delete-article',
       },
     },
+    SETTINGS: {
+      PRODUCT_CATALOG: {
+        ADD: 'add-product-catalog',
+        GET: 'get-product-catalog',
+      },
+    },
     CONTRACT_TYPE: {
       ADD: 'add-contract-type',
       GET: 'get-contract-types',
