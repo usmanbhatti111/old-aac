@@ -2,16 +2,12 @@ import { Injectable } from '@nestjs/common';
 import { AssetTypeRepository } from '@shared';
 import { AddAssetTypeDto, ListAssetTypeDto } from '@shared/dto';
 import { RpcException } from '@nestjs/microservices';
-import { Types } from 'mongoose';
 @Injectable()
 export class AssetTypeService {
   constructor(private readonly assettypeRepository: AssetTypeRepository) {}
 
   async addAssetType(payload: AddAssetTypeDto) {
     try {
-      const newPayload: any = payload;
-      newPayload.createdBy = new Types.ObjectId(newPayload?.createdBy);
-      newPayload.companyId = new Types.ObjectId(newPayload?.companyId);
       const res = await this.assettypeRepository.create({ ...payload });
       return res;
     } catch (error) {
