@@ -289,6 +289,9 @@ export const API_ENDPOINTS = {
         ADD: 'add-contract-type',
         GET: 'get-contract-types',
       },
+      REQUESTER: {
+        ADD: 'add-requester',
+      },
     },
     KNOWLEDGE_BASE: {
       ARTICLES: {

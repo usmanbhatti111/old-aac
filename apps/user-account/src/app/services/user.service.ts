@@ -36,7 +36,6 @@ export class UserService {
   async create(payload: CreateUserDto) {
     try {
       const { crn, role } = payload;
-
       if (role === UserRole.SUPER_ADMIN) {
         // PENDING: (need to create lambda function or new flow with identitygram) Send temporary password email
         // Change cognitoId to required true when it is done
@@ -52,6 +51,14 @@ export class UserService {
         const result = await this.userRepository.create(payload);
 
         return successResponse(HttpStatus.OK, ResponseMessage.SUCCESS, result);
+      } else if (role === UserRole.ORG_REQUESTER) {
+        // PENDING: Need to add lambda function here for sending email to requester.
+        const response = await this.userRepository.create(payload);
+        return successResponse(
+          HttpStatus.OK,
+          ResponseMessage.SUCCESS,
+          response
+        );
       } else {
         return successResponse(
           HttpStatus.OK,
