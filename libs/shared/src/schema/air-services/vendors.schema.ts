@@ -2,7 +2,6 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { AbstractSchema } from '../abstract-repo/abstract.schema';
 
 import { HydratedDocument, SchemaTypes } from 'mongoose';
-import { Organization } from '../organization';
 
 export type VendorDocument = HydratedDocument<Vendor>;
 @Schema({
@@ -43,7 +42,7 @@ export class Vendor extends AbstractSchema {
   @Prop({ type: String, required: false })
   zipCode: string;
 
-  @Prop({ type: String, required: false })
+  @Prop({ type: SchemaTypes.ObjectId, required: false })
   companyId: string;
 }
 
