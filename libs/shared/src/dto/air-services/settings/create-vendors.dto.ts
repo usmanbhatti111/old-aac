@@ -1,5 +1,11 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNotEmpty, IsObject, IsString } from 'class-validator';
+import {
+  IsEmail,
+  IsMobilePhone,
+  IsNotEmpty,
+  IsObject,
+  IsString,
+} from 'class-validator';
 
 export class AddVendorRequestDTO {
   @ApiProperty({
@@ -22,19 +28,19 @@ export class AddVendorRequestDTO {
 
   @ApiProperty({
     type: String,
-    required: true,
-    example: '123456789',
+    example: '+447355546945',
+    required: false,
   })
-  @IsString()
+  @IsMobilePhone()
   @IsNotEmpty()
   phone: string;
 
   @ApiProperty({
     type: String,
+    example: '+447355546945',
     required: false,
-    example: '123456789',
   })
-  @IsString()
+  @IsMobilePhone()
   @IsNotEmpty()
   mobile: string;
 
@@ -43,7 +49,7 @@ export class AddVendorRequestDTO {
     required: true,
     example: 'abc@yopmail.com',
   })
-  @IsString()
+  @IsEmail()
   @IsNotEmpty()
   email: string;
 
