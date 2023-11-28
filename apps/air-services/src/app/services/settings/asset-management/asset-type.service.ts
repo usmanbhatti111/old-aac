@@ -1,15 +1,16 @@
-import { Injectable } from '@nestjs/common';
+import { HttpStatus, Injectable } from '@nestjs/common';
 import { AssetTypeRepository } from '@shared';
 import { RpcException } from '@nestjs/microservices';
 import { AddAssetTypeDto, ListAssetTypeDto } from '@shared/dto';
+import { successResponse } from '@shared/constants';
 @Injectable()
 export class AssetTypeService {
   constructor(private readonly assettypeRepository: AssetTypeRepository) {}
 
   async addAssetType(payload: AddAssetTypeDto) {
     try {
-      const res = await this.assettypeRepository.create({ ...payload });
-      return res;
+      const response = await this.assettypeRepository.create({ ...payload });
+      return successResponse(HttpStatus.CREATED, `Success`, response);
     } catch (error) {
       return new RpcException(error);
     }
@@ -27,13 +28,13 @@ export class AssetTypeService {
           },
         });
       }
-      const res = await this.assettypeRepository.paginate({
+      const response = await this.assettypeRepository.paginate({
         filterQuery,
         offset,
         limit,
         pipelines,
       });
-      return res;
+      return successResponse(HttpStatus.CREATED, `Success`, response);
     } catch (error) {
       return new RpcException(error);
     }
