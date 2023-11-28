@@ -52,6 +52,7 @@ export class UserService {
 
         return successResponse(HttpStatus.OK, ResponseMessage.SUCCESS, result);
       } else if (role === UserRole.ORG_REQUESTER) {
+        // PENDING: Need to add lambda function here for sending email to requester.
         const response = await this.userRepository.create(payload);
         return successResponse(
           HttpStatus.OK,
