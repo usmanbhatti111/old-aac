@@ -33,7 +33,7 @@ export class UserService {
     private s3: S3Service
   ) {}
 
-  async create(payload: CreateUserDto | any) {
+  async create(payload: CreateUserDto) {
     try {
       const { crn, role } = payload;
       if (role === UserRole.SUPER_ADMIN) {

@@ -17,10 +17,7 @@ import { firstValueFrom } from 'rxjs';
 @Controller(CONTROLLERS.REQUESTER)
 @ApiBearerAuth()
 export class RequesterController {
-  constructor(
-    //   @Inject(SERVICES.AIR_SERVICES) private airServiceClient: ClientProxy
-    @Inject(SERVICES.USER) private userServiceClient: ClientProxy
-  ) {}
+  constructor(@Inject(SERVICES.USER) private userServiceClient: ClientProxy) {}
 
   @Auth(true)
   @ApiOkResponse({ type: AddRequesterResponseDTO })

@@ -6,6 +6,9 @@ import {
   IsOptional,
   IsEmail,
   IsEnum,
+  IsPhoneNumber,
+  Matches,
+  IsMobilePhone,
 } from 'class-validator';
 
 export class AddRequesterDto {
@@ -55,19 +58,22 @@ export class AddRequesterDto {
   jobTitle: string;
 
   @IsOptional()
-  @IsString()
+  @IsMobilePhone()
   @ApiProperty({
     type: String,
-    example: '+4423882399',
+    example: '+447355546945',
     required: false,
   })
   phoneNumber: string;
 
   @IsOptional()
   @IsString()
+  @Matches(/^(\(GMT[+-]\d{2}:\d{2}\))\s\S+$/, {
+    message: 'Invalid timezone format. Example: (GMT+04:00) Perth',
+  })
   @ApiProperty({
     type: String,
-    example: '(GMT = 04:00) Perth',
+    example: '(GMT+04:00) Perth',
     required: false,
   })
   timezone: string;
