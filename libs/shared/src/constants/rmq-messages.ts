@@ -5,6 +5,7 @@ export const RMQ_MESSAGES = {
     EDIT_EXAMPLE: 'edit-example',
   },
   PERMISSION: {
+    GET_PERMISSIONS_BY_PRODUCT: 'get-permissions-by-product',
     ADD_ALL_PERMISSIONS: 'add-all-permissions',
     ADD_COMPNAY_ACCOUNT_ROLE: 'add-company-account-role',
     GET_COMPNAY_ACCOUNT_ROLES: 'get-company-account-roles',

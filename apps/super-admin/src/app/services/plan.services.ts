@@ -462,7 +462,7 @@ export class PlanService {
         },
         {
           $match: {
-            planProducts: { $elemMatch: { $eq: payload.productId } },
+            planProducts: { $elemMatch: { $eq: payload?.productId } },
             ...this.notDeletedFilter,
           },
         },

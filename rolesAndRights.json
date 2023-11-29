@@ -1,6 +1,6 @@
 [
   {
-    "Modules": "Super-Admin Roles & Right",
+    "Modules": "Super Admin",
     "Sub Modules": "",
     "Permissions": "",
     "Slugs": ""
@@ -582,7 +582,7 @@
     "Slugs": "active-inactive-feature"
   },
   {
-    "Modules": "Org-Admin Roles & Right",
+    "Modules": "Organization Admin",
     "Sub Modules": "",
     "Permissions": "",
     "Slugs": ""
@@ -786,7 +786,7 @@
     "Slugs": "org-delete-property"
   },
   {
-    "Modules": "Air Sales Roles & Right",
+    "Modules": "Air Sales",
     "Sub Modules": "",
     "Permissions": "",
     "Slugs": ""
@@ -1680,7 +1680,7 @@
     "Slugs": "sale-setting-active-inactive-quote-notification"
   },
   {
-    "Modules": "Air Services Roles & Right",
+    "Modules": "Air Services",
     "Sub Modules": "",
     "Permissions": "",
     "Slugs": ""
@@ -2862,7 +2862,7 @@
     "Slugs": "service-settings-set-closure-rules-against-tickets"
   },
   {
-    "Modules": "Air Operations Roles & Right",
+    "Modules": "Air Operations",
     "Sub Modules": "",
     "Permissions": "",
     "Slugs": ""

@@ -183,6 +183,7 @@ export const API_ENDPOINTS = {
     ADD_COMPANY_ACCOUNT_ROLE: '/role',
     UPDATE_COMPANY_ACCOUNT_ROLE: '/role/:id',
     GET_COMPNAY_ACCOUNT_ROLES: '/role',
+    GET_PERMISSIONS_BY_PRODUCT: 'permissions-by-product/:productId',
   },
   AIR_SERVICES: {
     TICKETS: {

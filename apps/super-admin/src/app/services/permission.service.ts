@@ -10,6 +10,7 @@ import {
   AddCompanyAccountRoleDto,
   EditCompanyAccountRoleDto,
   GetCompanyAccountRolesDto,
+  PlanProductParamDto,
 } from '@shared/dto';
 
 import * as fs from 'fs';
@@ -30,7 +31,6 @@ export class PermissionService {
   async addAllPermissions() {
     try {
       const res = await this.permissionRepository.find();
-
       const permissiosJson = `${process.cwd()}/rolesAndRights.json`;
       const allPermissions = JSON.parse(
         fs.readFileSync(permissiosJson, 'utf8')
@@ -38,12 +38,12 @@ export class PermissionService {
 
       let permissionModule = '';
       let permissionSubModule = '';
-      let permissionProduct = '';
+      let permissionProduct: any = '';
       for (const permission of allPermissions) {
         const res = await this.permissionRepository.findOneWithoutException({
           slug: permission['Slugs'],
         });
-        if (res) continue;
+        if (res) await this.permissionRepository.delete({ _id: res?._id });
 
         if (permission['Modules']) permissionModule = permission['Modules'];
 
@@ -63,12 +63,8 @@ export class PermissionService {
         const allProducts = await this.productsRepository.find();
 
         for (const product of allProducts) {
-          if (
-            permissionProduct
-              ?.toLowerCase()
-              .includes(product?.name?.toLowerCase())
-          )
-            permissionProduct = product?.id;
+          if (permissionProduct == product?.name)
+            permissionProduct = product?._id;
         }
 
         await this.permissionRepository.create({
@@ -86,6 +82,23 @@ export class PermissionService {
         HttpStatus.CREATED,
         ResponseMessage.SUCCESS,
         res
+      );
+      return response;
+    } catch (error) {
+      throw new RpcException(error);
+    }
+  }
+
+  async getPermissionsByProduct(payload: PlanProductParamDto) {
+    try {
+      const permissions = await this.permissionRepository.find({
+        productId: payload?.productId,
+      });
+
+      const response = successResponse(
+        HttpStatus.FOUND,
+        ResponseMessage.SUCCESS,
+        permissions
       );
       return response;
     } catch (error) {

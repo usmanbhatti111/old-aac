@@ -6,11 +6,17 @@ import {
   AddCompanyAccountRoleDto,
   EditCompanyAccountRoleDto,
   GetCompanyAccountRolesDto,
+  PlanProductParamDto,
 } from '@shared/dto';
 
 @Controller()
 export class PermissionController {
   constructor(private readonly permssionService: PermissionService) {}
+
+  @MessagePattern(RMQ_MESSAGES.PERMISSION.GET_PERMISSIONS_BY_PRODUCT)
+  getPermissionsByProduct(payload: PlanProductParamDto) {
+    return this.permssionService.getPermissionsByProduct(payload);
+  }
 
   @MessagePattern(RMQ_MESSAGES.PERMISSION.ADD_ALL_PERMISSIONS)
   addAllPermissions() {

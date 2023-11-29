@@ -29,7 +29,9 @@ import {
   EditCompanyAccountRoleDto,
   GetCompanyAccountRolesDto,
   GetCompanyAccountRolesResponseDto,
+  GetProductPermissionsResponseDto,
   IdDto,
+  PlanProductParamDto,
 } from '@shared/dto';
 import { Auth } from '../../decorators/auth.decorator';
 
@@ -40,7 +42,7 @@ export class PermissionController {
   constructor(
     @Inject(SERVICES.SUPER_ADMIN)
     private superAdminService: ClientProxy
-  ) {}
+  ) { }
 
   @Auth(true)
   @Post(API_ENDPOINTS.PERMISSION.ADD_ALL_PERMISSIONS)
@@ -52,6 +54,19 @@ export class PermissionController {
       )
     );
 
+    return response;
+  }
+
+  @Auth(true)
+  @Get(API_ENDPOINTS.PERMISSION.GET_PERMISSIONS_BY_PRODUCT)
+  @ApiOkResponse({ type: GetProductPermissionsResponseDto })
+  public async getPermissionsByProduct(@Param() payload: PlanProductParamDto): Promise<GetProductPermissionsResponseDto> {
+    const response = await firstValueFrom(
+      this.superAdminService.send(
+        RMQ_MESSAGES.PERMISSION.GET_PERMISSIONS_BY_PRODUCT,
+        payload
+      )
+    );
     return response;
   }
 
