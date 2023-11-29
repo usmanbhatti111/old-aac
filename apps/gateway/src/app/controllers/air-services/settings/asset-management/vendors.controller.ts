@@ -6,9 +6,15 @@ import {
   Query,
   Post,
   Body,
+  Param,
 } from '@nestjs/common';
 import { ClientProxy, RpcException } from '@nestjs/microservices';
-import { ApiTags, ApiBearerAuth, ApiOkResponse } from '@nestjs/swagger';
+import {
+  ApiTags,
+  ApiBearerAuth,
+  ApiOkResponse,
+  ApiParam,
+} from '@nestjs/swagger';
 import {
   API_ENDPOINTS,
   API_TAGS,
@@ -22,6 +28,8 @@ import { firstValueFrom } from 'rxjs';
 import {
   AddVendorRequestDTO,
   AddVendorResponseDto,
+  GetVendorsResponseDto,
+  IdDto,
   ListVendorsRequestDto,
   ListVendorsResponseDto,
 } from '@shared/dto';
@@ -73,6 +81,28 @@ export class VendorController {
         )
       );
 
+      return response;
+    } catch (err) {
+      throw new RpcException(err);
+    }
+  }
+
+  @Get(API_ENDPOINTS.AIR_SERVICES.SETTINGS.VENDORS.GET_VENDOR)
+  @Auth(true)
+  @ApiParam({
+    type: String,
+    name: 'id',
+    description: 'id should be VendorId',
+  })
+  @ApiOkResponse({ type: GetVendorsResponseDto })
+  async getVendr(@Param() id: IdDto) {
+    try {
+      const response = await firstValueFrom(
+        this.airServiceClient.send(
+          RMQ_MESSAGES.AIR_SERVICES.SETTINGS.VENDORS.GET_VENDOR,
+          id
+        )
+      );
       return response;
     } catch (err) {
       throw new RpcException(err);
