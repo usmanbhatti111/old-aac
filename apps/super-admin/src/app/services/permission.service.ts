@@ -169,7 +169,6 @@ export class PermissionService {
           },
         ];
       }
-
       pipelines.push(
         {
           $addFields: {
@@ -183,6 +182,28 @@ export class PermissionService {
         },
         {
           $lookup: {
+            from: 'organizationcompanyaccounts',
+            localField: 'organizationCompanyAccountId',
+            foreignField: '_id',
+            as: 'companyAccountDetails',
+          },
+        },
+        {
+          $unwind: '$companyAccountDetails',
+        },
+        {
+          $lookup: {
+            from: 'products',
+            localField: 'productId',
+            foreignField: '_id',
+            as: 'productDetails',
+          },
+        },
+        {
+          $unwind: '$productDetails',
+        },
+        {
+          $lookup: {
             from: 'permissions',
             localField: 'tempPermissions',
             foreignField: 'slug',
@@ -191,16 +212,23 @@ export class PermissionService {
         },
         {
           $project: {
-            _id: 0,
+            _id: 1,
             name: 1,
             description: 1,
-            productId: 1,
             organizationId: 1,
             organizationCompanyAccountId: 1,
             createdAt: 1,
             updatedAt: 1,
             permissions: 1,
             status: 1,
+            companyAccountDetails: {
+              id: '$companyAccountDetails._id',
+              name: '$companyAccountDetails.name',
+            },
+            productDetails: {
+              id: '$productDetails._id',
+              name: '$productDetails.name',
+            },
           },
         }
       );
