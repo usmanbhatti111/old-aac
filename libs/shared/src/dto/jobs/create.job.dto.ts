@@ -91,4 +91,6 @@ export class IdDTO {
   @IsNotEmpty()
   @IsMongoId()
   id: string;
+
+  companyId: string;
 }

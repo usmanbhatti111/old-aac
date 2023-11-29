@@ -47,8 +47,11 @@ export class VendorsService {
 
   async getVendor(payload: IdDTO) {
     try {
+      const { id, companyId } = payload;
+
       const res = await this.vendorsRepository.findOne({
-        _id: payload.id,
+        _id: id,
+        companyId: companyId,
       });
       return successResponse(HttpStatus.OK, 'Success', res);
     } catch (error) {

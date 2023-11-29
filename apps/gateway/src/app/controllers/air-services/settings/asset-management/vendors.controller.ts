@@ -94,13 +94,18 @@ export class VendorController {
     name: 'id',
     description: 'id should be VendorId',
   })
-  @ApiOkResponse({ type: GetVendorsResponseDto })
-  async getVendr(@Param() id: IdDto) {
+  // @ApiOkResponse({ type: GetVendorsResponseDto })
+  public async getVendr(
+    @Param() payload: IdDto,
+    @Req() request: AppRequest
+  ): Promise<GetVendorsResponseDto> {
     try {
+      payload['companyId'] = request?.user?.companyId;
+
       const response = await firstValueFrom(
         this.airServiceClient.send(
           RMQ_MESSAGES.AIR_SERVICES.SETTINGS.VENDORS.GET_VENDOR,
-          id
+          payload
         )
       );
       return response;
