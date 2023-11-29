@@ -2,7 +2,7 @@ import { ApiProperty, OmitType, PartialType } from '@nestjs/swagger';
 import { Transform } from 'class-transformer';
 import { IsNotEmpty, IsOptional } from 'class-validator';
 import { User } from '../../schema/user-account';
-import { UserRole } from '../../constants/enums';
+import { UserRole, UserStatus } from '../../constants/enums';
 import { toMongoObjectId } from '../../functions';
 import { PaginationDto } from '../common';
 
@@ -92,6 +92,57 @@ export class CreateOrgUserDto extends PartialType(
   createdBy: string;
 }
 
+export class CreateOrgUserCompanyAccountDto {
+  @ApiProperty({
+    required: true,
+    example: '652627f809a15759b979dd3a',
+    description: 'Example: 652627f809a15759b979dd3a',
+  })
+  @IsNotEmpty()
+  @Transform(toMongoObjectId)
+  product: string;
+
+  @ApiProperty({
+    required: true,
+    example: '652627f809a15759b979dd3a',
+    description: 'Example: 652627f809a15759b979dd3a',
+  })
+  @IsNotEmpty()
+  @Transform(toMongoObjectId)
+  company: string;
+
+  @ApiProperty({
+    required: false,
+    example: '652627f809a15759b979dd3a',
+    description: 'Example: 652627f809a15759b979dd3a',
+  })
+  @IsOptional()
+  role?: string;
+
+  @ApiProperty({
+    required: true,
+    example: '652627f809a15759b979dd3a',
+    description: 'Example: 652627f809a15759b979dd3a',
+  })
+  @IsNotEmpty()
+  @Transform(toMongoObjectId)
+  user: string;
+
+  @ApiProperty({
+    required: true,
+    enum: [UserStatus.ACTIVE, UserStatus.INACTIVE],
+    default: UserStatus.ACTIVE,
+  })
+  @IsNotEmpty()
+  status: string;
+
+  @Transform(toMongoObjectId)
+  createdBy: string;
+
+  @Transform(toMongoObjectId)
+  organization: string;
+}
+
 export class CreateOrgUserParamDto {
   @ApiProperty({
     required: true,
@@ -100,6 +151,16 @@ export class CreateOrgUserParamDto {
   @IsNotEmpty()
   @Transform(toMongoObjectId)
   orgId: string;
+}
+
+export class CommonIdParamDto {
+  @ApiProperty({
+    required: true,
+    description: 'Example: 652627f809a15759b979dd3a',
+  })
+  @IsNotEmpty()
+  @Transform(toMongoObjectId)
+  id: string;
 }
 
 export class GetOrgEmployeesQueryDto extends PaginationDto {
@@ -130,4 +191,16 @@ export class GetOrgEmployeesQueryDto extends PaginationDto {
 
   @Transform(toMongoObjectId)
   orgId: string;
+}
+
+export class GetOrgEmployeeAccountsQueryDto extends PaginationDto {
+  @ApiProperty({
+    example: '',
+    required: false,
+  })
+  @IsOptional()
+  search: string;
+
+  @Transform(toMongoObjectId)
+  organization: string;
 }

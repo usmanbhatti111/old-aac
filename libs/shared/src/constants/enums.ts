@@ -401,6 +401,13 @@ export enum EActivitylogModule {
   CUSTOMIZED_COLUMNS = 'CUSTOMIZED_COLUMNS',
   MARKETING_COMPANY = 'MARKETING_COMPANY',
   COMPANY = 'COMPANY',
+  ORG_USER = 'ORG_USER',
+  ORG_USER_ACCOUNT = 'ORG_USER_ACCOUNT',
+}
+
+export enum EActivitylogModuleName {
+  USER = 'USER',
+  ACCOUNT = 'ACCOUNT',
 }
 
 export enum EApplicationStatus {

@@ -1,15 +1,21 @@
 import { HttpStatus, Injectable } from '@nestjs/common';
-import { errorResponse, successResponse } from '@shared/constants';
+import {
+  errorResponse,
+  ResponseMessage,
+  successResponse,
+} from '@shared/constants';
 import { OrganizationCompanyAccountRepository } from '@shared';
 
 import {
   CreateOrganizationCompanyAccountDto,
   DeleteMultipleOrganizationCompanyAccountDto,
   GetAllOrganizationCompanyAccountsDto,
+  GetOrgUsersDropDownDto,
   IdDto,
   UpdateOrganizationCompanyAccountDto,
   UpdateOrganizationCompanyAccountStatusDto,
 } from '@shared/dto';
+import { RpcException } from '@nestjs/microservices';
 @Injectable()
 export class OrganizationCompanyAccountService {
   constructor(
@@ -48,6 +54,49 @@ export class OrganizationCompanyAccountService {
       );
     } catch (error) {
       return errorResponse(HttpStatus.BAD_REQUEST, error?.response?.message);
+    }
+  }
+
+  async getOrgCompaniesForDropdowns(payload: GetOrgUsersDropDownDto) {
+    const { page = 1, limit = 20, search, organization } = payload;
+    const offset = (page - 1) * limit;
+
+    let filterQuery = {};
+    if (search) {
+      filterQuery = {
+        ...filterQuery,
+        accountName: {
+          $regex: search,
+          $options: 'i',
+        },
+      };
+    }
+
+    filterQuery = {
+      organizationId: organization,
+      isDeleted: false,
+    };
+
+    const pipelines = [
+      {
+        $project: {
+          _id: 1,
+          accountName: 1,
+        },
+      },
+    ];
+
+    try {
+      const res = await this.organizationCompanyAccountRepository.paginate({
+        filterQuery,
+        pipelines,
+        offset,
+        limit,
+      });
+
+      return successResponse(HttpStatus.OK, ResponseMessage.SUCCESS, res);
+    } catch (error) {
+      throw new RpcException(error);
     }
   }
 

@@ -68,6 +68,7 @@ import {
   JobApplicationsRepository,
   CustomizeColumnsRepository,
   CompanyRepository,
+  UserCompanyAccountRepository,
   VendorsRepository,
   ProductCatalogRepository,
 } from '../src/repositories/index';
@@ -158,6 +159,7 @@ import {
     JobApplicationsRepository,
     CustomizeColumnsRepository,
     CompanyRepository,
+    UserCompanyAccountRepository,
     VendorsRepository,
     {
       provide: 'S3',
@@ -257,6 +259,7 @@ import {
     CustomizeColumnsRepository,
     CustomizeColumnsService,
     CompanyRepository,
+    UserCompanyAccountRepository,
     VendorsRepository,
     ProductCatalogRepository,
   ],

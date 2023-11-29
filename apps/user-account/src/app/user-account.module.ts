@@ -12,6 +12,8 @@ import { HttpModule } from '@nestjs/axios';
 import { CompanyHouseService } from './services/company-house.service';
 import { CompanyHouseController } from './controllers/company-house.controller';
 import { VerificationService } from './services/verification.service';
+import { UserCompanyAccountController } from './controllers/user-company-account.controller';
+import { UserCompanyAccountService } from './services/user-company-account.service';
 
 @Module({
   imports: [
@@ -24,12 +26,14 @@ import { VerificationService } from './services/verification.service';
     UserController,
     RequestLogController,
     CompanyHouseController,
+    UserCompanyAccountController,
   ],
   providers: [
     AuthService,
     UserService,
     RequestLogService,
     VerificationService,
+    UserCompanyAccountService,
     CompanyHouseService,
     {
       provide: 'CognitoIDP',

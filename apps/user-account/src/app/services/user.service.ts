@@ -20,7 +20,8 @@ import {
   GetOrgEmployeesQueryDto,
 } from '@shared/dto';
 import { S3Service } from '@shared/services';
-import { Model, Types } from 'mongoose';
+import dayjs from 'dayjs';
+import { Model } from 'mongoose';
 import { CompanyHouseService } from './company-house.service';
 
 @Injectable()
@@ -28,7 +29,7 @@ export class UserService {
   constructor(
     private userRepository: UserRepository,
     private companyHouseService: CompanyHouseService,
-    @InjectModel('User') private readonly exampleModel: Model<User>,
+    @InjectModel('User') private readonly userModel: Model<User>,
     private readonly orgRepository: OrganizationRepository,
     private s3: S3Service
   ) {}
@@ -88,6 +89,7 @@ export class UserService {
         search,
         products,
         role = UserRole.SUPER_ADMIN,
+        createdAt,
       } = payload;
       const offset = (page - 1) * limit;
 
@@ -114,16 +116,23 @@ export class UserService {
         };
       }
 
-      filterQuery = payload.products
-        ? {
-            ...filterQuery,
-            ...payload,
-            products: { $in: [products] },
-          }
-        : {
-            ...filterQuery,
-            ...payload,
-          };
+      if (createdAt) {
+        filterQuery;
+      }
+
+      filterQuery = {
+        ...filterQuery,
+        ...payload,
+        ...(products && {
+          products: { $in: [products] },
+        }),
+        ...(createdAt && {
+          createdAt: {
+            $lte: dayjs(createdAt).endOf('day').toDate(),
+            $gte: dayjs(createdAt).startOf('day').toDate(),
+          },
+        }),
+      };
       let pipelines = [];
 
       if ([UserRole.ORG_ADMIN, UserRole.ORG_EMPLOYEE].includes(role)) {
@@ -152,6 +161,7 @@ export class UserService {
               firstName: 1,
               lastName: 1,
               avatar: 1,
+              email: 1,
               role: 1,
               products: {
                 _id: 1,
@@ -205,7 +215,7 @@ export class UserService {
       return successResponse(
         HttpStatus.OK,
         ResponseMessage.SUCCESS,
-        await this.exampleModel
+        await this.userModel
           .findOne({ ...payload })
           .populate('products organization')
       );
@@ -235,29 +245,8 @@ export class UserService {
 
   async userProfile({ id }) {
     try {
-      const user = await this.userRepository.aggregate([
-        {
-          $match: { _id: id },
-        },
-        {
-          $lookup: {
-            from: 'organizations',
-            localField: 'organization',
-            foreignField: '_id',
-            as: 'organization',
-          },
-        },
-        {
-          $lookup: {
-            from: 'products',
-            localField: 'products',
-            foreignField: '_id',
-            as: 'products',
-          },
-        },
-        { $unwind: '$organization' },
-      ]);
-      return successResponse(HttpStatus.OK, ResponseMessage.SUCCESS, user[0]);
+      const user = await this.userRepository.findOne({ _id: id });
+      return successResponse(HttpStatus.OK, ResponseMessage.SUCCESS, user);
     } catch (error) {
       throw new RpcException(error);
     }
@@ -383,7 +372,7 @@ export class UserService {
 
     filterQuery = {
       ...filterQuery,
-      organization: new Types.ObjectId(organization),
+      organization: organization,
       role: UserRole.ORG_EMPLOYEE,
       status: UserStatus.ACTIVE,
     };

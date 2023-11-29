@@ -1,4 +1,4 @@
-import { Controller, Get, Inject, Query, Req } from '@nestjs/common';
+import { Controller, Get, Inject, Param, Query, Req } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
 import { ApiBearerAuth, ApiCreatedResponse, ApiTags } from '@nestjs/swagger';
 import {
@@ -11,7 +11,11 @@ import {
 
 import { firstValueFrom } from 'rxjs';
 import { AppRequest } from '../../shared/interface/request.interface';
-import { GetAllDropdownResponseDto, GetAllSearchDTO } from '@shared/dto';
+import {
+  CommonIdParamDto,
+  GetAllDropdownResponseDto,
+  GetAllSearchDTO,
+} from '@shared/dto';
 import { Auth } from '../../decorators/auth.decorator';
 
 @ApiTags(API_TAGS.DROPDOWNS)
@@ -20,7 +24,8 @@ import { Auth } from '../../decorators/auth.decorator';
 export class DropdownController {
   constructor(
     @Inject(SERVICES.COMMON_FEATURE) private commonFeatureClient: ClientProxy,
-    @Inject(SERVICES.USER) private userClient: ClientProxy
+    @Inject(SERVICES.USER) private userClient: ClientProxy,
+    @Inject(SERVICES.ORG_ADMIN) private orgAdminClient: ClientProxy
   ) {}
 
   @Get(API_ENDPOINTS.DROPDOWNS.ORGANIZATION_DROPDOWN)
@@ -59,14 +64,29 @@ export class DropdownController {
   @Get(API_ENDPOINTS.DROPDOWNS.ORG_EMPLOYEES)
   @ApiCreatedResponse({ type: GetAllDropdownResponseDto })
   public async getOrgUsers(
-    @Query() { search }: GetAllSearchDTO,
-    @Req() request: AppRequest
+    @Param() { id }: CommonIdParamDto,
+    @Query() { search = '' }: GetAllSearchDTO
   ): Promise<GetAllDropdownResponseDto> {
-    const { user } = request;
     const response = await firstValueFrom(
       this.userClient.send(RMQ_MESSAGES.DROPDOWNS.ORG_EMPLOYEES, {
-        search: search,
-        organization: user.organization,
+        search,
+        organization: id,
+      })
+    );
+    return response;
+  }
+
+  @Auth(true)
+  @Get(API_ENDPOINTS.DROPDOWNS.ORG_COMPANIES)
+  @ApiCreatedResponse({ type: GetAllDropdownResponseDto })
+  public async getOrgCompanies(
+    @Param() { id }: CommonIdParamDto,
+    @Query() query: GetAllSearchDTO
+  ): Promise<GetAllDropdownResponseDto> {
+    const response = await firstValueFrom(
+      this.orgAdminClient.send(RMQ_MESSAGES.DROPDOWNS.ORG_COMPANIES, {
+        ...query,
+        organization: id,
       })
     );
     return response;

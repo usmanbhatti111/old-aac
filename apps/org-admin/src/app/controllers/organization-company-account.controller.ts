@@ -7,6 +7,7 @@ import {
   DeleteMultipleOrganizationCompanyAccountDto,
   DeleteOrganizationCompanyAccountDto,
   GetAllOrganizationCompanyAccountsDto,
+  GetOrgUsersDropDownDto,
   IdDto,
   UpdateOrganizationCompanyAccountDto,
   UpdateOrganizationCompanyAccountStatusDto,
@@ -96,6 +97,13 @@ export class OrganizationCompanyAccountController {
     @Payload() payload: UpdateOrganizationCompanyAccountStatusDto
   ) {
     return await this.OrganizationCompanyAccountService.updateOrganizationCompanyAccountStatus(
+      payload
+    );
+  }
+
+  @MessagePattern(RMQ_MESSAGES.DROPDOWNS.ORG_COMPANIES)
+  async orgUserDropDown(payload: GetOrgUsersDropDownDto) {
+    return await this.OrganizationCompanyAccountService.getOrgCompaniesForDropdowns(
       payload
     );
   }

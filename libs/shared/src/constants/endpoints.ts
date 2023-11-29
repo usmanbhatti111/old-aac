@@ -19,6 +19,7 @@ export const API_ENDPOINTS = {
     CREATE: '/',
     UPDATE: '/:id',
     ORG_USER: '/organization/:orgId',
+    COMPANY_ACCOUNT: '/organization/:orgId/account',
     AVATAR: '/:id/avatar',
     EDIT_USER: 'edit/:id',
     DELETE: '/:id',
@@ -466,6 +467,7 @@ export const API_ENDPOINTS = {
     ORGANIZATION_DROPDOWN: 'organizations',
     PRODUCTS_DROPDOWN: 'products',
     ORG_EMPLOYEES: 'organizations/:id/users',
+    ORG_COMPANIES: 'organizations/:id/company-accounts',
   },
 
   COMMON_FEATURES: {

@@ -23,6 +23,9 @@ import {
   API_ENDPOINTS,
   API_TAGS,
   CONTROLLERS,
+  EActivitylogModule,
+  EActivitylogModuleName,
+  EActivityType,
   RMQ_MESSAGES,
   SERVICES,
 } from '@shared/constants';
@@ -41,6 +44,9 @@ import {
   CreateOrgUserParamDto,
   IdParamDto,
   GetOrgEmployeesQueryDto,
+  CreateOrgUserCompanyAccountDto,
+  GetOrgEmployeeAccountsQueryDto,
+  ActivityLogParams,
 } from '@shared/dto';
 import { firstValueFrom } from 'rxjs';
 import { Auth } from '../../decorators/auth.decorator';
@@ -50,7 +56,65 @@ import { AppRequest } from '../../shared/interface/request.interface';
 @Controller(CONTROLLERS.USER)
 @ApiBearerAuth()
 export class UserController {
-  constructor(@Inject(SERVICES.USER) private userServiceClient: ClientProxy) {}
+  constructor(
+    @Inject(SERVICES.USER) private userServiceClient: ClientProxy,
+    @Inject(SERVICES.COMMON_FEATURE) private commonFeatureClient: ClientProxy
+  ) {}
+
+  @Auth(true)
+  @Post(API_ENDPOINTS.USER.COMPANY_ACCOUNT)
+  @ApiOperation({ summary: 'Add User for to company account' })
+  @ApiOkResponse({ type: UserProfileResponseDto })
+  public async createOrganizationUserCompanyAccount(
+    @Param() { orgId }: CreateOrgUserParamDto,
+    @Body() payload: CreateOrgUserCompanyAccountDto,
+    @Req() request: AppRequest
+  ): Promise<UserProfileResponseDto> {
+    payload.organization = orgId;
+
+    const response: any = firstValueFrom(
+      this.userServiceClient.send(
+        RMQ_MESSAGES.USER.CREATE_COMPANY_ACCOUNT,
+        payload
+      )
+    );
+
+    if (response?.data) {
+      const params: ActivityLogParams = {
+        performedBy: request?.user?._id, // userId
+        activityType: EActivityType.CREATED, // UPDATED
+        module: EActivitylogModule.ORG_USER_ACCOUNT, // module
+        moduleId: response?.data?._id, // module._id
+        moduleName: EActivitylogModuleName.ACCOUNT,
+      };
+
+      firstValueFrom(
+        this.commonFeatureClient.emit(
+          RMQ_MESSAGES.ACTIVITY_LOG.ACTIVITY_LOG,
+          params
+        )
+      );
+    }
+
+    return response;
+  }
+
+  @Auth(true)
+  @Get(API_ENDPOINTS.USER.COMPANY_ACCOUNT)
+  @ApiOperation({ summary: 'Get Company account of user in that organization' })
+  @ApiOkResponse({ type: UserProfileResponseDto })
+  public getOrganizationUsersCompanyAccounts(
+    @Param() { orgId }: CreateOrgUserParamDto,
+    @Query() query: GetOrgEmployeeAccountsQueryDto
+  ): Promise<UserProfileResponseDto> {
+    query.organization = orgId;
+
+    return firstValueFrom(
+      this.userServiceClient.send(RMQ_MESSAGES.USER.GET_COMPANY_ACCOUNT, {
+        ...query,
+      })
+    );
+  }
 
   @Auth(true)
   @Post(API_ENDPOINTS.USER.CREATE)
@@ -136,15 +200,36 @@ export class UserController {
   @Post(API_ENDPOINTS.USER.ORG_USER)
   @ApiOperation({ summary: 'Add User for organization' })
   @ApiOkResponse({ type: UserProfileResponseDto })
-  public createOrganizationUser(
+  public async createOrganizationUser(
     @Param() { orgId }: CreateOrgUserParamDto,
-    @Body() payload: CreateOrgUserDto
+    @Body() payload: CreateOrgUserDto,
+    @Req() request: AppRequest
   ): Promise<UserProfileResponseDto> {
     payload.organization = orgId;
 
-    return firstValueFrom(
+    const response: any = await firstValueFrom(
       this.userServiceClient.send(RMQ_MESSAGES.USER.CREATE_ORG_USER, payload)
     );
+
+    //ActivityLog
+    if (response?.data) {
+      const params: ActivityLogParams = {
+        performedBy: request?.user?._id, // userId
+        activityType: EActivityType.CREATED, // UPDATED
+        module: EActivitylogModule.ORG_USER, // module
+        moduleId: response?.data?._id, // module._id
+        moduleName: EActivitylogModuleName.USER,
+      };
+
+      firstValueFrom(
+        this.commonFeatureClient.emit(
+          RMQ_MESSAGES.ACTIVITY_LOG.ACTIVITY_LOG,
+          params
+        )
+      );
+    }
+
+    return response;
   }
 
   @Auth(true)
