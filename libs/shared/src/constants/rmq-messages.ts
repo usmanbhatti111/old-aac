@@ -322,6 +322,7 @@ export const RMQ_MESSAGES = {
       VENDORS: {
         ADD_VENDORS: 'add-vendors',
         GET_VENDORS: 'get-vendors',
+        UPDATE_VENDORS: 'update-vendors',
       },
     },
     CONTRACT_TYPE: {

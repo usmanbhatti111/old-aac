@@ -311,6 +311,7 @@ export const API_ENDPOINTS = {
       VENDORS: {
         ADD_VENDORS: 'add-vendors',
         GET_VENDORS: 'get-vendors',
+        UPDATE_VENDORS: 'update-vendor',
       },
     },
   },

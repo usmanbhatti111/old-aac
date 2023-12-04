@@ -6,6 +6,7 @@ import {
   Query,
   Post,
   Body,
+  Patch,
 } from '@nestjs/common';
 import { ClientProxy, RpcException } from '@nestjs/microservices';
 import { ApiTags, ApiBearerAuth, ApiOkResponse } from '@nestjs/swagger';
@@ -24,6 +25,8 @@ import {
   AddVendorResponseDto,
   ListVendorsRequestDto,
   ListVendorsResponseDto,
+  UpdateVendorRequestDTO,
+  UpdateVendorsResponseDto,
 } from '@shared/dto';
 
 @ApiBearerAuth()
@@ -76,6 +79,25 @@ export class VendorController {
       return response;
     } catch (err) {
       throw new RpcException(err);
+    }
+  }
+
+  @Auth(true)
+  @Patch(API_ENDPOINTS.AIR_SERVICES.SETTINGS.VENDORS.UPDATE_VENDORS)
+  public async UpdateVendor(
+    @Body() payload: UpdateVendorRequestDTO
+  ): Promise<UpdateVendorsResponseDto> {
+    try {
+      const response = await firstValueFrom(
+        this.airServiceClient.send(
+          RMQ_MESSAGES.AIR_SERVICES.SETTINGS.VENDORS.UPDATE_VENDORS,
+          payload
+        )
+      );
+
+      return response;
+    } catch (error) {
+      throw new RpcException(error);
     }
   }
 }

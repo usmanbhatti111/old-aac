@@ -1,7 +1,11 @@
 import { HttpStatus, Injectable } from '@nestjs/common';
-import { successResponse } from '@shared/constants';
+import { errorResponse, successResponse } from '@shared/constants';
 import { VendorsRepository } from '@shared';
-import { AddVendorRequestDTO, ListVendorsRequestDto } from '@shared/dto';
+import {
+  AddVendorRequestDTO,
+  ListVendorsRequestDto,
+  UpdateVendorRequestDTO,
+} from '@shared/dto';
 import { RpcException } from '@nestjs/microservices';
 
 @Injectable()
@@ -42,6 +46,19 @@ export class VendorsService {
       return successResponse(HttpStatus.OK, 'Success', res);
     } catch (error) {
       return new RpcException(error);
+    }
+  }
+
+  async updateVendor(udateVendorDto: UpdateVendorRequestDTO) {
+    try {
+      // const res = await this.vendorsRepository.findOneAndUpdate(
+      //   updateVendorDto,
+      //   id:id
+      // );
+
+      return successResponse(HttpStatus.OK, 'Success');
+    } catch (error) {
+      return errorResponse(HttpStatus.BAD_REQUEST, 'Bad Request', error?.name);
     }
   }
 }
